@@ -1,12 +1,10 @@
-package domain;
+package com.e_shop.domain;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "clients_addresses")
@@ -24,5 +22,8 @@ public class ClientAddress {
     private String street;
     private int houseNumber;
     private int flatNumber;
+
+    @OneToMany//(mappedBy = "client", fetch = FetchType.EAGER)
+    private List<Client> clientList;
 
 }

@@ -1,4 +1,4 @@
-package domain.enums;
+package com.e_shop.enums;
 
 public enum OrderStatus {
     WAITING_FOR_PAYMENT,
