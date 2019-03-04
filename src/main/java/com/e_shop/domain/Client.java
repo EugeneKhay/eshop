@@ -30,7 +30,7 @@ public class Client {
     private String password;
 
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "client_id")
+    @JoinColumn(name = "address_id")
     private ClientAddress address;
 
     @OneToMany(fetch = FetchType.EAGER)
