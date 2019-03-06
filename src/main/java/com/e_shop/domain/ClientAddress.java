@@ -23,7 +23,7 @@ public class ClientAddress {
     private int houseNumber;
     private int flatNumber;
 
-    @OneToMany//(mappedBy = "client", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "address", fetch = FetchType.EAGER)
     private List<Client> clientList;
 
 }

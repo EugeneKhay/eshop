@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -22,8 +21,7 @@ public class Client {
 
     private String lastName;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date birthDate;
+    private LocalDate birthDate;
 
     private String email;
 
@@ -33,7 +31,8 @@ public class Client {
     @JoinColumn(name = "address_id")
     private ClientAddress address;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "orders_id")
     private List<Order> orders;
 
 }

@@ -16,9 +16,14 @@ public class ProductParameteres {
     private Integer id;
 
     private String colour;
-    private double power;
+
     private String brand;
 
-    @OneToOne//(mappedBy = "productparameters")
+    @OneToOne(mappedBy = "productParameteres")
     private Product product;
+
+    public ProductParameteres(String colour, String brand) {
+        this.colour = colour;
+        this.brand = brand;
+    }
 }

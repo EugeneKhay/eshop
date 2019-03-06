@@ -22,8 +22,6 @@ public class Product {
 
     private double productPrice;
 
-    //@ElementCollection(targetClass = ProductCategory.class, fetch = FetchType.EAGER)
-    //@CollectionTable(name = "payment_method", joinColumns = @JoinColumn(name = "order_id"))
     @Enumerated(EnumType.STRING)
     private ProductCategory category;
 
@@ -31,13 +29,17 @@ public class Product {
     @JoinColumn(name = "parameters_id")
     private ProductParameteres productParameteres;
 
-    private double productWeight;
-
-    private double productVolume;
-
     private int amount;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "product_id")
+    //@JoinColumn(name = "order_id")
     private Order order;
+
+    public Product(String productName, double productPrice, ProductCategory category, ProductParameteres productParameteres, int amount) {
+        this.productName = productName;
+        this.productPrice = productPrice;
+        this.category = category;
+        this.productParameteres = productParameteres;
+        this.amount = amount;
+    }
 }

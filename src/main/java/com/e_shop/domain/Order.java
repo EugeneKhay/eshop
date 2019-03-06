@@ -4,6 +4,7 @@ import com.e_shop.enums.DeliveryMethod;
 import com.e_shop.enums.OrderStatus;
 import com.e_shop.enums.PaymentMethod;
 import com.e_shop.enums.PaymentStatus;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -25,27 +26,26 @@ public class Order {
     private Client client;
 
     @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "product_id")
     private List<Product> productsInOrder;
 
-    //private ClientAddress clientAddress;
-
-    //@ElementCollection(targetClass = PaymentMethod.class, fetch = FetchType.EAGER)
-    //@CollectionTable(name = "payment_method", joinColumns = @JoinColumn(name = "order_id"))
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
 
-    //@ElementCollection(targetClass = DeliveryMethod.class, fetch = FetchType.EAGER)
-    //@CollectionTable(name = "delivery_method", joinColumns = @JoinColumn(name = "order_id"))
     @Enumerated(EnumType.STRING)
     private DeliveryMethod deliveryMethod;
 
-    //@ElementCollection(targetClass = PaymentStatus.class, fetch = FetchType.EAGER)
-    //@CollectionTable(name = "payment_status", joinColumns = @JoinColumn(name = "order_id"))
     @Enumerated(EnumType.STRING)
     private PaymentStatus paymentStatus;
 
-    //@ElementCollection(targetClass = OrderStatus.class, fetch = FetchType.EAGER)
-    //@CollectionTable(name = "order_status", joinColumns = @JoinColumn(name = "order_id"))
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
+
+    public Order(Client client, PaymentMethod paymentMethod, DeliveryMethod deliveryMethod, PaymentStatus paymentStatus, OrderStatus orderStatus) {
+        this.client = client;
+        this.paymentMethod = paymentMethod;
+        this.deliveryMethod = deliveryMethod;
+        this.paymentStatus = paymentStatus;
+        this.orderStatus = orderStatus;
+    }
 }
