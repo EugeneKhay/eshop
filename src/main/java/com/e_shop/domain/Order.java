@@ -25,8 +25,8 @@ public class Order {
     @JoinColumn(name = "client_id")
     private Client client;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "product_id")
+    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
+    //@JoinColumn(name = "product_id")
     private List<Product> productsInOrder;
 
     @Enumerated(EnumType.STRING)
@@ -43,6 +43,15 @@ public class Order {
 
     public Order(Client client, PaymentMethod paymentMethod, DeliveryMethod deliveryMethod, PaymentStatus paymentStatus, OrderStatus orderStatus) {
         this.client = client;
+        this.paymentMethod = paymentMethod;
+        this.deliveryMethod = deliveryMethod;
+        this.paymentStatus = paymentStatus;
+        this.orderStatus = orderStatus;
+    }
+
+    public Order(Client client, List<Product> productsInOrder, PaymentMethod paymentMethod, DeliveryMethod deliveryMethod, PaymentStatus paymentStatus, OrderStatus orderStatus) {
+        this.client = client;
+        this.productsInOrder = productsInOrder;
         this.paymentMethod = paymentMethod;
         this.deliveryMethod = deliveryMethod;
         this.paymentStatus = paymentStatus;

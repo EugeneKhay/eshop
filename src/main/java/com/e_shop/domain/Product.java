@@ -32,7 +32,7 @@ public class Product {
     private int amount;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    //@JoinColumn(name = "order_id")
+    @JoinColumn(name = "order_id")
     private Order order;
 
     public Product(String productName, double productPrice, ProductCategory category, ProductParameteres productParameteres, int amount) {

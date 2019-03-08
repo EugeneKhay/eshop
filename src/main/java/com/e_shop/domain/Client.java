@@ -31,8 +31,8 @@ public class Client {
     @JoinColumn(name = "address_id")
     private ClientAddress address;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "orders_id")
+    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
+    //@JoinColumn(name = "orders_id")
     private List<Order> orders;
 
 }
