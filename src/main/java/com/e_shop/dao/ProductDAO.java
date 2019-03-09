@@ -11,6 +11,12 @@ public interface ProductDAO {
 
     List<Product> getAllProducts();
 
+    List<Product> getAllProductsByPrice(int price);
+
+//    List<Product> getAllProductsByBrand(String brand);
+//
+//    List<Product> getAllProductsByColour();
+
     void saveProduct(Product product);
 
 }

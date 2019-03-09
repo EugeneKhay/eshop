@@ -26,4 +26,5 @@ public class ProductParameteres {
         this.colour = colour;
         this.brand = brand;
     }
+
 }

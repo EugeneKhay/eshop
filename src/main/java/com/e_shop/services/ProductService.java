@@ -11,6 +11,8 @@ public interface ProductService {
 
     List<Product> getAllProducts();
 
+    List<Product> getAllProductsByPrice(int price);
+
     void saveProduct(Product product);
 
 

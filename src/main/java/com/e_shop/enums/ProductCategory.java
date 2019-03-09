@@ -1,6 +1,9 @@
 package com.e_shop.enums;
 
 public enum  ProductCategory {
-    ELECTRONIC,
-    MECHANICAL
+    PHONE,
+    TV_VIDEO,
+    AUDIO,
+    LAPTOP,
+    TABLET
 }

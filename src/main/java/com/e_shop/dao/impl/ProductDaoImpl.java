@@ -34,6 +34,27 @@ public class ProductDaoImpl implements ProductDAO {
     }
 
     @Override
+    public List<Product> getAllProductsByPrice(int price) {
+        String hql = "FROM Product WHERE productprice = :param";
+        Query query = sessionFactory.getCurrentSession().createQuery(hql);
+        query.setParameter("param", price);
+        return query.list();
+    }
+
+//    @Override
+//    public List<Product> getAllProductsByBrand(String brand) {
+//        String hql = "FROM Product WHERE productprice = :param";
+//        Query query = sessionFactory.getCurrentSession().createQuery(hql);
+//        query.setParameter("param", price);
+//        return query.list();
+//    }
+//
+//    @Override
+//    public List<Product> getAllProductsByColour() {
+//        return null;
+//    }
+
+    @Override
     public void saveProduct(Product product) {
         sessionFactory.getCurrentSession().save(product);
     }

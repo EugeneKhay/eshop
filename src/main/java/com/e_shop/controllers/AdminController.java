@@ -34,7 +34,8 @@ public class AdminController {
                        @RequestParam(name = "colour") String colour,
                        @RequestParam(name = "brand") String brand) {
         ProductParameteres productParameteres = new ProductParameteres(colour, brand);
-        ProductCategory productCategory = category.equals("electronic") ? ProductCategory.ELECTRONIC : ProductCategory.MECHANICAL;
+        //ProductCategory productCategory = category.equals("electronic") ? ProductCategory.ELECTRONIC : ProductCategory.MECHANICAL;
+        ProductCategory productCategory = ProductCategory.valueOf(category);
         Product product = new Product(productName, productPrice, productCategory, productParameteres, amount);
         productService.saveProduct(product);
         return "adminpage";

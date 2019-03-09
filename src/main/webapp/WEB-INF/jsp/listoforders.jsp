@@ -10,12 +10,13 @@
 <html>
 <head>
     <title>New order</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
 
 <div>
     <h3>List of orders:</h3>
-    <table border="1" width="50%" cellpadding="5">
+    <table class="table table-borderless table-hover" width="80%">
         <tr>
             <th>First name</th>
             <th>Last name</th>

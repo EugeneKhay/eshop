@@ -22,14 +22,14 @@ public class Product {
 
     private double productPrice;
 
+    private int amount;
+
     @Enumerated(EnumType.STRING)
     private ProductCategory category;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "parameters_id")
     private ProductParameteres productParameteres;
-
-    private int amount;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id")

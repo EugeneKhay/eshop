@@ -11,7 +11,8 @@
 <html>
 <head>
     <title>Admin page</title>
-</head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="../resources/static/css/app.css"></head>
 <body>
 
 <p><a href="/orders">View orders</a></p>
@@ -25,7 +26,17 @@
         <p><b>Please, enter product properties</b></p>
         <p><input type="text" name="productName" placeholder="productName"></p>
         <p><input type="text" name="productPrice" placeholder="productPrice"></p>
-        <p><input type="text" name="category" placeholder="category"></p>
+
+
+        <p><select class="custom-select mr-sm-2" name="category" id="category">
+            <option selected>Choose...</option>
+            <option value="PHONE">PHONE</option>
+            <option value="TV_VIDEO">TV_VIDEO</option>
+            <option value="AUDIO">AUDIO</option>
+            <option value="LAPTOP">LAPTOP</option>
+            <option value="TABLET">TABLET</option>
+        </select></p>
+
         <p><input type="number" name="amount" placeholder="amount"></p>
         <p><b>Please, enter your product parameteres:</b></p>
         <p><input type="text" name="colour" placeholder="colour"></p>
@@ -35,8 +46,9 @@
 
 <div>
     <h3>List of products</h3>
-    <table border="1" width="50%" cellpadding="5">
+    <table class="table table-borderless table-hover" width="80%">
         <tr>
+            <th>Product ID</th>
             <th>Product name</th>
             <th>Price</th>
             <th>Amount</th>
@@ -44,24 +56,25 @@
             <th>Colour</th>
             <th>Brand</th>
         </tr>
-    <c:forEach items="${products}" var="product">
-            <tr>
-                <td>${product.productName}</td>
-                <td>${product.productPrice}</td>
-                <td>${product.amount}</td>
-                <td>${product.category}</td>
-                <c:set var = "parameters" scope = "session" value = "${product.productParameteres}"/>
-                <td>${parameters.colour}</td>
-                <td>${parameters.brand}</td>
-            </tr>
 
-    </c:forEach>
+        <c:forEach items="${products}" var="product">
+        <tr>
+            <td>${product.id}</td>
+            <td>${product.productName}</td>
+            <td>${product.productPrice}</td>
+            <td>${product.amount}</td>
+            <td>${product.category}</td>
+            <c:set var = "parameters" scope = "session" value = "${product.productParameteres}"/>
+            <td>${parameters.colour}</td>
+            <td>${parameters.brand}</td>
+        </tr>
+        </c:forEach>
     </table>
 </div>
 
 <div>
     <h3>List of clients</h3>
-    <table border="1" width="90%" cellpadding="5">
+    <table class="table table-borderless table-hover" width="80%">
         <tr>
             <th>ID</th>
             <th>First name</th>
