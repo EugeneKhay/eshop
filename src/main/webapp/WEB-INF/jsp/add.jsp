@@ -9,73 +9,56 @@
 <html>
 <head>
     <title>Add new Client</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="../resources/static/css/app.css">
 </head>
 <body>
 <h1>Add new client</h1>
 <div>
-    <!--<form method="post" action="/add">
-        <p>Please, enter your data:</p>
-        <p><input type="text" name="firstName" placeholder="firstName"></p>
-        <p><input type="text" name="lastName" placeholder="lastName"></p>
-        <p><input type="text" name="birthDate" placeholder="YYYY MM DD"></p>
-        <p><input type="text" name="email" placeholder="email"></p>
-        <p><input type="text" name="password" placeholder="password"></p>
-
-        <p>Please, enter your address:</p>
-        <p><input type="text" name="country" placeholder="country"></p>
-        <p><input type="text" name="city" placeholder="city"></p>
-        <p><input type="number" name="postcode" placeholder="post code"></p>
-        <p><input type="text" name="street" placeholder="street"></p>
-        <p><input type="number" name="house" placeholder="house"></p>
-        <p><input type="number" name="flat" placeholder="flat"></p>
-
-        <p><button type="submit" value="OK">Add</button></p>
-    </form>-->
-
     <form method="post" action="/add">
         <div class="form-group">
             <label for="firstName">First name</label>
-            <input class="form-control form-control-lg" type="text" class="form-control" id="firstName" aria-describedby="emailHelp" placeholder="Name">
+            <input class="form-control form-control-lg" name="firstName" type="text" class="form-control" id="firstName" aria-describedby="emailHelp" placeholder="Name">
         </div>
         <div class="form-group">
             <label for="lastName">Last name</label>
-            <input class="form-control form-control-lg" type="text" class="form-control" id="lastName" placeholder="Last name">
+            <input class="form-control form-control-lg" name="lastName" type="text" class="form-control" id="lastName" placeholder="Last name">
         </div>
         <div class="form-group">
             <label for="birthDate">Birth date</label>
-            <input class="form-control form-control-lg" type="text" class="form-control" id="birthDate" placeholder="YYYY MM DD">
+            <input class="form-control form-control-lg" name="birthDate" type="text" class="form-control" id="birthDate" placeholder="YYYY MM DD">
         </div>
         <div class="form-group">
             <label for="email">Email</label>
-            <input class="form-control form-control-lg" type="text"  id="email" placeholder="example@email.com">
+            <input class="form-control form-control-lg" name="email" type="text"  id="email" placeholder="example@email.com">
         </div>
         <div class="form-group">
             <label for="password">Password</label>
-            <input class="form-control form-control-lg" type="text"  id="password" placeholder="Password">
+            <input class="form-control form-control-lg" name="password" type="text"  id="password" placeholder="Password">
         </div>
         <div class="form-group">
             <label for="country">Country</label>
-            <input class="form-control form-control-lg" type="text"  id="country" placeholder="Country">
+            <input class="form-control form-control-lg" name="country" type="text"  id="country" placeholder="Country">
         </div>
         <div class="form-group">
             <label for="city">City</label>
-            <input class="form-control form-control-lg" type="text"  id="city" placeholder="City">
+            <input class="form-control form-control-lg" name="city" type="text"  id="city" placeholder="City">
         </div>
         <div class="form-group">
             <label for="postcode">Post code</label>
-            <input class="form-control form-control-lg" type="number"  id="postcode" placeholder="Post code">
+            <input class="form-control form-control-lg" name="postcode" type="number"  id="postcode" placeholder="Post code">
         </div>
         <div class="form-group">
             <label for="street">Street</label>
-            <input class="form-control form-control-lg" type="text"  id="street" placeholder="Street">
+            <input class="form-control form-control-lg" name="street" type="text"  id="street" placeholder="Street">
         </div>
         <div class="form-group">
             <label for="house">House</label>
-            <input class="form-control form-control-lg" type="number"  id="house" placeholder="House">
+            <input class="form-control form-control-lg" name="house" type="number"  id="house" placeholder="House">
         </div>
         <div class="form-group">
             <label for="flat">Flat</label>
-            <input class="form-control form-control-lg" type="number"  id="flat" placeholder="Flat">
+            <input class="form-control form-control-lg" name="flat" type="number"  id="flat" placeholder="Flat">
         </div>
 
         <button type="submit" class="btn btn-primary">Submit</button>

@@ -21,18 +21,8 @@
 </head>
 <body>
 
-<h2>Search</h2>
+<h2 style="margin: auto" >Search resulrs</h2>
     <div class="container">
-        <form method="post" action="/catalog">
-            <p><select class="custom-select mr-sm-2" name="search_type" id="search">
-                <option selected>Choose filter</option>
-                <option value="Price">Price</option>
-                <option value="Brand">Brand</option>
-                <option value="Colour">Colour</option>
-            </select></p>
-            <input type="text" name="search_res" placeholder="filter">
-            <button type="submit" value="OK">Search</button>
-        </form>
 
         <table class="table table-borderless table-hover" width="80%">
             <tr>

@@ -42,5 +42,6 @@
 <script src="../resources/static/js/app.js"></script>
 <script src="../resources/static/js/controller.js"></script>
 <link rel="stylesheet" href="./webjars/bootstrap/3.3.6/css/bootstrap.css">
+
 </body>
 </html>

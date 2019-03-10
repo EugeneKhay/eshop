@@ -31,22 +31,17 @@ public class CatalogController {
                               Model model) {
         List<Product> searchResult = new ArrayList<>();
         if (filter.equals("Price")) {
-            int price = Integer.valueOf(search_data);
-            searchResult = productService.getAllProductsByPrice(price);
-//        } else if (filter.equals("Brand")) {
-//            searchResult = productService.getAllProductsByBrand();
-//        } else if (filter.equals("Colour")) {
-//            searchResult = productService.getAllProductsByColour();
+            //FIX ME
+            String[] arr = search_data.split(" ");
+            double priceMin = Double.valueOf(arr[0]);
+            double priceMax = Double.valueOf(arr[1]);
+            searchResult = productService.getAllProductsByPrice(priceMin, priceMax);
+        } else if (filter.equals("Brand")) {
+            searchResult = productService.getAllProductsByBrand(search_data);
+        } else if (filter.equals("Colour")) {
+            searchResult = productService.getAllProductsByColour(search_data);
         }
         model.addAttribute("products", searchResult);
-        System.out.println(searchResult.size());
-        System.out.println(searchResult.get(0).getId());
-        System.out.println(searchResult.get(0).getProductName());
-        System.out.println(searchResult.get(0).getProductPrice());
-        System.out.println(searchResult.get(0).getAmount());
-        System.out.println(searchResult.get(0).getCategory());
-        System.out.println(searchResult.get(0).getProductParameteres().getColour());
-        System.out.println(searchResult.get(0).getProductParameteres().getBrand());
         return "catalog";
     }
 }

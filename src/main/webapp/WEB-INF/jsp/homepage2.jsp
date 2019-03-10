@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,22 +13,25 @@
 <body>
 
 <h2>Welcome to e-shop ...</h2>
+<sec:authorize access="isAuthenticated()">
+    Username: <sec:authentication property="principal.username" />
+</sec:authorize>
+<div id="mainpage">
 
     <div class="container">
 
         <div class="row">
-            <div class="col-sm-2">
+            <div class="col-sm" style="height: 100px;">
                 <span class="badge badge-secondary" >Logo</span>
             </div>
-            <div class="col-sm">
-                <button type="button" class="btn btn-outline-primary">Catalog</button>
-                <a href="/catalog">Temp link to catalog</a>
+            <div class="col-sm-2">
+                <button type="button" class="btn btn-outline-primary"><a href="/resources/static/views/support.html">Support</a></button>
             </div>
-            <div class="col-sm">
-                <button type="button" class="btn btn-outline-primary">Payment & Delivery</button>
+            <div class="col-sm-3">
+                <button type="button" class="btn btn-outline-primary"><a href="/resources/static/views/payment.html">Payment & Delivery</a></button>
             </div>
-            <div class="col-sm">
-                <button type="button" class="btn btn-outline-primary">About us</button>
+            <div class="col-sm-2">
+                <button type="button" class="btn btn-outline-primary"><a href="/resources/static/views/contacts.html">About us</a></button>
             </div>
             <div class="col-sm-1">
                 <span class="badge badge-secondary">Basket</span>
@@ -36,28 +41,27 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-sm-3" style="height: 150px;">
-                <a href="/phones" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Phones</a>
+        <div class="row justify-content-around" >
+            <div class="col-sm-2" style="height: 150px;">
+               <a href="/phones" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Phones</a>
             </div>
-            <div class="col-sm">
+            <div class="col-sm-2">
                 <a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">TV & Video</a>
             </div>
-            <div class="col-sm">
+            <div class="col-sm-2">
                 <a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Audio & Hi-Fi</a>
             </div>
-            <div class="col-sm">
+            <div class="col-sm-2">
                 <a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Laptops</a>
             </div>
-            <div class="col-sm">
+            <div class="col-sm-2">
                 <a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Tablets</a>
             </div>
         </div>
 
         <div class="row">
-
             <div class="card" style="width: 17rem;">
-                <img src="/resources/static/images/tv.jpeg" class="card-img-top" alt="...">
+                <img src="/resources/static/images/tv.jpg" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">HIT 1</h5>
                     <p class="card-text">special offer</p>
@@ -68,12 +72,11 @@
                     <li class="list-group-item">Special price</li>
                 </ul>
                 <div class="card-body">
-                    <a href="#" class="card-link">Buy!</a>
+                    <a href="#" class="card-link">Buy</a>
                 </div>
             </div>
-
             <div class="card" style="width: 17rem;">
-                <img src="/resources/static/images/laptop.jpeg" class="card-img-top" alt="...">
+                <img src="/resources/static/images/laptop.jpg" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">HIT 2</h5>
                     <p class="card-text">special offer</p>
@@ -84,12 +87,11 @@
                     <li class="list-group-item">Special price</li>
                 </ul>
                 <div class="card-body">
-                    <a href="#" class="card-link">Buy!</a>
+                    <a href="#" class="card-link">Buy</a>
                 </div>
             </div>
-
             <div class="card" style="width: 17rem;">
-                <img src="/resources/static/images/tablet.jpeg" class="card-img-top" alt="...">
+                <img src="/resources/static/images/tablet.jpg" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">HIT 3</h5>
                     <p class="card-text">special offer</p>
@@ -100,12 +102,11 @@
                     <li class="list-group-item">Special price</li>
                 </ul>
                 <div class="card-body">
-                    <a href="#" class="card-link">Buy!</a>
+                    <a href="#" class="card-link">Buy</a>
                 </div>
             </div>
-
             <div class="card" style="width: 17rem;">
-                <img src="/resources/static/images/audio.jpeg" class="card-img-top" alt="...">
+                <img src="/resources/static/images/audio.jpg" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">HIT 4</h5>
                     <p class="card-text">special offer</p>
@@ -116,12 +117,20 @@
                     <li class="list-group-item">Special price</li>
                 </ul>
                 <div class="card-body">
-                    <a href="#" class="card-link">Buy!</a>
+                    <a href="#" class="card-link">Buy</a>
                 </div>
             </div>
         </div>
+        <div>
+            <sec:authorize access="hasRole('ADMIN')">
+                <a href="/admin">Temp admin link</a>
+            </sec:authorize>
+            <a href="/logout">Logout</a>
+        </div>
 
     </div>
+</div>
+
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

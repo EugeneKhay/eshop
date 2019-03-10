@@ -34,30 +34,32 @@ public class ProductDaoImpl implements ProductDAO {
     }
 
     @Override
-    public List<Product> getAllProductsByPrice(int price) {
-        String hql = "FROM Product WHERE productprice = :param";
+    public List<Product> getAllProductsByPrice(double priceMin, double priceMax) {
+        String hql = "FROM Product WHERE productprice between :minprice and :maxprice";
         Query query = sessionFactory.getCurrentSession().createQuery(hql);
-        query.setParameter("param", price);
+        query.setParameter("maxprice", priceMax);
+        query.setParameter("minprice", priceMin);
         return query.list();
     }
 
-//    @Override
-//    public List<Product> getAllProductsByBrand(String brand) {
-//        String hql = "FROM Product WHERE productprice = :param";
-//        Query query = sessionFactory.getCurrentSession().createQuery(hql);
-//        query.setParameter("param", price);
-//        return query.list();
-//    }
-//
-//    @Override
-//    public List<Product> getAllProductsByColour() {
-//        return null;
-//    }
+    @Override
+    public List<Product> getAllProductsByBrand(String brand) {
+        String hql = "FROM Product as p WHERE p.productParameteres.brand = :param";
+        Query query = sessionFactory.getCurrentSession().createQuery(hql);
+        query.setParameter("param", brand);
+        return query.list();
+    }
+
+    @Override
+    public List<Product> getAllProductsByColour(String colour) {
+        String hql = "FROM Product as p WHERE p.productParameteres.colour = :param";
+        Query query = sessionFactory.getCurrentSession().createQuery(hql);
+        query.setParameter("param", colour);
+        return query.list();
+    }
 
     @Override
     public void saveProduct(Product product) {
         sessionFactory.getCurrentSession().save(product);
     }
-
-
 }
