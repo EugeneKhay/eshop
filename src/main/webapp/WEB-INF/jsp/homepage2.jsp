@@ -173,7 +173,8 @@
         </div>
         <div>
             <sec:authorize access="hasRole('ADMIN')">
-                <a href="/admin">Temp admin link</a>
+                <a href="/admin">Temp admin </a>
+                <a href="/order">Temp admin order</a>
             </sec:authorize>
         </div>
     </div>

@@ -21,7 +21,7 @@
 </head>
 <body>
 
-<h2 style="margin: auto" >Search resulrs</h2>
+<h2 style="margin: auto" >Search results</h2>
     <div class="container">
 
         <table class="table table-borderless table-hover" width="80%">

@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
 @Table(name = "clients")
 @Data
 @NoArgsConstructor
-public class Client {
+public class Client implements Serializable {
 
     @Id
     @GeneratedValue
