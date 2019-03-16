@@ -1,6 +1,7 @@
 body{
-    background-color: antiquewhite;
+    background-image: url(/resources/static/images/background.jpg);
 }
+
 
 .menu-list{
     padding-left: 30px;
@@ -17,6 +18,20 @@ body{
 }
 .photo{
     padding-right: 5px;
+}
+
+#hits{
+    background-color: transparent;
+    color: aliceblue;
+}
+
+.list-group-item{
+    background-color: transparent;
+    color: aliceblue;
+}
+
+.modal fade{
+    background-color: transparent;
 }
 
 

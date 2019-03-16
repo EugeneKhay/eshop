@@ -26,6 +26,15 @@ public class ProductDaoImpl implements ProductDAO {
     }
 
     @Override
+    public Product getProductById(int id) {
+        String hql = "FROM Product WHERE id = :param";
+        Query query = sessionFactory.getCurrentSession().createQuery(hql);
+        query.setParameter("param", id);
+        Product product = (Product) query.list().get(0);
+        return product;
+    }
+
+    @Override
     public List<Product> getAllProducts() {
         String hql = "FROM Product";
         Query query = sessionFactory.getCurrentSession().createQuery(hql);

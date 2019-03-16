@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "parameters")
@@ -27,4 +28,14 @@ public class ProductParameteres {
         this.brand = brand;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ProductParameteres)) return false;
+        ProductParameteres that = (ProductParameteres) o;
+        return id.equals(that.id) &&
+                colour.equals(that.colour) &&
+                brand.equals(that.brand) &&
+                product.equals(that.product);
+    }
 }

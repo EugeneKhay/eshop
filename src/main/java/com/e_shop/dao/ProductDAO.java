@@ -9,6 +9,8 @@ public interface ProductDAO {
 
     Product getProductByName(String name);
 
+    Product getProductById(int id);
+
     List<Product> getAllProducts();
 
     List<Product> getAllProductsByPrice(double priceMin, double priceMax);

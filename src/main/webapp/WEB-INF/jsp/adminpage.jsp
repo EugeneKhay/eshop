@@ -42,6 +42,7 @@
         <p><input type="text" name="colour" placeholder="colour"></p>
         <p><input type="text" name="brand" placeholder="brand"></p>
         <p><button type="submit" value="OK">Add</button></p>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     </form>
 
 <div>

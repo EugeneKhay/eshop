@@ -1,5 +1,7 @@
 package com.e_shop;
 
+import com.e_shop.config.SecurityConfig;
+import com.e_shop.services.ClientService;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;

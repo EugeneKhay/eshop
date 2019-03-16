@@ -19,31 +19,53 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="../resources/static/css/app.css">
 </head>
-<body>
+<body style="background-image: url(/resources/static/images/background.jpg);">
 
-<h2>Phones</h2>
+<h2 style="margin-left: auto">Phones</h2>
 
-    <div class="container">
-        <div class="row">
-         <c:forEach items="${phones}" var="phone">
-            <div class="card" style="width: 17rem;">
-                <img src="/resources/static/images/phones/phone1.jpeg" class="card-img-top" alt="...">
+    <%--<div class="container">--%>
+        <%--<div class="row">--%>
+         <%--<c:forEach items="${phones}" var="phone">--%>
+            <%--<form class="card" style="width: 17rem;" action="/basket" method="post">--%>
+                <%--<img src="/resources/static/images/phones/phone1.jpeg" class="card-img-top" alt="...">--%>
+                <%--<div class="card-body" >--%>
+                    <%--<h5 class="card-title">${phone.productName}</h5>--%>
+                    <%--<p class="card-text">${phone.productPrice}</p>--%>
+                <%--</div>--%>
+                <%--<c:set var = "params" scope = "session" value = "${phone.productParameteres}"/>--%>
+                <%--<ul class="list-group list-group-flush">--%>
+                    <%--<li class="list-group-item" >${params.brand}</li>--%>
+                    <%--<li class="list-group-item" >${params.colour}</li>--%>
+                <%--</ul>--%>
+                <%--<input  type="hidden" name="item" value=${phone.productName}>--%>
+                <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
+                <%--<button type="submit">Buy</button>--%>
+             <%--</form>--%>
+         <%--</c:forEach>--%>
+        <%--</div>--%>
+    <%--</div>--%>
+
+<div class="container">
+    <div class="row">
+        <c:forEach items="${phones}" var="phone">
+            <form class="card" style="width: 17rem; background-color: transparent; color: aliceblue;" action="/basket" method="post">
+                <img src="/static/images/phones/qw.png" class="card-img-top" alt="...">
                 <div class="card-body" >
                     <h5 class="card-title">${phone.productName}</h5>
                     <p class="card-text">${phone.productPrice}</p>
                 </div>
                 <c:set var = "params" scope = "session" value = "${phone.productParameteres}"/>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item" >${params.brand}</li>
-                    <li class="list-group-item" >${params.colour}</li>
+                    <li class="list-group-item" style="width: 17rem; background-color: transparent; color: aliceblue;">${params.brand}</li>
+                    <li class="list-group-item" style="width: 17rem; background-color: transparent; color: aliceblue;">${params.colour}</li>
                 </ul>
-                <div class="card-body">
-                    <a href="#" class="card-link">Buy</a>
-                </div>
-            </div>
-         </c:forEach>
-        </div>
+                <input  type="hidden" name="item" value=${phone.id}>
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                <button type="submit">Buy</button>
+            </form>
+        </c:forEach>
     </div>
+</div>
 
     <h2>Search</h2>
     <div class="container">
@@ -56,6 +78,7 @@
             </select></p>
             <input type="text" name="search_res" placeholder="filter">
             <button type="submit" value="OK">Search</button>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
     </div>
 

@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "products")
@@ -41,5 +42,13 @@ public class Product {
         this.category = category;
         this.productParameteres = productParameteres;
         this.amount = amount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Product)) return false;
+        Product product = (Product) o;
+        return  id.equals(product.id);
     }
 }

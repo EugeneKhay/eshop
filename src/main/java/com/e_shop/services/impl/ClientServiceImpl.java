@@ -6,6 +6,9 @@ import com.e_shop.dao2.IGenericDao;
 import com.e_shop.domain.Client;
 import com.e_shop.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,4 +36,8 @@ public class ClientServiceImpl implements ClientService {
         dao.saveClient(client);
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        return dao.getClientByName(s);
+    }
 }
