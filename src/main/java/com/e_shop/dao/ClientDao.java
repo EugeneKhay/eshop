@@ -9,6 +9,8 @@ public interface ClientDao {
 
     Client getClientByName(String name);
 
+    Client getClientById(int id);
+
     List<Client> getAllClients();
 
     void saveClient(Client client);

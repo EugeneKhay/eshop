@@ -24,7 +24,7 @@
 <h2 style="margin: auto" >Search results</h2>
     <div class="container">
 
-        <table class="table table-borderless table-hover" width="80%">
+        <table class="table table-borderless table-hover" style="width: 65%">
             <tr>
                 <th>Product ID</th>
                 <th>Product name</th>

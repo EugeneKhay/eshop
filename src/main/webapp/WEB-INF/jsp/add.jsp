@@ -15,7 +15,7 @@
 <body>
 <h1>Add new client</h1>
 <div>
-    <form method="post" action="/add">
+    <form method="post" action="/add" style="width: 65%">
         <div class="form-group">
             <label for="firstName">First name</label>
             <input class="form-control form-control-lg" name="firstName" type="text" class="form-control" id="firstName" aria-describedby="emailHelp" placeholder="Name">

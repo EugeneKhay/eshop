@@ -37,7 +37,7 @@ public class Client implements UserDetails, Serializable {
     @JoinColumn(name = "address_id")
     private ClientAddress address;
 
-    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     //@JoinColumn(name = "orders_id")
     private List<Order> orders;
 
@@ -74,5 +74,12 @@ public class Client implements UserDetails, Serializable {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "id=" + id +
+                '}';
     }
 }

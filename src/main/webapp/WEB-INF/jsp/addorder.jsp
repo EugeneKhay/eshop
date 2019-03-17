@@ -27,7 +27,7 @@
         <p><button type="submit" value="OK">Add</button></p>
     </form>-->
 
-    <form method="post" action="/order">
+    <form method="post" action="/order" style="width: 65%">
         <div class="form-row align-items-center">
             <div class="form-group">
                 <label for="client_name">Client name</label>

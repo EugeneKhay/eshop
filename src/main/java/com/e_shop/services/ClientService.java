@@ -10,6 +10,8 @@ public interface ClientService extends UserDetailsService {
 
     Client getClientByName(String name);
 
+    Client getClientById(int id);
+
     List<Client> getAllClients();
 
     void saveClient(Client client);

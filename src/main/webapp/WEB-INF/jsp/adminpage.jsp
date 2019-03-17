@@ -22,7 +22,7 @@
 
     <h3>Add new product</h3>
 
-    <form method="post" action="/addproducts">
+    <form method="post" action="/addproducts" style="width: 65%">
         <p><b>Please, enter product properties</b></p>
         <p><input type="text" name="productName" placeholder="productName"></p>
         <p><input type="text" name="productPrice" placeholder="productPrice"></p>
@@ -47,7 +47,7 @@
 
 <div>
     <h3>List of products</h3>
-    <table class="table table-borderless table-hover" width="80%">
+    <table class="table table-borderless table-hover" style="width: 65%">
         <tr>
             <th>Product ID</th>
             <th>Product name</th>
@@ -75,7 +75,7 @@
 
 <div>
     <h3>List of clients</h3>
-    <table class="table table-borderless table-hover" width="80%">
+    <table class="table table-borderless table-hover" style="width: 65%">
         <tr>
             <th>ID</th>
             <th>First name</th>

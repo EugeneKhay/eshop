@@ -27,6 +27,11 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
+    public Client getClientById(int id) {
+        return dao.getClientById(id);
+    }
+
+    @Override
     public List<Client> getAllClients() {
         return dao.getAllClients();
     }

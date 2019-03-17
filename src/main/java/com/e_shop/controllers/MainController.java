@@ -6,6 +6,8 @@ import com.e_shop.domain.ClientAddress;
 import com.e_shop.enums.Role;
 import com.e_shop.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +23,7 @@ import java.util.Collections;
 public class MainController {
 
     @Autowired
-    private ClientService service;
+    private ClientService clientService;
 
     Basket basket;
 
@@ -36,7 +38,6 @@ public class MainController {
 
     @GetMapping("/")
     public String homepage(HttpSession session) {
-
         //ModelAndView modelAndView = new ModelAndView();
         if (basket == null) basket = new Basket();
         session.setAttribute("shop_basket", basket);
@@ -45,8 +46,22 @@ public class MainController {
         return "homepage2";
     }
 
-    @RequestMapping("/login")
+//    @RequestMapping("/login")
+//    public String login() {
+//        return "login";
+//    }
+
+    @GetMapping("/login")
     public String login() {
+        return "login";
+    }
+
+    @PostMapping("/login")
+    public String login(@RequestParam(name="username") String firstName,
+                        HttpSession session) {
+        Client currentClient = clientService.getClientByName(firstName);
+        session.setAttribute("client", currentClient);
+                System.out.println(currentClient.getFirstName());
         return "login";
     }
 
@@ -61,7 +76,6 @@ public class MainController {
                       @RequestParam(name="birthDate") String birthDate,
                       @RequestParam(name="email") String email,
                       @RequestParam(name="password") String password,
-
                       @RequestParam(name="country") String country,
                       @RequestParam(name="city") String city,
                       @RequestParam(name="postcode") int postcode,
@@ -90,16 +104,34 @@ public class MainController {
         client.setAddress(address);
         client.setRoles(Collections.singleton(Role.ADMIN));
 
-        service.saveClient(client);
+        clientService.saveClient(client);
         return "redirect:/";
     }
 
+
+    /*
+     * client data - from security context
+     */
     @GetMapping("/personal")
     public String enter(Model model) {
-//        Client client =
-//        model.addAttribute("client", client);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Client client = (Client) auth.getPrincipal();
+        model.addAttribute("client", client);
+                System.out.println(client);
         return "personal";
     }
+
+    @PostMapping("/personal")
+    public String editClientData(@RequestParam(name = "clientForEdit") int clientId,
+                                 Model model) {
+        Client client = clientService.getClientById(clientId);
+        // set new values from jsp
+        clientService.saveClient(client);
+        model.addAttribute("client", client);
+        return "personal";
+    }
+
+
 
 //    @ModelAttribute
 //    public Basket createBasket(){

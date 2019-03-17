@@ -19,13 +19,28 @@
 </head>
 <body style="background-image: url(/resources/static/images/background.jpg);">
 
-<h3>e-shop of gadgets & electronics</h3>
-<sec:authorize access="isAuthenticated()">
-    <p>Welcome, <sec:authentication property="principal.username" /></p>
-    <p><a href="/personal">Personal</a></p>
-    <p><a href="/logout">Logout</a></p>
-</sec:authorize>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-8">
+            <h3 style="color: aliceblue">E-shop of gadgets & electronics</h3>
+        </div>
+        <div class="col-sm-4">
+            <sec:authorize access="isAuthenticated()">
+                <b style="color: aliceblue"> Welcome, <a style="color: aliceblue" href="/personal"> <sec:authentication property="principal.username" /> </a> </b>
+                <%--<a style="color: aliceblue; padding-left: 20px" href="/personal"> Personal </a>--%>
+                <a style="color: aliceblue; padding-left: 20px" href="/logout"> Logout </a>
+            </sec:authorize>
+        </div>
+    </div>
+</div>
 
+
+<%--<h3>E-shop of gadgets & electronics</h3>--%>
+<%--<sec:authorize access="isAuthenticated()">--%>
+    <%--<b style="color: white"> Welcome, <sec:authentication property="principal.username" /></b>--%>
+    <%--<a style="color: white" href="/personal"> Personal </a>--%>
+    <%--<a style="color: white"href="/logout"> Logout </a>--%>
+<%--</sec:authorize>--%>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -70,53 +85,56 @@
     </div>
 </div>
 
-
-
 <div id="mainpage">
 
     <div class="container">
 
         <div class="row">
-            <div class="col-sm" style="height: 100px;">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item active" aria-current="page">Home</li>
+                </ol>
+            </nav>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-1" style="height: 100px;">
                 <span class="badge badge-secondary" >Logo</span>
             </div>
-            <div class="col-sm-2">
-                <button type="button" class="btn btn-light"><a href="/resources/static/views/support.html">Support</a></button>
-            </div>
-            <div class="col-sm-3">
-                <button type="button" class="btn btn-light"><a href="/resources/static/views/payment.html">Payment & Delivery</a></button>
-            </div>
-            <div class="col-sm-2">
-                <button type="button" class="btn btn-light"><a href="/resources/static/views/contacts.html">About us</a></button>
+
+            <div class="col-sm">
+                <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/phones"> Phones </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#"> TV & Video </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#"> Audio & Hi-Fi </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#"> Laptops </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#"> Tablets </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
             </div>
 
             <div class="col-sm-1">
-                <button type="button" class="btn btn-primary" href="/basket">
-                    Basket <span class="badge badge-light"><%= ((Basket) session.getAttribute("shop_basket")).getProductList().size() %></span>
+                <button type="button" class="btn btn-primary">
+                    <a href="/basket">Basket</a>
+                    <span class="badge badge-light"><%= ((Basket) session.getAttribute("shop_basket")).getProductList().size() %></span>
                 </button>
             </div>
 
             <div class="col-sm-1">
-                <!--<span class="badge badge-secondary">Sign In</span>-->
                 <button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#exampleModal">Sign In</button>
-            </div>
-        </div>
-
-        <div class="row justify-content-around" >
-            <div class="col-sm-2" style="height: 150px;">
-               <a href="/phones" class="btn btn-outline-secondary btn-lg active" role="button" aria-pressed="true">Phones</a>
-            </div>
-            <div class="col-sm-2">
-                <a href="#" class="btn btn-outline-secondary btn-lg active" role="button" aria-pressed="true">TV & Video</a>
-            </div>
-            <div class="col-sm-2">
-                <a href="#" class="btn btn-outline-secondary btn-lg active" role="button" aria-pressed="true">Audio & Hi-Fi</a>
-            </div>
-            <div class="col-sm-2">
-                <a href="#" class="btn btn-outline-secondary btn-lg active" role="button" aria-pressed="true">Laptops</a>
-            </div>
-            <div class="col-sm-2">
-                <a href="#" class="btn btn-outline-secondary btn-lg active" role="button" aria-pressed="true">Tablets</a>
             </div>
         </div>
 
@@ -182,10 +200,11 @@
                 </div>
             </div>
         </div>
-        <div>
+
+        <div class="row">
             <sec:authorize access="hasRole('ADMIN')">
-                <a href="/admin">Temp admin </a>
-                <a href="/order">Temp admin order</a>
+                <div class="col-sm-3"> <a href="/admin">Temp admin </a> </div>
+                <div class="col-sm-3"> <a href="/order">Temp admin order</a> </div>
             </sec:authorize>
         </div>
     </div>

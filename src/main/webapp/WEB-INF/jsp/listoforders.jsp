@@ -16,7 +16,7 @@
 
 <div>
     <h3>List of orders:</h3>
-    <table class="table table-borderless table-hover" width="80%">
+    <table class="table table-borderless table-hover" style="width: 65%">
         <tr>
             <th>First name</th>
             <th>Last name</th>
