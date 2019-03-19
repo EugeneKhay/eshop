@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -32,9 +33,21 @@ public class Product {
     @JoinColumn(name = "parameters_id")
     private ProductParameteres productParameteres;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "order_id")
-    private Order order;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name="order_product",
+            joinColumns=@JoinColumn(name="product_id"),
+            inverseJoinColumns=@JoinColumn(name="order_id"))
+    private List<Order> orders;
+
+//    @ManyToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "product_id")
+//    private Order order;
+
+//    @ManyToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "order_id")
+//    private Order order;
+
+
 
     public Product(String productName, double productPrice, ProductCategory category, ProductParameteres productParameteres, int amount) {
         this.productName = productName;
@@ -50,5 +63,12 @@ public class Product {
         if (!(o instanceof Product)) return false;
         Product product = (Product) o;
         return  id.equals(product.id);
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                '}';
     }
 }

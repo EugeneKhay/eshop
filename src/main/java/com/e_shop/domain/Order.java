@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -21,13 +22,24 @@ public class Order {
     @GeneratedValue
     private Integer id;
 
+    //private LocalDate dateOfOrder;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id")
     private Client client;
 
-    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
-    //@JoinColumn(name = "product_id")
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable (name="order_product",
+            joinColumns=@JoinColumn (name="order_id"),
+            inverseJoinColumns=@JoinColumn(name="product_id"))
     private List<Product> productsInOrder;
+
+//    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
+//    private List<Product> productsInOrder;
+
+//    @OneToMany(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "product_id")
+//    private List<Product> productsInOrder;
 
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
@@ -56,5 +68,12 @@ public class Order {
         this.deliveryMethod = deliveryMethod;
         this.paymentStatus = paymentStatus;
         this.orderStatus = orderStatus;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                '}';
     }
 }

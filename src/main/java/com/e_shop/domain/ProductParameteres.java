@@ -38,4 +38,11 @@ public class ProductParameteres {
                 brand.equals(that.brand) &&
                 product.equals(that.product);
     }
+
+    @Override
+    public String toString() {
+        return "ProductParameteres{" +
+                "id=" + id +
+                '}';
+    }
 }

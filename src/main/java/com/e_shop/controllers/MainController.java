@@ -121,6 +121,7 @@ public class MainController {
         return "personal";
     }
 
+    //user editing
     @PostMapping("/personal")
     public String editClientData(@RequestParam(name = "clientForEdit") int clientId,
                                  Model model) {

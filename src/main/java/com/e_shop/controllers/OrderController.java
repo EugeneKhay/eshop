@@ -1,5 +1,6 @@
 package com.e_shop.controllers;
 
+import com.e_shop.domain.Basket;
 import com.e_shop.domain.Client;
 import com.e_shop.domain.Order;
 import com.e_shop.domain.Product;
@@ -11,6 +12,8 @@ import com.e_shop.services.ClientService;
 import com.e_shop.services.OrderService;
 import com.e_shop.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,6 +72,31 @@ public class OrderController {
         orderService.saveOrders(newOrder);
 
         return "addorder";
+    }
+
+    @PostMapping("/confirm")
+    public String confirmOrder(HttpSession session,
+                               Model model,
+                               @RequestParam(name = "paymentMethod") String paymentMethod,
+                               @RequestParam(name = "deliveryMethod") String deliveryMethod
+                               //@RequestParam(name = "paymentStatus") String paymentStatus
+                               ) {
+        Order order = new Order();
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Client client = (Client) auth.getPrincipal();
+        Basket basket = (Basket) session.getAttribute("shop_basket");
+        List<Product> productList = basket.getProductList();
+
+        order.setClient(client);
+        order.setProductsInOrder(productList);
+        order.setDeliveryMethod(DeliveryMethod.valueOf(deliveryMethod));
+        order.setPaymentMethod(PaymentMethod.valueOf(paymentMethod));
+        //order.setPaymentStatus(PaymentStatus.valueOf(paymentStatus));
+
+        orderService.saveOrders(order);
+                System.out.println(order);
+        return "homepage2";
     }
 
 
