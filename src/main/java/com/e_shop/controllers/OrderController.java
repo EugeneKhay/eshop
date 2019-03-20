@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,7 +81,7 @@ public class OrderController {
                                @RequestParam(name = "paymentMethod") String paymentMethod,
                                @RequestParam(name = "deliveryMethod") String deliveryMethod
                                //@RequestParam(name = "paymentStatus") String paymentStatus
-                               ) {
+    ) {
         Order order = new Order();
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -92,12 +93,29 @@ public class OrderController {
         order.setProductsInOrder(productList);
         order.setDeliveryMethod(DeliveryMethod.valueOf(deliveryMethod));
         order.setPaymentMethod(PaymentMethod.valueOf(paymentMethod));
+
+        order.setDateOfOrder(LocalDate.now());
         //order.setPaymentStatus(PaymentStatus.valueOf(paymentStatus));
 
         orderService.saveOrders(order);
-                System.out.println(order);
+        System.out.println(order);
         return "homepage2";
     }
 
+    @PostMapping("/editorder")
+    public String editOrder(@RequestParam(name = "orderForEdit") int id,
+                            @RequestParam(name = "paymentStatus") String paymentStatus,
+                            @RequestParam(name = "orderStatus") String orderStatus,
+                            Model model) {
+        Order orderForEditing = orderService.getOrderById(id);
+        orderForEditing.setPaymentStatus(PaymentStatus.valueOf(paymentStatus));
+        orderForEditing.setOrderStatus(OrderStatus.valueOf(orderStatus));
 
+        orderService.updateOrder(id, paymentStatus, orderStatus);
+
+        List<Order> orders = orderService.getAllOrders();
+        model.addAttribute("orders", orders);
+                System.out.println(id);
+        return "listoforders";
+    }
 }

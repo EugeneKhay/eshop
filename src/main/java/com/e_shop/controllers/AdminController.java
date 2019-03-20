@@ -38,19 +38,19 @@ public class AdminController {
         ProductCategory productCategory = ProductCategory.valueOf(category);
         Product product = new Product(productName, productPrice, productCategory, productParameteres, amount);
         productService.saveProduct(product);
-        return "adminpage";
+        return "listofproducts";
     }
 
     @GetMapping("/viewproducts")
     public String showProducts(Model model) {
         model.addAttribute("products", productService.getAllProducts());
-        return "adminpage";
+        return "listofproducts";
     }
 
     @GetMapping("/viewclients")
     public String showClients(Model model) {
         model.addAttribute("clients", clientService.getAllClients());
-        return "adminpage";
+        return "listofclients";
     }
 
 }

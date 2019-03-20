@@ -21,14 +21,20 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-sm-8">
+        <div class="col-sm-6">
             <h3 style="color: aliceblue">E-shop of gadgets & electronics</h3>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-3">
             <sec:authorize access="isAuthenticated()">
                 <b style="color: aliceblue"> Welcome, <a style="color: aliceblue" href="/personal"> <sec:authentication property="principal.username" /> </a> </b>
                 <%--<a style="color: aliceblue; padding-left: 20px" href="/personal"> Personal </a>--%>
-                <a style="color: aliceblue; padding-left: 20px" href="/logout"> Logout </a>
+                <a style="color: aliceblue; padding-left: 30px" href="/logout"> Logout </a>
+            </sec:authorize>
+        </div>
+        <div class="col-sm-3">
+            <sec:authorize access="hasRole('ADMIN')">
+                <div class="col-sm-3"> <a style="color: aliceblue" href="/admin"> Admin </a> </div>
+                <%--<div class="col-sm-3"> <a href="/order">Temp admin order</a> </div>--%>
             </sec:authorize>
         </div>
     </div>
@@ -127,14 +133,14 @@
             </div>
 
             <div class="col-sm-1">
-                <button type="button" class="btn btn-primary">
-                    <a href="/basket">Basket</a>
+                <button type="button" class="btn btn-secondary">
+                    <a style="color: aliceblue" href="/basket">Basket</a>
                     <span class="badge badge-light"><%= ((Basket) session.getAttribute("shop_basket")).getProductList().size() %></span>
                 </button>
             </div>
 
             <div class="col-sm-1">
-                <button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#exampleModal">Sign In</button>
+                <button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#exampleModal">Sign In</button>
             </div>
         </div>
 
@@ -199,13 +205,6 @@
                     <a href="#" class="card-link">Buy</a>
                 </div>
             </div>
-        </div>
-
-        <div class="row">
-            <sec:authorize access="hasRole('ADMIN')">
-                <div class="col-sm-3"> <a href="/admin">Temp admin </a> </div>
-                <div class="col-sm-3"> <a href="/order">Temp admin order</a> </div>
-            </sec:authorize>
         </div>
     </div>
 </div>

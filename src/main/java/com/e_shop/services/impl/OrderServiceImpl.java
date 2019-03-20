@@ -30,4 +30,16 @@ public class OrderServiceImpl implements OrderService {
     public void saveOrders(Order order) {
         dao.saveOrders(order);
     }
+
+    @Override
+    public int updateOrder(int orderId, String payStatus, String ordStatus) {
+        return dao.updateOrder(orderId, payStatus, ordStatus);
+    }
+
+//    @Override
+//    public int updateOrder(Order order, String payStatus, String ordStatus) {
+//        return dao.updateOrder(order, payStatus, ordStatus);
+//    }
+
+
 }

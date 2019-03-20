@@ -12,4 +12,11 @@ public interface OrderDao {
     List<Order> getAllOrders();
 
     void saveOrders(Order order);
+
+//    int updateOrder(Order order, String payStatus, String ordStatus);
+
+    int updateOrder(int orderId, String payStatus, String ordStatus);
+
 }
+
+

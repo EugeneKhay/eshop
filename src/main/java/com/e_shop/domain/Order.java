@@ -22,7 +22,7 @@ public class Order {
     @GeneratedValue
     private Integer id;
 
-    //private LocalDate dateOfOrder;
+    private LocalDate dateOfOrder;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id")

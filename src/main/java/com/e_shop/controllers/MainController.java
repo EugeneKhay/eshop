@@ -122,15 +122,43 @@ public class MainController {
     }
 
     //user editing
-    @PostMapping("/personal")
+    @PostMapping("/edit")
     public String editClientData(@RequestParam(name = "clientForEdit") int clientId,
+                                 @RequestParam(name = "first") String firstName,
+                                 @RequestParam(name = "last") String lastName,
+                                 @RequestParam(name = "password") String password,
+                                 @RequestParam(name = "email") String email,
+                                 @RequestParam(name = "country") String country,
+                                 @RequestParam(name = "city") String city,
+                                 @RequestParam(name = "postcode") int postcode,
+                                 @RequestParam(name = "street") String street,
+                                 @RequestParam(name = "houseNumber") int houseNumber,
+                                 @RequestParam(name = "flatNumber") int flatNumber,
                                  Model model) {
         Client client = clientService.getClientById(clientId);
-        // set new values from jsp
+        client.setFirstName(firstName);
+        client.setLastName(lastName);
+        client.setPassword(password);
+        client.setEmail(email);
+
+        ClientAddress newAddress = new ClientAddress();
+        newAddress.setCountry(country);
+        newAddress.setCity(city);
+        newAddress.setPostCode(postcode);
+        newAddress.setStreet(street);
+        newAddress.setHouseNumber(houseNumber);
+        newAddress.setFlatNumber(flatNumber);
+
+        client.setAddress(newAddress);
+
         clientService.saveClient(client);
         model.addAttribute("client", client);
+                System.out.println(client.getFirstName());
+                System.out.println(client.getLastName());
         return "personal";
     }
+
+
 
 
 

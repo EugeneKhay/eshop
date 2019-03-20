@@ -109,10 +109,10 @@
             </form>
         </c:forEach>
     </div>
-</div>
-
-    <h2>Search</h2>
-    <div class="container">
+    <br>
+    <h3 style="color: aliceblue">Search</h3>
+    <br>
+    <div class="row">
         <form method="post" action="/catalog">
             <p><select class="custom-select mr-sm-2" name="search_type" id="search">
                 <option selected>Choose filter</option>
@@ -125,6 +125,10 @@
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
     </div>
+</div>
+
+
+
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
