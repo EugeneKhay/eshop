@@ -105,6 +105,7 @@
                 </ul>
                 <input  type="hidden" name="item" value=${phone.id}>
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                <input  type="number" name="amount">
                 <button type="submit">Buy</button>
             </form>
         </c:forEach>

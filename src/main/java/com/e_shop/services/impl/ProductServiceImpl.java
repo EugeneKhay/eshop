@@ -37,7 +37,6 @@ public class ProductServiceImpl implements ProductService {
         return dao.getAllProductsByPrice(priceMin, priceMax);
     }
 
-
     @Override
     public List<Product> getAllProductsByBrand(String brand) {
         return dao.getAllProductsByBrand(brand);
@@ -51,6 +50,18 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void saveProduct(Product product) {
         dao.saveProduct(product);
+    }
+
+    @Override
+    public int decreaseProductAmountInStock(Product product, int countOfItems) {
+        int amount = dao.getProductById(product.getId()).getAmount();
+        int newAmount = amount - countOfItems;
+        return newAmount;
+    }
+
+    @Override
+    public int saveNewAmountOfProduct(Product product, int amount) {
+        return dao.saveNewAmountOfProduct(product, amount);
     }
 
 }

@@ -21,4 +21,6 @@ public interface ProductDAO {
 
     void saveProduct(Product product);
 
+    int saveNewAmountOfProduct(Product product, int amount);
+
 }

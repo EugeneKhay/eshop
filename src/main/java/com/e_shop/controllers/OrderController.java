@@ -39,10 +39,10 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @GetMapping("/order")
-    public String order() {
-        return "addorder";
-    }
+//    @GetMapping("/order")
+//    public String order() {
+//        return "addorder";
+//    }
 
     @GetMapping("/orders")
     public String getOrders(Model model) {
@@ -50,38 +50,39 @@ public class OrderController {
         return "listoforders";
     }
 
-    @PostMapping("/order")
-    public String makeorder(@RequestParam(name = "client_name") String name,
-                            @RequestParam(name = "product_name") String prodName,
-                            @RequestParam(name = "paymentMethod") String paymentMethod,
-                            @RequestParam(name = "deliveryMethod") String deliveryMethod,
-                            @RequestParam(name = "paymentStatus") String paymentStatus,
-                            @RequestParam(name = "orderStatus") String orderStatus) {
-
-        Client client = clientService.getClientByName(name);
-        Product product = productService.getProductByName(prodName);
-
-        List<Product> productList = new ArrayList<>();
-        productList.add(product);
-
-        PaymentMethod payMethod = PaymentMethod.valueOf(paymentMethod);
-        DeliveryMethod delMethod = DeliveryMethod.valueOf(deliveryMethod);
-        PaymentStatus payStatus = PaymentStatus.valueOf(paymentStatus);
-        OrderStatus ordStatus = OrderStatus.valueOf(orderStatus);
-
-        Order newOrder = new Order(client, productList, payMethod, delMethod, payStatus, ordStatus);
-        orderService.saveOrders(newOrder);
-
-        return "addorder";
-    }
+//    @PostMapping("/order")
+//    public String makeorder(@RequestParam(name = "client_name") String name,
+//                            @RequestParam(name = "product_name") String prodName,
+//                            @RequestParam(name = "paymentMethod") String paymentMethod,
+//                            @RequestParam(name = "deliveryMethod") String deliveryMethod,
+//                            @RequestParam(name = "paymentStatus") String paymentStatus,
+//                            @RequestParam(name = "orderStatus") String orderStatus
+//                            ) {
+//
+//        Client client = clientService.getClientByName(name);
+//        Product product = productService.getProductByName(prodName);
+//
+//        List<Product> productList = new ArrayList<>();
+//        productList.add(product);
+//
+//        PaymentMethod payMethod = PaymentMethod.valueOf(paymentMethod);
+//        DeliveryMethod delMethod = DeliveryMethod.valueOf(deliveryMethod);
+//        PaymentStatus payStatus = PaymentStatus.valueOf(paymentStatus);
+//        OrderStatus ordStatus = OrderStatus.valueOf(orderStatus);
+//
+//        Order newOrder = new Order(client, productList, payMethod, delMethod, payStatus, ordStatus);
+//        orderService.saveOrders(newOrder);
+//
+//        return "addorder";
+//    }
 
     @PostMapping("/confirm")
     public String confirmOrder(HttpSession session,
-                               Model model,
+                               //Model model,
                                @RequestParam(name = "paymentMethod") String paymentMethod,
-                               @RequestParam(name = "deliveryMethod") String deliveryMethod
-                               //@RequestParam(name = "paymentStatus") String paymentStatus
-    ) {
+                               @RequestParam(name = "deliveryMethod") String deliveryMethod)
+                               //@RequestParam(name = "amount") int amountToBuy)
+    {
         Order order = new Order();
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -93,20 +94,24 @@ public class OrderController {
         order.setProductsInOrder(productList);
         order.setDeliveryMethod(DeliveryMethod.valueOf(deliveryMethod));
         order.setPaymentMethod(PaymentMethod.valueOf(paymentMethod));
-
         order.setDateOfOrder(LocalDate.now());
-        //order.setPaymentStatus(PaymentStatus.valueOf(paymentStatus));
 
         orderService.saveOrders(order);
-        System.out.println(order);
+
+        for (Product product: productList) {
+            int amount = productService.decreaseProductAmountInStock(product, 1);
+            productService.saveNewAmountOfProduct(product, amount);
+        }
+                System.out.println(order);
         return "homepage2";
     }
 
     @PostMapping("/editorder")
-    public String editOrder(@RequestParam(name = "orderForEdit") int id,
+    public String editOrderByAdmin(@RequestParam(name = "orderForEdit") int id,
                             @RequestParam(name = "paymentStatus") String paymentStatus,
                             @RequestParam(name = "orderStatus") String orderStatus,
-                            Model model) {
+                            Model model)
+    {
         Order orderForEditing = orderService.getOrderById(id);
         orderForEditing.setPaymentStatus(PaymentStatus.valueOf(paymentStatus));
         orderForEditing.setOrderStatus(OrderStatus.valueOf(orderStatus));

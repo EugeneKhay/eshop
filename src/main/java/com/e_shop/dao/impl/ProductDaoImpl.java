@@ -70,4 +70,14 @@ public class ProductDaoImpl implements ProductDAO {
     public void saveProduct(Product product) {
         sessionFactory.getCurrentSession().save(product);
     }
+
+    @Override
+    public int saveNewAmountOfProduct(Product product, int amount) {
+        String hql = "update com.e_shop.domain.Product set amount = :amountParam where id = :idParam";
+        Query query = sessionFactory.getCurrentSession().createQuery(hql);
+        query.setParameter("amountParam", amount);
+        query.setParameter("idParam", product.getId());
+        int updateResult = query.executeUpdate();
+        return updateResult;
+    }
 }

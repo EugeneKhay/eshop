@@ -21,5 +21,9 @@ public interface ProductService {
 
     void saveProduct(Product product);
 
+    int decreaseProductAmountInStock(Product product, int countOfItems);
+
+    int saveNewAmountOfProduct(Product product, int amount);
+
 
 }
