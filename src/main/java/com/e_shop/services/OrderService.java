@@ -1,7 +1,9 @@
 package com.e_shop.services;
 
 import com.e_shop.domain.Order;
+import com.e_shop.domain.Product;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface OrderService {
@@ -12,9 +14,15 @@ public interface OrderService {
 
     void saveOrders(Order order);
 
-//    int updateOrder(Order order, String payStatus, String ordStatus);
-
     int updateOrder(int orderId, String payStatus, String ordStatus);
 
+    List<Order> getOrdersPerPeriod(LocalDate start, LocalDate finish);
 
+    LocalDate getDate(String day, String month, String year);
+
+    double getTotalSumOfAllOrdersPerPeriod(LocalDate start, LocalDate finish);
+
+    long getTotalAmountOfOrdersPerPeriod(LocalDate start, LocalDate finish);
+
+    Product getBestsellerPerPeriod(LocalDate start, LocalDate finish);
 }

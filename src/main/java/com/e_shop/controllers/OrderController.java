@@ -21,10 +21,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @Controller
 @RequestMapping
@@ -87,22 +90,35 @@ public class OrderController {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Client client = (Client) auth.getPrincipal();
+
         Basket basket = (Basket) session.getAttribute("shop_basket");
-        List<Product> productList = basket.getProductList();
+
+        Set<Product> products = basket.getProductsInBasket().keySet();
+        //Map<Product, Integer> products = basket.getProductsInBasket();
 
         order.setClient(client);
-        order.setProductsInOrder(productList);
+
+        order.setProductsInOrder(products);
+        //order.setProductsInOrder(products);
+
         order.setDeliveryMethod(DeliveryMethod.valueOf(deliveryMethod));
         order.setPaymentMethod(PaymentMethod.valueOf(paymentMethod));
         order.setDateOfOrder(LocalDate.now());
 
         orderService.saveOrders(order);
 
-        for (Product product: productList) {
-            int amount = productService.decreaseProductAmountInStock(product, 1);
-            productService.saveNewAmountOfProduct(product, amount);
+        for (Map.Entry<Product, Integer> entry : basket.getProductsInBasket().entrySet()) {
+            int amount = productService.decreaseProductAmountInStock(entry.getKey(), entry.getValue());
+            productService.saveNewAmountOfProduct(entry.getKey(), amount);
         }
+
+//        for (Product product: products) {
+//            int amount = productService.decreaseProductAmountInStock(product, 1);
+//            productService.saveNewAmountOfProduct(product, amount);
+//        }
+
                 System.out.println(order);
+
         return "homepage2";
     }
 

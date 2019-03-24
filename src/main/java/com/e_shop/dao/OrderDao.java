@@ -3,6 +3,7 @@ package com.e_shop.dao;
 import com.e_shop.domain.Order;
 import com.e_shop.domain.Product;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface OrderDao {
@@ -16,6 +17,8 @@ public interface OrderDao {
 //    int updateOrder(Order order, String payStatus, String ordStatus);
 
     int updateOrder(int orderId, String payStatus, String ordStatus);
+
+    List<Order> getOrdersPerPeriod(LocalDate start, LocalDate finish);
 
 }
 

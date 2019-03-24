@@ -10,6 +10,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -61,5 +62,14 @@ public class OrderDaoImpl implements OrderDao {
         query.setParameter("ordParam", OrderStatus.valueOf(ordStatus));
         int updateResult = query.executeUpdate();
         return updateResult;
+    }
+
+    @Override
+    public List<Order> getOrdersPerPeriod(LocalDate start, LocalDate finish) {
+        String hql = "FROM Order WHERE dateOfOrder between :start and :finish";
+        Query query = sessionFactory.getCurrentSession().createQuery(hql);
+        query.setParameter("start", start);
+        query.setParameter("finish", finish);
+        return query.list();
     }
 }

@@ -135,7 +135,8 @@
             <div class="col-sm-1">
                 <button type="button" class="btn btn-secondary">
                     <a style="color: aliceblue" href="/basket">Basket</a>
-                    <span class="badge badge-light"><%= ((Basket) session.getAttribute("shop_basket")).getProductList().size() %></span>
+                    <%--<span class="badge badge-light"><%= ((Basket) session.getAttribute("shop_basket")).getProductsInBasket().keySet().size() %></span>--%>
+                    <span class="badge badge-light"><%= ((Basket) session.getAttribute("shop_basket")).getProductsInBasket().values().stream().reduce((s1, s2) -> s1 + s2).orElse(0) %></span>
                 </button>
             </div>
 
@@ -208,6 +209,12 @@
         </div>
     </div>
 </div>
+
+<footer style="color: aliceblue; margin-left: 50px">
+    <p> Copyright ...</p>
+    <p> Our contacts ...</p>
+    <p> Support... </p>
+</footer>
 
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

@@ -79,14 +79,15 @@
         </div>
 
         <div class="col-sm-1">
-            <button type="button" class="btn btn-primary">
-                <a href="/basket">Basket</a>
-                <span class="badge badge-light"><%= ((Basket) session.getAttribute("shop_basket")).getProductList().size() %></span>
+            <button type="button" class="btn btn-secondary">
+                <a style="color: aliceblue" href="/basket">Basket</a>
+                <%--<span class="badge badge-light"><%= ((Basket) session.getAttribute("shop_basket")).getProductsInBasket().keySet().size() %></span>--%>
+                <span class="badge badge-light"><%= ((Basket) session.getAttribute("shop_basket")).getProductsInBasket().values().stream().reduce((s1, s2) -> s1 + s2).orElse(0) %></span>
             </button>
         </div>
 
         <div class="col-sm-1">
-            <button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#exampleModal">Sign In</button>
+            <button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#exampleModal">Sign In</button>
         </div>
     </div>
 
@@ -110,17 +111,21 @@
             </form>
         </c:forEach>
     </div>
+
     <br>
+
     <h3 style="color: aliceblue">Search</h3>
     <br>
     <div class="row">
         <form method="post" action="/catalog">
-            <p><select class="custom-select mr-sm-2" name="search_type" id="search">
-                <option selected>Choose filter</option>
-                <option value="Price">Price</option>
-                <option value="Brand">Brand</option>
-                <option value="Colour">Colour</option>
-            </select></p>
+            <p>
+                <select class="custom-select mr-sm-2" name="search_type" id="search">
+                    <option selected>Choose filter</option>
+                    <option value="Price">Price</option>
+                    <option value="Brand">Brand</option>
+                    <option value="Colour">Colour</option>
+                </select>
+            </p>
             <input type="text" name="search_res" placeholder="filter">
             <button type="submit" value="OK">Search</button>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -129,7 +134,11 @@
 </div>
 
 
-
+<footer style="color: aliceblue; margin-left: 50px">
+    <p> Copyright ...</p>
+    <p> Our contacts ...</p>
+    <p> Support... </p>
+</footer>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

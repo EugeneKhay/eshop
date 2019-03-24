@@ -10,7 +10,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Table(name = "orders")
@@ -32,14 +34,13 @@ public class Order {
     @JoinTable (name="order_product",
             joinColumns=@JoinColumn (name="order_id"),
             inverseJoinColumns=@JoinColumn(name="product_id"))
-    private List<Product> productsInOrder;
+    private Collection<Product> productsInOrder;
 
-//    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
-//    private List<Product> productsInOrder;
-
-//    @OneToMany(fetch = FetchType.EAGER)
-//    @JoinColumn(name = "product_id")
-//    private List<Product> productsInOrder;
+//    @ManyToMany(fetch = FetchType.EAGER)
+//    @JoinTable (name="order_product",
+//            joinColumns=@JoinColumn (name="order_id"),
+//            inverseJoinColumns=@JoinColumn(name="product_id"))
+//    private Map<Product, Integer> productsInOrder;
 
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
@@ -61,7 +62,7 @@ public class Order {
         this.orderStatus = orderStatus;
     }
 
-    public Order(Client client, List<Product> productsInOrder, PaymentMethod paymentMethod, DeliveryMethod deliveryMethod, PaymentStatus paymentStatus, OrderStatus orderStatus) {
+    public Order(Client client, Collection<Product> productsInOrder, PaymentMethod paymentMethod, DeliveryMethod deliveryMethod, PaymentStatus paymentStatus, OrderStatus orderStatus) {
         this.client = client;
         this.productsInOrder = productsInOrder;
         this.paymentMethod = paymentMethod;

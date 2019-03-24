@@ -34,5 +34,13 @@ body{
     background-color: transparent;
 }
 
+footer{
+    color: azure;
+    margin-left: 10%;
+    float:left;
+    padding-left: 30px;
+    padding-top: 20px;
+}
+
 
 
