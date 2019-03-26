@@ -1,15 +1,20 @@
 package com.e_shop.services.impl;
 
 import com.e_shop.dao.OrderDao;
+import com.e_shop.domain.Basket;
+import com.e_shop.domain.Client;
 import com.e_shop.domain.Order;
 import com.e_shop.domain.Product;
 import com.e_shop.services.OrderService;
+import com.e_shop.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -17,6 +22,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private OrderDao dao;
+
+    @Autowired
+    private ProductService productService;
 
     @Override
     public Order getOrderById(Integer id) {
@@ -59,48 +67,59 @@ public class OrderServiceImpl implements OrderService {
         List<Order> listOfOrdersPerPeriod = getOrdersPerPeriod(start, finish);
         double totalSumOfAllOrders = 0;
         for (Order order: listOfOrdersPerPeriod) {
-            double sumInOrder = order.getProductsInOrder()
-                    .stream()
-                    .mapToDouble(p -> p.getProductPrice())
-                    .sum();
-            totalSumOfAllOrders += sumInOrder;
+            totalSumOfAllOrders += order.getSumOfOrder();
         }
         return totalSumOfAllOrders;
     }
 
+    //Need to check
+    @Override
+    public List<Product> getBestsellerPerPeriod(LocalDate start, LocalDate finish) {
 
-//    @Override
-//    public double getTotalSumOfAllOrdersPerPeriod(LocalDate start, LocalDate finish) {
-//        List<Order> listOfOrdersPerPeriod = getOrdersPerPeriod(start, finish);
-//        double totalSumOfAllOrders = 0;
-//        for (Order order: listOfOrdersPerPeriod) {
-//            double sumInOrder = 0;
-//            for (Map.Entry<Product, Integer> entry: order.getProductsInOrder().entrySet()) {
-//                sumInOrder = entry.getKey().getProductPrice() * entry.getValue();
-//            }
-//            totalSumOfAllOrders += sumInOrder;
-//        }
-//        return totalSumOfAllOrders;
-//    }
-//
+        List<Product> allProducts = productService.getAllProducts();
+        Map<Product, Long> productsOfPeriod = new HashMap<>();
+        List<Order> orderList = getOrdersPerPeriod(start, finish);
 
+        for (Product product: allProducts) {
+            long x = 0;
+            for (Order order: orderList) {
+                long count = order.getProductsInOrder()
+                                  .stream()
+                                  .filter(p -> p.equals(product))
+                                  .count();
+                x += count;
+            }
+            productsOfPeriod.put(product, x);
+                        System.out.println(productsOfPeriod);
+        }
+        List<Long> freqOfProducts = productsOfPeriod.values()
+                                  .stream().sorted(Comparator.reverseOrder())
+                                  .collect(Collectors.toList());
+        Set<Product> bestTenProducts = new LinkedHashSet<>();
+        freqOfProducts.forEach(p -> {
+            for (Map.Entry<Product, Long> entry : productsOfPeriod.entrySet()) {
+                if (p == entry.getValue())
+                    bestTenProducts.add(entry.getKey());
+            }
+        });
 
+        return bestTenProducts.stream().limit(10).collect(Collectors.toList());
+    }
 
     @Override
-    public Product getBestsellerPerPeriod(LocalDate start, LocalDate finish) {
-//
-//        List<Order> orderList = getOrdersPerPeriod(start, finish);
-//        Map<Product, Long> compareProductsMap = new HashMap<>();
-//
-//        for (Order order: orderList) {
-//            Map<Product, Integer> productsInOrder = order.getProductsInOrder();
-//            for (Map.Entry<Product, Integer> entry : productsInOrder.entrySet()) {
-//
-//            }
-//
-//        }
-        return null;
+    public double sumOfOrder(Basket basket) {
+        double sum = 0;
+        for (Map.Entry<Product, Integer> entry : basket.getProductsInBasket().entrySet()) {
+            sum = sum + (entry.getKey().getProductPrice() * entry.getValue());
+        }
+        return sum;
     }
+
+
+
+
+
+
 
 
 }

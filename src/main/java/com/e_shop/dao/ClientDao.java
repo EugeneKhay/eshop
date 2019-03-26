@@ -3,6 +3,7 @@ package com.e_shop.dao;
 import com.e_shop.domain.Client;
 import com.e_shop.domain.ClientAddress;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface ClientDao {
@@ -14,5 +15,8 @@ public interface ClientDao {
     List<Client> getAllClients();
 
     void saveClient(Client client);
+
+    //List<Client> getAllClientsPerPeriod(LocalDate start, LocalDate finish);
+
 
 }

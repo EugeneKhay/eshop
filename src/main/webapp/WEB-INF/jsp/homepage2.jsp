@@ -116,16 +116,16 @@
                                 <a class="nav-link" href="/phones"> Phones </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#"> TV & Video </a>
+                                <a class="nav-link" href="/tv"> TV & Video </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#"> Audio & Hi-Fi </a>
+                                <a class="nav-link" href="/audio"> Audio & Hi-Fi </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#"> Laptops </a>
+                                <a class="nav-link" href="/laptops"> Laptops </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#"> Tablets </a>
+                                <a class="nav-link" href="/tablets"> Tablets </a>
                             </li>
                         </ul>
                     </div>

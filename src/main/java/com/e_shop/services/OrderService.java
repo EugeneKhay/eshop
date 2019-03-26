@@ -1,9 +1,11 @@
 package com.e_shop.services;
 
+import com.e_shop.domain.Basket;
 import com.e_shop.domain.Order;
 import com.e_shop.domain.Product;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
 
 public interface OrderService {
@@ -24,5 +26,7 @@ public interface OrderService {
 
     long getTotalAmountOfOrdersPerPeriod(LocalDate start, LocalDate finish);
 
-    Product getBestsellerPerPeriod(LocalDate start, LocalDate finish);
+    List<Product> getBestsellerPerPeriod(LocalDate start, LocalDate finish);
+
+    double sumOfOrder(Basket basket);
 }

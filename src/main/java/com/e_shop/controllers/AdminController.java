@@ -1,6 +1,6 @@
 package com.e_shop.controllers;
 
-import com.e_shop.domain.Order;
+import com.e_shop.domain.Client;
 import com.e_shop.domain.Product;
 import com.e_shop.domain.ProductParameteres;
 import com.e_shop.enums.ProductCategory;
@@ -15,9 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.Set;
+
 
 @Controller
 public class AdminController {
@@ -74,6 +73,8 @@ public class AdminController {
         LocalDate finish = orderService.getDate(finishDay, finishMonth, finishYear);
         double totalSumOfAllOrders = orderService.getTotalSumOfAllOrdersPerPeriod(start, finish);
         long totalAmountOfOrders = orderService.getTotalAmountOfOrdersPerPeriod(start, finish);
+        model.addAttribute("bestClient", clientService.getTenBestClientsPerPeriod(start, finish));
+        model.addAttribute("bestProducts", orderService.getBestsellerPerPeriod(start, finish));
         model.addAttribute("orders", orderService.getOrdersPerPeriod(start, finish));
         model.addAttribute("totalSumOfAllOrders", totalSumOfAllOrders);
         model.addAttribute("totalAmountOfOrders", totalAmountOfOrders);

@@ -2,6 +2,7 @@ package com.e_shop.services.impl;
 
 import com.e_shop.dao.ProductDAO;
 import com.e_shop.domain.Product;
+import com.e_shop.enums.ProductCategory;
 import com.e_shop.services.ProductService;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +63,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public int saveNewAmountOfProduct(Product product, int amount) {
         return dao.saveNewAmountOfProduct(product, amount);
+    }
+
+    @Override
+    public List<Product> getAllProductsByCategory(ProductCategory category) {
+        return dao.getAllProductsByCategory(category);
     }
 
 }

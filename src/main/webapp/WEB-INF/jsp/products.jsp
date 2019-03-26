@@ -44,7 +44,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Phones</li>
+                <li class="breadcrumb-item active" aria-current="page">Products</li>
             </ol>
         </nav>
     </div>
@@ -59,19 +59,19 @@
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link active" href="/phones"> Phones </a>
+                            <a class="nav-link" href="/phones"> Phones </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#"> TV & Video </a>
+                            <a class="nav-link" href="/tv"> TV & Video </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#"> Audio & Hi-Fi </a>
+                            <a class="nav-link" href="/audio"> Audio & Hi-Fi </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#"> Laptops </a>
+                            <a class="nav-link" href="/laptops"> Laptops </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#"> Tablets </a>
+                            <a class="nav-link" href="/tablets"> Tablets </a>
                         </li>
                     </ul>
                 </div>
@@ -92,7 +92,7 @@
     </div>
 
     <div class="row">
-        <c:forEach items="${phones}" var="phone">
+        <c:forEach items="${items}" var="phone">
             <form class="card" style="width: 17rem; background-color: transparent; color: aliceblue;" action="/basket" method="post">
                 <img src="/static/images/phones/qw.png" class="card-img-top" alt="...">
                 <div class="card-body" >
@@ -106,7 +106,7 @@
                 </ul>
                 <input  type="hidden" name="item" value=${phone.id}>
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                <input  type="number" name="amount">
+                <%--<input  type="number" name="amount">--%>
                 <button type="submit">Buy</button>
             </form>
         </c:forEach>

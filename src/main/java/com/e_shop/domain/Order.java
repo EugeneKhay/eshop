@@ -26,6 +26,8 @@ public class Order {
 
     private LocalDate dateOfOrder;
 
+    private double sumOfOrder;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id")
     private Client client;
@@ -35,12 +37,6 @@ public class Order {
             joinColumns=@JoinColumn (name="order_id"),
             inverseJoinColumns=@JoinColumn(name="product_id"))
     private Collection<Product> productsInOrder;
-
-//    @ManyToMany(fetch = FetchType.EAGER)
-//    @JoinTable (name="order_product",
-//            joinColumns=@JoinColumn (name="order_id"),
-//            inverseJoinColumns=@JoinColumn(name="product_id"))
-//    private Map<Product, Integer> productsInOrder;
 
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;

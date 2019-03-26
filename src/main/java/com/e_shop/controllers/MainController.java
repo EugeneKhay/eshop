@@ -25,12 +25,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller
-//@SessionAttributes("shop_basket")
 public class MainController {
 
     @Autowired
     private ClientService clientService;
-
     Basket basket;
 
 
@@ -57,20 +55,12 @@ public class MainController {
                       @RequestParam(name = "postcode") int postcode,
                       @RequestParam(name = "street") String street,
                       @RequestParam(name = "house") int house,
-                      @RequestParam(name = "flat") int flat
-    ) {
+                      @RequestParam(name = "flat") int flat) {
+        //FIX date input
         String[] array = birthDate.split(" ");
         int[] intArr = Arrays.stream(array).mapToInt(Integer::valueOf).toArray();
         LocalDate birth = LocalDate.of(intArr[0], intArr[1], intArr[2]);
-
-        ClientAddress address = new ClientAddress();
-        address.setCountry(country);
-        address.setCity(city);
-        address.setPostCode(postcode);
-        address.setStreet(street);
-        address.setHouseNumber(house);
-        address.setFlatNumber(flat);
-
+        ClientAddress address = new ClientAddress(country, city, postcode, street, house,flat);
         Client client = new Client();
         client.setFirstName(firstName);
         client.setLastName(lastName);
@@ -79,7 +69,6 @@ public class MainController {
         client.setPassword(password);
         client.setAddress(address);
         client.setRoles(Collections.singleton(Role.ROLE_USER));
-
         clientService.saveClient(client);
         return "redirect:/";
     }
@@ -93,7 +82,6 @@ public class MainController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Client client = (Client) auth.getPrincipal();
         model.addAttribute("client", client);
-        System.out.println(client);
         return "personal";
     }
 
@@ -116,54 +104,16 @@ public class MainController {
         client.setLastName(lastName);
         client.setPassword(password);
         client.setEmail(email);
-
-        ClientAddress newAddress = new ClientAddress();
-        newAddress.setCountry(country);
-        newAddress.setCity(city);
-        newAddress.setPostCode(postcode);
-        newAddress.setStreet(street);
-        newAddress.setHouseNumber(houseNumber);
-        newAddress.setFlatNumber(flatNumber);
-
+        ClientAddress newAddress = new ClientAddress(country, city, postcode, street, houseNumber, flatNumber);
         client.setAddress(newAddress);
-
         clientService.saveClient(client);
         model.addAttribute("client", client);
-        System.out.println(client.getFirstName());
-        System.out.println(client.getLastName());
         return "personal";
     }
 }
 
 
 
-
-
-//    @ModelAttribute
-//    public Basket createBasket(){
-//        return new Basket();
-//    }
-
-    //    @PostMapping("/logaut")
-//    public String logout(HttpSession session, SessionStatus status) {
-//        session.removeAttribute("shop_basket");
-//        status.setComplete();
-//        return "homepage";
-//    }
-
-//    @GetMapping("/login")
-//    public String login() {
-//        return "login";
-//    }
-
-//    @PostMapping("/login")
-//    public String login(@RequestParam(name="username") String firstName,
-//                        HttpSession session) {
-//        Client currentClient = clientService.getClientByName(firstName);
-//        session.setAttribute("client", currentClient);
-//                System.out.println(currentClient.getFirstName());
-//        return "login";
-//    }
 
 
 

@@ -4,7 +4,9 @@ import com.e_shop.domain.Client;
 import com.e_shop.domain.ClientAddress;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 public interface ClientService extends UserDetailsService {
 
@@ -15,5 +17,12 @@ public interface ClientService extends UserDetailsService {
     List<Client> getAllClients();
 
     void saveClient(Client client);
+
+    List<Client> getTenBestClientsPerPeriod(LocalDate start, LocalDate finish);
+
+    List<Client> getAllClientsPerPeriod(LocalDate start, LocalDate finish);
+
+
+
 
 }

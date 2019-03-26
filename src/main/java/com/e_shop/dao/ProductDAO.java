@@ -2,6 +2,7 @@ package com.e_shop.dao;
 
 import com.e_shop.domain.Client;
 import com.e_shop.domain.Product;
+import com.e_shop.enums.ProductCategory;
 
 import java.util.List;
 
@@ -19,8 +20,13 @@ public interface ProductDAO {
 
     List<Product> getAllProductsByColour(String colour);
 
+    List<Product> getAllProductsByCategory(ProductCategory category);
+
     void saveProduct(Product product);
 
     int saveNewAmountOfProduct(Product product, int amount);
 
-}
+
+
+
+    }

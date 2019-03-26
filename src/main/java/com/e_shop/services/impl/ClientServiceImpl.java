@@ -4,7 +4,9 @@ import com.e_shop.dao.ClientDao;
 import com.e_shop.dao2.GenericDao;
 import com.e_shop.dao2.IGenericDao;
 import com.e_shop.domain.Client;
+import com.e_shop.domain.Order;
 import com.e_shop.services.ClientService;
+import com.e_shop.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,8 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -22,6 +24,9 @@ public class ClientServiceImpl implements ClientService {
 
     @Autowired
     private ClientDao dao;
+
+    @Autowired
+    private OrderService orderService;
 
     @Override
     public Client getClientByName(String name) {
@@ -38,9 +43,46 @@ public class ClientServiceImpl implements ClientService {
         return dao.getAllClients();
     }
 
+
     @Override
     public void saveClient(Client client) {
         dao.saveClient(client);
+    }
+
+    @Override
+    public List<Client> getAllClientsPerPeriod(LocalDate start, LocalDate finish) {
+        return null;
+    }
+
+    @Override
+    public List<Client> getTenBestClientsPerPeriod(LocalDate start, LocalDate finish)
+    {
+        Map<Client, Long> ordersOfClientMap = new HashMap<>();
+        List<Order> ordersPerPeriod = orderService.getOrdersPerPeriod(start, finish);
+        List<Client> allClients = getAllClients();
+
+        for (Client client: allClients) {
+            long countOfOrderForClient = ordersPerPeriod.stream()
+                                                        .filter(order -> order.getClient().equals(client))
+                                                        .count();
+            ordersOfClientMap.put(client, countOfOrderForClient);
+        }
+        List<Long> amountOfOrders = ordersOfClientMap
+                                .values()
+                                .stream()
+                                .sorted(Comparator.reverseOrder())
+                                .collect(Collectors.toList());
+        //Collections.reverse(amountOfOrders);
+        //List<Client> bestTenClients = new ArrayList<>();
+        Set<Client> bestTenClients = new LinkedHashSet<>();
+
+        amountOfOrders.forEach(i -> {
+            for (Map.Entry<Client, Long> entry : ordersOfClientMap.entrySet()) {
+                if (i == entry.getValue())
+                    bestTenClients.add(entry.getKey());
+            }
+        });
+        return bestTenClients.stream().limit(10).collect(Collectors.toList());
     }
 
     @Override

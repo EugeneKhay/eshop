@@ -1,7 +1,9 @@
 package com.e_shop.dao.impl;
 
+import com.e_shop.dao.HibernateUtils;
 import com.e_shop.dao.ProductDAO;
 import com.e_shop.domain.Product;
+import com.e_shop.enums.ProductCategory;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,17 @@ public class ProductDaoImpl implements ProductDAO {
         Product product = (Product) query.list().get(0);
         return product;
     }
+
+//    @Override
+//    public Product getProductByName(String name) {
+//        String hql = "FROM Product WHERE productname = :param";
+//        Query query = HibernateUtils.getQuery(hql);
+//        //Query query = sessionFactory.getCurrentSession().createQuery(hql);
+//        query.setParameter("param", name);
+//        //Product product = (Product) query.list().get(0);
+//        Product product = (Product) query.uniqueResult();
+//        return product;
+//    }
 
     @Override
     public Product getProductById(int id) {
@@ -63,6 +76,14 @@ public class ProductDaoImpl implements ProductDAO {
         String hql = "FROM Product as p WHERE p.productParameteres.colour = :param";
         Query query = sessionFactory.getCurrentSession().createQuery(hql);
         query.setParameter("param", colour);
+        return query.list();
+    }
+
+    @Override
+    public List<Product> getAllProductsByCategory(ProductCategory category) {
+        String hql = "FROM Product as p WHERE p.category = :param";
+        Query query = sessionFactory.getCurrentSession().createQuery(hql);
+        query.setParameter("param", category);
         return query.list();
     }
 

@@ -35,8 +35,9 @@
         <table class="table table-borderless table-hover" style="margin: 0 auto; color: aliceblue">
         <tr>
             <th>Order number</th>
-            <th>First name</th>
-            <th>Last name</th>
+            <th>Client</th>
+            <th>Products</th>
+            <th>Sum</th>
             <th>Payment status</th>
             <th>Payment method</th>
             <th>Delivery method</th>
@@ -46,9 +47,15 @@
     <c:forEach items="${orders}" var="order">
         <tr>
         <c:set var = "client" scope = "session" value = "${order.client}"/>
+        <c:set var = "products" scope = "session" value = "${order.productsInOrder}"/>
             <td>${order.id}</td>
-            <td>${client.firstName}</td>
-            <td>${client.lastName}</td>
+            <td>${client.firstName} ${client.lastName}</td>
+            <td>
+                <c:forEach items="${products}" var="product">
+                    <td>${product.productName}</td>
+                </c:forEach>
+            </td>
+            <td>${order.sumOfOrder}</td>
             <td>${order.paymentStatus}</td>
             <td>${order.paymentMethod}</td>
             <td>${order.deliveryMethod}</td>
@@ -56,6 +63,7 @@
             <td>${order.dateOfOrder}</td>
         </tr>
     </c:forEach>
+        </table>
     </div>
 
     <div class="col-sm-1">

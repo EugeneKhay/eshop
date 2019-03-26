@@ -1,6 +1,7 @@
 package com.e_shop.services;
 
 import com.e_shop.domain.Product;
+import com.e_shop.enums.ProductCategory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,6 +25,9 @@ public interface ProductService {
     int decreaseProductAmountInStock(Product product, int countOfItems);
 
     int saveNewAmountOfProduct(Product product, int amount);
+
+    List<Product> getAllProductsByCategory(ProductCategory category);
+
 
 
 }

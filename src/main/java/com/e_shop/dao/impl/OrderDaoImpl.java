@@ -54,7 +54,6 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public int updateOrder(int orderId, String payStatus, String ordStatus) {
-        //int id = order.getId();
         String hql = "update com.e_shop.domain.Order set paymentStatus = :payParam, orderStatus = :ordParam where id = :idParam";
         Query query = sessionFactory.getCurrentSession().createQuery(hql);
         query.setParameter("idParam", orderId);

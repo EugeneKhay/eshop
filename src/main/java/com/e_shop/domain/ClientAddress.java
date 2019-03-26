@@ -26,4 +26,12 @@ public class ClientAddress {
     @OneToMany(mappedBy = "address", fetch = FetchType.EAGER)
     private List<Client> clientList;
 
+    public ClientAddress(String country, String city, int postCode, String street, int houseNumber, int flatNumber) {
+        this.country = country;
+        this.city = city;
+        this.postCode = postCode;
+        this.street = street;
+        this.houseNumber = houseNumber;
+        this.flatNumber = flatNumber;
+    }
 }

@@ -31,7 +31,7 @@ public class DataConfig {
         LocalSessionFactoryBuilder sessionBuilder = new LocalSessionFactoryBuilder(dataSource);
         Properties properties = new Properties();
         properties.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
-        properties.put("hibernate.show_sql", "true");
+        properties.put("hibernate.show_sql", "false");
         properties.put("hibernate.hbm2ddl.auto", "update");
         sessionBuilder.addProperties(properties);
         sessionBuilder.addAnnotatedClass(Client.class);
