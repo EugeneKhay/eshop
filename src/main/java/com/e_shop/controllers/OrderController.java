@@ -91,6 +91,7 @@ public class OrderController {
         List<Order> orders = orderService.getAllOrders();
         model.addAttribute("orders", orders);
                 System.out.println(id);
-        return "listoforders";
+        //return "listoforders";
+        return "adminpage";
     }
 }

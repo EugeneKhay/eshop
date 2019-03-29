@@ -19,7 +19,19 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="../resources/static/css/app.css">
+    <link rel="stylesheet" href="/resources/static/css/app.css">
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <%--<script type="text/javascript" src="<c:url value="/resources/static/js/jquery-3.3.1.min.js" />"></script>--%>
+
+    <%--<script type="text/javascript">--%>
+        <%--function doAjax() {--%>
+            <%--$("#1").css({"display" : "none"});--%>
+        <%--}--%>
+    <%--</script>--%>
+
+
+
 </head>
 <body style="background-image: url(/resources/static/images/background.jpg);">
 
@@ -59,7 +71,7 @@
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="/phones"> Phones </a>
+                            <a class="nav-link" href="/phone"> Phones </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/tv"> TV & Video </a>
@@ -68,10 +80,10 @@
                             <a class="nav-link" href="/audio"> Audio & Hi-Fi </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/laptops"> Laptops </a>
+                            <a class="nav-link" href="/laptop"> Laptops </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/tablets"> Tablets </a>
+                            <a class="nav-link" href="/tablet"> Tablets </a>
                         </li>
                     </ul>
                 </div>
@@ -91,22 +103,21 @@
         </div>
     </div>
 
-    <div class="row">
-        <c:forEach items="${items}" var="phone">
+    <div class="row" id="output">
+        <c:forEach items="${items}" var="item">
             <form class="card" style="width: 17rem; background-color: transparent; color: aliceblue;" action="/basket" method="post">
                 <img src="/static/images/phones/qw.png" class="card-img-top" alt="...">
                 <div class="card-body" >
-                    <h5 class="card-title">${phone.productName}</h5>
-                    <p class="card-text">${phone.productPrice}</p>
+                    <h5 class="card-title">${item.productName}</h5>
+                    <p class="card-text">${item.productPrice}</p>
                 </div>
-                <c:set var = "params" scope = "session" value = "${phone.productParameteres}"/>
+                <c:set var = "params" scope = "session" value = "${item.productParameteres}"/>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item" style="width: 17rem; background-color: transparent; color: aliceblue;">${params.brand}</li>
                     <li class="list-group-item" style="width: 17rem; background-color: transparent; color: aliceblue;">${params.colour}</li>
                 </ul>
-                <input  type="hidden" name="item" value=${phone.id}>
+                <input  type="hidden" name="item" value=${item.id}>
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                <%--<input  type="number" name="amount">--%>
                 <button type="submit">Buy</button>
             </form>
         </c:forEach>
@@ -114,23 +125,40 @@
 
     <br>
 
-    <h3 style="color: aliceblue">Search</h3>
-    <br>
-    <div class="row">
-        <form method="post" action="/catalog">
-            <p>
-                <select class="custom-select mr-sm-2" name="search_type" id="search">
-                    <option selected>Choose filter</option>
-                    <option value="Price">Price</option>
-                    <option value="Brand">Brand</option>
-                    <option value="Colour">Colour</option>
-                </select>
-            </p>
-            <input type="text" name="search_res" placeholder="filter">
-            <button type="submit" value="OK">Search</button>
+    <%--<h3 style="color: aliceblue">Search</h3>--%>
+    <%--<br>--%>
+    <%--<div class="row" id="1">--%>
+        <%--<form method="post" action="/catalog">--%>
+            <%--<p>--%>
+                <%--<select class="custom-select mr-sm-2" name="search_type" id="search">--%>
+                    <%--<option selected>Choose filter</option>--%>
+                    <%--<option value="Price">Price</option>--%>
+                    <%--<option value="Brand">Brand</option>--%>
+                    <%--<option value="Colour">Colour</option>--%>
+                <%--</select>--%>
+            <%--</p>--%>
+            <%--<input id="search_input" type="text" name="search_res" placeholder="filter">--%>
+            <%--<button id="search_button" type="submit" value="OK" onclick="doAjax()">Search</button>--%>
+            <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
+        <%--</form>--%>
+    <%--</div>--%>
+
+    <form method="post" action="/phone" style="width: 40%">
+        <div class="input-group">
+            <select class="custom-select-7" id="search" name="search_type">
+            <option selected>Search</option>
+            <option value="Price">Price</option>
+            <option value="Brand">Brand</option>
+            <option value="Colour">Colour</option>
+        </select>
+            <input id="search_input" type="text" name="search_res" placeholder="filter">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        </form>
-    </div>
+            <input type="hidden" name="page" value="${requestScope['javax.servlet.forward.request_uri']}"/>
+            <div class="input-group-append">
+                <button class="btn btn-secondary" type="submit">Find</button>
+            </div>
+        </div>
+    </form>
 </div>
 
 

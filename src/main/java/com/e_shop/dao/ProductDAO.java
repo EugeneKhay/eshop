@@ -18,7 +18,11 @@ public interface ProductDAO {
 
     List<Product> getAllProductsByBrand(String brand);
 
+    List<Product> getAllProductsByBrand(String brand, String type);
+
     List<Product> getAllProductsByColour(String colour);
+
+    List<Product> getAllProductsByColour(String colour, String type);
 
     List<Product> getAllProductsByCategory(ProductCategory category);
 
@@ -29,4 +33,7 @@ public interface ProductDAO {
 
 
 
-    }
+
+
+
+}

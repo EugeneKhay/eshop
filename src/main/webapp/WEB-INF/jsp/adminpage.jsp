@@ -16,7 +16,10 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="/resources/static/css/app.css">
+    <link rel="stylesheet" type="text/css" href="/resources/static/css/app.css">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="//ajax.aspnetcdn.com/ajax/jquery.ui/1.10.3/jquery-ui.min.js"></script>
+    <script src="/resources/static/js/app.js"></script>
 </head>
 <body>
 
@@ -35,20 +38,22 @@
         </nav>
     </div>
 
-    <div class="row">
-        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-            <div class="btn-group" role="group">
-                <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Control menu
-                </button>
-                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                    <a class="dropdown-item" href="/orders"> Orders </a>
-                    <a class="dropdown-item" href="/viewproducts"> Products </a>
-                    <a class="dropdown-item" href="/viewclients"> Clients </a>
-                </div>
-            </div>
-        </div>
-    </div>
+    <%--<div class="row">--%>
+        <%--<div class="btn-group" role="group" aria-label="Button group with nested dropdown">--%>
+            <%--<div class="btn-group" role="group">--%>
+                <%--<button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--%>
+                    <%--Control menu--%>
+                <%--</button>--%>
+                <%--<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">--%>
+                    <%--<a class="dropdown-item" href="/orders"> Orders </a>--%>
+                    <%--<a class="dropdown-item" href="/viewproducts"> Products </a>--%>
+                    <%--<a class="dropdown-item" href="/viewclients"> Clients </a>--%>
+                <%--</div>--%>
+            <%--</div>--%>
+        <%--</div>--%>
+    <%--</div>--%>
+
+
 
     <br>
 
@@ -56,202 +61,298 @@
         <h4> Statistics </h4>
     </div>
 
+    <br>
+
+    <div><h6> Period </h6></div>
+
     <div class="row" style="color: aliceblue; margin: 0 auto">
-        <h6> Period </h6>
-    </div>
-
-    <div class="row" style="color: aliceblue; background-color: transparent">
-            <form action="/statistics" method="post" id="search_form">
-                <div class="form-inline">
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                <div style="width: 150px; color: aliceblue; background-color: transparent">
-                    <div class="form-inline">
-                    <select style="color: aliceblue; background-color: transparent" class="custom-select mr-sm-2" name="startDay">
-                        <option selected>start day</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                        <option value="11">11</option>
-                        <option value="12">12</option>
-                        <option value="13">13</option>
-                        <option value="14">14</option>
-                        <option value="15">15</option>
-                        <option value="16">16</option>
-                        <option value="17">17</option>
-                        <option value="18">18</option>
-                        <option value="19">19</option>
-                        <option value="20">20</option>
-                        <option value="21">21</option>
-                        <option value="22">22</option>
-                        <option value="23">23</option>
-                        <option value="24">24</option>
-                        <option value="25">25</option>
-                        <option value="26">26</option>
-                        <option value="27">27</option>
-                        <option value="28">28</option>
-                        <option value="29">29</option>
-                        <option value="30">30</option>
-                        <option value="31">31</option>
-                    </select>
-                    <select style="color: aliceblue; background-color: transparent" class="custom-select mr-sm-2" name="startMonth">
-                        <option selected>start month</option>
-                        <option value="1">January</option>
-                        <option value="2">February</option>
-                        <option value="3">March</option>
-                        <option value="4">April</option>
-                        <option value="5">May</option>
-                        <option value="6">June</option>
-                        <option value="7">July</option>
-                        <option value="8">August</option>
-                        <option value="9">September</option>
-                        <option value="10">October</option>
-                        <option value="11">November</option>
-                        <option value="12">December</option>
-                    </select>
-                    <select style="color: aliceblue; background-color: transparent" class="custom-select mr-sm-2" name="startYear">
-                        <option selected>start year</option>
-                        <option value="2018">2018</option>
-                        <option value="2019">2019</option>
-                        <option value="2020">2020</option>
-                        <option value="2021">2021</option>
-                        <option value="2022">2022</option>
-                    </select>
-                    </div>
-                </div>
-                <br>
-                <div style="width: 150px; color: aliceblue; background-color: transparent">
-                    <div class="form-inline">
-                    <select style="color: aliceblue; background-color: transparent" class="custom-select mr-sm-2" name="finishDay">
-                        <option selected>finish day</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                        <option value="11">11</option>
-                        <option value="12">12</option>
-                        <option value="13">13</option>
-                        <option value="14">14</option>
-                        <option value="15">15</option>
-                        <option value="16">16</option>
-                        <option value="17">17</option>
-                        <option value="18">18</option>
-                        <option value="19">19</option>
-                        <option value="20">20</option>
-                        <option value="21">21</option>
-                        <option value="22">22</option>
-                        <option value="23">23</option>
-                        <option value="24">24</option>
-                        <option value="25">25</option>
-                        <option value="26">26</option>
-                        <option value="27">27</option>
-                        <option value="28">28</option>
-                        <option value="29">29</option>
-                        <option value="30">30</option>
-                        <option value="31">31</option>
-                    </select>
-                    <select style="color: aliceblue; background-color: transparent" class="custom-select mr-sm-2" name="finishMonth">
-                        <option selected>finish month</option>
-                        <option value="1">January</option>
-                        <option value="2">February</option>
-                        <option value="3">March</option>
-                        <option value="4">April</option>
-                        <option value="5">May</option>
-                        <option value="6">June</option>
-                        <option value="7">Jule</option>
-                        <option value="8">August</option>
-                        <option value="9">September</option>
-                        <option value="10">October</option>
-                        <option value="11">November</option>
-                        <option value="12">December</option>
-                    </select>
-                    <select style="color: aliceblue; background-color: transparent" class="custom-select mr-sm-2" name="finishYear">
-                        <option selected>finish year</option>
-                        <option value="2018">2018</option>
-                        <option value="2019">2019</option>
-                        <option value="2020">2020</option>
-                        <option value="2021">2021</option>
-                        <option value="2022">2022</option>
-                    </select>
-                    </div>
-                </div>
-                <br>
-                <button type="submit" class="btn btn-secondary"> Enter </button>
-                </div>
-            </form>
-
-            <%--<input type="text" class="form-control" id="example">--%>
-            <%--<script>--%>
-                <%--$(function () {--%>
-                    <%--$('#example').datetimepicker();--%>
-                <%--});--%>
-            <%--</script>--%>
-        </div>
 
         <br>
-
-        <div>
-            <ul>
-                <li> Total sum of all orders: ${totalSumOfAllOrders}</li>
-                <li> Total amount of orders: ${totalAmountOfOrders}</li>
-                <li> Top item:
-                    <ol>
-                        <c:forEach items="${bestProducts}" var="product">
-                            <li>${product.productName}</li>
-                        </c:forEach>
-                    </ol>
-                </li>
-                <li> Top 10 clients:
-                    <ol>
-                        <c:forEach items="${bestClient}" var="client">
-                            <li>${client.firstName} ${client.lastName}</li>
-                        </c:forEach>
-                    </ol>
-                </li>
-            </ul>
+        <%--<form method="post" action="/statistics">--%>
+            <%--<input type="date" name="start">--%>
+            <%--<input type="date" name="finish">--%>
+            <%--<button type="submit">OK</button>--%>
+            <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
+        <%--</form>--%>
+        <div class="col-sm-3">
+            <form method="post" action="/admin">
+            <div class="form-group">
+                <input type="date" name="start" class="form-control" placeholder="Start">
+            </div>
+            <div class="form-group">
+                <input type="date" name="finish" class="form-control" placeholder="End">
+            </div>
+            <button type="submit" class="btn btn-secondary"> Enter </button>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        </form>
         </div>
 
-        <div class="row">
-            <table class="table table-borderless" style="margin: 0 auto; color: aliceblue">
-                <tr>
-                    <th>Order number</th>
-                    <th>First name</th>
-                    <th>Last name</th>
-                    <th>Payment status</th>
-                    <th>Payment method</th>
-                    <th>Delivery method</th>
-                    <th>Order status</th>
-                    <th>Date of order</th>
-                </tr>
-                <c:forEach items="${orders}" var="order">
-                <tr>
-                    <c:set var = "client" scope = "session" value = "${order.client}"/>
-                    <td>${order.id}</td>
-                    <td>${client.firstName}</td>
-                    <td>${client.lastName}</td>
-                    <td>${order.paymentStatus}</td>
-                    <td>${order.paymentMethod}</td>
-                    <td>${order.deliveryMethod}</td>
-                    <td>${order.orderStatus}</td>
-                    <td>${order.dateOfOrder}</td>
-                </tr>
-                </c:forEach>
-        </table>
+    </div>
+
+    <br>
+
+    <div class="row" style="color: aliceblue; background-color: transparent">
+
+        <div class="col-sm-2">
+                <div class="btn-group-vertical" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-secondary" onclick="orders()"> Orders </button>
+                    <button type="button" class="btn btn-secondary" onclick="products()">Products</button>
+                    <button type="button" class="btn btn-secondary" onclick="clients()"> Clients</button>
+                    <button type="button" class="btn btn-secondary" onclick="stats()"> Statistics</button>
+                </div>
+        </div>
+
+
+        <div class="col-sm-10" >
+
+            <div id="stats" style="display: none">
+                <ul>
+                    <li> Total sum of all orders: ${totalSumOfAllOrders}</li>
+                    <li> Total amount of orders: ${totalAmountOfOrders}</li>
+                    <li> Top item:
+                        <ol>
+                            <c:forEach items="${bestProducts}" var="product">
+                                <li>${product.productName}</li>
+                            </c:forEach>
+                        </ol>
+                    </li>
+                    <li> Top 10 clients:
+                        <ol>
+                            <c:forEach items="${bestClient}" var="client">
+                                <li>${client.firstName} ${client.lastName}</li>
+                            </c:forEach>
+                        </ol>
+                    </li>
+                </ul>
+            </div>
+
+            <div id="orders" style="display: none">
+                <div class="row">
+                <table class="table table-borderless" style="margin: 0 auto; color: aliceblue">
+                    <tr>
+                        <th>Order number</th>
+                        <th>Client</th>
+                        <th>Products</th>
+                        <th>Sum</th>
+                        <th>Date of order</th>
+                        <th>Payment method</th>
+                        <th>Delivery method</th>
+                        <th>Order status</th>
+                        <th>Payment status</th>
+                    </tr>
+                    <c:forEach items="${orders}" var="order">
+                        <tr>
+                            <c:set var = "client" scope = "session" value = "${order.client}"/>
+                            <td>${order.id}</td>
+                            <td>${client.firstName} ${client.lastName}</td>
+                            <td>
+                                <%--<c:set var = "products" scope = "session" value = "${order.productsInOrder}"/>--%>
+                                <c:forEach items="${order.productsInOrder}" var="product">
+                                    <table>
+                                        <tr>${product.productName}</tr>
+                                    </table>
+                                </c:forEach>
+                            </td>
+                            <td>${order.sumOfOrder}</td>
+                            <td>${order.dateOfOrder}</td>
+                            <td>${order.paymentMethod}</td>
+                            <td>${order.deliveryMethod}</td>
+                            <td>${order.orderStatus}</td>
+                            <td>${order.paymentStatus}</td>
+                        </tr>
+                    </c:forEach>
+                </table>
+            </div>
+                <div class="col-sm-1">
+                <button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#exampleModal"> Edit </button>
+            </div>
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel"> Edit data </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="/editorder" method="post" id="edited_order">
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                <p>
+                                    <label for="orderForEdit"> Order number </label>
+                                    <input type="number" id="orderForEdit" name="orderForEdit"/>
+                                </p>
+                                <p>
+                                    <label for="paymentStatus"> Payment status </label>
+                                    <select class="custom-select mr-sm-2" name="paymentStatus" id="paymentStatus">
+                                        <option selected>NOT_PAID</option>
+                                        <option >PAID</option>
+                                    </select>
+                                </p>
+                                <p>
+                                    <label for="orderStatus"> Order status </label>
+                                    <select class="custom-select mr-sm-2" name="orderStatus" id="orderStatus">
+                                        <option selected>WAITING_FOR_PAYMENT</option>
+                                        <option >WAITING_FOR_SHIPPMENT</option>
+                                        <option >SHIPPED</option>
+                                        <option >DELIVERIED</option>
+                                    </select>
+                                </p>
+                                <%--<input type="hidden" name="orderForEdit" value="${order.id}">--%>
+                                <button onclick="form_submit()" name="user_search" class="btn btn-secondary" data-dismiss="modal"> Submit </button>
+                            </form>
+                            <script type="text/javascript">
+                                function form_submit() {
+                                    document.getElementById("edited_order").submit();
+                                }
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+            <div id="products" style="display: none">
+                    <h3 style="color: aliceblue">List of products</h3>
+                    <table class="table table-borderless table-hover" style="width: 65%; margin: 0 auto; color: aliceblue">
+                        <tr>
+                            <th>Product ID</th>
+                            <th>Product name</th>
+                            <th>Brand</th>
+                            <th>Price</th>
+                            <th>Amount</th>
+                            <th>Category</th>
+                            <th>Colour</th>
+                        </tr>
+                        <c:forEach items="${products}" var="product">
+                            <tr>
+                                <c:set var = "parameters" scope = "session" value = "${product.productParameteres}"/>
+                                <td>${product.id}</td>
+                                <td>${product.productName}</td>
+                                <td>${parameters.brand}</td>
+                                <td>${product.productPrice}</td>
+                                <td>${product.amount}</td>
+                                <td>${product.category}</td>
+                                <td>${parameters.colour}</td>
+                            </tr>
+                        </c:forEach>
+                    </table>
+
+                    <h3 style="margin: 0 auto; color: aliceblue">Add new product</h3>
+                    <form method="post" action="/addproducts" style="width: 35%; margin: 0 auto">
+                        <b style="color:aliceblue"> Enter product properties </b>
+                        <div class="form-group">
+                            <label style="color: aliceblue" for="productName"> Product name </label>
+                            <input style="background: transparent; color: aliceblue" class="form-control form-control-md" name="productName" type="text" class="form-control" id="productName" aria-describedby="emailHelp" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label style="color: aliceblue" for="productPrice"> Product price </label>
+                            <input style="background: transparent; color: aliceblue" class="form-control form-control-md" name="productPrice" type="number" class="form-control" id="productPrice" aria-describedby="emailHelp" placeholder="">
+                        </div>
+                        <div>
+                            <label style="color: aliceblue" for="productPrice"> Product type </label>
+                            <select class="custom-select mr-sm-2" name="category" id="category" style="color: aliceblue; background: transparent; padding-top: 30px">
+                                <option selected>Choose category</option>
+                                <option value="PHONE"> PHONE </option>
+                                <option value="TV_VIDEO"> TV_VIDEO </option>
+                                <option value="AUDIO"> AUDIO </option>
+                                <option value="LAPTOP"> LAPTOP </option>
+                                <option value="TABLET"> TABLET </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label style="color: aliceblue" for="productPrice">Amount</label>
+                            <input style="background: transparent; color: aliceblue" class="form-control form-control-md" name="amount" type="number" class="form-control" id="amount" aria-describedby="emailHelp" placeholder="">
+                        </div>
+                        <p><b style="color:aliceblue"> Enter product parameteres: </b></p>
+                        <div class="form-group">
+                            <label style="color: aliceblue" for="productPrice"> Colour </label>
+                            <input style="background: transparent; color: aliceblue" class="form-control form-control-md" name="colour" type="text" class="form-control" id="colour" aria-describedby="emailHelp" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label style="color: aliceblue" for="productPrice"> Brand </label>
+                            <input style="background: transparent; color: aliceblue" class="form-control form-control-md" name="brand" type="text" class="form-control" id="brand" aria-describedby="emailHelp" placeholder="">
+                        </div>
+                        <button type="submit" class="btn btn-secondary"> Add product </button>
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    </form>
+            </div>
+
+            <div id="clients" style="display: none">
+
+                    <h3>List of clients</h3>
+                    <table class="table table-borderless" style="width: 65%; margin: 0 auto; color: aliceblue">
+                        <tr>
+                            <th>ID</th>
+                            <th>First name</th>
+                            <th>Last name</th>
+                            <th>Date of birth</th>
+                            <th>Email</th>
+                            <th>Password</th>
+                            <th>Country</th>
+                            <th>City</th>
+                            <th>Post code</th>
+                            <th>Street</th>
+                            <th>Hose number</th>
+                            <th>Flat number</th>
+                        </tr>
+                        <c:forEach items="${clients}" var="client">
+                            <tr>
+                                <td>${client.id}</td>
+                                <td>${client.firstName}</td>
+                                <td>${client.lastName}</td>
+                                <td>${client.birthDate}</td>
+                                <td>${client.email}</td>
+                                <td>${client.password}</td>
+                                <c:set var = "address" scope = "session" value = "${client.address}"/>
+                                <td>${address.country}</td>
+                                <td>${address.city}</td>
+                                <td>${address.postCode}</td>
+                                <td>${address.street}</td>
+                                <td>${address.houseNumber}</td>
+                                <td>${address.flatNumber}</td>
+                            </tr>
+                        </c:forEach>
+                    </table>
+            </div>
+
         </div>
     </div>
 </div>
+
+<%--<script type="text/javascript">--%>
+    <%--function stats() {--%>
+        <%--$("#stats").css({"display" : "block"});--%>
+        <%--$("#orders").css({"display" : "none"});--%>
+        <%--$("#products").css({"display" : "none"});--%>
+        <%--$("#clients").css({"display" : "none"});--%>
+    <%--}--%>
+    <%--function orders() {--%>
+        <%--$("#orders").css({"display" : "block"});--%>
+        <%--$("#stats").css({"display" : "none"});--%>
+        <%--$("#products").css({"display" : "none"});--%>
+        <%--$("#clients").css({"display" : "none"});--%>
+    <%--}--%>
+    <%--function products() {--%>
+        <%--$("#products").css({"display" : "block"});--%>
+        <%--$("#stats").css({"display" : "none"});--%>
+        <%--$("#orders").css({"display" : "none"});--%>
+        <%--$("#clients").css({"display" : "none"});--%>
+    <%--}--%>
+    <%--function clients() {--%>
+        <%--$("#clients").css({"display" : "block"});--%>
+        <%--$("#products").css({"display" : "none"});--%>
+        <%--$("#stats").css({"display" : "none"});--%>
+        <%--$("#orders").css({"display" : "none"});--%>
+    <%--}--%>
+<%--</script>--%>
+
+<footer style="color: aliceblue; margin-left: 50px">
+    <p> Copyright ...</p>
+    <p> Our contacts ...</p>
+    <p> Support... </p>
+</footer>
+
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

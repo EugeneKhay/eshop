@@ -1,19 +1,25 @@
-var app = angular.module('app', ['ngRoute','ngResource']);
-app.config(function($routeProvider){
-    $routeProvider
-        .when('/products',{
-            templateUrl: 'resources/static/views/products.html',
-            controller: 'productsController'
-        })
-        .when('/orders',{
-            templateUrl: 'resources/static/views/orders.html',
-            controller: 'ordersController'
-        })
-        .when('/contacts',{
-            templateUrl: 'resources/static/views/contacts.html',
-            controller: 'contactsController'
-        })
-        .otherwise(
-            { redirectTo: '/'}
-        );
-});
+function stats() {
+    $("#stats").css({"display" : "block"});
+    $("#orders").css({"display" : "none"});
+    $("#products").css({"display" : "none"});
+    $("#clients").css({"display" : "none"});
+}
+function orders() {
+    $("#orders").css({"display" : "block"});
+    $("#stats").css({"display" : "none"});
+    $("#products").css({"display" : "none"});
+    $("#clients").css({"display" : "none"});
+}
+function products() {
+    $("#products").css({"display" : "block"});
+    $("#stats").css({"display" : "none"});
+    $("#orders").css({"display" : "none"});
+    $("#clients").css({"display" : "none"});
+}
+function clients() {
+    $("#clients").css({"display" : "block"});
+    $("#products").css({"display" : "none"});
+    $("#stats").css({"display" : "none"});
+    $("#orders").css({"display" : "none"});
+}
+

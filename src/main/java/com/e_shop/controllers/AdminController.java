@@ -8,6 +8,7 @@ import com.e_shop.services.ClientService;
 import com.e_shop.services.OrderService;
 import com.e_shop.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,31 +47,67 @@ public class AdminController {
         ProductCategory productCategory = ProductCategory.valueOf(category);
         Product product = new Product(productName, productPrice, productCategory, productParameteres, amount);
         productService.saveProduct(product);
-        return "listofproducts";
+        //return "listofproducts";
+        return "adminpage";
     }
 
     @GetMapping("/viewproducts")
     public String showProducts(Model model) {
         model.addAttribute("products", productService.getAllProducts());
-        return "listofproducts";
+        //return "listofproducts";
+        return "adminpage";
     }
 
     @GetMapping("/viewclients")
     public String showClients(Model model) {
         model.addAttribute("clients", clientService.getAllClients());
-        return "listofclients";
+        //return "listofclients";
+        return "adminpage";
     }
 
-    @PostMapping("/statistics")
-    public String getStats(@RequestParam(name = "startDay") String startDay,
-                           @RequestParam(name = "startMonth") String startMonth,
-                           @RequestParam(name = "startYear") String startYear,
-                           @RequestParam(name = "finishDay") String finishDay,
-                           @RequestParam(name = "finishMonth") String finishMonth,
-                           @RequestParam(name = "finishYear") String finishYear,
+//    @PostMapping("/statistics")
+//    public String getStats(@RequestParam(name = "startDay") String startDay,
+//                           @RequestParam(name = "startMonth") String startMonth,
+//                           @RequestParam(name = "startYear") String startYear,
+//                           @RequestParam(name = "finishDay") String finishDay,
+//                           @RequestParam(name = "finishMonth") String finishMonth,
+//                           @RequestParam(name = "finishYear") String finishYear,
+//                           Model model) {
+//        LocalDate start = orderService.getDate(startDay, startMonth, startYear);
+//        LocalDate finish = orderService.getDate(finishDay, finishMonth, finishYear);
+//        double totalSumOfAllOrders = orderService.getTotalSumOfAllOrdersPerPeriod(start, finish);
+//        long totalAmountOfOrders = orderService.getTotalAmountOfOrdersPerPeriod(start, finish);
+//        model.addAttribute("bestClient", clientService.getTenBestClientsPerPeriod(start, finish));
+//        model.addAttribute("bestProducts", orderService.getBestsellerPerPeriod(start, finish));
+//        model.addAttribute("orders", orderService.getOrdersPerPeriod(start, finish));
+//        model.addAttribute("totalSumOfAllOrders", totalSumOfAllOrders);
+//        model.addAttribute("totalAmountOfOrders", totalAmountOfOrders);
+//        return "adminpage";
+//    }
+
+
+//    @PostMapping("/statistics")
+//    public String getStats(@RequestParam(name = "start") @DateTimeFormat(pattern="yyyy-MM-dd")LocalDate start,
+//                           @RequestParam(name = "finish")@DateTimeFormat(pattern="yyyy-MM-dd") LocalDate finish,
+//                           Model model) {
+//        double totalSumOfAllOrders = orderService.getTotalSumOfAllOrdersPerPeriod(start, finish);
+//        long totalAmountOfOrders = orderService.getTotalAmountOfOrdersPerPeriod(start, finish);
+//        model.addAttribute("bestClient", clientService.getTenBestClientsPerPeriod(start, finish));
+//        model.addAttribute("bestProducts", orderService.getBestsellerPerPeriod(start, finish));
+//        model.addAttribute("orders", orderService.getOrdersPerPeriod(start, finish));
+//        model.addAttribute("totalSumOfAllOrders", totalSumOfAllOrders);
+//        model.addAttribute("totalAmountOfOrders", totalAmountOfOrders);
+//
+//        model.addAttribute("products", productService.getAllProducts());
+//        model.addAttribute("clients", clientService.getAllClients());
+//
+//        return "adminpage";
+//    }
+
+    @PostMapping("/admin")
+    public String getStats(@RequestParam(name = "start", required = false) @DateTimeFormat(pattern="yyyy-MM-dd")LocalDate start,
+                           @RequestParam(name = "finish", required = false)@DateTimeFormat(pattern="yyyy-MM-dd") LocalDate finish,
                            Model model) {
-        LocalDate start = orderService.getDate(startDay, startMonth, startYear);
-        LocalDate finish = orderService.getDate(finishDay, finishMonth, finishYear);
         double totalSumOfAllOrders = orderService.getTotalSumOfAllOrdersPerPeriod(start, finish);
         long totalAmountOfOrders = orderService.getTotalAmountOfOrdersPerPeriod(start, finish);
         model.addAttribute("bestClient", clientService.getTenBestClientsPerPeriod(start, finish));
@@ -78,6 +115,10 @@ public class AdminController {
         model.addAttribute("orders", orderService.getOrdersPerPeriod(start, finish));
         model.addAttribute("totalSumOfAllOrders", totalSumOfAllOrders);
         model.addAttribute("totalAmountOfOrders", totalAmountOfOrders);
+
+        model.addAttribute("products", productService.getAllProducts());
+        model.addAttribute("clients", clientService.getAllClients());
+
         return "adminpage";
     }
 

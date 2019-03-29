@@ -52,7 +52,7 @@
             <td>${client.firstName} ${client.lastName}</td>
             <td>
                 <c:forEach items="${products}" var="product">
-                    <td>${product.productName}</td>
+                    ${product.productName}
                 </c:forEach>
             </td>
             <td>${order.sumOfOrder}</td>

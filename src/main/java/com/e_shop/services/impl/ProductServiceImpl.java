@@ -49,6 +49,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<Product> getAllProductsByColour(String colour, String type) {
+        return dao.getAllProductsByColour(colour, type);
+    }
+
+    @Override
     public void saveProduct(Product product) {
         dao.saveProduct(product);
     }
@@ -68,6 +73,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> getAllProductsByCategory(ProductCategory category) {
         return dao.getAllProductsByCategory(category);
+    }
+
+    @Override
+    public List<Product> getAllProductsByBrand(String brand, String type) {
+        return dao.getAllProductsByBrand(brand, type);
     }
 
 }

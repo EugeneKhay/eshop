@@ -63,6 +63,17 @@ public class ProductDaoImpl implements ProductDAO {
         return query.list();
     }
 
+    //search by category and brand
+    @Override
+    public List<Product> getAllProductsByBrand(String brand, String type) {
+        ProductCategory category = ProductCategory.valueOf(type.toUpperCase());
+        String hql = "FROM Product as p WHERE p.category = :paramCategory and p.productParameteres.brand = :paramBrand" ;
+        Query query = sessionFactory.getCurrentSession().createQuery(hql);
+        query.setParameter("paramCategory", category);
+        query.setParameter("paramBrand", brand);
+        return query.list();
+    }
+
     @Override
     public List<Product> getAllProductsByBrand(String brand) {
         String hql = "FROM Product as p WHERE p.productParameteres.brand = :param";
@@ -76,6 +87,16 @@ public class ProductDaoImpl implements ProductDAO {
         String hql = "FROM Product as p WHERE p.productParameteres.colour = :param";
         Query query = sessionFactory.getCurrentSession().createQuery(hql);
         query.setParameter("param", colour);
+        return query.list();
+    }
+
+    @Override
+    public List<Product> getAllProductsByColour(String colour, String type) {
+        ProductCategory category = ProductCategory.valueOf(type.toUpperCase());
+        String hql = "FROM Product as p WHERE p.category = :paramCategory and p.productParameteres.colour = :paramColour" ;
+        Query query = sessionFactory.getCurrentSession().createQuery(hql);
+        query.setParameter("paramCategory", category);
+        query.setParameter("paramColour", colour);
         return query.list();
     }
 
@@ -101,4 +122,6 @@ public class ProductDaoImpl implements ProductDAO {
         int updateResult = query.executeUpdate();
         return updateResult;
     }
+
+
 }

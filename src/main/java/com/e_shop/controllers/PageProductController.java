@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class PageProductController {
     @Autowired
     private ProductService productService;
 
-    @GetMapping("/phones")
+    @GetMapping("/phone")
     public String phones(Model model) {
 
         List<Product> phones = productService.getAllProductsByCategory(ProductCategory.PHONE);
@@ -38,14 +39,14 @@ public class PageProductController {
         return "products";
     }
 
-    @GetMapping("/laptops")
+    @GetMapping("/laptop")
     public String laptops(Model model) {
         List<Product> laptops = productService.getAllProductsByCategory(ProductCategory.LAPTOP);
         model.addAttribute("items", laptops);
         return "products";
     }
 
-    @GetMapping("/tablets")
+    @GetMapping("/tablet")
     public String tablets(Model model) {
         List<Product> tablets = productService.getAllProductsByCategory(ProductCategory.TABLET);
         model.addAttribute("items", tablets);

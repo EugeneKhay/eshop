@@ -18,8 +18,6 @@ public interface ProductService {
 
     List<Product> getAllProductsByBrand(String brand);
 
-    List<Product> getAllProductsByColour(String colour);
-
     void saveProduct(Product product);
 
     int decreaseProductAmountInStock(Product product, int countOfItems);
@@ -27,6 +25,13 @@ public interface ProductService {
     int saveNewAmountOfProduct(Product product, int amount);
 
     List<Product> getAllProductsByCategory(ProductCategory category);
+
+    List<Product> getAllProductsByBrand(String brand, String type);
+
+    List<Product> getAllProductsByColour(String colour);
+
+    List<Product> getAllProductsByColour(String colour, String type);
+
 
 
 
