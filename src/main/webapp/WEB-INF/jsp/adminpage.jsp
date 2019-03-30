@@ -63,30 +63,58 @@
 
     <br>
 
-    <div><h6> Period </h6></div>
 
     <div class="row" style="color: aliceblue; margin: 0 auto">
 
         <br>
-        <%--<form method="post" action="/statistics">--%>
-            <%--<input type="date" name="start">--%>
-            <%--<input type="date" name="finish">--%>
-            <%--<button type="submit">OK</button>--%>
+
+        <%--<div class="col-sm-3">--%>
+        <%--<form method="post" action="/admin">--%>
+            <%--<div class="form-group">--%>
+                <%--<input type="date" name="start" class="form-control" placeholder="Start">--%>
+            <%--</div>--%>
+            <%--<div class="form-group">--%>
+                <%--<input type="date" name="finish" class="form-control" placeholder="End">--%>
+            <%--</div>--%>
+            <%--<button type="submit" class="btn btn-secondary"> Enter </button>--%>
             <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
         <%--</form>--%>
-        <div class="col-sm-3">
-            <form method="post" action="/admin">
-            <div class="form-group">
-                <input type="date" name="start" class="form-control" placeholder="Start">
-            </div>
-            <div class="form-group">
-                <input type="date" name="finish" class="form-control" placeholder="End">
-            </div>
-            <button type="submit" class="btn btn-secondary"> Enter </button>
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        </form>
+        <%--</div>--%>
+
+        <div class="col-sm-1">
+            <button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#exampleModal">Time period</button>
         </div>
 
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel2">Enter period</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" action="/admin" id="search_form">
+                            <div class="form-group">
+                                <input type="date" name="start" class="form-control" placeholder="Start">
+                            </div>
+                            <div class="form-group">
+                                <input type="date" name="finish" class="form-control" placeholder="End">
+                            </div>
+                            <button onclick="form_submit()" name="user_search" class="btn btn-secondary" data-dismiss="modal">Enter</button>
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="row" style="margin: 0 auto">
+        <h6> Statistics for ${period}</h6>
     </div>
 
     <br>
@@ -164,13 +192,13 @@
                 </table>
             </div>
                 <div class="col-sm-1">
-                <button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#exampleModal"> Edit </button>
+                <button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#editModal"> Edit </button>
             </div>
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel"> Edit data </h5>
+                            <h5 class="modal-title" id="editModalLabel"> Edit data </h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -198,11 +226,10 @@
                                         <option >DELIVERIED</option>
                                     </select>
                                 </p>
-                                <%--<input type="hidden" name="orderForEdit" value="${order.id}">--%>
-                                <button onclick="form_submit()" name="user_search" class="btn btn-secondary" data-dismiss="modal"> Submit </button>
+                                <button onclick="edit_submit()" name="user_search" class="btn btn-secondary" data-dismiss="modal"> Submit </button>
                             </form>
                             <script type="text/javascript">
-                                function form_submit() {
+                                function edit_submit() {
                                     document.getElementById("edited_order").submit();
                                 }
                             </script>
@@ -289,12 +316,14 @@
                             <th>Date of birth</th>
                             <th>Email</th>
                             <th>Password</th>
-                            <th>Country</th>
-                            <th>City</th>
-                            <th>Post code</th>
-                            <th>Street</th>
-                            <th>Hose number</th>
-                            <th>Flat number</th>
+                            <th>Address</th>
+
+                            <%--<th>Country</th>--%>
+                            <%--<th>City</th>--%>
+                            <%--<th>Post code</th>--%>
+                            <%--<th>Street</th>--%>
+                            <%--<th>Hose number</th>--%>
+                            <%--<th>Flat number</th>--%>
                         </tr>
                         <c:forEach items="${clients}" var="client">
                             <tr>
@@ -305,12 +334,15 @@
                                 <td>${client.email}</td>
                                 <td>${client.password}</td>
                                 <c:set var = "address" scope = "session" value = "${client.address}"/>
-                                <td>${address.country}</td>
-                                <td>${address.city}</td>
-                                <td>${address.postCode}</td>
-                                <td>${address.street}</td>
-                                <td>${address.houseNumber}</td>
-                                <td>${address.flatNumber}</td>
+                                <td>${address.country}, ${address.city}, ${address.postCode}, ${address.street}, ${address.houseNumber}, ${address.flatNumber}</td>
+
+
+                                <%--<td>${address.country}</td>--%>
+                                <%--<td>${address.city}</td>--%>
+                                <%--<td>${address.postCode}</td>--%>
+                                <%--<td>${address.street}</td>--%>
+                                <%--<td>${address.houseNumber}</td>--%>
+                                <%--<td>${address.flatNumber}</td>--%>
                             </tr>
                         </c:forEach>
                     </table>
@@ -320,32 +352,11 @@
     </div>
 </div>
 
-<%--<script type="text/javascript">--%>
-    <%--function stats() {--%>
-        <%--$("#stats").css({"display" : "block"});--%>
-        <%--$("#orders").css({"display" : "none"});--%>
-        <%--$("#products").css({"display" : "none"});--%>
-        <%--$("#clients").css({"display" : "none"});--%>
-    <%--}--%>
-    <%--function orders() {--%>
-        <%--$("#orders").css({"display" : "block"});--%>
-        <%--$("#stats").css({"display" : "none"});--%>
-        <%--$("#products").css({"display" : "none"});--%>
-        <%--$("#clients").css({"display" : "none"});--%>
-    <%--}--%>
-    <%--function products() {--%>
-        <%--$("#products").css({"display" : "block"});--%>
-        <%--$("#stats").css({"display" : "none"});--%>
-        <%--$("#orders").css({"display" : "none"});--%>
-        <%--$("#clients").css({"display" : "none"});--%>
-    <%--}--%>
-    <%--function clients() {--%>
-        <%--$("#clients").css({"display" : "block"});--%>
-        <%--$("#products").css({"display" : "none"});--%>
-        <%--$("#stats").css({"display" : "none"});--%>
-        <%--$("#orders").css({"display" : "none"});--%>
-    <%--}--%>
-<%--</script>--%>
+<script>
+    function form_submit() {
+        document.getElementById("search_form").submit();
+    }
+</script>
 
 <footer style="color: aliceblue; margin-left: 50px">
     <p> Copyright ...</p>

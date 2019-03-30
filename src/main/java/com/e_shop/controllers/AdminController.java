@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Set;
 
 
@@ -108,6 +109,10 @@ public class AdminController {
     public String getStats(@RequestParam(name = "start", required = false) @DateTimeFormat(pattern="yyyy-MM-dd")LocalDate start,
                            @RequestParam(name = "finish", required = false)@DateTimeFormat(pattern="yyyy-MM-dd") LocalDate finish,
                            Model model) {
+        if (start == null) start = LocalDate.of(2019, 1, 1);
+        if (finish == null) start = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        String period = start.format(formatter) + " / " + finish.format(formatter);
         double totalSumOfAllOrders = orderService.getTotalSumOfAllOrdersPerPeriod(start, finish);
         long totalAmountOfOrders = orderService.getTotalAmountOfOrdersPerPeriod(start, finish);
         model.addAttribute("bestClient", clientService.getTenBestClientsPerPeriod(start, finish));
@@ -115,9 +120,9 @@ public class AdminController {
         model.addAttribute("orders", orderService.getOrdersPerPeriod(start, finish));
         model.addAttribute("totalSumOfAllOrders", totalSumOfAllOrders);
         model.addAttribute("totalAmountOfOrders", totalAmountOfOrders);
-
         model.addAttribute("products", productService.getAllProducts());
         model.addAttribute("clients", clientService.getAllClients());
+        model.addAttribute("period", period);
 
         return "adminpage";
     }
