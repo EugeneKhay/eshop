@@ -15,10 +15,11 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="/resources/static/css/app.css">
+    <link rel="stylesheet" type="text/css" href="../resources/static/css/style.css"/>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
-<body style="background-image: url(/resources/static/images/background.jpg);">
+<%--<body style="background-image: url(/resources/static/images/background.jpg);">--%>
+<body>
 
 <div class="container">
     <div class="row">
@@ -35,19 +36,10 @@
         <div class="col-sm-3">
             <sec:authorize access="hasRole('ADMIN')">
                 <div class="col-sm-3"> <a style="color: aliceblue" href="/admin"> Admin </a> </div>
-                <%--<div class="col-sm-3"> <a href="/order">Temp admin order</a> </div>--%>
             </sec:authorize>
         </div>
     </div>
 </div>
-
-
-<%--<h3>E-shop of gadgets & electronics</h3>--%>
-<%--<sec:authorize access="isAuthenticated()">--%>
-    <%--<b style="color: white"> Welcome, <sec:authentication property="principal.username" /></b>--%>
-    <%--<a style="color: white" href="/personal"> Personal </a>--%>
-    <%--<a style="color: white"href="/logout"> Logout </a>--%>
-<%--</sec:authorize>--%>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -82,11 +74,11 @@
                     <a href="/registration" class="btn btn-secondary btn-md active" role="button" aria-pressed="true">Registration</a>
 
                 </form>
-                <script type="text/javascript">
-                    function form_submit() {
-                        document.getElementById("search_form").submit();
-                    }
-                </script>
+                <%--<script type="text/javascript">--%>
+                    <%--function form_submit() {--%>
+                        <%--document.getElementById("search_form").submit();--%>
+                    <%--}--%>
+                <%--</script>--%>
             </div>
         </div>
     </div>
@@ -148,7 +140,7 @@
 
         <div class="row">
             <div class="card" style="width: 17rem; background-color: transparent; color: aliceblue;">
-                <img src="/resources/static/images/phones/tv.jpg" class="card-img-top" alt="...">
+                <img src="/resources/static/images/phones/" class="card-img-top" alt="..." >
                 <div class="card-body">
                     <h5 class="card-title">HIT 1</h5>
                     <p class="card-text">special offer</p>
@@ -163,7 +155,7 @@
                 </div>
             </div>
             <div class="card" style="width: 17rem; background-color: transparent; color: aliceblue;">
-                <img src="/resources/static/images/" class="card-img-top" alt="...">
+                <img src="../resources/static/images/" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">HIT 2</h5>
                     <p class="card-text">special offer</p>
@@ -178,7 +170,7 @@
                 </div>
             </div>
             <div class="card" style="width: 17rem; background-color: transparent; color: aliceblue;">
-                <img src="/resources/static/images/" class="card-img-top" alt="...">
+                <img src="../resources/static/images/" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">HIT 3</h5>
                     <p class="card-text">special offer</p>
@@ -193,7 +185,7 @@
                 </div>
             </div>
             <div class="card" style="width: 17rem; background-color: transparent; color: aliceblue;">
-                <img src="/resources/static/images/" class="card-img-top" alt="...">
+                <img src="../resources/static/images/" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">HIT 4</h5>
                     <p class="card-text">special offer</p>
@@ -213,33 +205,33 @@
 
 
 
-<h3>Enter text:</h3>
-<input id="input_str" type="text">
-<input type="button" value="OK" onclick="doAjax()">
+<%--<h3>Enter text:</h3>--%>
+<%--<input id="input_str" type="text">--%>
+<%--<input type="button" value="OK" onclick="doAjax()">--%>
 
-<script type="text/javascript">
-    function doAjax() {
-        $.ajax({
-            url : '/ajax',
-            type: 'GET',
-            dataType: 'json',
-            data : ({
-                'text': $("#input_str").val()
-            }),
-            success: function (result) {
-                alert(result.dayOfWeek);
-            }
-        });
-    }
-</script>
+<%--<script type="text/javascript">--%>
+    <%--function doAjax() {--%>
+        <%--$.ajax({--%>
+            <%--url : '/ajax',--%>
+            <%--type: 'GET',--%>
+            <%--dataType: 'json',--%>
+            <%--data : ({--%>
+                <%--'text': $("#input_str").val()--%>
+            <%--}),--%>
+            <%--success: function (result) {--%>
+                <%--alert(result.dayOfWeek);--%>
+            <%--}--%>
+        <%--});--%>
+    <%--}--%>
+<%--</script>--%>
 
-<footer style="color: aliceblue; margin-left: 50px">
+<footer>
     <p> Copyright ...</p>
     <p> Our contacts ...</p>
     <p> Support... </p>
 </footer>
 
-
+<script type="text/javascript" src="../resources/static/js/app2.js"/>
 <%--<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>--%>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

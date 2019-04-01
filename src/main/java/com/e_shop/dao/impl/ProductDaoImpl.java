@@ -56,10 +56,21 @@ public class ProductDaoImpl implements ProductDAO {
 
     @Override
     public List<Product> getAllProductsByPrice(double priceMin, double priceMax) {
-        String hql = "FROM Product WHERE productprice between :minprice and :maxprice";
+        String hql = "FROM Product WHERE productPrice between :minprice and :maxprice";
         Query query = sessionFactory.getCurrentSession().createQuery(hql);
         query.setParameter("maxprice", priceMax);
         query.setParameter("minprice", priceMin);
+        return query.list();
+    }
+
+    @Override
+    public List<Product> getAllProductsByPrice(double priceMin, double priceMax, String type) {
+        ProductCategory category = ProductCategory.valueOf(type.toUpperCase());
+        String hql = "FROM Product as p WHERE p.category = :paramCategory and p.productPrice between :minprice and :maxprice";
+        Query query = sessionFactory.getCurrentSession().createQuery(hql);
+        query.setParameter("maxprice", priceMax);
+        query.setParameter("minprice", priceMin);
+        query.setParameter("paramCategory", category);
         return query.list();
     }
 

@@ -19,7 +19,7 @@
     <link rel="stylesheet" type="text/css" href="/resources/static/css/app.css">
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="//ajax.aspnetcdn.com/ajax/jquery.ui/1.10.3/jquery-ui.min.js"></script>
-    <script src="/resources/static/js/app.js"></script>
+    <%--<script src="/resources/static/js/app.js"></script>--%>
 </head>
 <body>
 
@@ -63,58 +63,8 @@
 
     <br>
 
-
-    <div class="row" style="color: aliceblue; margin: 0 auto">
-
-        <br>
-
-        <%--<div class="col-sm-3">--%>
-        <%--<form method="post" action="/admin">--%>
-            <%--<div class="form-group">--%>
-                <%--<input type="date" name="start" class="form-control" placeholder="Start">--%>
-            <%--</div>--%>
-            <%--<div class="form-group">--%>
-                <%--<input type="date" name="finish" class="form-control" placeholder="End">--%>
-            <%--</div>--%>
-            <%--<button type="submit" class="btn btn-secondary"> Enter </button>--%>
-            <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
-        <%--</form>--%>
-        <%--</div>--%>
-
-        <div class="col-sm-1">
-            <button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#exampleModal">Time period</button>
-        </div>
-
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel2">Enter period</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form method="post" action="/admin" id="search_form">
-                            <div class="form-group">
-                                <input type="date" name="start" class="form-control" placeholder="Start">
-                            </div>
-                            <div class="form-group">
-                                <input type="date" name="finish" class="form-control" placeholder="End">
-                            </div>
-                            <button onclick="form_submit()" name="user_search" class="btn btn-secondary" data-dismiss="modal">Enter</button>
-                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <br>
-
     <div class="row" style="margin: 0 auto">
-        <h6> Statistics for ${period}</h6>
+        <h5> ${period}</h5>
     </div>
 
     <br>
@@ -130,6 +80,34 @@
                 </div>
         </div>
 
+        <div class="col-sm-1">
+            <button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#exampleModal">Change period</button>
+        </div>
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 style="color: black" class="modal-title" id="exampleModalLabel2">Enter period</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" action="/admin" id="time_form">
+                            <div class="form-group">
+                                <input type="date" name="start" class="form-control" placeholder="Start">
+                            </div>
+                            <div class="form-group">
+                                <input type="date" name="finish" class="form-control" placeholder="End">
+                            </div>
+                            <button onclick="time_submit()" name="user_search" class="btn btn-secondary" data-dismiss="modal">Enter</button>
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="col-sm-10" >
 
@@ -352,18 +330,44 @@
     </div>
 </div>
 
-<script>
-    function form_submit() {
-        document.getElementById("search_form").submit();
-    }
-</script>
+<%--<script>--%>
+    <%--function form_submit() {--%>
+        <%--document.getElementById("search_form").submit();--%>
+    <%--}--%>
+<%--</script>--%>
+<%--<script>--%>
+<%--function stats() {--%>
+<%--$("#stats").css({"display" : "block"});--%>
+<%--$("#orders").css({"display" : "none"});--%>
+<%--$("#products").css({"display" : "none"});--%>
+<%--$("#clients").css({"display" : "none"});--%>
+<%--}--%>
+<%--function orders() {--%>
+<%--$("#orders").css({"display" : "block"});--%>
+<%--$("#stats").css({"display" : "none"});--%>
+<%--$("#products").css({"display" : "none"});--%>
+<%--$("#clients").css({"display" : "none"});--%>
+<%--}--%>
+<%--function products() {--%>
+<%--$("#products").css({"display" : "block"});--%>
+<%--$("#stats").css({"display" : "none"});--%>
+<%--$("#orders").css({"display" : "none"});--%>
+<%--$("#clients").css({"display" : "none"});--%>
+<%--}--%>
+<%--function clients() {--%>
+<%--$("#clients").css({"display" : "block"});--%>
+<%--$("#products").css({"display" : "none"});--%>
+<%--$("#stats").css({"display" : "none"});--%>
+<%--$("#orders").css({"display" : "none"});--%>
+<%--}--%>
+<%--</script>--%>
 
 <footer style="color: aliceblue; margin-left: 50px">
     <p> Copyright ...</p>
     <p> Our contacts ...</p>
     <p> Support... </p>
 </footer>
-
+<script type="text/javascript" src="../resources/static/js/app2.js"/>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

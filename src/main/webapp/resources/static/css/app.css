@@ -2,40 +2,8 @@ body{
     background-image: url(/resources/static/images/background.jpg);
 }
 
-
-.menu-list{
-    padding-left: 30px;
-    padding-top: 20px;
-}
-
-.home-section{
-    float:left;
-    width: 10%;
-}
-.section{
-    margin-left: 10%;
-    float:left;
-}
-.photo{
-    padding-right: 5px;
-}
-
-#hits{
-    background-color: transparent;
-    color: aliceblue;
-}
-
-.list-group-item{
-    background-color: transparent;
-    color: aliceblue;
-}
-
-.modal fade{
-    background-color: transparent;
-}
-
 footer{
-    color: azure;
+    color: blue;
     margin-left: 10%;
     float:left;
     padding-left: 30px;

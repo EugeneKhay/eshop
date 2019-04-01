@@ -16,6 +16,8 @@ public interface ProductService {
 
     List<Product> getAllProductsByPrice(double priceMin, double priceMax);
 
+    List<Product> getAllProductsByPrice(double priceMin, double priceMax, String type);
+
     List<Product> getAllProductsByBrand(String brand);
 
     void saveProduct(Product product);

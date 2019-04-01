@@ -31,47 +31,46 @@ function edit_submit() {
     document.getElementById("edited_order").submit();
 }
 
-function deleteItem() {
-    $.ajax({
-        url : '/delete',
-        type: 'GET',
-        dataType: 'json',
-        data : ({
-            delete: ${product.id}
-        }),
-        success: function (result) {
-            $('#totalPrice').text(result);
-            $('#deleteItem-${product.id}').css({"display" : "none"});
-        }
-    });
-}
+    function deleteItem(id) {
+        $.ajax({
+            url : '/delete',
+            type: 'GET',
+            dataType: 'json',
+            data : ({
+                delete: id
+            }),
+            success: function (result) {
+                $('#totalPrice').text(result);
+                $('#product-'+ id + 'del').css({"display" : "none"});
+            }
+        });
+    }
 
-function increase() {
-    $.ajax({
-        url : '/editOrderPlus',
-        type: 'GET',
-        dataType: 'json',
-        data : ({
-            editOrderPlus: ${product.id}
-        }),
-        success: function (result) {
-            $('#totalPrice').text(result[0]);
-            $('#amount').text(result[1]);
-        }
-    });
-}
-
-function decrease() {
-    $.ajax({
-        url : '/editOrderMinus',
-        type: 'GET',
-        dataType: 'json',
-        data : ({
-            editOrderMinus: ${product.id}
-        }),
-        success: function (result) {
-            $('#totalPrice').text(result[0]);
-            $('#amount').text(result[1]);
-        }
-    });
-}
+    function increase(id) {
+        $.ajax({
+            url : '/editOrderPlus',
+            type: 'GET',
+            dataType: 'json',
+            data : ({
+                editOrderPlus: id
+            }),
+            success: function (result) {
+                $('#totalPrice').text(result[0]);
+                $('#amount'+id+'edit').text(result[1]);
+            }
+        });
+    }
+    function decrease(id) {
+        $.ajax({
+            url : '/editOrderMinus',
+            type: 'GET',
+            dataType: 'json',
+            data : ({
+                editOrderMinus: id
+            }),
+            success: function (result) {
+                $('#totalPrice').text(result[0]);
+                $('#amount'+id+'edit').text(result[1]);
+            }
+        });
+    }

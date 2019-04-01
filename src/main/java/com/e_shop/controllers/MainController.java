@@ -6,6 +6,7 @@ import com.e_shop.domain.ClientAddress;
 import com.e_shop.enums.Role;
 import com.e_shop.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -47,7 +48,8 @@ public class MainController {
     @PostMapping("/registration")
     public String add(@RequestParam(name = "firstName") String firstName,
                       @RequestParam(name = "lastName") String lastName,
-                      @RequestParam(name = "birthDate") String birthDate,
+//                      @RequestParam(name = "birthDate") String birthDate,
+                      @RequestParam(name = "birthDate") @DateTimeFormat(pattern="yyyy-MM-dd")LocalDate birthDate,
                       @RequestParam(name = "email") String email,
                       @RequestParam(name = "password") String password,
                       @RequestParam(name = "country") String country,
@@ -57,14 +59,15 @@ public class MainController {
                       @RequestParam(name = "house") int house,
                       @RequestParam(name = "flat") int flat) {
         //FIX date input
-        String[] array = birthDate.split(" ");
-        int[] intArr = Arrays.stream(array).mapToInt(Integer::valueOf).toArray();
-        LocalDate birth = LocalDate.of(intArr[0], intArr[1], intArr[2]);
+//        String[] array = birthDate.split(" ");
+//        int[] intArr = Arrays.stream(array).mapToInt(Integer::valueOf).toArray();
+//        LocalDate birth = LocalDate.of(intArr[0], intArr[1], intArr[2]);
+
         ClientAddress address = new ClientAddress(country, city, postcode, street, house,flat);
         Client client = new Client();
         client.setFirstName(firstName);
         client.setLastName(lastName);
-        client.setBirthDate(birth);
+        client.setBirthDate(birthDate);
         client.setEmail(email);
         client.setPassword(password);
         client.setAddress(address);
@@ -79,8 +82,8 @@ public class MainController {
      */
     @GetMapping("/personal")
     public String enter(Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Client client = (Client) auth.getPrincipal();
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("client", client);
         return "personal";
     }

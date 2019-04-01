@@ -22,13 +22,6 @@
     <link rel="stylesheet" href="/resources/static/css/app.css">
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <%--<script type="text/javascript" src="<c:url value="/resources/static/js/jquery-3.3.1.min.js" />"></script>--%>
-
-    <%--<script type="text/javascript">--%>
-        <%--function doAjax() {--%>
-            <%--$("#1").css({"display" : "none"});--%>
-        <%--}--%>
-    <%--</script>--%>
 
 
 
@@ -103,10 +96,39 @@
         </div>
     </div>
 
+    <div style="color: aliceblue">
+        <h5>Search</h5>
+        <form method="post" action="/phone" style="width: 50%">
+            <div class="input-group">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="search_type" id="inlineRadio1" value="Price">
+                    <label class="form-check-label" for="inlineRadio1">Price</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="search_type" id="inlineRadio2" value="Brand">
+                    <label class="form-check-label" for="inlineRadio2">Brand</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="search_type" id="inlineRadio3" value="Colour">
+                    <label class="form-check-label" for="inlineRadio3">Colour</label>
+                </div>
+                <input id="search_input" type="text" name="search_res" placeholder="filter">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                <input type="hidden" name="page" value="${requestScope['javax.servlet.forward.request_uri']}"/>
+                <div class="input-group-append">
+                    <button class="btn btn-secondary" type="submit">Find</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <br>
+    <br>
+
     <div class="row" id="output">
         <c:forEach items="${items}" var="item">
-            <form class="card" style="width: 17rem; background-color: transparent; color: aliceblue;" action="/basket" method="post">
-                <img src="/static/images/phones/qw.png" class="card-img-top" alt="...">
+            <form class="card" style="width: 17rem; background-color: transparent; color: aliceblue; float: left" action="/basket" method="post">
+                <img src="../resources/static/images/phones/" class="card-img-top" alt="...">
                 <div class="card-body" >
                     <h5 class="card-title">${item.productName}</h5>
                     <p class="card-text">${item.productPrice}</p>
@@ -125,40 +147,6 @@
 
     <br>
 
-    <%--<h3 style="color: aliceblue">Search</h3>--%>
-    <%--<br>--%>
-    <%--<div class="row" id="1">--%>
-        <%--<form method="post" action="/catalog">--%>
-            <%--<p>--%>
-                <%--<select class="custom-select mr-sm-2" name="search_type" id="search">--%>
-                    <%--<option selected>Choose filter</option>--%>
-                    <%--<option value="Price">Price</option>--%>
-                    <%--<option value="Brand">Brand</option>--%>
-                    <%--<option value="Colour">Colour</option>--%>
-                <%--</select>--%>
-            <%--</p>--%>
-            <%--<input id="search_input" type="text" name="search_res" placeholder="filter">--%>
-            <%--<button id="search_button" type="submit" value="OK" onclick="doAjax()">Search</button>--%>
-            <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
-        <%--</form>--%>
-    <%--</div>--%>
-
-    <form method="post" action="/phone" style="width: 40%">
-        <div class="input-group">
-            <select class="custom-select-7" id="search" name="search_type">
-            <option selected>Search</option>
-            <option value="Price">Price</option>
-            <option value="Brand">Brand</option>
-            <option value="Colour">Colour</option>
-        </select>
-            <input id="search_input" type="text" name="search_res" placeholder="filter">
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-            <input type="hidden" name="page" value="${requestScope['javax.servlet.forward.request_uri']}"/>
-            <div class="input-group-append">
-                <button class="btn btn-secondary" type="submit">Find</button>
-            </div>
-        </div>
-    </form>
 </div>
 
 
@@ -168,7 +156,7 @@
     <p> Support... </p>
 </footer>
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<%--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>--%>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>

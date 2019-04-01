@@ -26,24 +26,31 @@ public class CatalogController {
     }
 
     @PostMapping("/phone")
-    public String postCatalog(@RequestParam(name = "search_type") String filter,
-                              @RequestParam(name = "search_res") String search_data,
+    public String postCatalog(@RequestParam(name = "search_type", required = false)  String filter,
+                              @RequestParam(name = "search_res", required = false) String search_data,
                               @RequestParam(name = "page") String page,
                               Model model) {
+        List<Product> searchResult;
         String productType = page.substring(1).toUpperCase();
         ProductCategory category = ProductCategory.valueOf(productType);
-        List<Product> searchResult;
+
+        if (filter == null || filter.isEmpty() || search_data == null || search_data.isEmpty()) {
+            searchResult = productService.getAllProductsByCategory(category);
+            model.addAttribute("items", searchResult);
+            return "products";
+        }
         if (filter.equals("Price")) {
             //TODO
             String[] arr = search_data.split(" ");
             double priceMin = Double.valueOf(arr[0]);
             double priceMax = Double.valueOf(arr[1]);
-            searchResult = productService.getAllProductsByPrice(priceMin, priceMax);
+            searchResult = productService.getAllProductsByPrice(priceMin, priceMax, productType);
         } else if (filter.equals("Brand")) {
             searchResult = productService.getAllProductsByBrand(search_data, productType);
         } else if (filter.equals("Colour")) {
             searchResult = productService.getAllProductsByColour(search_data, productType);
-        } else {
+        }
+        else {
             searchResult = productService.getAllProductsByCategory(category);
         }
         model.addAttribute("items", searchResult);

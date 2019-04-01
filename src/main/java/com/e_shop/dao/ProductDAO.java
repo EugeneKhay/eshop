@@ -16,6 +16,8 @@ public interface ProductDAO {
 
     List<Product> getAllProductsByPrice(double priceMin, double priceMax);
 
+    List<Product> getAllProductsByPrice(double priceMin, double priceMax, String type);
+
     List<Product> getAllProductsByBrand(String brand);
 
     List<Product> getAllProductsByBrand(String brand, String type);

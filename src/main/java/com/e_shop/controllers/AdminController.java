@@ -7,6 +7,7 @@ import com.e_shop.enums.ProductCategory;
 import com.e_shop.services.ClientService;
 import com.e_shop.services.OrderService;
 import com.e_shop.services.ProductService;
+import com.e_shop.services.impl.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -32,8 +33,21 @@ public class AdminController {
     @Autowired
     private OrderService orderService;
 
+    @Autowired
+    private AdminService adminService;
+
     @GetMapping("/admin")
-    public String view() {
+    public String view(Model model) {
+        LocalDate start = LocalDate.of(2019, 1, 1);
+        LocalDate finish = LocalDate.now();
+        model.addAttribute("bestClient", clientService.getTenBestClientsPerPeriod(start, finish));
+        model.addAttribute("bestProducts", orderService.getBestsellerPerPeriod(start, finish));
+        model.addAttribute("orders", orderService.getOrdersPerPeriod(start, finish));
+        model.addAttribute("totalSumOfAllOrders", orderService.getTotalSumOfAllOrdersPerPeriod(start, finish));
+        model.addAttribute("totalAmountOfOrders", orderService.getTotalAmountOfOrdersPerPeriod(start, finish));
+        model.addAttribute("products", productService.getAllProducts());
+        model.addAttribute("clients", clientService.getAllClients());
+        model.addAttribute("period", adminService.getMessage(start, finish));
         return "adminpage";
     }
 
@@ -106,24 +120,27 @@ public class AdminController {
 //    }
 
     @PostMapping("/admin")
-    public String getStats(@RequestParam(name = "start", required = false) @DateTimeFormat(pattern="yyyy-MM-dd")LocalDate start,
-                           @RequestParam(name = "finish", required = false)@DateTimeFormat(pattern="yyyy-MM-dd") LocalDate finish,
+    public String getStats(@RequestParam(name = "start", required = false) @DateTimeFormat(pattern="yyyy-MM-dd")LocalDate startParameter,
+                           @RequestParam(name = "finish", required = false)@DateTimeFormat(pattern="yyyy-MM-dd")LocalDate finishParameter,
                            Model model) {
-        if (start == null) start = LocalDate.of(2019, 1, 1);
-        if (finish == null) start = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        String period = start.format(formatter) + " / " + finish.format(formatter);
-        double totalSumOfAllOrders = orderService.getTotalSumOfAllOrdersPerPeriod(start, finish);
-        long totalAmountOfOrders = orderService.getTotalAmountOfOrdersPerPeriod(start, finish);
+
+
+
+        LocalDate start = adminService.getStartDate(startParameter);
+        LocalDate finish = adminService.getFinishDate(finishParameter);
+
+//        String period = adminService.getMessage(startParameter, finishParameter);
+//        double totalSumOfAllOrders = orderService.getTotalSumOfAllOrdersPerPeriod(start, finish);
+//        long totalAmountOfOrders = orderService.getTotalAmountOfOrdersPerPeriod(start, finish);
         model.addAttribute("bestClient", clientService.getTenBestClientsPerPeriod(start, finish));
         model.addAttribute("bestProducts", orderService.getBestsellerPerPeriod(start, finish));
         model.addAttribute("orders", orderService.getOrdersPerPeriod(start, finish));
-        model.addAttribute("totalSumOfAllOrders", totalSumOfAllOrders);
-        model.addAttribute("totalAmountOfOrders", totalAmountOfOrders);
+        model.addAttribute("totalSumOfAllOrders", orderService.getTotalSumOfAllOrdersPerPeriod(start, finish));
+        model.addAttribute("totalAmountOfOrders", orderService.getTotalAmountOfOrdersPerPeriod(start, finish));
         model.addAttribute("products", productService.getAllProducts());
         model.addAttribute("clients", clientService.getAllClients());
-        model.addAttribute("period", period);
-
+//        model.addAttribute("period", adminService.getMessage(startParameter, finishParameter));
+        model.addAttribute("period", adminService.getMessage(start, finish));
         return "adminpage";
     }
 

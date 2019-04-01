@@ -39,6 +39,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<Product> getAllProductsByPrice(double priceMin, double priceMax, String type) {
+        return dao.getAllProductsByPrice(priceMin, priceMax, type);
+    }
+
+    @Override
     public List<Product> getAllProductsByBrand(String brand) {
         return dao.getAllProductsByBrand(brand);
     }
