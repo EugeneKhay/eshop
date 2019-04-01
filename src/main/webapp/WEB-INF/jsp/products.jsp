@@ -98,21 +98,46 @@
 
     <div style="color: aliceblue">
         <h5>Search</h5>
+        <%--<form method="post" action="/phone" style="width: 50%">--%>
+            <%--<div class="input-group">--%>
+                <%--<div class="form-check form-check-inline">--%>
+                    <%--<input class="form-check-input" type="radio" name="search_type" id="inlineRadio1" value="Price">--%>
+                    <%--<label class="form-check-label" for="inlineRadio1">Price</label>--%>
+                <%--</div>--%>
+                <%--<div class="form-check form-check-inline">--%>
+                    <%--<input class="form-check-input" type="radio" name="search_type" id="inlineRadio2" value="Brand">--%>
+                    <%--<label class="form-check-label" for="inlineRadio2">Brand</label>--%>
+                <%--</div>--%>
+                <%--<div class="form-check form-check-inline">--%>
+                    <%--<input class="form-check-input" type="radio" name="search_type" id="inlineRadio3" value="Colour">--%>
+                    <%--<label class="form-check-label" for="inlineRadio3">Colour</label>--%>
+                <%--</div>--%>
+                <%--<input id="search_input" type="text" name="search_res" placeholder="filter">--%>
+                <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
+                <%--<input type="hidden" name="page" value="${requestScope['javax.servlet.forward.request_uri']}"/>--%>
+                <%--<div class="input-group-append">--%>
+                    <%--<button class="btn btn-secondary" type="submit">Find</button>--%>
+                <%--</div>--%>
+            <%--</div>--%>
+        <%--</form>--%>
+
         <form method="post" action="/phone" style="width: 50%">
             <div class="input-group">
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="search_type" id="inlineRadio1" value="Price">
-                    <label class="form-check-label" for="inlineRadio1">Price</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="search_type1" value="Price" id="defaultCheck1">
+                    <label class="form-check-label" for="defaultCheck1">Price</label>
+                    <input id="search_input1" type="text" name="search_res1" placeholder="price">
                 </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="search_type" id="inlineRadio2" value="Brand">
-                    <label class="form-check-label" for="inlineRadio2">Brand</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="search_type2" value="Brand" id="defaultCheck2">
+                    <label class="form-check-label" for="defaultCheck2">Brand</label>
+                    <input id="search_input2" type="text" name="search_res2" placeholder="brand">
                 </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="search_type" id="inlineRadio3" value="Colour">
-                    <label class="form-check-label" for="inlineRadio3">Colour</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="search_type3" value="Colour" id="defaultCheck3">
+                    <label class="form-check-label" for="defaultCheck3">Colour</label>
+                    <input id="search_input3" type="text" name="search_res3" placeholder="colour">
                 </div>
-                <input id="search_input" type="text" name="search_res" placeholder="filter">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <input type="hidden" name="page" value="${requestScope['javax.servlet.forward.request_uri']}"/>
                 <div class="input-group-append">
@@ -120,6 +145,24 @@
                 </div>
             </div>
         </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </div>
 
     <br>
