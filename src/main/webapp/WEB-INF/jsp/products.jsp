@@ -122,18 +122,18 @@
         <%--</form>--%>
 
         <form method="post" action="/phone" style="width: 50%">
-            <div class="input-group">
-                <div class="form-check">
+            <%--<div class="input-group form-group">--%>
+                <div class="form-check form-group" >
                     <input class="form-check-input" type="checkbox" name="search_type1" value="Price" id="defaultCheck1">
                     <label class="form-check-label" for="defaultCheck1">Price</label>
-                    <input id="search_input1" type="text" name="search_res1" placeholder="price">
+                    <input id="search_input1" type="text" name="search_res1" placeholder="price" style="margin-left: 11px">
                 </div>
-                <div class="form-check">
+                <div class="form-check form-group">
                     <input class="form-check-input" type="checkbox" name="search_type2" value="Brand" id="defaultCheck2">
                     <label class="form-check-label" for="defaultCheck2">Brand</label>
-                    <input id="search_input2" type="text" name="search_res2" placeholder="brand">
+                    <input id="search_input2" type="text" name="search_res2" placeholder="brand" style="margin-left: 5px">
                 </div>
-                <div class="form-check">
+                <div class="form-check form-group">
                     <input class="form-check-input" type="checkbox" name="search_type3" value="Colour" id="defaultCheck3">
                     <label class="form-check-label" for="defaultCheck3">Colour</label>
                     <input id="search_input3" type="text" name="search_res3" placeholder="colour">
@@ -141,9 +141,8 @@
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <input type="hidden" name="page" value="${requestScope['javax.servlet.forward.request_uri']}"/>
                 <div class="input-group-append">
-                    <button class="btn btn-secondary" type="submit">Find</button>
+                    <button class="btn btn-secondary" type="submit">Find/Clear</button>
                 </div>
-            </div>
         </form>
 
 
@@ -170,7 +169,7 @@
 
     <div class="row" id="output">
         <c:forEach items="${items}" var="item">
-            <form class="card" style="width: 17rem; background-color: transparent; color: aliceblue; float: left" action="/basket" method="post">
+            <form class="card" style="width: 17rem; margin-left: 15px; margin-top: 15px; background-color: transparent; color: aliceblue; float: left" action="/basket" method="post">
                 <img src="../resources/static/images/phones/" class="card-img-top" alt="...">
                 <div class="card-body" >
                     <h5 class="card-title">${item.productName}</h5>
@@ -193,11 +192,11 @@
 </div>
 
 
-<footer style="color: aliceblue; margin-left: 50px">
-    <p> Copyright ...</p>
-    <p> Our contacts ...</p>
-    <p> Support... </p>
-</footer>
+<%--<footer style="color: aliceblue; margin-left: 50px">--%>
+    <%--<p> Copyright ...</p>--%>
+    <%--<p> Our contacts ...</p>--%>
+    <%--<p> Support... </p>--%>
+<%--</footer>--%>
 
 <%--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>--%>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

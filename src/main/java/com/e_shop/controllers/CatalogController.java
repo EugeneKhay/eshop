@@ -69,23 +69,26 @@ public class CatalogController {
                               @RequestParam(name = "search_res3", required = false) String search_dataColour,
                               @RequestParam(name = "page") String page,
                               Model model) {
-//        List<Product> searchResult = new ArrayList<>();
         String productType = page.substring(1).toUpperCase();
         ProductCategory category = ProductCategory.valueOf(productType);
 
-        String[] arr = search_dataPrice.split(" ");
-        double priceMin = Double.valueOf(arr[0]);
-        double priceMax = Double.valueOf(arr[1]);
-
         List<Product> searchResult = productService.getAllProductsByCategory(category);
-        List<Product> filteredByPrice = productService.getAllProductsByPrice(priceMin, priceMax, productType);
-        List<Product> filteredByBrand = productService.getAllProductsByBrand(search_dataBrand, productType);
-        List<Product> filteredByColour = productService.getAllProductsByColour(search_dataColour, productType);
 
-        searchResult.retainAll(filteredByPrice);
-        searchResult.retainAll(filteredByBrand);
-        searchResult.retainAll(filteredByColour);
-
+        if (search_dataPrice != null && !search_dataPrice.isEmpty()) {
+            String[] arr = search_dataPrice.split(" ");
+            double priceMin = Double.valueOf(arr[0]);
+            double priceMax = Double.valueOf(arr[1]);
+            List<Product> filteredByPrice = productService.getAllProductsByPrice(priceMin, priceMax, productType);
+            searchResult.retainAll(filteredByPrice);
+        }
+        if (search_dataBrand != null && !search_dataBrand.isEmpty()) {
+            List<Product> filteredByBrand = productService.getAllProductsByBrand(search_dataBrand, productType);
+            searchResult.retainAll(filteredByBrand);
+        }
+        if (search_dataColour != null && !search_dataColour.isEmpty()) {
+            List<Product> filteredByColour = productService.getAllProductsByColour(search_dataColour, productType);
+            searchResult.retainAll(filteredByColour);
+        }
         model.addAttribute("items", searchResult);
         return "products";
     }

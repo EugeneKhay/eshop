@@ -3,8 +3,10 @@ package com.e_shop.controllers;
 import com.e_shop.domain.Basket;
 import com.e_shop.domain.Client;
 import com.e_shop.domain.ClientAddress;
+import com.e_shop.domain.Product;
 import com.e_shop.enums.Role;
 import com.e_shop.services.ClientService;
+import com.e_shop.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
@@ -20,25 +22,37 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class MainController {
 
     @Autowired
     private ClientService clientService;
+
+    @Autowired
+    private ProductService productService;
+
     Basket basket;
 
 
+//    @GetMapping("/")
+//    public String homepage(HttpSession session) {
+//        if (basket == null) basket = new Basket();
+//        session.setAttribute("shop_basket", basket);
+//        return "homepage2";
+//    }
+
     @GetMapping("/")
-    public String homepage(HttpSession session) {
+    public String homepage(HttpSession session, Model model) {
         if (basket == null) basket = new Basket();
         session.setAttribute("shop_basket", basket);
+        List<Product> allProducts = productService.getAllProducts();
+        model.addAttribute("items", allProducts);
         return "homepage2";
     }
+
+
 
     @GetMapping("/registration")
     public String register() {

@@ -138,72 +138,92 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="card" style="width: 17rem; background-color: transparent; color: aliceblue;">
-                <img src="/resources/static/images/phones/" class="card-img-top" alt="..." >
-                <div class="card-body">
-                    <h5 class="card-title">HIT 1</h5>
-                    <p class="card-text">special offer</p>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item" style="background-color: transparent; color: aliceblue;">Description</li>
-                    <li class="list-group-item" style="background-color: transparent; color: aliceblue;">Common price</li>
-                    <li class="list-group-item" style="background-color: transparent; color: aliceblue;">Special price</li>
-                </ul>
-                <div class="card-body">
-                    <a href="#" class="card-link">Buy</a>
-                </div>
-            </div>
-            <div class="card" style="width: 17rem; background-color: transparent; color: aliceblue;">
-                <img src="../resources/static/images/" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">HIT 2</h5>
-                    <p class="card-text">special offer</p>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item" style="background-color: transparent;">Description</li>
-                    <li class="list-group-item" style="background-color: transparent;">Common price</li>
-                    <li class="list-group-item" style="background-color: transparent;">Special price</li>
-                </ul>
-                <div class="card-body">
-                    <a href="#" class="card-link">Buy</a>
-                </div>
-            </div>
-            <div class="card" style="width: 17rem; background-color: transparent; color: aliceblue;">
-                <img src="../resources/static/images/" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">HIT 3</h5>
-                    <p class="card-text">special offer</p>
-                </div>
-                <ul class="list-group list-group-flush" >
-                    <li class="list-group-item" style="background-color: transparent;">Description</li>
-                    <li class="list-group-item" style="background-color: transparent;">Common price</li>
-                    <li class="list-group-item" style="background-color: transparent;">Special price</li>
-                </ul>
-                <div class="card-body">
-                    <a href="#" class="card-link" >Buy</a>
-                </div>
-            </div>
-            <div class="card" style="width: 17rem; background-color: transparent; color: aliceblue;">
-                <img src="../resources/static/images/" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">HIT 4</h5>
-                    <p class="card-text">special offer</p>
-                </div>
-                <ul class="list-group list-group-flush" style="background-color: transparent;">
-                    <li class="list-group-item" style="background-color: transparent;">Description</li>
-                    <li class="list-group-item" style="background-color: transparent;">Common price</li>
-                    <li class="list-group-item" style="background-color: transparent;">Special price</li>
-                </ul>
-                <div class="card-body">
-                    <a href="#" class="card-link">Buy</a>
-                </div>
-            </div>
+        <div class="row" id="output">
+            <c:forEach items="${items}" var="item">
+                <form class="card" style="width: 15rem; background-color: transparent; color: aliceblue; float: left; margin-left: 15px; margin-top: 15px" action="/basket" method="post">
+                    <img src="../resources/static/images/phones/" class="card-img-top" alt="...">
+                    <div class="card-body" >
+                        <h5 class="card-title">${item.productName}</h5>
+                        <p class="card-text">${item.productPrice}</p>
+                    </div>
+                    <c:set var = "params" scope = "session" value = "${item.productParameteres}"/>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item" style="width: 17rem; background-color: transparent; color: aliceblue;">${params.brand}</li>
+                        <li class="list-group-item" style="width: 17rem; background-color: transparent; color: aliceblue;">${params.colour}</li>
+                    </ul>
+                    <input  type="hidden" name="item" value=${item.id}>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    <button type="submit">Buy</button>
+                </form>
+            </c:forEach>
         </div>
     </div>
 </div>
 
 
+
+<%--<div class="row">--%>
+    <%--<div class="card" style="width: 17rem; background-color: transparent; color: aliceblue;">--%>
+        <%--<img src="/resources/static/images/phones/" class="card-img-top" alt="..." >--%>
+        <%--<div class="card-body">--%>
+            <%--<h5 class="card-title">HIT 1</h5>--%>
+            <%--<p class="card-text">special offer</p>--%>
+        <%--</div>--%>
+        <%--<ul class="list-group list-group-flush">--%>
+            <%--<li class="list-group-item" style="background-color: transparent; color: aliceblue;">Description</li>--%>
+            <%--<li class="list-group-item" style="background-color: transparent; color: aliceblue;">Common price</li>--%>
+            <%--<li class="list-group-item" style="background-color: transparent; color: aliceblue;">Special price</li>--%>
+        <%--</ul>--%>
+        <%--<div class="card-body">--%>
+            <%--<a href="#" class="card-link">Buy</a>--%>
+        <%--</div>--%>
+    <%--</div>--%>
+    <%--<div class="card" style="width: 17rem; background-color: transparent; color: aliceblue;">--%>
+        <%--<img src="../resources/static/images/" class="card-img-top" alt="...">--%>
+        <%--<div class="card-body">--%>
+            <%--<h5 class="card-title">HIT 2</h5>--%>
+            <%--<p class="card-text">special offer</p>--%>
+        <%--</div>--%>
+        <%--<ul class="list-group list-group-flush">--%>
+            <%--<li class="list-group-item" style="background-color: transparent;">Description</li>--%>
+            <%--<li class="list-group-item" style="background-color: transparent;">Common price</li>--%>
+            <%--<li class="list-group-item" style="background-color: transparent;">Special price</li>--%>
+        <%--</ul>--%>
+        <%--<div class="card-body">--%>
+            <%--<a href="#" class="card-link">Buy</a>--%>
+        <%--</div>--%>
+    <%--</div>--%>
+    <%--<div class="card" style="width: 17rem; background-color: transparent; color: aliceblue;">--%>
+        <%--<img src="../resources/static/images/" class="card-img-top" alt="...">--%>
+        <%--<div class="card-body">--%>
+            <%--<h5 class="card-title">HIT 3</h5>--%>
+            <%--<p class="card-text">special offer</p>--%>
+        <%--</div>--%>
+        <%--<ul class="list-group list-group-flush" >--%>
+            <%--<li class="list-group-item" style="background-color: transparent;">Description</li>--%>
+            <%--<li class="list-group-item" style="background-color: transparent;">Common price</li>--%>
+            <%--<li class="list-group-item" style="background-color: transparent;">Special price</li>--%>
+        <%--</ul>--%>
+        <%--<div class="card-body">--%>
+            <%--<a href="#" class="card-link" >Buy</a>--%>
+        <%--</div>--%>
+    <%--</div>--%>
+    <%--<div class="card" style="width: 17rem; background-color: transparent; color: aliceblue;">--%>
+        <%--<img src="../resources/static/images/" class="card-img-top" alt="...">--%>
+        <%--<div class="card-body">--%>
+            <%--<h5 class="card-title">HIT 4</h5>--%>
+            <%--<p class="card-text">special offer</p>--%>
+        <%--</div>--%>
+        <%--<ul class="list-group list-group-flush" style="background-color: transparent;">--%>
+            <%--<li class="list-group-item" style="background-color: transparent;">Description</li>--%>
+            <%--<li class="list-group-item" style="background-color: transparent;">Common price</li>--%>
+            <%--<li class="list-group-item" style="background-color: transparent;">Special price</li>--%>
+        <%--</ul>--%>
+        <%--<div class="card-body">--%>
+            <%--<a href="#" class="card-link">Buy</a>--%>
+        <%--</div>--%>
+    <%--</div>--%>
+<%--</div>--%>
 
 <%--<h3>Enter text:</h3>--%>
 <%--<input id="input_str" type="text">--%>
@@ -225,11 +245,11 @@
     <%--}--%>
 <%--</script>--%>
 
-<footer>
-    <p> Copyright ...</p>
-    <p> Our contacts ...</p>
-    <p> Support... </p>
-</footer>
+<%--<footer>--%>
+    <%--<p> Copyright ...</p>--%>
+    <%--<p> Our contacts ...</p>--%>
+    <%--<p> Support... </p>--%>
+<%--</footer>--%>
 
 <script type="text/javascript" src="../resources/static/js/app2.js"/>
 <%--<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>--%>
