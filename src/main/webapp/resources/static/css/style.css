@@ -1,0 +1,14 @@
+body{
+    background-image: url(/resources/static/images/background.jpg);
+}
+
+footer{
+    color: blue;
+    margin-left: 10%;
+    float:left;
+    padding-left: 30px;
+    padding-top: 20px;
+}
+
+
+
