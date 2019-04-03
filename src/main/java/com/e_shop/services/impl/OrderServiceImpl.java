@@ -9,8 +9,7 @@ import com.e_shop.services.OrderService;
 import com.e_shop.services.ProductService;
 import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +20,6 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Service
-@Slf4j
 @Transactional
 public class OrderServiceImpl implements OrderService {
 
@@ -44,7 +42,6 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void saveOrders(Order order) {
         dao.saveOrders(order);
-        log.info("Order saved to database");
     }
 
     @Override
@@ -55,6 +52,11 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Order> getOrdersPerPeriod(LocalDate start, LocalDate finish) {
         return dao.getOrdersPerPeriod(start, finish);
+    }
+
+    @Override
+    public List<Order> getOrdersPerPeriodForClient(Client client, LocalDate start, LocalDate finish) {
+        return dao.getOrdersPerPeriodForClient(client, start, finish);
     }
 
     public LocalDate getDate(String day, String month, String year) {

@@ -1,7 +1,7 @@
 package com.e_shop.dao.impl;
 
 import com.e_shop.dao.ClientDao;
-import com.e_shop.dao2.AbstractDao;
+//import com.e_shop.dao2.AbstractDao;
 import com.e_shop.domain.Client;
 import com.e_shop.domain.ClientAddress;
 import org.hibernate.SessionFactory;

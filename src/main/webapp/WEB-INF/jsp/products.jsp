@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <%@ page import="com.e_shop.domain.Product" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="com.e_shop.domain.Basket" %><%--
+<%@ page import="com.e_shop.domain.Basket" %>
+<%--
   Created by IntelliJ IDEA.
   User: evgenijhajmovskij
   Date: 2019-03-03
@@ -35,9 +36,7 @@
         </div>
         <div class="col-sm-4">
             <sec:authorize access="isAuthenticated()">
-                <%--<b style="color: aliceblue"> <sec:authentication property="principal.username" /></b>--%>
                 <b style="color: aliceblue"> <a style="color: aliceblue" href="/personal"> <sec:authentication property="principal.username" /> </a> </b>
-                <%--<a style="color: aliceblue; padding-left: 20px" href="/personal"> Personal </a>--%>
                 <a style="color: aliceblue; padding-left: 20px" href="/logout"> Logout </a>
             </sec:authorize>
         </div>
@@ -86,7 +85,6 @@
         <div class="col-sm-1">
             <button type="button" class="btn btn-secondary">
                 <a style="color: aliceblue" href="/basket">Basket</a>
-                <%--<span class="badge badge-light"><%= ((Basket) session.getAttribute("shop_basket")).getProductsInBasket().keySet().size() %></span>--%>
                 <span class="badge badge-light"><%= ((Basket) session.getAttribute("shop_basket")).getProductsInBasket().values().stream().reduce((s1, s2) -> s1 + s2).orElse(0) %></span>
             </button>
         </div>
@@ -94,35 +92,57 @@
         <div class="col-sm-1">
             <button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#exampleModal">Sign In</button>
         </div>
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Please, sign in</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <c:url var="loginUrl" value="/login" />
+                        <form action="${loginUrl}" method="post" id="search_form">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            <c:if test="${param.error != null}">
+                                <p>
+                                    Invalid username and password.
+                                </p>
+                            </c:if>
+                            <p>
+                                <label for="username">Username</label>
+                                <input type="text" id="username" name="username"/>
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            </p>
+                            <p>
+                                <label for="password">Password</label>
+                                <input type="password" id="password" name="password"/>
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            </p>
+                            <button onclick="form_submit()" name="user_search" class="btn btn-secondary" data-dismiss="modal">Log in</button>
+                            <!--<button type="button" class="btn btn-secondary"><a href="/registration">Registration</a></button>-->
+                            <a href="/registration" class="btn btn-secondary btn-md active" role="button" aria-pressed="true">Registration</a>
+
+                        </form>
+                        <%--<script type="text/javascript">--%>
+                        <%--function form_submit() {--%>
+                        <%--document.getElementById("search_form").submit();--%>
+                        <%--}--%>
+                        <%--</script>--%>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <div style="color: aliceblue">
         <h5>Search</h5>
-        <%--<form method="post" action="/phone" style="width: 50%">--%>
-            <%--<div class="input-group">--%>
-                <%--<div class="form-check form-check-inline">--%>
-                    <%--<input class="form-check-input" type="radio" name="search_type" id="inlineRadio1" value="Price">--%>
-                    <%--<label class="form-check-label" for="inlineRadio1">Price</label>--%>
-                <%--</div>--%>
-                <%--<div class="form-check form-check-inline">--%>
-                    <%--<input class="form-check-input" type="radio" name="search_type" id="inlineRadio2" value="Brand">--%>
-                    <%--<label class="form-check-label" for="inlineRadio2">Brand</label>--%>
-                <%--</div>--%>
-                <%--<div class="form-check form-check-inline">--%>
-                    <%--<input class="form-check-input" type="radio" name="search_type" id="inlineRadio3" value="Colour">--%>
-                    <%--<label class="form-check-label" for="inlineRadio3">Colour</label>--%>
-                <%--</div>--%>
-                <%--<input id="search_input" type="text" name="search_res" placeholder="filter">--%>
-                <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
-                <%--<input type="hidden" name="page" value="${requestScope['javax.servlet.forward.request_uri']}"/>--%>
-                <%--<div class="input-group-append">--%>
-                    <%--<button class="btn btn-secondary" type="submit">Find</button>--%>
-                <%--</div>--%>
-            <%--</div>--%>
-        <%--</form>--%>
+
 
         <form method="post" action="/phone" style="width: 50%">
-            <%--<div class="input-group form-group">--%>
                 <div class="form-check form-group" >
                     <input class="form-check-input" type="checkbox" name="search_type1" value="Price" id="defaultCheck1">
                     <label class="form-check-label" for="defaultCheck1">Price</label>
@@ -203,3 +223,40 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<%--<form method="post" action="/phone" style="width: 50%">--%>
+<%--<div class="input-group">--%>
+<%--<div class="form-check form-check-inline">--%>
+<%--<input class="form-check-input" type="radio" name="search_type" id="inlineRadio1" value="Price">--%>
+<%--<label class="form-check-label" for="inlineRadio1">Price</label>--%>
+<%--</div>--%>
+<%--<div class="form-check form-check-inline">--%>
+<%--<input class="form-check-input" type="radio" name="search_type" id="inlineRadio2" value="Brand">--%>
+<%--<label class="form-check-label" for="inlineRadio2">Brand</label>--%>
+<%--</div>--%>
+<%--<div class="form-check form-check-inline">--%>
+<%--<input class="form-check-input" type="radio" name="search_type" id="inlineRadio3" value="Colour">--%>
+<%--<label class="form-check-label" for="inlineRadio3">Colour</label>--%>
+<%--</div>--%>
+<%--<input id="search_input" type="text" name="search_res" placeholder="filter">--%>
+<%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
+<%--<input type="hidden" name="page" value="${requestScope['javax.servlet.forward.request_uri']}"/>--%>
+<%--<div class="input-group-append">--%>
+<%--<button class="btn btn-secondary" type="submit">Find</button>--%>
+<%--</div>--%>
+<%--</div>--%>
+<%--</form>--%>

@@ -1,6 +1,7 @@
 package com.e_shop.services;
 
 import com.e_shop.domain.Basket;
+import com.e_shop.domain.Client;
 import com.e_shop.domain.Order;
 import com.e_shop.domain.Product;
 
@@ -29,4 +30,6 @@ public interface OrderService {
     List<Product> getBestsellerPerPeriod(LocalDate start, LocalDate finish);
 
     double sumOfOrder(Basket basket);
+
+    List<Order> getOrdersPerPeriodForClient(Client client, LocalDate start, LocalDate finish);
 }

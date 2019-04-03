@@ -1,5 +1,6 @@
 package com.e_shop.dao;
 
+import com.e_shop.domain.Client;
 import com.e_shop.domain.Order;
 import com.e_shop.domain.Product;
 
@@ -19,6 +20,8 @@ public interface OrderDao {
     int updateOrder(int orderId, String payStatus, String ordStatus);
 
     List<Order> getOrdersPerPeriod(LocalDate start, LocalDate finish);
+
+    List<Order> getOrdersPerPeriodForClient(Client client, LocalDate start, LocalDate finish);
 
 }
 

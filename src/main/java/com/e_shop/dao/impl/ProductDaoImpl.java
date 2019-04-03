@@ -1,6 +1,6 @@
 package com.e_shop.dao.impl;
 
-import com.e_shop.dao.HibernateUtils;
+//import com.e_shop.dao.HibernateUtils;
 import com.e_shop.dao.ProductDAO;
 import com.e_shop.domain.Product;
 import com.e_shop.enums.ProductCategory;

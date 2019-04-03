@@ -6,7 +6,7 @@
   Time: 14:49
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
@@ -109,28 +109,47 @@
             </div>
         </div>
 
-        <div class="col-sm-10" >
+        <div class="col-sm-10" id="stats" style="display: none">
 
-            <div id="stats" style="display: none">
-                <ul>
                     <li> Total sum of all orders: ${totalSumOfAllOrders}</li>
+                    <br>
+
                     <li> Total amount of orders: ${totalAmountOfOrders}</li>
-                    <li> Top item:
+                    <br>
+
+                    <li> Top products:
                         <ol>
                             <c:forEach items="${bestProducts}" var="product">
-                                <li>${product.productName}</li>
+                                <c:set var = "params" scope = "session" value = "${product.productParameteres}"/>
+                                <li> ${params.brand} ${product.productName} ${params.colour}</li>
                             </c:forEach>
                         </ol>
                     </li>
-                    <li> Top 10 clients:
+
+                    <li> Top clients:
                         <ol>
-                            <c:forEach items="${bestClient}" var="client">
-                                <li>${client.firstName} ${client.lastName}</li>
+                            <c:forEach items="${output}" var="data">
+                                <li> ${data}</li>
                             </c:forEach>
                         </ol>
                     </li>
-                </ul>
-            </div>
+
+                    <%--<li>Top clients:--%>
+                            <%--<ol>--%>
+                                <%--<c:forEach items="${bestClient}" var="client">--%>
+                                    <%--<li>${client.firstName} ${client.lastName}</li>--%>
+                                <%--</c:forEach>--%>
+                            <%--</ol>--%>
+                    <%--</li>--%>
+
+                    <%--<li> Number of orders:--%>
+                            <%--<ol>--%>
+                                <%--<c:forEach items="${bestNumberOfOrders}" var="number">--%>
+                                    <%--<li> - ${number} orders </li>--%>
+                                <%--</c:forEach>--%>
+                            <%--</ol>--%>
+                    <%--</li>--%>
+        </div>
 
             <div id="orders" style="display: none">
                 <div class="row">
@@ -217,9 +236,10 @@
             </div>
             </div>
 
-            <div id="products" style="display: none">
+            <div id="products" style="display: none; width: 90%">
                     <h3 style="color: aliceblue">List of products</h3>
-                    <table class="table table-borderless table-hover" style="width: 65%; margin: 0 auto; color: aliceblue">
+                    <table class="table table-borderless" style="withdth: 65%; margin: 0 auto; color: aliceblue">
+                    <%--<table class="table table-borderless" style=" color: aliceblue">--%>
                         <tr>
                             <th>Product ID</th>
                             <th>Product name</th>
@@ -256,7 +276,7 @@
                         </div>
                         <div>
                             <label style="color: aliceblue" for="productPrice"> Product type </label>
-                            <select class="custom-select mr-sm-2" name="category" id="category" style="color: aliceblue; background: transparent; padding-top: 30px">
+                            <select class="custom-select mr-sm-2" name="category" id="category" style="color: aliceblue; background: transparent">
                                 <option selected>Choose category</option>
                                 <option value="PHONE"> PHONE </option>
                                 <option value="TV_VIDEO"> TV_VIDEO </option>

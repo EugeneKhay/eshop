@@ -1,8 +1,8 @@
 package com.e_shop.services.impl;
 
 import com.e_shop.dao.ClientDao;
-import com.e_shop.dao2.GenericDao;
-import com.e_shop.dao2.IGenericDao;
+//import com.e_shop.dao2.GenericDao;
+//import com.e_shop.dao2.IGenericDao;
 import com.e_shop.domain.Client;
 import com.e_shop.domain.Order;
 import com.e_shop.services.ClientService;
@@ -72,8 +72,6 @@ public class ClientServiceImpl implements ClientService {
                                 .stream()
                                 .sorted(Comparator.reverseOrder())
                                 .collect(Collectors.toList());
-        //Collections.reverse(amountOfOrders);
-        //List<Client> bestTenClients = new ArrayList<>();
         Set<Client> bestTenClients = new LinkedHashSet<>();
 
         amountOfOrders.forEach(i -> {

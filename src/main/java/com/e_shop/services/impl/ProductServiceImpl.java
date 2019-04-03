@@ -63,14 +63,13 @@ public class ProductServiceImpl implements ProductService {
         dao.saveProduct(product);
     }
 
-    //TODO exception amount
     @Override
     public int decreaseProductAmountInStock(Product product, int countOfItems) {
-        int newAmount = 0;
+        int newAmount;
         int amount = dao.getProductById(product.getId()).getAmount();
-        while (amount >= countOfItems) {
+        if (amount >= countOfItems) {
            newAmount = amount - countOfItems;
-        }
+        } else throw new IllegalArgumentException("Not enough amount");
         return newAmount;
     }
 

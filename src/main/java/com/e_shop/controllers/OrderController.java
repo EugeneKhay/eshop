@@ -51,7 +51,8 @@ public class OrderController {
     @PostMapping("/confirm")
     public String confirmOrder(HttpSession session,
                                @RequestParam(name = "paymentMethod") String paymentMethod,
-                               @RequestParam(name = "deliveryMethod") String deliveryMethod) {
+                               @RequestParam(name = "deliveryMethod") String deliveryMethod,
+                               Model model) {
         Order order = new Order();
         Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Basket basket = (Basket) session.getAttribute("shop_basket");
@@ -74,6 +75,7 @@ public class OrderController {
         basket2.getProductsInBasket().clear();
         session.setAttribute("shop_basket", basket);
         session.setAttribute("totalPrice", 0);
+        model.addAttribute("items", productService.getAllProducts());
         return "homepage2";
     }
 

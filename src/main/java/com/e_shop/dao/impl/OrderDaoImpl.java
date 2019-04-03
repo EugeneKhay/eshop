@@ -1,6 +1,7 @@
 package com.e_shop.dao.impl;
 
 import com.e_shop.dao.OrderDao;
+import com.e_shop.domain.Client;
 import com.e_shop.domain.Order;
 import com.e_shop.domain.Product;
 import com.e_shop.enums.OrderStatus;
@@ -67,6 +68,16 @@ public class OrderDaoImpl implements OrderDao {
     public List<Order> getOrdersPerPeriod(LocalDate start, LocalDate finish) {
         String hql = "FROM Order WHERE dateOfOrder between :start and :finish";
         Query query = sessionFactory.getCurrentSession().createQuery(hql);
+        query.setParameter("start", start);
+        query.setParameter("finish", finish);
+        return query.list();
+    }
+
+    @Override
+    public List<Order> getOrdersPerPeriodForClient(Client client, LocalDate start, LocalDate finish) {
+        String hql = "FROM Order as o WHERE o.client = :paramClient and o.dateOfOrder between :start and :finish";
+        Query query = sessionFactory.getCurrentSession().createQuery(hql);
+        query.setParameter("paramClient", client);
         query.setParameter("start", start);
         query.setParameter("finish", finish);
         return query.list();
