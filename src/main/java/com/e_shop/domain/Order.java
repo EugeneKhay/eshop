@@ -10,9 +10,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Entity
 @Table(name = "orders")
@@ -58,7 +56,7 @@ public class Order {
         this.orderStatus = orderStatus;
     }
 
-    public Order(Client client, Collection<Product> productsInOrder, PaymentMethod paymentMethod, DeliveryMethod deliveryMethod, PaymentStatus paymentStatus, OrderStatus orderStatus) {
+    public Order(Client client, LinkedHashSet<Product> productsInOrder, PaymentMethod paymentMethod, DeliveryMethod deliveryMethod, PaymentStatus paymentStatus, OrderStatus orderStatus) {
         this.client = client;
         this.productsInOrder = productsInOrder;
         this.paymentMethod = paymentMethod;

@@ -23,6 +23,7 @@ public interface OrderDao {
 
     List<Order> getOrdersPerPeriodForClient(Client client, LocalDate start, LocalDate finish);
 
+
 }
 
 

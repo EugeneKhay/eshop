@@ -91,60 +91,32 @@
 <br>
 <br>
 <br>
-<%--<div class="footer" style="color: aliceblue; margin-left: 30px">--%>
-    <%--<div class="container">--%>
-        <%--<div class="row">--%>
-            <%--<div class="col-sm-5" style="padding: 20px">--%>
-                <%--<p>Phone: 8 800 2000 600, 8 800 5353 777</p>--%>
-                <%--<p>Email: shop@eshop.com, info@eshop.com</p>--%>
-            <%--</div>--%>
-            <%--<div class="col-sm" style="padding: 20px">--%>
-                <%--<p>Address: Russia</p>--%>
-                <%--<p>SPb, Somestreet st., 35</p>--%>
-            <%--</div>--%>
-            <%--<div class="col-sm" style="padding: 20px">--%>
-                <%--<p>Social nets: </p>--%>
-                <%--<p>link1, link2</p>--%>
-            <%--</div>--%>
-        <%--</div>--%>
-    <%--</div>--%>
-<%--</div>--%>
-
-
-<div class="contener">
-    <ul>
-        <li>
-            <p class="home">Главная</p>
-            <a class="logo" href="#">Fot-Tof.RU <i>© 2015</i></a>
-        </li>
-        <li>
-            <p class="services">Услуги</p>
-            <ul>
-                <li><a href="#">3D моделирование</a></li>
-                <li><a href="#">Веб-разработка</a></li>
-                <li><a href="#">Разработка приложений</a></li>
-                <li><a href="#">Web & Дизайн</a></li>
-            </ul>
-        </li>
-        <li>
-            <p class="reachus">Связь</p>
-            <ul>
-                <li><a href="#">Email</a></li>
-                <li><a href="#">Twitter</a></li>
-                <li><a href="#">Facebook</a></li>
-                <li>555-123456789</li>
-            </ul>
-        </li>
-        <li>
-            <p class="clients">Клиенты</p>
-            <ul>
-                <li><a href="#">Войти</a></li>
-                <li><a href="#">Центр Поддержки</a></li>
-                <li><a href="#">FAQ</a></li>
-            </ul>
-        </li>
-    </ul>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="footer" style="color: aliceblue; margin-left: 30px">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-5" style="padding: 20px">
+                <p>Phone: 8 800 2000 600, 8 800 5353 777</p>
+                <p>Email: shop@eshop.com, info@eshop.com</p>
+            </div>
+            <div class="col-sm" style="padding: 20px">
+                <p>Address: Russia</p>
+                <p>SPb, Somestreet st., 35</p>
+            </div>
+            <div class="col-sm" style="padding: 20px">
+                <p>Social nets: </p>
+                <p>link1, link2</p>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+
 
 
 

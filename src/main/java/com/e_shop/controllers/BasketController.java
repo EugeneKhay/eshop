@@ -4,6 +4,7 @@ import com.e_shop.domain.Basket;
 import com.e_shop.domain.Product;
 import com.e_shop.enums.ProductCategory;
 import com.e_shop.services.ProductService;
+import com.e_shop.services.impl.BasketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -26,6 +27,9 @@ public class BasketController {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private BasketService basketService;
+
     @GetMapping("/basket")
     public String getBasket(HttpServletRequest request, Model model) {
         Basket basket = (Basket) request.getSession().getAttribute("shop_basket");
@@ -39,36 +43,14 @@ public class BasketController {
                               @RequestParam(name = "page", required = false) String page,
                               HttpSession session,
                               Model model) {
-        Product product = productService.getProductById(id);
-        Basket basket = (Basket) session.getAttribute("shop_basket");
-
-        if (basket.getProductsInBasket().containsKey(product)) {
-            int amountInBasketBeforeAdd = basket.getProductsInBasket().get(product);
-            basket.getProductsInBasket().put(product, amountInBasketBeforeAdd + 1);
-        } else {
-            basket.getProductsInBasket().put(product, 1);
-        }
-        session.setAttribute("shop_basket", basket);
-
-        double totalPrice = 0;
-        for (Map.Entry<Product, Integer> entry: basket.getProductsInBasket().entrySet()) {
-            totalPrice += (entry.getKey().getProductPrice() * entry.getValue());
-        }
-        session.setAttribute("totalPrice", totalPrice);
-
-        ProductCategory category = product.getCategory();
-        List<Product> products;
-        //if came from homepage
+        List<Product> products = basketService.prepareProductsForBasket(id, page, session);
+        model.addAttribute("items", products);
         if (page == null) {
-            products = productService.getAllProducts();
-            model.addAttribute("items", products);
             return "homepage2";
         }
-        // if came from any category of products
-        products = productService.getAllProductsByCategory(category);
-        model.addAttribute("items", products);
         return "products";
     }
+
 
     @GetMapping(value = "/delete", produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
@@ -86,6 +68,7 @@ public class BasketController {
         session.setAttribute("totalPrice", totalPrice);
         return new ResponseEntity<>(totalPrice, HttpStatus.OK);
     }
+
 
     //TODO refactoring
     @GetMapping(value = "/editOrderMinus", produces = {MediaType.APPLICATION_JSON_VALUE})

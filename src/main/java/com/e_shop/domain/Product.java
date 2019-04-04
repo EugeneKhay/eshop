@@ -39,16 +39,6 @@ public class Product {
             inverseJoinColumns=@JoinColumn(name="order_id"))
     private List<Order> orders;
 
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "product_id")
-//    private Order order;
-
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "order_id")
-//    private Order order;
-
-
-
     public Product(String productName, double productPrice, ProductCategory category, ProductParameteres productParameteres, int amount) {
         this.productName = productName;
         this.productPrice = productPrice;

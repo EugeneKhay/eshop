@@ -1,6 +1,9 @@
 package com.e_shop.services.impl;
 
 import com.e_shop.domain.Client;
+import com.e_shop.domain.Product;
+import com.e_shop.domain.ProductParameteres;
+import com.e_shop.enums.ProductCategory;
 import com.e_shop.services.ClientService;
 import com.e_shop.services.OrderService;
 import com.e_shop.services.ProductService;
@@ -66,6 +69,14 @@ public class AdminService {
             numbers.add(numberOfOrders);
         }
         return numbers;
+    }
+
+    public void addNewProduct(String productName, double productPrice, String category, int amount,
+                       String colour, String brand) {
+        ProductParameteres productParameteres = new ProductParameteres(colour, brand);
+        ProductCategory productCategory = ProductCategory.valueOf(category);
+        Product product = new Product(productName, productPrice, productCategory, productParameteres, amount);
+        productService.saveProduct(product);
     }
 
 }

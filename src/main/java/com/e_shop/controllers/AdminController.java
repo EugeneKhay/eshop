@@ -1,8 +1,5 @@
 package com.e_shop.controllers;
 
-import com.e_shop.domain.Product;
-import com.e_shop.domain.ProductParameteres;
-import com.e_shop.enums.ProductCategory;
 import com.e_shop.services.ClientService;
 import com.e_shop.services.ProductService;
 import com.e_shop.services.impl.AdminService;
@@ -14,11 +11,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import java.time.LocalDate;
-
+import java.util.logging.Logger;
 
 
 @Controller
 public class AdminController {
+
+    private Logger logger = Logger.getLogger("logger");
 
     @Autowired
     private ClientService clientService;
@@ -31,6 +30,7 @@ public class AdminController {
 
     @GetMapping("/admin")
     public String view(Model model) {
+        logger.info("Go to adminpage");
         LocalDate start = LocalDate.of(2019, 1, 1);
         LocalDate finish = LocalDate.now();
         adminService.setStats(model, start, finish);
@@ -44,10 +44,7 @@ public class AdminController {
                              @RequestParam(name = "amount") int amount,
                              @RequestParam(name = "colour") String colour,
                              @RequestParam(name = "brand") String brand) {
-        ProductParameteres productParameteres = new ProductParameteres(colour, brand);
-        ProductCategory productCategory = ProductCategory.valueOf(category);
-        Product product = new Product(productName, productPrice, productCategory, productParameteres, amount);
-        productService.saveProduct(product);
+        adminService.addNewProduct(productName, productPrice, category, amount, colour, brand);
         return "adminpage";
     }
 

@@ -34,47 +34,17 @@ import java.util.Set;
 public class OrderController {
 
     @Autowired
-    private ClientService clientService;
-
-    @Autowired
     private ProductService productService;
 
     @Autowired
     private OrderService orderService;
-
-//    @GetMapping("/orders")
-//    public String getOrders(Model model) {
-//        model.addAttribute("orders", orderService.getAllOrders());
-//        return "listoforders";
-//    }
 
     @PostMapping("/confirm")
     public String confirmOrder(HttpSession session,
                                @RequestParam(name = "paymentMethod") String paymentMethod,
                                @RequestParam(name = "deliveryMethod") String deliveryMethod,
                                Model model) {
-        Order order = new Order();
-        Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Basket basket = (Basket) session.getAttribute("shop_basket");
-        Set<Product> products = basket.getProductsInBasket().keySet();
-        double sum = orderService.sumOfOrder(basket);
-        order.setClient(client);
-        order.setProductsInOrder(products);
-        order.setDeliveryMethod(DeliveryMethod.valueOf(deliveryMethod));
-        order.setPaymentMethod(PaymentMethod.valueOf(paymentMethod));
-        order.setDateOfOrder(LocalDate.now());
-        order.setSumOfOrder(sum);
-
-        orderService.saveOrders(order);
-
-        for (Map.Entry<Product, Integer> entry : basket.getProductsInBasket().entrySet()) {
-            int amount = productService.decreaseProductAmountInStock(entry.getKey(), entry.getValue());
-            productService.saveNewAmountOfProduct(entry.getKey(), amount);
-        }
-        Basket basket2 = (Basket) session.getAttribute("shop_basket");
-        basket2.getProductsInBasket().clear();
-        session.setAttribute("shop_basket", basket);
-        session.setAttribute("totalPrice", 0);
+        orderService.makeNewOrder(session, paymentMethod, deliveryMethod);
         model.addAttribute("items", productService.getAllProducts());
         return "homepage2";
     }
@@ -84,12 +54,33 @@ public class OrderController {
                                    @RequestParam(name = "paymentStatus") String paymentStatus,
                                    @RequestParam(name = "orderStatus") String orderStatus,
                                    Model model) {
-        Order orderForEditing = orderService.getOrderById(id);
-        orderForEditing.setPaymentStatus(PaymentStatus.valueOf(paymentStatus));
-        orderForEditing.setOrderStatus(OrderStatus.valueOf(orderStatus));
-        orderService.updateOrder(id, paymentStatus, orderStatus);
-        List<Order> orders = orderService.getAllOrders();
-        model.addAttribute("orders", orders);
+        orderService.editOrder(id, paymentStatus, orderStatus);
+        model.addAttribute("orders", orderService.getAllOrders());
         return "adminpage";
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -32,7 +32,6 @@
         </div>
         <div class="col-sm-1">
             <sec:authorize access="isAuthenticated()">
-                <%--<a style="color: aliceblue; padding-left: 30px" href="/logout"> Logout </a>--%>
                 <button type="button" class="btn btn-secondary">
                     <a style="color: aliceblue" href="/logout">Logout</a>
                 </button>

@@ -112,8 +112,6 @@ public class MainController {
                                  @RequestParam(name = "category") String category,
                                  @RequestParam(name = "color") String colour,
                                  Model model) {
-                System.out.println(productId + productName + brand + price + amount + category + colour);
-
         ProductCategory category1 = ProductCategory.valueOf(category);
         ProductParameteres parameteres = new ProductParameteres(colour, brand);
         Product product = productService.getProductById(productId);
