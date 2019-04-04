@@ -1,11 +1,9 @@
 package com.e_shop.controllers;
 
-import com.e_shop.domain.Client;
 import com.e_shop.domain.Product;
 import com.e_shop.domain.ProductParameteres;
 import com.e_shop.enums.ProductCategory;
 import com.e_shop.services.ClientService;
-import com.e_shop.services.OrderService;
 import com.e_shop.services.ProductService;
 import com.e_shop.services.impl.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Set;
+
 
 
 @Controller

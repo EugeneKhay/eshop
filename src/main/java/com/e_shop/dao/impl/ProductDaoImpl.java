@@ -121,7 +121,7 @@ public class ProductDaoImpl implements ProductDAO {
 
     @Override
     public void saveProduct(Product product) {
-        sessionFactory.getCurrentSession().save(product);
+        sessionFactory.getCurrentSession().saveOrUpdate(product);
     }
 
     @Override
@@ -132,6 +132,19 @@ public class ProductDaoImpl implements ProductDAO {
         query.setParameter("idParam", product.getId());
         int updateResult = query.executeUpdate();
         return updateResult;
+    }
+
+    @Override
+    public String getPageName(String page) {
+        // delete symbol "/"
+        String page2 = page.substring(1);
+        String pageName = "Products";
+        if (page2.equals("phone")) pageName = "Phones";
+        if (page2.equals("tv")) pageName = "TV & Video";
+        if (page2.equals("audio")) pageName = "Audio & Hi-Fi";
+        if (page2.equals("laptop")) pageName = "Laptops";
+        if (page2.equals("tablet")) pageName = "Tablets";
+        return pageName;
     }
 
 

@@ -1,15 +1,8 @@
 <!DOCTYPE html>
-<%@ page import="com.e_shop.domain.Product" %>
-<%@ page import="java.util.ArrayList" %>
+
 <%@ page import="com.e_shop.domain.Basket" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: evgenijhajmovskij
-  Date: 2019-03-03
-  Time: 14:49
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %><html>
@@ -20,19 +13,17 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="/resources/static/css/app.css">
+    <link rel="stylesheet" type="text/css" href="../resources/static/css/style.css"/>
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-
-
 </head>
-<body style="background-image: url(/resources/static/images/background.jpg);">
+<body>
 
 <div class="container">
     <div class="row">
         <div class="col-sm-8">
-            <h3 style="color: aliceblue">Phones</h3>
+            <h3 style="color: aliceblue">${pageName}</h3>
         </div>
         <div class="col-sm-4">
             <sec:authorize access="isAuthenticated()">
@@ -43,7 +34,7 @@
     </div>
 </div>
 
-<div class="container">
+<div class="container" style="margin-top: 30px">
     <div class="row">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -126,11 +117,6 @@
                             <a href="/registration" class="btn btn-secondary btn-md active" role="button" aria-pressed="true">Registration</a>
 
                         </form>
-                        <%--<script type="text/javascript">--%>
-                        <%--function form_submit() {--%>
-                        <%--document.getElementById("search_form").submit();--%>
-                        <%--}--%>
-                        <%--</script>--%>
                     </div>
                 </div>
             </div>
@@ -146,17 +132,17 @@
                 <div class="form-check form-group" >
                     <input class="form-check-input" type="checkbox" name="search_type1" value="Price" id="defaultCheck1">
                     <label class="form-check-label" for="defaultCheck1">Price</label>
-                    <input id="search_input1" type="text" name="search_res1" placeholder="price" style="margin-left: 11px">
+                    <input id="search_input1" type="text" name="search_res1" placeholder="price" style="color:aliceblue; margin-left: 25px; background-color: transparent">
                 </div>
                 <div class="form-check form-group">
                     <input class="form-check-input" type="checkbox" name="search_type2" value="Brand" id="defaultCheck2">
                     <label class="form-check-label" for="defaultCheck2">Brand</label>
-                    <input id="search_input2" type="text" name="search_res2" placeholder="brand" style="margin-left: 5px">
+                    <input id="search_input2" type="text" name="search_res2" placeholder="brand" style="color:aliceblue; margin-left: 19px; background-color: transparent">
                 </div>
                 <div class="form-check form-group">
                     <input class="form-check-input" type="checkbox" name="search_type3" value="Colour" id="defaultCheck3">
                     <label class="form-check-label" for="defaultCheck3">Colour</label>
-                    <input id="search_input3" type="text" name="search_res3" placeholder="colour">
+                    <input id="search_input3" type="text" name="search_res3" placeholder="colour" style="color:aliceblue; margin-left: 15px; background-color: transparent">
                 </div>
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <input type="hidden" name="page" value="${requestScope['javax.servlet.forward.request_uri']}"/>
@@ -164,22 +150,6 @@
                     <button class="btn btn-secondary" type="submit">Find/Clear</button>
                 </div>
         </form>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     </div>
@@ -212,12 +182,30 @@
 </div>
 
 
-<%--<footer style="color: aliceblue; margin-left: 50px">--%>
-    <%--<p> Copyright ...</p>--%>
-    <%--<p> Our contacts ...</p>--%>
-    <%--<p> Support... </p>--%>
-<%--</footer>--%>
+<br>
+<br>
+<br>
+<br>
+<div class="footer" style="color: aliceblue; margin-left: 30px">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-5" style="padding: 20px">
+                <p>Phone: 8 800 2000 600, 8 800 5353 777</p>
+                <p>Email: shop@eshop.com, info@eshop.com</p>
+            </div>
+            <div class="col-sm" style="padding: 20px">
+                <p>Address: Russia</p>
+                <p>SPb, Somestreet st., 35</p>
+            </div>
+            <div class="col-sm" style="padding: 20px">
+                <p>Social nets: </p>
+                <p>link1, link2</p>
+            </div>
+        </div>
+    </div>
+</div>
 
+<script type="text/javascript" src="../resources/static/js/app2.js"/>
 <%--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>--%>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

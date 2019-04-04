@@ -4,9 +4,6 @@ import com.e_shop.domain.Basket;
 import com.e_shop.domain.Product;
 import com.e_shop.enums.ProductCategory;
 import com.e_shop.services.ProductService;
-import com.e_shop.domain.Product;
-import com.e_shop.enums.ProductCategory;
-import com.e_shop.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,7 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
@@ -91,7 +87,7 @@ public class BasketController {
         return new ResponseEntity<>(totalPrice, HttpStatus.OK);
     }
 
-    //TODO refactor
+    //TODO refactoring
     @GetMapping(value = "/editOrderMinus", produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     public ResponseEntity<List> editOrderFromBasketMinusAjax(@RequestParam(name = "editOrderMinus") int id,
@@ -118,7 +114,7 @@ public class BasketController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    //TODO refactor
+    //TODO refactoring
     @GetMapping(value = "/editOrderPlus", produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     public ResponseEntity<List> editOrderFromBasketPlusAjax(@RequestParam(name = "editOrderPlus") int id,

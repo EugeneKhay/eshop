@@ -1,25 +1,18 @@
 package com.e_shop.controllers;
 
-import com.e_shop.domain.Basket;
-import com.e_shop.domain.Client;
-import com.e_shop.domain.ClientAddress;
-import com.e_shop.domain.Product;
+import com.e_shop.domain.*;
+import com.e_shop.enums.ProductCategory;
 import com.e_shop.enums.Role;
 import com.e_shop.services.ClientService;
 import com.e_shop.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.util.*;
@@ -35,14 +28,6 @@ public class MainController {
 
     Basket basket;
 
-
-//    @GetMapping("/")
-//    public String homepage(HttpSession session) {
-//        if (basket == null) basket = new Basket();
-//        session.setAttribute("shop_basket", basket);
-//        return "homepage2";
-//    }
-
     @GetMapping("/")
     public String homepage(HttpSession session, Model model) {
         if (basket == null) basket = new Basket();
@@ -52,8 +37,6 @@ public class MainController {
         return "homepage2";
     }
 
-
-
     @GetMapping("/registration")
     public String register() {
         return "registration";
@@ -62,7 +45,6 @@ public class MainController {
     @PostMapping("/registration")
     public String add(@RequestParam(name = "firstName") String firstName,
                       @RequestParam(name = "lastName") String lastName,
-//                      @RequestParam(name = "birthDate") String birthDate,
                       @RequestParam(name = "birthDate") @DateTimeFormat(pattern="yyyy-MM-dd")LocalDate birthDate,
                       @RequestParam(name = "email") String email,
                       @RequestParam(name = "password") String password,
@@ -72,11 +54,6 @@ public class MainController {
                       @RequestParam(name = "street") String street,
                       @RequestParam(name = "house") int house,
                       @RequestParam(name = "flat") int flat) {
-        //FIX date input
-//        String[] array = birthDate.split(" ");
-//        int[] intArr = Arrays.stream(array).mapToInt(Integer::valueOf).toArray();
-//        LocalDate birth = LocalDate.of(intArr[0], intArr[1], intArr[2]);
-
         ClientAddress address = new ClientAddress(country, city, postcode, street, house,flat);
         Client client = new Client();
         client.setFirstName(firstName);
@@ -90,13 +67,11 @@ public class MainController {
         return "redirect:/";
     }
 
-
     /*
      * client data - from security context
      */
     @GetMapping("/personal")
     public String enter(Model model) {
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("client", client);
         return "personal";
@@ -126,6 +101,30 @@ public class MainController {
         clientService.saveClient(client);
         model.addAttribute("client", client);
         return "personal";
+    }
+
+    @PostMapping("/editproduct")
+    public String editClientData(@RequestParam(name = "productForEdit") int productId,
+                                 @RequestParam(name = "name") String productName,
+                                 @RequestParam(name = "brand") String brand,
+                                 @RequestParam(name = "price") double price,
+                                 @RequestParam(name = "amount") int amount,
+                                 @RequestParam(name = "category") String category,
+                                 @RequestParam(name = "color") String colour,
+                                 Model model) {
+                System.out.println(productId + productName + brand + price + amount + category + colour);
+
+        ProductCategory category1 = ProductCategory.valueOf(category);
+        ProductParameteres parameteres = new ProductParameteres(colour, brand);
+        Product product = productService.getProductById(productId);
+        product.setProductName(productName);
+        product.setProductPrice(price);
+        product.setAmount(amount);
+        product.setCategory(category1);
+        product.setProductParameteres(parameteres);
+        productService.saveProduct(product);
+        model.addAttribute("products", productService.getAllProducts());
+        return "adminpage";
     }
 }
 

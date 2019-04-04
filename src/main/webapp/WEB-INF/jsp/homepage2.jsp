@@ -18,7 +18,6 @@
     <link rel="stylesheet" type="text/css" href="../resources/static/css/style.css"/>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
-<%--<body style="background-image: url(/resources/static/images/background.jpg);">--%>
 <body>
 
 <div class="container">
@@ -70,15 +69,10 @@
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     </p>
                     <button onclick="form_submit()" name="user_search" class="btn btn-secondary" data-dismiss="modal">Log in</button>
-                    <!--<button type="button" class="btn btn-secondary"><a href="/registration">Registration</a></button>-->
                     <a href="/registration" class="btn btn-secondary btn-md active" role="button" aria-pressed="true">Registration</a>
 
                 </form>
-                <%--<script type="text/javascript">--%>
-                    <%--function form_submit() {--%>
-                        <%--document.getElementById("search_form").submit();--%>
-                    <%--}--%>
-                <%--</script>--%>
+
             </div>
         </div>
     </div>
@@ -86,7 +80,7 @@
 
 <div id="mainpage">
 
-    <div class="container">
+    <div class="container" style="margin-top: 30px">
 
         <div class="row">
             <nav aria-label="breadcrumb">
@@ -128,7 +122,6 @@
             <div class="col-sm-1">
                 <button type="button" class="btn btn-secondary">
                     <a style="color: aliceblue" href="/basket">Basket</a>
-                    <%--<span class="badge badge-light"><%= ((Basket) session.getAttribute("shop_basket")).getProductsInBasket().keySet().size() %></span>--%>
                     <span class="badge badge-light"><%= ((Basket) session.getAttribute("shop_basket")).getProductsInBasket().values().stream().reduce((s1, s2) -> s1 + s2).orElse(0) %></span>
                 </button>
             </div>
@@ -160,96 +153,29 @@
     </div>
 </div>
 
+<br>
+<br>
+<br>
+<br>
+<div class="footer" style="color: aliceblue; margin-left: 30px">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-5" style="padding: 20px">
+                <p>Phone: 8 800 2000 600, 8 800 5353 777</p>
+                <p>Email: shop@eshop.com, info@eshop.com</p>
+            </div>
+            <div class="col-sm" style="padding: 20px">
+                <p>Address: Russia</p>
+                <p>SPb, Somestreet st., 35</p>
+            </div>
+            <div class="col-sm" style="padding: 20px">
+                <p>Social nets: </p>
+                <p>link1, link2</p>
+            </div>
+        </div>
+    </div>
+</div>
 
-
-<%--<div class="row">--%>
-    <%--<div class="card" style="width: 17rem; background-color: transparent; color: aliceblue;">--%>
-        <%--<img src="/resources/static/images/phones/" class="card-img-top" alt="..." >--%>
-        <%--<div class="card-body">--%>
-            <%--<h5 class="card-title">HIT 1</h5>--%>
-            <%--<p class="card-text">special offer</p>--%>
-        <%--</div>--%>
-        <%--<ul class="list-group list-group-flush">--%>
-            <%--<li class="list-group-item" style="background-color: transparent; color: aliceblue;">Description</li>--%>
-            <%--<li class="list-group-item" style="background-color: transparent; color: aliceblue;">Common price</li>--%>
-            <%--<li class="list-group-item" style="background-color: transparent; color: aliceblue;">Special price</li>--%>
-        <%--</ul>--%>
-        <%--<div class="card-body">--%>
-            <%--<a href="#" class="card-link">Buy</a>--%>
-        <%--</div>--%>
-    <%--</div>--%>
-    <%--<div class="card" style="width: 17rem; background-color: transparent; color: aliceblue;">--%>
-        <%--<img src="../resources/static/images/" class="card-img-top" alt="...">--%>
-        <%--<div class="card-body">--%>
-            <%--<h5 class="card-title">HIT 2</h5>--%>
-            <%--<p class="card-text">special offer</p>--%>
-        <%--</div>--%>
-        <%--<ul class="list-group list-group-flush">--%>
-            <%--<li class="list-group-item" style="background-color: transparent;">Description</li>--%>
-            <%--<li class="list-group-item" style="background-color: transparent;">Common price</li>--%>
-            <%--<li class="list-group-item" style="background-color: transparent;">Special price</li>--%>
-        <%--</ul>--%>
-        <%--<div class="card-body">--%>
-            <%--<a href="#" class="card-link">Buy</a>--%>
-        <%--</div>--%>
-    <%--</div>--%>
-    <%--<div class="card" style="width: 17rem; background-color: transparent; color: aliceblue;">--%>
-        <%--<img src="../resources/static/images/" class="card-img-top" alt="...">--%>
-        <%--<div class="card-body">--%>
-            <%--<h5 class="card-title">HIT 3</h5>--%>
-            <%--<p class="card-text">special offer</p>--%>
-        <%--</div>--%>
-        <%--<ul class="list-group list-group-flush" >--%>
-            <%--<li class="list-group-item" style="background-color: transparent;">Description</li>--%>
-            <%--<li class="list-group-item" style="background-color: transparent;">Common price</li>--%>
-            <%--<li class="list-group-item" style="background-color: transparent;">Special price</li>--%>
-        <%--</ul>--%>
-        <%--<div class="card-body">--%>
-            <%--<a href="#" class="card-link" >Buy</a>--%>
-        <%--</div>--%>
-    <%--</div>--%>
-    <%--<div class="card" style="width: 17rem; background-color: transparent; color: aliceblue;">--%>
-        <%--<img src="../resources/static/images/" class="card-img-top" alt="...">--%>
-        <%--<div class="card-body">--%>
-            <%--<h5 class="card-title">HIT 4</h5>--%>
-            <%--<p class="card-text">special offer</p>--%>
-        <%--</div>--%>
-        <%--<ul class="list-group list-group-flush" style="background-color: transparent;">--%>
-            <%--<li class="list-group-item" style="background-color: transparent;">Description</li>--%>
-            <%--<li class="list-group-item" style="background-color: transparent;">Common price</li>--%>
-            <%--<li class="list-group-item" style="background-color: transparent;">Special price</li>--%>
-        <%--</ul>--%>
-        <%--<div class="card-body">--%>
-            <%--<a href="#" class="card-link">Buy</a>--%>
-        <%--</div>--%>
-    <%--</div>--%>
-<%--</div>--%>
-
-<%--<h3>Enter text:</h3>--%>
-<%--<input id="input_str" type="text">--%>
-<%--<input type="button" value="OK" onclick="doAjax()">--%>
-
-<%--<script type="text/javascript">--%>
-    <%--function doAjax() {--%>
-        <%--$.ajax({--%>
-            <%--url : '/ajax',--%>
-            <%--type: 'GET',--%>
-            <%--dataType: 'json',--%>
-            <%--data : ({--%>
-                <%--'text': $("#input_str").val()--%>
-            <%--}),--%>
-            <%--success: function (result) {--%>
-                <%--alert(result.dayOfWeek);--%>
-            <%--}--%>
-        <%--});--%>
-    <%--}--%>
-<%--</script>--%>
-
-<%--<footer>--%>
-    <%--<p> Copyright ...</p>--%>
-    <%--<p> Our contacts ...</p>--%>
-    <%--<p> Support... </p>--%>
-<%--</footer>--%>
 
 <script type="text/javascript" src="../resources/static/js/app2.js"/>
 <%--<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>--%>
@@ -257,3 +183,115 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<%--<div class="row">--%>
+<%--<div class="card" style="width: 17rem; background-color: transparent; color: aliceblue;">--%>
+<%--<img src="/resources/static/images/phones/" class="card-img-top" alt="..." >--%>
+<%--<div class="card-body">--%>
+<%--<h5 class="card-title">HIT 1</h5>--%>
+<%--<p class="card-text">special offer</p>--%>
+<%--</div>--%>
+<%--<ul class="list-group list-group-flush">--%>
+<%--<li class="list-group-item" style="background-color: transparent; color: aliceblue;">Description</li>--%>
+<%--<li class="list-group-item" style="background-color: transparent; color: aliceblue;">Common price</li>--%>
+<%--<li class="list-group-item" style="background-color: transparent; color: aliceblue;">Special price</li>--%>
+<%--</ul>--%>
+<%--<div class="card-body">--%>
+<%--<a href="#" class="card-link">Buy</a>--%>
+<%--</div>--%>
+<%--</div>--%>
+<%--<div class="card" style="width: 17rem; background-color: transparent; color: aliceblue;">--%>
+<%--<img src="../resources/static/images/" class="card-img-top" alt="...">--%>
+<%--<div class="card-body">--%>
+<%--<h5 class="card-title">HIT 2</h5>--%>
+<%--<p class="card-text">special offer</p>--%>
+<%--</div>--%>
+<%--<ul class="list-group list-group-flush">--%>
+<%--<li class="list-group-item" style="background-color: transparent;">Description</li>--%>
+<%--<li class="list-group-item" style="background-color: transparent;">Common price</li>--%>
+<%--<li class="list-group-item" style="background-color: transparent;">Special price</li>--%>
+<%--</ul>--%>
+<%--<div class="card-body">--%>
+<%--<a href="#" class="card-link">Buy</a>--%>
+<%--</div>--%>
+<%--</div>--%>
+<%--<div class="card" style="width: 17rem; background-color: transparent; color: aliceblue;">--%>
+<%--<img src="../resources/static/images/" class="card-img-top" alt="...">--%>
+<%--<div class="card-body">--%>
+<%--<h5 class="card-title">HIT 3</h5>--%>
+<%--<p class="card-text">special offer</p>--%>
+<%--</div>--%>
+<%--<ul class="list-group list-group-flush" >--%>
+<%--<li class="list-group-item" style="background-color: transparent;">Description</li>--%>
+<%--<li class="list-group-item" style="background-color: transparent;">Common price</li>--%>
+<%--<li class="list-group-item" style="background-color: transparent;">Special price</li>--%>
+<%--</ul>--%>
+<%--<div class="card-body">--%>
+<%--<a href="#" class="card-link" >Buy</a>--%>
+<%--</div>--%>
+<%--</div>--%>
+<%--<div class="card" style="width: 17rem; background-color: transparent; color: aliceblue;">--%>
+<%--<img src="../resources/static/images/" class="card-img-top" alt="...">--%>
+<%--<div class="card-body">--%>
+<%--<h5 class="card-title">HIT 4</h5>--%>
+<%--<p class="card-text">special offer</p>--%>
+<%--</div>--%>
+<%--<ul class="list-group list-group-flush" style="background-color: transparent;">--%>
+<%--<li class="list-group-item" style="background-color: transparent;">Description</li>--%>
+<%--<li class="list-group-item" style="background-color: transparent;">Common price</li>--%>
+<%--<li class="list-group-item" style="background-color: transparent;">Special price</li>--%>
+<%--</ul>--%>
+<%--<div class="card-body">--%>
+<%--<a href="#" class="card-link">Buy</a>--%>
+<%--</div>--%>
+<%--</div>--%>
+<%--</div>--%>
+
+<%--<h3>Enter text:</h3>--%>
+<%--<input id="input_str" type="text">--%>
+<%--<input type="button" value="OK" onclick="doAjax()">--%>
+
+<%--<script type="text/javascript">--%>
+<%--function doAjax() {--%>
+<%--$.ajax({--%>
+<%--url : '/ajax',--%>
+<%--type: 'GET',--%>
+<%--dataType: 'json',--%>
+<%--data : ({--%>
+<%--'text': $("#input_str").val()--%>
+<%--}),--%>
+<%--success: function (result) {--%>
+<%--alert(result.dayOfWeek);--%>
+<%--}--%>
+<%--});--%>
+<%--}--%>
+<%--</script>--%>
+
+<%--<footer>--%>
+<%--<p> Copyright ...</p>--%>
+<%--<p> Our contacts ...</p>--%>
+<%--<p> Support... </p>--%>
+<%--</footer>--%>

@@ -24,6 +24,4 @@ public class CustomLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler im
         request.getSession().setAttribute("totalPrice", 0);
         super.onLogoutSuccess(request, response, authentication);
     }
-
-
 }

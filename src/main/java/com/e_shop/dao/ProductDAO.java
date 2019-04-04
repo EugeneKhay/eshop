@@ -32,6 +32,8 @@ public interface ProductDAO {
 
     int saveNewAmountOfProduct(Product product, int amount);
 
+    String getPageName(String page);
+
 
 
 

@@ -43,8 +43,6 @@ public class AdminService {
     }
 
     public void setStats(Model model, LocalDate start, LocalDate finish) {
-        //model.addAttribute("bestClient", clientService.getTenBestClientsPerPeriod(start, finish));
-        //model.addAttribute("bestNumberOfOrders", numberOfOrdersForTenBestClients(clientService.getTenBestClientsPerPeriod(start, finish), start, finish));
         model.addAttribute("bestProducts", orderService.getBestsellerPerPeriod(start, finish));
         model.addAttribute("orders", orderService.getOrdersPerPeriod(start, finish));
         model.addAttribute("totalSumOfAllOrders", orderService.getTotalSumOfAllOrdersPerPeriod(start, finish));

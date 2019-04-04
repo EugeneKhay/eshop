@@ -4,35 +4,44 @@
 <html>
 <head>
     <title>My account</title>
+    <%--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">--%>
+    <%--<link rel="stylesheet" type="text/css" href="../resources/static/css/style.css"/>--%>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="../resources/static/css/app.css">
+    <link rel="stylesheet" type="text/css" href="/resources/static/css/app.css">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="//ajax.aspnetcdn.com/ajax/jquery.ui/1.10.3/jquery-ui.min.js"></script>
 </head>
 
 <body style="background-image: url(/resources/static/images/background.jpg)">
 
 <h3 style="margin: 30px; color: aliceblue; margin-top: 10px">My account</h3>
 
-<div class="container">
+<div class="container" style="margin-top: 30px">
 
     <div class="row">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/"> Home </a></li>
-                <li class="breadcrumb-item active" aria-current="page"> My account </li>
-            </ol>
-        </nav>
-    </div>
+        <div class="col-sm-3">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/"> Home </a></li>
+                    <li class="breadcrumb-item active" aria-current="page"> My account </li>
+                </ol>
+            </nav>
+        </div>
+        <div class="col-sm-8">
 
-    <div class="col-sm-3">
-        <sec:authorize access="isAuthenticated()">
-            <%--<b style="color: aliceblue"> Welcome, <a style="color: aliceblue" href="/personal"> <sec:authentication property="principal.username" /> </a> </b>--%>
-            <%--<a style="color: aliceblue; padding-left: 20px" href="/personal"> Personal </a>--%>
-            <a style="color: aliceblue; padding-left: 30px" href="/logout"> Logout </a>
-        </sec:authorize>
+        </div>
+        <div class="col-sm-1">
+            <sec:authorize access="isAuthenticated()">
+                <%--<a style="color: aliceblue; padding-left: 30px" href="/logout"> Logout </a>--%>
+                <button type="button" class="btn btn-secondary">
+                    <a style="color: aliceblue" href="/logout">Logout</a>
+                </button>
+            </sec:authorize>
+        </div>
     </div>
 
     <div class="row">
-        <table style="width: 65%; color: aliceblue; margin: 0 auto" class="table table-borderless table-hover">
+        <table style="width: 65%; color: aliceblue; margin: 0 auto" class="table table-borderless">
         <tr style="background: transparent; color: aliceblue">
             <th>First name</th>
             <th>Last name</th>
@@ -61,11 +70,11 @@
             <td>${address.flatNumber}</td>
             <td>
                 <div class="col-sm-1">
-                    <button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#exampleModal"> Edit </button>
+                    <button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#personal"> Edit </button>
                 </div>
             </td>
 
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="personal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -124,12 +133,12 @@
                                 </p>
 
                                 <input type="hidden" name="clientForEdit" value="${client.id}">
-                                <button onclick="form_submit()" name="user_search" class="btn btn-secondary" data-dismiss="modal"> Submit </button>
+                                <button onclick="pers_submit()" type="submit" name="user_search" class="btn btn-secondary" data-dismiss="modal"> Submit </button>
                                 <a href="/registration" class="btn btn-secondary btn-md active" role="button" aria-pressed="true"> New account</a>
 
                             </form>
                             <script type="text/javascript">
-                                function form_submit() {
+                                function pers_submit() {
                                     document.getElementById("edited_data").submit();
                                 }
                             </script>
@@ -205,6 +214,30 @@
 
 </div>
 
+<br>
+<br>
+<br>
+<br>
+<div class="footer" style="color: aliceblue; margin-left: 30px">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-5" style="padding: 20px">
+                <p>Phone: 8 800 2000 600, 8 800 5353 777</p>
+                <p>Email: shop@eshop.com, info@eshop.com</p>
+            </div>
+            <div class="col-sm" style="padding: 20px">
+                <p>Address: Russia</p>
+                <p>SPb, Somestreet st., 35</p>
+            </div>
+            <div class="col-sm" style="padding: 20px">
+                <p>Social nets: </p>
+                <p>link1, link2</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="../resources/static/js/app2.js"/>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

@@ -23,16 +23,27 @@ function clients() {
     $("#orders").css({"display" : "none"});
 }
 
+// function changeproduct() {
+//     $("#changeproduct").css({"display" : "block"});
+// }
+
+
+
+
 function form_submit() {
     document.getElementById("search_form").submit();
 }
 
-function edit_submit() {
-    document.getElementById("edited_order").submit();
-}
+// function edit_submit() {
+//     document.getElementById("edited_order").submit();
+// }
 
 function time_submit() {
     document.getElementById("time_form").submit();
+}
+
+function form2_submit() {
+    document.getElementById("edited_data_order").submit();
 }
 
 function deleteItem(id) {
@@ -79,3 +90,21 @@ function decrease(id) {
             }
     });
 }
+
+var footer = $('.footer'),
+    pageContainer = $('.page-container'),
+    fixClass = 'navbar-fixed-bottom';
+
+function stickyFooter() {
+    var windowHeight  = $(window).height(),
+        contentHeight = pageContainer.height(),
+        footerHeight  = footer.height();
+    footer.removeClass(fixClass);
+    if (contentHeight <= windowHeight-footerHeight){
+        footer.addClass(fixClass);
+    }
+}
+stickyFooter();
+$(window).resize(function () {
+    stickyFooter();
+});

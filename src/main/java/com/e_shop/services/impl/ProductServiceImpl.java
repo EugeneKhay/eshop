@@ -59,6 +59,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public String getPageName(String page) {
+        return dao.getPageName(page);
+    }
+
+    @Override
     public void saveProduct(Product product) {
         dao.saveProduct(product);
     }

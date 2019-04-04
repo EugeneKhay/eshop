@@ -1,12 +1,4 @@
 <!DOCTYPE html>
-<%@ page import="com.e_shop.domain.Product" %>
-<%@ page import="java.util.ArrayList" %><%--
-  Created by IntelliJ IDEA.
-  User: evgenijhajmovskij
-  Date: 2019-03-03
-  Time: 14:49
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
@@ -17,7 +9,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="../resources/static/css/style.css">
+    <link rel="stylesheet" type="text/css" href="../resources/static/css/style.css"/>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
@@ -28,24 +20,28 @@
         <div class="col-sm-8">
             <h3 style="color: aliceblue; margin-top: 10px">Basket</h3>
         </div>
-        <div class="col-sm-4">
+    </div>
+
+    <div class="row" style="margin-top: 30px">
+        <div class="col-sm-3">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/phone">Products</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Basket</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="col-sm">
+        </div>
+        <div class="col-sm-2">
             <sec:authorize access="isAuthenticated()">
-                <b style="color: aliceblue"> <a style="color: aliceblue" href="/personal"> <sec:authentication property="principal.username" /> </a> </b>
-                <a style="color: aliceblue; padding-left: 20px" href="/logout"> Clear all </a>
+                <button type="button" class="btn btn-secondary">
+                    <a style="color: aliceblue" href="/logout"> Clear </a>
+                </button>
             </sec:authorize>
         </div>
     </div>
-
-    <div class="row">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/">Home</a></li>
-                <li class="breadcrumb-item"><a href="/phone">Products</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Basket</li>
-            </ol>
-        </nav>
-    </div>
-
 
     <div id="basketInfo">
         <div class="row">
@@ -91,34 +87,54 @@
         </div>
     </div>
 
-    <form method="post" action="/confirm" style="width: 40%; color: aliceblue; margin-top: 15px">
-        <p class="form-row align-items-center">
-            <div class="col-auto my-1">
-                <select class="custom-select mr-sm-2" name="paymentMethod" style="background-color: transparent">
-                    <option selected>Payment Method</option>
-                    <option value="CARD">Card</option>
-                    <option value="CASH">Cash</option>
-                </select>
-            </div>
-            <div class="col-auto my-1">
-                <select class="custom-select mr-sm-2" name="deliveryMethod" style="background-color: transparent">
-                    <option selected>Delivery method</option>
-                    <option value="COURIER">Courier</option>
-                    <option value="SELF">Self</option>
-                </select>
-            </div>
-            <div class="col-auto my-1">
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                <button type="submit" class="btn btn-secondary">Confirm</button>
-            </div>
+    <form method="post" action="/confirm" style="margin-top: 20px; color: aliceblue; width: 50%">
+        <p>Payment Method</p>
+        <div class="form-check form-group" >
+            <input class="form-check-input" type="checkbox" name="paymentMethod" value="CARD" id="defaultCheck1">
+            <label class="form-check-label" for="defaultCheck1">Card</label>
+        </div>
+        <div class="form-check form-group">
+            <input class="form-check-input" type="checkbox" name="paymentMethod" value="CASH" id="defaultCheck2">
+            <label class="form-check-label" for="defaultCheck2">Cash</label>
+        </div>
+        <p>Delivery method</p>
+        <div class="form-check form-group">
+            <input class="form-check-input" type="checkbox" name="deliveryMethod" value="COURIER" id="defaultCheck3">
+            <label class="form-check-label" for="defaultCheck3">Courier</label>
+        </div>
+        <div class="form-check form-group">
+            <input class="form-check-input" type="checkbox" name="deliveryMethod" value="SELF" id="defaultCheck4">
+            <label class="form-check-label" for="defaultCheck4">Self</label>
+        </div>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        <div class="input-group-append">
+            <button class="btn btn-secondary" type="submit">Confirm</button>
+        </div>
     </form>
 </div>
 
-<%--<footer>--%>
-    <%--<p> Copyright ...</p>--%>
-    <%--<p> Our contacts ...</p>--%>
-    <%--<p> Support... </p>--%>
-<%--</footer>--%>
+<br>
+<br>
+<br>
+<br>
+<div class="footer" style="color: aliceblue; margin-left: 30px">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-5" style="padding: 20px">
+                <p>Phone: 8 800 2000 600, 8 800 5353 777</p>
+                <p>Email: shop@eshop.com, info@eshop.com</p>
+            </div>
+            <div class="col-sm" style="padding: 20px">
+                <p>Address: Russia</p>
+                <p>SPb, Somestreet st., 35</p>
+            </div>
+            <div class="col-sm" style="padding: 20px">
+                <p>Social nets: </p>
+                <p>link1, link2</p>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <script type="text/javascript" src="../resources/static/js/app2.js"/>
@@ -143,53 +159,3 @@
 
 
 
-<%--<script type="text/javascript">--%>
-<%--function deleteItem(id) {--%>
-<%--$.ajax({--%>
-<%--url : '/delete',--%>
-<%--type: 'GET',--%>
-<%--dataType: 'json',--%>
-<%--data : ({--%>
-<%--delete: id--%>
-<%--}),--%>
-<%--success: function (result) {--%>
-<%--$('#totalPrice').text(result);--%>
-<%--$('#product-'+ id + 'del').css({"display" : "none"});--%>
-<%--&lt;%&ndash;$('.product${product.id}').css({"display" : "none"});&ndash;%&gt;--%>
-<%--// $('.prod-name[prod-id="'+ id +'"]').text(name)--%>
-<%--}--%>
-<%--});--%>
-<%--}--%>
-<%--</script>--%>
-<%--<script type="text/javascript">--%>
-<%--function increase(id) {--%>
-<%--$.ajax({--%>
-<%--url : '/editOrderPlus',--%>
-<%--type: 'GET',--%>
-<%--dataType: 'json',--%>
-<%--data : ({--%>
-<%--editOrderPlus: id--%>
-<%--}),--%>
-<%--success: function (result) {--%>
-<%--$('#totalPrice').text(result[0]);--%>
-<%--$('#amount'+id+'edit').text(result[1]);--%>
-<%--}--%>
-<%--});--%>
-<%--}--%>
-<%--</script>--%>
-<%--<script type="text/javascript">--%>
-<%--function decrease(id) {--%>
-<%--$.ajax({--%>
-<%--url : '/editOrderMinus',--%>
-<%--type: 'GET',--%>
-<%--dataType: 'json',--%>
-<%--data : ({--%>
-<%--editOrderMinus: id--%>
-<%--}),--%>
-<%--success: function (result) {--%>
-<%--$('#totalPrice').text(result[0]);--%>
-<%--$('#amount'+id+'edit').text(result[1]);--%>
-<%--}--%>
-<%--});--%>
-<%--}--%>
-<%--</script>--%>

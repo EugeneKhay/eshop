@@ -17,7 +17,9 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
-<div class="container">
+<div class="page-container">
+
+<div class="container" style="margin-top: 40px">
 
     <div class="row">
         <div>
@@ -56,23 +58,15 @@
                             <p>
                                 <label for="username">Username</label>
                                 <input type="text" id="username" name="username"/>
-                                <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
                             </p>
                             <p>
                                 <label for="password">Password</label>
                                 <input type="password" id="password" name="password"/>
-                                <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
                             </p>
                             <button onclick="form_submit()" name="user_search" class="btn btn-secondary" data-dismiss="modal">Log in</button>
-                            <!--<button type="button" class="btn btn-secondary"><a href="/registration">Registration</a></button>-->
                             <a href="/registration" class="btn btn-secondary btn-md active" role="button" aria-pressed="true">Registration</a>
 
                         </form>
-                        <%--<script type="text/javascript">--%>
-                        <%--function form_submit() {--%>
-                        <%--document.getElementById("search_form").submit();--%>
-                        <%--}--%>
-                        <%--</script>--%>
                     </div>
                 </div>
             </div>
@@ -87,6 +81,69 @@
             <h5>email: support@eshop.com</h5>
         </c:if>
     </div>
+</div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<%--<div class="footer" style="color: aliceblue; margin-left: 30px">--%>
+    <%--<div class="container">--%>
+        <%--<div class="row">--%>
+            <%--<div class="col-sm-5" style="padding: 20px">--%>
+                <%--<p>Phone: 8 800 2000 600, 8 800 5353 777</p>--%>
+                <%--<p>Email: shop@eshop.com, info@eshop.com</p>--%>
+            <%--</div>--%>
+            <%--<div class="col-sm" style="padding: 20px">--%>
+                <%--<p>Address: Russia</p>--%>
+                <%--<p>SPb, Somestreet st., 35</p>--%>
+            <%--</div>--%>
+            <%--<div class="col-sm" style="padding: 20px">--%>
+                <%--<p>Social nets: </p>--%>
+                <%--<p>link1, link2</p>--%>
+            <%--</div>--%>
+        <%--</div>--%>
+    <%--</div>--%>
+<%--</div>--%>
+
+
+<div class="contener">
+    <ul>
+        <li>
+            <p class="home">Главная</p>
+            <a class="logo" href="#">Fot-Tof.RU <i>© 2015</i></a>
+        </li>
+        <li>
+            <p class="services">Услуги</p>
+            <ul>
+                <li><a href="#">3D моделирование</a></li>
+                <li><a href="#">Веб-разработка</a></li>
+                <li><a href="#">Разработка приложений</a></li>
+                <li><a href="#">Web & Дизайн</a></li>
+            </ul>
+        </li>
+        <li>
+            <p class="reachus">Связь</p>
+            <ul>
+                <li><a href="#">Email</a></li>
+                <li><a href="#">Twitter</a></li>
+                <li><a href="#">Facebook</a></li>
+                <li>555-123456789</li>
+            </ul>
+        </li>
+        <li>
+            <p class="clients">Клиенты</p>
+            <ul>
+                <li><a href="#">Войти</a></li>
+                <li><a href="#">Центр Поддержки</a></li>
+                <li><a href="#">FAQ</a></li>
+            </ul>
+        </li>
+    </ul>
 </div>
 
 

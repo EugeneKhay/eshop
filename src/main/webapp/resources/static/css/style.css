@@ -1,5 +1,6 @@
 body{
     background-image: url(/resources/static/images/background.jpg);
+    margin-top: 30px;
 }
 
 footer{

@@ -42,11 +42,11 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @GetMapping("/orders")
-    public String getOrders(Model model) {
-        model.addAttribute("orders", orderService.getAllOrders());
-        return "listoforders";
-    }
+//    @GetMapping("/orders")
+//    public String getOrders(Model model) {
+//        model.addAttribute("orders", orderService.getAllOrders());
+//        return "listoforders";
+//    }
 
     @PostMapping("/confirm")
     public String confirmOrder(HttpSession session,
@@ -87,13 +87,9 @@ public class OrderController {
         Order orderForEditing = orderService.getOrderById(id);
         orderForEditing.setPaymentStatus(PaymentStatus.valueOf(paymentStatus));
         orderForEditing.setOrderStatus(OrderStatus.valueOf(orderStatus));
-
         orderService.updateOrder(id, paymentStatus, orderStatus);
-
         List<Order> orders = orderService.getAllOrders();
         model.addAttribute("orders", orders);
-                System.out.println(id);
-        //return "listoforders";
         return "adminpage";
     }
 }

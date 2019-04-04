@@ -34,6 +34,8 @@ public interface ProductService {
 
     List<Product> getAllProductsByColour(String colour, String type);
 
+    String getPageName(String page);
+
 
 
 

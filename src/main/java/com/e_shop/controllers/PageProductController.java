@@ -22,6 +22,7 @@ public class PageProductController {
 
         List<Product> phones = productService.getAllProductsByCategory(ProductCategory.PHONE);
         model.addAttribute("items", phones);
+        model.addAttribute("pageName", "Phones");
         return "products";
     }
 
@@ -29,6 +30,7 @@ public class PageProductController {
     public String tv(Model model) {
         List<Product> tv = productService.getAllProductsByCategory(ProductCategory.TV_VIDEO);
         model.addAttribute("items", tv);
+        model.addAttribute("pageName", "TV & Video");
         return "products";
     }
 
@@ -36,6 +38,7 @@ public class PageProductController {
     public String audio(Model model) {
         List<Product> audio = productService.getAllProductsByCategory(ProductCategory.AUDIO);
         model.addAttribute("items", audio);
+        model.addAttribute("pageName", "Audio & Hi-Fi");
         return "products";
     }
 
@@ -43,6 +46,7 @@ public class PageProductController {
     public String laptops(Model model) {
         List<Product> laptops = productService.getAllProductsByCategory(ProductCategory.LAPTOP);
         model.addAttribute("items", laptops);
+        model.addAttribute("pageName", "Laptops");
         return "products";
     }
 
@@ -50,6 +54,7 @@ public class PageProductController {
     public String tablets(Model model) {
         List<Product> tablets = productService.getAllProductsByCategory(ProductCategory.TABLET);
         model.addAttribute("items", tablets);
+        model.addAttribute("pageName", "Tablets");
         return "products";
     }
 }

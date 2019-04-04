@@ -80,7 +80,6 @@ public class OrderServiceImpl implements OrderService {
         return totalSumOfAllOrders;
     }
 
-    //Need to check
     @Override
     public List<Product> getBestsellerPerPeriod(LocalDate start, LocalDate finish) {
 

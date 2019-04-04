@@ -29,7 +29,7 @@
         <h3 style="color: aliceblue"> Admin page </h3>
     </div>
 
-    <div class="row">
+    <div class="row" style="margin-top: 30px">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/"> Home </a></li>
@@ -37,23 +37,6 @@
             </ol>
         </nav>
     </div>
-
-    <%--<div class="row">--%>
-        <%--<div class="btn-group" role="group" aria-label="Button group with nested dropdown">--%>
-            <%--<div class="btn-group" role="group">--%>
-                <%--<button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--%>
-                    <%--Control menu--%>
-                <%--</button>--%>
-                <%--<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">--%>
-                    <%--<a class="dropdown-item" href="/orders"> Orders </a>--%>
-                    <%--<a class="dropdown-item" href="/viewproducts"> Products </a>--%>
-                    <%--<a class="dropdown-item" href="/viewclients"> Clients </a>--%>
-                <%--</div>--%>
-            <%--</div>--%>
-        <%--</div>--%>
-    <%--</div>--%>
-
-
 
     <br>
 
@@ -133,22 +116,6 @@
                             </c:forEach>
                         </ol>
                     </li>
-
-                    <%--<li>Top clients:--%>
-                            <%--<ol>--%>
-                                <%--<c:forEach items="${bestClient}" var="client">--%>
-                                    <%--<li>${client.firstName} ${client.lastName}</li>--%>
-                                <%--</c:forEach>--%>
-                            <%--</ol>--%>
-                    <%--</li>--%>
-
-                    <%--<li> Number of orders:--%>
-                            <%--<ol>--%>
-                                <%--<c:forEach items="${bestNumberOfOrders}" var="number">--%>
-                                    <%--<li> - ${number} orders </li>--%>
-                                <%--</c:forEach>--%>
-                            <%--</ol>--%>
-                    <%--</li>--%>
         </div>
 
             <div id="orders" style="display: none">
@@ -171,7 +138,6 @@
                             <td>${order.id}</td>
                             <td>${client.firstName} ${client.lastName}</td>
                             <td>
-                                <%--<c:set var = "products" scope = "session" value = "${order.productsInOrder}"/>--%>
                                 <c:forEach items="${order.productsInOrder}" var="product">
                                     <table>
                                         <tr>${product.productName}</tr>
@@ -189,8 +155,8 @@
                 </table>
             </div>
                 <div class="col-sm-1">
-                <button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#editModal"> Edit </button>
-            </div>
+                    <button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#editModal"> Edit </button>
+                </div>
                 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -223,10 +189,10 @@
                                         <option >DELIVERIED</option>
                                     </select>
                                 </p>
-                                <button onclick="edit_submit()" name="user_search" class="btn btn-secondary" data-dismiss="modal"> Submit </button>
+                                <button onclick="edit_order_submit()" type="submit" class="btn btn-secondary" data-dismiss="modal"> Submit </button>
                             </form>
                             <script type="text/javascript">
-                                function edit_submit() {
+                                function edit_order_submit() {
                                     document.getElementById("edited_order").submit();
                                 }
                             </script>
@@ -239,7 +205,6 @@
             <div id="products" style="display: none; width: 90%">
                     <h3 style="color: aliceblue">List of products</h3>
                     <table class="table table-borderless" style="withdth: 65%; margin: 0 auto; color: aliceblue">
-                    <%--<table class="table table-borderless" style=" color: aliceblue">--%>
                         <tr>
                             <th>Product ID</th>
                             <th>Product name</th>
@@ -250,6 +215,7 @@
                             <th>Colour</th>
                         </tr>
                         <c:forEach items="${products}" var="product">
+
                             <tr>
                                 <c:set var = "parameters" scope = "session" value = "${product.productParameteres}"/>
                                 <td>${product.id}</td>
@@ -259,6 +225,54 @@
                                 <td>${product.amount}</td>
                                 <td>${product.category}</td>
                                 <td>${parameters.colour}</td>
+                                <td>
+                                    <div class="col-sm-1">
+                                        <button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#editOrder"> Edit </button>
+                                    </div>
+                                    <div class="modal fade" id="editOrder" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel"> Edit product </h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form action="/editproduct" method="post" id="edited_data_order">
+                                                                <input type="hidden" name="productForEdit" value="${product.id}">
+                                                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                                                <p>
+                                                                    <label for="name" style="color: black">Product name</label>
+                                                                    <input type="text" id="name" name="name" value="${product.productName}"/>
+                                                                </p>
+                                                                <p>
+                                                                    <label for="brand2" style="color: black">Brand</label>
+                                                                    <input type="text" id="brand2" name="brand" value="${parameters.brand}"/>
+                                                                </p>
+                                                                <p>
+                                                                    <label for="price" style="color: black">Price</label>
+                                                                    <input type="number" id="price" name="price" value="${product.productPrice}"/>
+                                                                </p>
+                                                                <p>
+                                                                    <label for="amount2" style="color: black">Amount</label>
+                                                                    <input type="number" id="amount2" name="amount" value="${product.amount}"/>
+                                                                </p>
+                                                                <p>
+                                                                    <label for="category2" style="color: black">Category</label>
+                                                                    <input type="text" id="category2" name="category" value="${product.category}"/>
+                                                                </p>
+                                                                <p>
+                                                                    <label for="color" style="color: black">Color</label>
+                                                                    <input type="text" id="color" name="color" value="${parameters.colour}"/>
+                                                                </p>
+                                                                <button onclick="form2_submit()" name="user_search" class="btn btn-secondary" data-dismiss="modal"> Submit </button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                </td>
                             </tr>
                         </c:forEach>
                     </table>
@@ -315,13 +329,6 @@
                             <th>Email</th>
                             <th>Password</th>
                             <th>Address</th>
-
-                            <%--<th>Country</th>--%>
-                            <%--<th>City</th>--%>
-                            <%--<th>Post code</th>--%>
-                            <%--<th>Street</th>--%>
-                            <%--<th>Hose number</th>--%>
-                            <%--<th>Flat number</th>--%>
                         </tr>
                         <c:forEach items="${clients}" var="client">
                             <tr>
@@ -333,63 +340,55 @@
                                 <td>${client.password}</td>
                                 <c:set var = "address" scope = "session" value = "${client.address}"/>
                                 <td>${address.country}, ${address.city}, ${address.postCode}, ${address.street}, ${address.houseNumber}, ${address.flatNumber}</td>
-
-
-                                <%--<td>${address.country}</td>--%>
-                                <%--<td>${address.city}</td>--%>
-                                <%--<td>${address.postCode}</td>--%>
-                                <%--<td>${address.street}</td>--%>
-                                <%--<td>${address.houseNumber}</td>--%>
-                                <%--<td>${address.flatNumber}</td>--%>
                             </tr>
                         </c:forEach>
                     </table>
             </div>
-
         </div>
     </div>
 </div>
-
-<%--<script>--%>
-    <%--function form_submit() {--%>
-        <%--document.getElementById("search_form").submit();--%>
-    <%--}--%>
-<%--</script>--%>
-<%--<script>--%>
-<%--function stats() {--%>
-<%--$("#stats").css({"display" : "block"});--%>
-<%--$("#orders").css({"display" : "none"});--%>
-<%--$("#products").css({"display" : "none"});--%>
-<%--$("#clients").css({"display" : "none"});--%>
-<%--}--%>
-<%--function orders() {--%>
-<%--$("#orders").css({"display" : "block"});--%>
-<%--$("#stats").css({"display" : "none"});--%>
-<%--$("#products").css({"display" : "none"});--%>
-<%--$("#clients").css({"display" : "none"});--%>
-<%--}--%>
-<%--function products() {--%>
-<%--$("#products").css({"display" : "block"});--%>
-<%--$("#stats").css({"display" : "none"});--%>
-<%--$("#orders").css({"display" : "none"});--%>
-<%--$("#clients").css({"display" : "none"});--%>
-<%--}--%>
-<%--function clients() {--%>
-<%--$("#clients").css({"display" : "block"});--%>
-<%--$("#products").css({"display" : "none"});--%>
-<%--$("#stats").css({"display" : "none"});--%>
-<%--$("#orders").css({"display" : "none"});--%>
-<%--}--%>
-<%--</script>--%>
-
-<%--<footer style="color: aliceblue; margin-left: 50px">--%>
-    <%--<p> Copyright ...</p>--%>
-    <%--<p> Our contacts ...</p>--%>
-    <%--<p> Support... </p>--%>
-<%--</footer>--%>
+<br>
+<br>
+<br>
+<br>
+<div class="footer" style="color: aliceblue; margin-left: 30px">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-5" style="padding: 20px">
+                <p>Phone: 8 800 2000 600, 8 800 5353 777</p>
+                <p>Email: shop@eshop.com, info@eshop.com</p>
+            </div>
+            <div class="col-sm" style="padding: 20px">
+                <p>Address: Russia</p>
+                <p>SPb, Somestreet st., 35</p>
+            </div>
+            <div class="col-sm" style="padding: 20px">
+                <p>Social nets: </p>
+                <p>link1, link2</p>
+            </div>
+        </div>
+    </div>
+</div>
 <script type="text/javascript" src="../resources/static/js/app2.js"/>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
