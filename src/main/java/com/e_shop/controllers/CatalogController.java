@@ -3,6 +3,7 @@ package com.e_shop.controllers;
 import com.e_shop.domain.Product;
 import com.e_shop.enums.ProductCategory;
 import com.e_shop.services.ProductService;
+import com.e_shop.services.impl.CatalogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,33 +20,17 @@ public class CatalogController {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private CatalogService catalogService;
+
     @PostMapping("/phone")
     public String postCatalog(@RequestParam(name = "search_res1", required = false) String search_dataPrice,
                               @RequestParam(name = "search_res2", required = false) String search_dataBrand,
                               @RequestParam(name = "search_res3", required = false) String search_dataColour,
                               @RequestParam(name = "page") String page,
                               Model model) {
-        String productType = page.substring(1).toUpperCase();
-        ProductCategory category = ProductCategory.valueOf(productType);
-
-        List<Product> searchResult = productService.getAllProductsByCategory(category);
-
-        if (search_dataPrice != null && !search_dataPrice.isEmpty()) {
-            String[] arr = search_dataPrice.split(" ");
-            double priceMin = Double.valueOf(arr[0]);
-            double priceMax = Double.valueOf(arr[1]);
-            List<Product> filteredByPrice = productService.getAllProductsByPrice(priceMin, priceMax, productType);
-            searchResult.retainAll(filteredByPrice);
-        }
-        if (search_dataBrand != null && !search_dataBrand.isEmpty()) {
-            List<Product> filteredByBrand = productService.getAllProductsByBrand(search_dataBrand, productType);
-            searchResult.retainAll(filteredByBrand);
-        }
-        if (search_dataColour != null && !search_dataColour.isEmpty()) {
-            List<Product> filteredByColour = productService.getAllProductsByColour(search_dataColour, productType);
-            searchResult.retainAll(filteredByColour);
-        }
-        model.addAttribute("items", searchResult);
+        List<Product> dataForPostCatalog = catalogService.getDataForPostCatalog(search_dataPrice, search_dataBrand, search_dataColour, page);
+        model.addAttribute("items", dataForPostCatalog);
         model.addAttribute("pageName", productService.getPageName(page));
         return "products";
     }

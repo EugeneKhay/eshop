@@ -205,9 +205,64 @@
                 <td>${order.deliveryMethod}</td>
                 <td>${order.paymentStatus}</td>
                 <td>${order.orderStatus}</td>
-
             </tr>
             </c:forEach>
+
+
+
+        <%--<c:set var = "orders" scope = "session" value = "${client.orders}"/>--%>
+        <%--<c:forEach items="${orders}" var="order">--%>
+            <%--<tr>--%>
+                <%--<td>${order.id}</td>--%>
+                <%--<td style="width: 100px">${order.dateOfOrder}</td>--%>
+                <%--<td>--%>
+                    <%--<c:forEach items="${order.productsInOrder}" var="product">--%>
+                        <%--<c:forEach items="${product.product}" var="pr">--%>
+                        <%--<table style="width: 100px">--%>
+                            <%--<tr>${pr.productName} - ${product.amountInOrder}</tr>--%>
+                        <%--</table>--%>
+                    <%--</c:forEach>--%>
+                <%--</td>--%>
+                <%--<td>--%>
+                    <%--<c:forEach items="${order.productsInOrder}" var="product">--%>
+                        <%--<c:forEach items="${product.product}" var="pr">--%>
+                        <%--<table>--%>
+                            <%--<tr>${pr.productPrice}</tr>--%>
+                        <%--</table>--%>
+                    <%--</c:forEach>--%>
+                <%--</td>--%>
+                <%--<td>--%>
+                    <%--<c:forEach items="${order.productsInOrder}" var="product">--%>
+                        <%--<c:forEach items="${product.product}" var="pr">--%>
+                        <%--<c:set var = "parameters" scope = "session" value = "${pr.productParameteres}"/>--%>
+                        <%--<table>--%>
+                            <%--<tr>${parameters.colour}</tr>--%>
+                        <%--</table>--%>
+                    <%--</c:forEach>--%>
+                <%--</td>--%>
+                <%--<td>--%>
+                    <%--<c:forEach items="${order.productsInOrder}" var="product">--%>
+                        <%--<c:forEach items="${product.product}" var="pr">--%>
+                        <%--<c:set var = "parameters" scope = "session" value = "${pr.productParameteres}"/>--%>
+                        <%--<table>--%>
+                            <%--<tr>${parameters.brand}</tr>--%>
+                        <%--</table>--%>
+                    <%--</c:forEach>--%>
+                <%--</td>--%>
+                <%--<td>${order.paymentMethod}</td>--%>
+                <%--<td>${order.deliveryMethod}</td>--%>
+                <%--<td>${order.paymentStatus}</td>--%>
+                <%--<td>${order.orderStatus}</td>--%>
+            <%--</tr>--%>
+        <%--</c:forEach>--%>
+
+
+
+
+
+
+
+
         </table>
     </div>
 

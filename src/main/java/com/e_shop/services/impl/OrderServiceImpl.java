@@ -1,10 +1,7 @@
 package com.e_shop.services.impl;
 
 import com.e_shop.dao.OrderDao;
-import com.e_shop.domain.Basket;
-import com.e_shop.domain.Client;
-import com.e_shop.domain.Order;
-import com.e_shop.domain.Product;
+import com.e_shop.domain.*;
 import com.e_shop.enums.DeliveryMethod;
 import com.e_shop.enums.OrderStatus;
 import com.e_shop.enums.PaymentMethod;
@@ -136,7 +133,19 @@ public class OrderServiceImpl implements OrderService {
         Set<Product> products = basket.getProductsInBasket().keySet();
         double sum = sumOfOrder(basket);
         order.setClient(client);
+
+//        //EXP
+//        List<ProductToOrder> productToOrderList = new ArrayList<>();
+//        for (Map.Entry<Product, Integer> entry: basket.getProductsInBasket().entrySet()) {
+//            ProductToOrder productToOrder = new ProductToOrder();
+//            productToOrder.setProduct(entry.getKey());
+//            productToOrder.setAmountInOrder(entry.getValue());
+//            productToOrderList.add(productToOrder);
+//        }
+
         order.setProductsInOrder(products);
+//        order.setProductsInOrder(productToOrderList);
+
         order.setDeliveryMethod(DeliveryMethod.valueOf(deliveryMethod));
         order.setPaymentMethod(PaymentMethod.valueOf(paymentMethod));
         order.setDateOfOrder(LocalDate.now());

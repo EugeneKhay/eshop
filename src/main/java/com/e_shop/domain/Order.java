@@ -36,6 +36,12 @@ public class Order {
             inverseJoinColumns=@JoinColumn(name="product_id"))
     private Collection<Product> productsInOrder;
 
+//    @ManyToMany(fetch = FetchType.EAGER)
+//    @JoinTable (name="order_product",
+//            joinColumns=@JoinColumn (name="order_id"),
+//            inverseJoinColumns=@JoinColumn(name="product_id"))
+//    private Collection<ProductToOrder> productsInOrder;
+
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
 
@@ -64,6 +70,15 @@ public class Order {
         this.paymentStatus = paymentStatus;
         this.orderStatus = orderStatus;
     }
+
+//    public Order(Client client, LinkedHashSet<ProductToOrder> productsInOrder, PaymentMethod paymentMethod, DeliveryMethod deliveryMethod, PaymentStatus paymentStatus, OrderStatus orderStatus) {
+//        this.client = client;
+//        this.productsInOrder = productsInOrder;
+//        this.paymentMethod = paymentMethod;
+//        this.deliveryMethod = deliveryMethod;
+//        this.paymentStatus = paymentStatus;
+//        this.orderStatus = orderStatus;
+//    }
 
     @Override
     public String toString() {

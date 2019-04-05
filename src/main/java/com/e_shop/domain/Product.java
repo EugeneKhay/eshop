@@ -33,11 +33,11 @@ public class Product {
     @JoinColumn(name = "parameters_id")
     private ProductParameteres productParameteres;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name="order_product",
-            joinColumns=@JoinColumn(name="product_id"),
-            inverseJoinColumns=@JoinColumn(name="order_id"))
-    private List<Order> orders;
+//    @ManyToMany(fetch = FetchType.EAGER)
+//    @JoinTable(name="order_product",
+//            joinColumns=@JoinColumn(name="product_id"),
+//            inverseJoinColumns=@JoinColumn(name="order_id"))
+//    private List<Order> orders;
 
     public Product(String productName, double productPrice, ProductCategory category, ProductParameteres productParameteres, int amount) {
         this.productName = productName;
