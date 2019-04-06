@@ -1,16 +1,12 @@
 package com.e_shop.dao.impl;
 
 import com.e_shop.dao.ClientDao;
-//import com.e_shop.dao2.AbstractDao;
 import com.e_shop.domain.Client;
-import com.e_shop.domain.ClientAddress;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Repository

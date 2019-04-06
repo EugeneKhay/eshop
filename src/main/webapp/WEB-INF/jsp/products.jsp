@@ -159,7 +159,7 @@
 
     <div class="row" id="output">
         <c:forEach items="${items}" var="item">
-            <form class="card" style="width: 17rem; margin-left: 15px; margin-top: 15px; background-color: transparent; color: aliceblue; float: left" action="/basket" method="post">
+            <form class="card" style="border-color: #efefef; width: 15rem; margin-left: 15px; margin-top: 15px; background-color: transparent; color: aliceblue; float: left" action="/basket" method="post">
                 <img src="../resources/static/images/phones/" class="card-img-top" alt="...">
                 <div class="card-body" >
                     <h5 class="card-title">${item.productName}</h5>

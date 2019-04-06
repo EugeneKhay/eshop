@@ -1,7 +1,6 @@
 package com.e_shop.controllers;
 
 import com.e_shop.domain.Product;
-import com.e_shop.services.ProductService;
 import com.e_shop.services.impl.BasketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,9 +19,6 @@ import java.util.Map;
 
 @Controller
 public class BasketController {
-
-    @Autowired
-    private ProductService productService;
 
     @Autowired
     private BasketService basketService;

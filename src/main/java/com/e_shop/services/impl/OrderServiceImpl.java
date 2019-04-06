@@ -8,23 +8,23 @@ import com.e_shop.enums.PaymentMethod;
 import com.e_shop.enums.PaymentStatus;
 import com.e_shop.services.OrderService;
 import com.e_shop.services.ProductService;
-import lombok.extern.java.Log;
-import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
+
 import java.util.*;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Service
 @Transactional
 public class OrderServiceImpl implements OrderService {
+
+    public static final LocalDate START_DATE = LocalDate.of(2019, 1, 1);
+
+    public static final LocalDate FINISH_DATE = LocalDate.now();
 
     @Autowired
     private OrderDao dao;
@@ -112,8 +112,12 @@ public class OrderServiceImpl implements OrderService {
                     bestTenProducts.add(entry.getKey());
             }
         });
+        return bestTenProducts.stream().limit(12).collect(Collectors.toList());
+    }
 
-        return bestTenProducts.stream().limit(10).collect(Collectors.toList());
+    @Override
+    public List<Product> getBestsellers() {
+        return getBestsellerPerPeriod(START_DATE, FINISH_DATE);
     }
 
     @Override
@@ -169,5 +173,4 @@ public class OrderServiceImpl implements OrderService {
         orderForEditing.setOrderStatus(OrderStatus.valueOf(orderStatus));
         updateOrder(id, paymentStatus, orderStatus);
     }
-
 }

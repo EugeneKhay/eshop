@@ -30,6 +30,8 @@ public interface OrderService {
 
     List<Product> getBestsellerPerPeriod(LocalDate start, LocalDate finish);
 
+    List<Product> getBestsellers();
+
     double sumOfOrder(Basket basket);
 
     List<Order> getOrdersPerPeriodForClient(Client client, LocalDate start, LocalDate finish);

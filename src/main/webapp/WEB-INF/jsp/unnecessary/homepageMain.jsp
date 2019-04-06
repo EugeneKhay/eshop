@@ -1,8 +1,7 @@
-<%@ page import="java.util.List" %>
-<%@ page import="com.e_shop.domain.Product" %>
+
 <%@ page import="com.e_shop.domain.Basket" %>
 <!DOCTYPE html>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -28,7 +27,6 @@
         <div class="col-sm-3">
             <sec:authorize access="isAuthenticated()">
                 <b style="color: aliceblue"> Welcome, <a style="color: aliceblue" href="/personal"> <sec:authentication property="principal.username" /> </a> </b>
-                <%--<a style="color: aliceblue; padding-left: 20px" href="/personal"> Personal </a>--%>
                 <a style="color: aliceblue; padding-left: 30px" href="/logout"> Logout </a>
             </sec:authorize>
         </div>
@@ -133,7 +131,7 @@
 
         <div class="row" id="output">
             <c:forEach items="${items}" var="item">
-                <form class="card" style="width: 15rem; background-color: transparent; color: aliceblue; float: left; margin-left: 15px; margin-top: 15px" action="/basket" method="post">
+                <form class="card" style="border-color: #efefef;  width: 15rem; background-color: transparent; color: aliceblue; float: left; margin-left: 15px; margin-top: 15px" action="/basket" method="post">
                     <img src="../resources/static/images/phones/" class="card-img-top" alt="...">
                     <div class="card-body" >
                         <h5 class="card-title">${item.productName}</h5>

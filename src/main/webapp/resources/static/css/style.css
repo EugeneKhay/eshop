@@ -1,15 +1,53 @@
 body{
-    background-image: url(/resources/static/images/background.jpg);
+    background-image: url(/resources/static/images/dark-gray-flecks.png);
     margin-top: 30px;
+    margin-bottom: 50px;
+    color: aliceblue;
 }
 
-footer{
-    color: blue;
-    margin-left: 10%;
-    float:left;
-    padding-left: 30px;
-    padding-top: 20px;
+/* Homepage */
+
+#title{
+    margin-bottom: 50px;
 }
+#shopname{
+    font-family: "Dancing+Script", "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+}
+.nav-link{
+    font-size: 1.3rem;
+    color: aliceblue;
+}
+.modal-content{
+    color: black;
+}
+#text{
+    margin-bottom: 50px;
+    font-family: sans-serif;
+}
+.card{
+    width: 15rem;
+    background-color: transparent;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 30px;
+    border-color: aliceblue;
+    text-align: center;
+}
+.list-group-item{
+    background-color: transparent;
+    color: aliceblue;
+}
+#navigation{
+    width: auto;
+    margin-top: 20px;
+    margin-bottom: 60px;
+}
+.footer{
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+
 
 
 

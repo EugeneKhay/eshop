@@ -41,18 +41,6 @@ public class OrderDaoImpl implements OrderDao {
         sessionFactory.getCurrentSession().save(order);
     }
 
-//    @Override
-//    public int updateOrder(Order order, String payStatus, String ordStatus) {
-//        int id = order.getId();
-//        String hql = "update com.e_shop.domain.Order set paymentStatus = :payParam, orderStatus = :ordParam where id = :idParam";
-//        Query query = sessionFactory.getCurrentSession().createQuery(hql);
-//        query.setParameter("idParam", id);
-//        query.setParameter("payParam", PaymentStatus.valueOf(payStatus));
-//        query.setParameter("ordParam", OrderStatus.valueOf(ordStatus));
-//        int updateResult = query.executeUpdate();
-//        return updateResult;
-//    }
-
     @Override
     public int updateOrder(int orderId, String payStatus, String ordStatus) {
         String hql = "update com.e_shop.domain.Order set paymentStatus = :payParam, orderStatus = :ordParam where id = :idParam";

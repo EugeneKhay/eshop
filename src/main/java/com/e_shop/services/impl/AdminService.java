@@ -72,7 +72,7 @@ public class AdminService {
     }
 
     public void addNewProduct(String productName, double productPrice, String category, int amount,
-                       String colour, String brand) {
+                              String colour, String brand) {
         ProductParameteres productParameteres = new ProductParameteres(colour, brand);
         ProductCategory productCategory = ProductCategory.valueOf(category);
         Product product = new Product(productName, productPrice, productCategory, productParameteres, amount);

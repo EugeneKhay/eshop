@@ -4,6 +4,7 @@ import com.e_shop.domain.*;
 import com.e_shop.enums.ProductCategory;
 import com.e_shop.enums.Role;
 import com.e_shop.services.ClientService;
+import com.e_shop.services.OrderService;
 import com.e_shop.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -26,13 +27,17 @@ public class MainController {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private OrderService orderService;
+
     Basket basket;
 
     @GetMapping("/")
     public String homepage(HttpSession session, Model model) {
         if (basket == null) basket = new Basket();
         session.setAttribute("shop_basket", basket);
-        List<Product> allProducts = productService.getAllProducts();
+//        List<Product> allProducts = productService.getAllProducts();
+        List<Product> allProducts = orderService.getBestsellers();
         model.addAttribute("items", allProducts);
         return "homepage2";
     }

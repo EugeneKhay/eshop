@@ -53,7 +53,6 @@ public class BasketService {
         return products;
     }
 
-
     public Double deleteFromBAsket(int id, HttpSession session) {
         Product product = productService.getProductById(id);
         Basket basket = (Basket) session.getAttribute("shop_basket");
