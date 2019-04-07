@@ -1,11 +1,3 @@
-<%@ page import="com.e_shop.domain.Product" %>
-<%@ page import="java.util.ArrayList" %><%--
-  Created by IntelliJ IDEA.
-  User: evgenijhajmovskij
-  Date: 2019-03-03
-  Time: 14:49
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
@@ -16,58 +8,66 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="/resources/static/css/app.css">
+    <link rel="stylesheet" type="text/css" href="/resources/static/css/style.css">
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="//ajax.aspnetcdn.com/ajax/jquery.ui/1.10.3/jquery-ui.min.js"></script>
-    <%--<script src="/resources/static/js/app.js"></script>--%>
 </head>
 <body>
+<div class="container">
 
-<div class="container" style="color: aliceblue; margin: 0 auto">
-
-    <div>
-        <h3 style="color: aliceblue"> Admin page </h3>
+    <div class="row" id="adminTitle">
+        <div class="col-sm">
+            <h3> Admin page </h3>
+        </div>
     </div>
 
-    <div class="row" style="margin-top: 30px">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/"> Home </a></li>
-                <li class="breadcrumb-item active" aria-current="page"> Admin </li>
-            </ol>
-        </nav>
+    <!-- Nav -->
+    <div class="row" id="nav">
+        <div class="col-sm-4">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb" style="background-color: transparent">
+                    <li class="breadcrumb-item"><a href="/"> Home </a></li>
+                    <li class="breadcrumb-item"><a href="/phone"> Products </a></li>
+                    <li class="breadcrumb-item"><a href="/basket"> Basket </a></li>
+                    <li class="breadcrumb-item active" aria-current="page"> Admin </li>
+                </ol>
+            </nav>
+        </div>
+        <div class="col-sm-7"></div>
+        <div class="col-sm-1">
+            <sec:authorize access="isAuthenticated()">
+                <button type="button" class="btn btn-secondary">
+                    <a style="color: aliceblue"href="/logout"> Logout </a>
+                </button>
+            </sec:authorize>
+        </div>
     </div>
 
-    <br>
-
-    <div class="row" style="color: aliceblue; margin: 0 auto">
-        <h4> Statistics </h4>
+    <div class="row" id="stat">
+        <div class="col-sm">
+            <h5> ${period}</h5>
+        </div>
     </div>
 
-    <br>
-
-    <div class="row" style="margin: 0 auto">
-        <h5> ${period}</h5>
-    </div>
-
-    <br>
-
-    <div class="row" style="color: aliceblue; background-color: transparent">
-
-        <div class="col-sm-2">
-                <div class="btn-group-vertical" role="group" aria-label="Basic example">
+    <!-- Buttons -->
+    <div class="row">
+        <div class="col-sm">
+            <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                <div class="btn-group mr-2" role="group" aria-label="First group">
                     <button type="button" class="btn btn-secondary" onclick="orders()"> Orders </button>
                     <button type="button" class="btn btn-secondary" onclick="products()">Products</button>
                     <button type="button" class="btn btn-secondary" onclick="clients()"> Clients</button>
                     <button type="button" class="btn btn-secondary" onclick="stats()"> Statistics</button>
                 </div>
+                <div class="btn-group mr-2" role="group" aria-label="Second group">
+                    <button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#exampleModal">Change period</button>
+                </div>
+            </div>
         </div>
+    </div>
 
-        <div class="col-sm-1">
-            <button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#exampleModal">Change period</button>
-        </div>
-
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+    <!-- Modal window-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -92,14 +92,15 @@
             </div>
         </div>
 
-        <div class="col-sm-10" id="stats" style="display: none">
+    <div class="row" id="info">
 
+        <!-- Statistics -->
+        <div class="col-sm-10" id="stats" style="display: none; color: black">
+            <h3>Statistics</h3>
                     <li> Total sum of all orders: ${totalSumOfAllOrders}</li>
                     <br>
-
                     <li> Total amount of orders: ${totalAmountOfOrders}</li>
                     <br>
-
                     <li> Top products:
                         <ol>
                             <c:forEach items="${bestProducts}" var="product">
@@ -108,7 +109,6 @@
                             </c:forEach>
                         </ol>
                     </li>
-
                     <li> Top clients:
                         <ol>
                             <c:forEach items="${output}" var="data">
@@ -118,9 +118,11 @@
                     </li>
         </div>
 
-            <div id="orders" style="display: none">
-                <div class="row">
-                <table class="table table-borderless" style="margin: 0 auto; color: aliceblue">
+        <!-- Orders -->
+        <div id="orders" style="display: none">
+            <h3 style="color: black">List of orders</h3>
+            <div class="row">
+                <table class="table table-borderless" style="color: black">
                     <tr>
                         <th>Order number</th>
                         <th>Client</th>
@@ -154,10 +156,12 @@
                     </c:forEach>
                 </table>
             </div>
-                <div class="col-sm-1">
-                    <button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#editModal"> Edit </button>
-                </div>
-                <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+            <div class="col-sm-1">
+                <button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#editModal"> Edit </button>
+            </div>
+
+            <!-- Modal window 2-->
+            <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -200,11 +204,12 @@
                     </div>
                 </div>
             </div>
-            </div>
+        </div>
 
-            <div id="products" style="display: none; width: 90%">
-                    <h3 style="color: aliceblue">List of products</h3>
-                    <table class="table table-borderless" style="withdth: 65%; margin: 0 auto; color: aliceblue">
+        <!--Products -->
+        <div id="products" style="display: none; width: 90%">
+            <h3 style="color: black">List of products</h3>
+            <table class="table table-borderless" style="withdth: 65%; margin: 0 auto; color: black">
                         <tr>
                             <th>Product ID</th>
                             <th>Product name</th>
@@ -214,22 +219,23 @@
                             <th>Category</th>
                             <th>Colour</th>
                         </tr>
-                        <c:forEach items="${products}" var="product">
+                    <c:forEach items="${products}" var="product">
+                        <tr>
+                            <c:set var = "parameters" scope = "session" value = "${product.productParameteres}"/>
+                            <td>${product.id}</td>
+                            <td>${product.productName}</td>
+                            <td>${parameters.brand}</td>
+                            <td>${product.productPrice}</td>
+                            <td>${product.amount}</td>
+                            <td>${product.category}</td>
+                            <td>${parameters.colour}</td>
+                            <td>
+                                <div class="col-sm-1">
+                                    <button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#editOrder"> Edit </button>
+                                </div>
 
-                            <tr>
-                                <c:set var = "parameters" scope = "session" value = "${product.productParameteres}"/>
-                                <td>${product.id}</td>
-                                <td>${product.productName}</td>
-                                <td>${parameters.brand}</td>
-                                <td>${product.productPrice}</td>
-                                <td>${product.amount}</td>
-                                <td>${product.category}</td>
-                                <td>${parameters.colour}</td>
-                                <td>
-                                    <div class="col-sm-1">
-                                        <button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#editOrder"> Edit </button>
-                                    </div>
-                                    <div class="modal fade" id="editOrder" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <!-- Modal window 3-->
+                                <div class="modal fade" id="editOrder" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
@@ -272,13 +278,13 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                    </table>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </table>
 
-                    <h3 style="margin: 0 auto; color: aliceblue">Add new product</h3>
-                    <form method="post" action="/addproducts" style="width: 35%; margin: 0 auto">
+            <h3 style="margin: 0 auto; color: aliceblue">Add new product</h3>
+                    <form method="post" action="/addproducts">
                         <b style="color:aliceblue"> Enter product properties </b>
                         <div class="form-group">
                             <label style="color: aliceblue" for="productName"> Product name </label>
@@ -288,9 +294,9 @@
                             <label style="color: aliceblue" for="productPrice"> Product price </label>
                             <input style="background: transparent; color: aliceblue" class="form-control form-control-md" name="productPrice" type="number" class="form-control" id="productPrice" aria-describedby="emailHelp" placeholder="">
                         </div>
-                        <div>
+                        <div style="width: 30%">
                             <label style="color: aliceblue" for="productPrice"> Product type </label>
-                            <select class="custom-select mr-sm-2" name="category" id="category" style="color: aliceblue; background: transparent">
+                            <select class="custom-select mr-sm-2" name="category" id="category" style=" color: aliceblue; background: transparent">
                                 <option selected>Choose category</option>
                                 <option value="PHONE"> PHONE </option>
                                 <option value="TV_VIDEO"> TV_VIDEO </option>
@@ -317,11 +323,11 @@
                     </form>
             </div>
 
-            <div id="clients" style="display: none">
-
-                    <h3>List of clients</h3>
-                    <table class="table table-borderless" style="width: 65%; margin: 0 auto; color: aliceblue">
-                        <tr>
+        <!-- Clients -->
+        <div id="clients" style="display: none">
+            <h3 style="color: black">List of clients</h3>
+            <table class="table table-borderless" style="width: 65%; margin: 0 auto; color: black">
+                <tr>
                             <th>ID</th>
                             <th>First name</th>
                             <th>Last name</th>
@@ -330,7 +336,7 @@
                             <th>Password</th>
                             <th>Address</th>
                         </tr>
-                        <c:forEach items="${clients}" var="client">
+                <c:forEach items="${clients}" var="client">
                             <tr>
                                 <td>${client.id}</td>
                                 <td>${client.firstName}</td>
@@ -342,16 +348,19 @@
                                 <td>${address.country}, ${address.city}, ${address.postCode}, ${address.street}, ${address.houseNumber}, ${address.flatNumber}</td>
                             </tr>
                         </c:forEach>
-                    </table>
-            </div>
+            </table>
         </div>
+    </div>
     </div>
 </div>
 <br>
 <br>
 <br>
 <br>
-<div class="footer" style="color: aliceblue; margin-left: 30px">
+<br>
+<br>
+<br>
+<div class="footer">
     <div class="container">
         <div class="row">
             <div class="col-sm-5" style="padding: 20px">
@@ -375,6 +384,22 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 </html>
+
+
+
+
+<%--<div class="col-sm-2">--%>
+<%--<div class="btn-group-vertical" role="group" aria-label="Basic example">--%>
+<%--<button type="button" class="btn btn-secondary" onclick="orders()"> Orders </button>--%>
+<%--<button type="button" class="btn btn-secondary" onclick="products()">Products</button>--%>
+<%--<button type="button" class="btn btn-secondary" onclick="clients()"> Clients</button>--%>
+<%--<button type="button" class="btn btn-secondary" onclick="stats()"> Statistics</button>--%>
+<%--</div>--%>
+<%--</div>--%>
+
+<%--<div class="col-sm-1">--%>
+<%--<button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#exampleModal">Change period</button>--%>
+<%--</div>--%>
 
 
 

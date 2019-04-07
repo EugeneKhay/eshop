@@ -100,7 +100,7 @@ public class OrderServiceImpl implements OrderService {
                 x += count;
             }
             productsOfPeriod.put(product, x);
-                        System.out.println(productsOfPeriod);
+//                        System.out.println(productsOfPeriod);
         }
         List<Long> freqOfProducts = productsOfPeriod.values()
                                   .stream().sorted(Comparator.reverseOrder())

@@ -1,4 +1,3 @@
-
 <%@ page import="com.e_shop.domain.Basket" %>
 <!DOCTYPE html>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -23,12 +22,17 @@
 <div class="container">
 
     <div class="row" id="title">
-        <div id="shopname" class="col-sm">
+        <div id="shopname" class="col-sm-9">
             <h3>E-shop of gadgets & electronics</h3>
         </div>
         <div class="col-sm-1">
+            <sec:authorize access="hasRole('ADMIN')">
+                <button type="button" class="btn btn-secondary btn-sm"><a style="color: aliceblue" href="/admin"/> Admin </button>
+            </sec:authorize>
+        </div>
+        <div class="col-sm-1">
             <sec:authorize access="isAuthenticated()">
-                <b> Account: <a style="color: aliceblue" href="/personal"> <sec:authentication property="principal.username" /> </a> </b>
+                <b style="color: black"> Account: <a style="color: black" href="/personal"> <sec:authentication property="principal.username" /> </a> </b>
             </sec:authorize>
         </div>
         <div class="col-sm-1">
@@ -73,20 +77,17 @@
             </div>
         </div>
     </div>
-</div>
+    </div>
 
     <!--Nav-->
     <div class="row" id="navigation">
 
-            <div class="col-sm-2">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <sec:authorize access="hasRole('ADMIN')">
-                            <li class="breadcrumb-item"><a href="/admin">Admin</a></li>
-                        </sec:authorize>
-                        <li class="breadcrumb-item active" aria-current="page">Home</li>
-                    </ol>
-                </nav>
+            <div class="col-sm-1">
+                <%--<nav aria-label="breadcrumb">--%>
+                    <%--<ol class="breadcrumb">--%>
+                        <%--<li class="breadcrumb-item active" aria-current="page">Home</li>--%>
+                    <%--</ol>--%>
+                <%--</nav>--%>
             </div>
 
             <div class="col-sm">
@@ -110,24 +111,29 @@
             </div>
 
             <div class="col-sm-1">
-                <button type="button" class="btn btn-secondary">
-                    <a style="color: aliceblue" href="/basket">Basket <span class="badge badge-light"><%= ((Basket) session.getAttribute("shop_basket")).getProductsInBasket().values().stream().reduce((s1, s2) -> s1 + s2).orElse(0) %></span></a>
-                    <%--<span class="badge badge-light"><%= ((Basket) session.getAttribute("shop_basket")).getProductsInBasket().values().stream().reduce((s1, s2) -> s1 + s2).orElse(0) %></span>--%>
+                <button type="button" class="btn btn-primary-outline">
+                    <a href="/basket" style="color: aliceblue">
+                        <span><img style="width: 45px; height: 30px" src="/resources/static/images/basket2.png"/> </span>
+                        <span class="badge badge-light"><%= ((Basket) session.getAttribute("shop_basket")).getProductsInBasket().values().stream().reduce((s1, s2) -> s1 + s2).orElse(0) %></span>
+                    </a>
                 </button>
             </div>
 
+            <!-- Sign In-->
             <div class="col-sm-1">
-                <button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#exampleModal">Sign In</button>
+                <button type="button" class="btn btn-primary-outline btn-md" data-toggle="modal" data-target="#exampleModal">
+                    <span><img style="width: 45px; height: 45px" src="/resources/static/images/sign_in2.png"/> </span>
+                </button>
             </div>
 
         </div>
 
     <div class="row" id="text">
         <h5>High level of practice orientation</h5>
-        Another key component of working at E-shop is a high level of practice orientation from the word go. This means that vocational trainees are given the opportunity to get to know all the departments and categories of products in a store, while more experienced employees are provided with regular product, customer relations or sales strategy training courses.
+        <p>Another key component of working at E-shop is a high level of practice orientation from the word go. This means that vocational trainees are given the opportunity to get to know all the departments and categories of products in a store, while more experienced employees are provided with regular product, customer relations or sales strategy training courses.</p>
         <br>
         <h5>Individual development</h5>
-        At E-shop, the individual strengths of employees are cultivated to enable them to develop their full potential. Employees are provided with individual support during their vocational training and later they profit from a mentoring system. Every employee is also given a great deal of individual responsibility and autonomy is encouraged. At MediaMarkt, people are the key – that is the core principle of our corporate philosophy.
+        <p>At E-shop, the individual strengths of employees are cultivated to enable them to develop their full potential. Employees are provided with individual support during their vocational training and later they profit from a mentoring system. Every employee is also given a great deal of individual responsibility and autonomy is encouraged. At MediaMarkt, people are the key – that is the core principle of our corporate philosophy.</p>
     </div>
 
     <div class="row">

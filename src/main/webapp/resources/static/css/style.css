@@ -1,21 +1,30 @@
 body{
-    background-image: url(/resources/static/images/dark-gray-flecks.png);
+    background-image: url(/resources/static/images/wood-pane.jpg);
     margin-top: 30px;
-    margin-bottom: 50px;
-    color: aliceblue;
+    /*margin-bottom: 50px;*/
+    color: black;
+}
+.footer{
+    text-align: center;
+    margin-bottom: 10px;
+    color: black;
+}
+.form-control{
+    background-color: transparent;
+    width: 30%;
 }
 
 /* Homepage */
 
 #title{
-    margin-bottom: 50px;
+    margin-bottom: 40px;
 }
 #shopname{
     font-family: "Dancing+Script", "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
 }
 .nav-link{
-    font-size: 1.3rem;
-    color: aliceblue;
+    font-size: 1.4rem;
+    color: black;
 }
 .modal-content{
     color: black;
@@ -30,22 +39,80 @@ body{
     margin-left: 20px;
     margin-right: 20px;
     margin-bottom: 30px;
-    border-color: aliceblue;
+    border-color: black;
     text-align: center;
 }
 .list-group-item{
     background-color: transparent;
-    color: aliceblue;
+    color: black;
 }
 #navigation{
     width: auto;
     margin-top: 20px;
     margin-bottom: 60px;
 }
-.footer{
-    text-align: center;
-    margin-bottom: 10px;
+
+/* Basket */
+
+#basketTitle{
+    font-family: "Dancing+Script", "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
 }
+#basketNav{
+    margin-bottom: 50px;
+    margin-top: 30px;
+}
+#confirm{
+    margin-top: 40px;
+    width: 50%;
+}
+#price{
+    margin-top: 40px;
+}
+
+/* Registration */
+
+#regTitle{
+    font-family: "Dancing+Script", "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+}
+#fill{
+    text-align: center;
+    margin-top: 40px;
+}
+#regForm{
+    width: 200px;
+    margin: 0 auto;
+}
+
+/* Admin page */
+
+#adminTitle{
+    font-family: "Dancing+Script", "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+    margin-bottom: 40px;
+    margin-top: 40px;
+}
+#stat{
+    margin-bottom: 40px;
+    margin-top: 40px;
+}
+#nav{
+    margin-bottom: 40px;
+}
+#info{
+    margin-top: 30px;
+    color: aliceblue;
+}
+
+/* Personal */
+
+#personalTitle{
+    font-family: "Dancing+Script", "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+    margin-bottom: 40px;
+    margin-top: 40px;
+}
+#persNav{
+    margin-bottom: 40px;
+}
+
 
 
 

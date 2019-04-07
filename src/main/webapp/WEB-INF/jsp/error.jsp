@@ -72,7 +72,7 @@
             </div>
         </div>
 
-    <div align="center" id="errormessage" style="color: aliceblue">
+    <div align="center" id="errormessage" style="color: black">
         <c:if test="${not empty errMsg}">
             <h4 class="text-danger">${errMsg}</h4>
             <br>
@@ -96,7 +96,7 @@
 <br>
 <br>
 <br>
-<div class="footer" style="color: aliceblue; margin-left: 30px">
+<div class="footer" style="color: black; margin-left: 30px">
     <div class="container">
         <div class="row">
             <div class="col-sm-5" style="padding: 20px">
