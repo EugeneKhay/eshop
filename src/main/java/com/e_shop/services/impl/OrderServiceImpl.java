@@ -93,18 +93,17 @@ public class OrderServiceImpl implements OrderService {
         for (Product product: allProducts) {
             long x = 0;
             for (Order order: orderList) {
-                long count = order.getProductsInOrder()
-                                  .stream()
-                                  .filter(p -> p.equals(product))
-                                  .count();
+                long count = order.getOrderProducts()
+                        .stream()
+                        .filter(p -> p.getProduct().equals(product))
+                        .count();
                 x += count;
             }
             productsOfPeriod.put(product, x);
-//                        System.out.println(productsOfPeriod);
         }
         List<Long> freqOfProducts = productsOfPeriod.values()
-                                  .stream().sorted(Comparator.reverseOrder())
-                                  .collect(Collectors.toList());
+                .stream().sorted(Comparator.reverseOrder())
+                .collect(Collectors.toList());
         Set<Product> bestTenProducts = new LinkedHashSet<>();
         freqOfProducts.forEach(p -> {
             for (Map.Entry<Product, Long> entry : productsOfPeriod.entrySet()) {
@@ -134,22 +133,22 @@ public class OrderServiceImpl implements OrderService {
         Order order = new Order();
         Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Basket basket = (Basket) session.getAttribute("shop_basket");
-        Set<Product> products = basket.getProductsInBasket().keySet();
+//        Set<Product> products = basket.getProductsInBasket().keySet();
         double sum = sumOfOrder(basket);
         order.setClient(client);
 
 //        //EXP
-//        List<ProductToOrder> productToOrderList = new ArrayList<>();
-//        for (Map.Entry<Product, Integer> entry: basket.getProductsInBasket().entrySet()) {
-//            ProductToOrder productToOrder = new ProductToOrder();
-//            productToOrder.setProduct(entry.getKey());
-//            productToOrder.setAmountInOrder(entry.getValue());
-//            productToOrderList.add(productToOrder);
-//        }
+        List<ProductToOrder> productToOrderList = new ArrayList<>();
+        for (Map.Entry<Product, Integer> entry: basket.getProductsInBasket().entrySet()) {
+            ProductToOrder productToOrder = new ProductToOrder();
+            productToOrder.setProduct(entry.getKey());
+            productToOrder.setAmount(entry.getValue());
+            productToOrder.setOrder(order);
+            productToOrderList.add(productToOrder);
+        }
 
-        order.setProductsInOrder(products);
-//        order.setProductsInOrder(productToOrderList);
-
+//        order.setProductsInOrder(products);
+        order.setOrderProducts(productToOrderList);
         order.setDeliveryMethod(DeliveryMethod.valueOf(deliveryMethod));
         order.setPaymentMethod(PaymentMethod.valueOf(paymentMethod));
         order.setDateOfOrder(LocalDate.now());
@@ -174,3 +173,42 @@ public class OrderServiceImpl implements OrderService {
         updateOrder(id, paymentStatus, orderStatus);
     }
 }
+
+
+
+
+
+
+
+
+//    @Override
+//    public List<Product> getBestsellerPerPeriod(LocalDate start, LocalDate finish) {
+//
+//        List<Product> allProducts = productService.getAllProducts();
+//        Map<Product, Long> productsOfPeriod = new HashMap<>();
+//        List<Order> orderList = getOrdersPerPeriod(start, finish);
+//
+//        for (Product product: allProducts) {
+//            long x = 0;
+//            for (Order order: orderList) {
+//                long count = order.getProductsInOrder()
+//                                  .stream()
+//                                  .filter(p -> p.equals(product))
+//                                  .count();
+//                x += count;
+//            }
+//            productsOfPeriod.put(product, x);
+////                        System.out.println(productsOfPeriod);
+//        }
+//        List<Long> freqOfProducts = productsOfPeriod.values()
+//                                  .stream().sorted(Comparator.reverseOrder())
+//                                  .collect(Collectors.toList());
+//        Set<Product> bestTenProducts = new LinkedHashSet<>();
+//        freqOfProducts.forEach(p -> {
+//            for (Map.Entry<Product, Long> entry : productsOfPeriod.entrySet()) {
+//                if (p == entry.getValue())
+//                    bestTenProducts.add(entry.getKey());
+//            }
+//        });
+//        return bestTenProducts.stream().limit(12).collect(Collectors.toList());
+//    }

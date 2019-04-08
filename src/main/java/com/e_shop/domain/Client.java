@@ -39,7 +39,7 @@ public class Client implements UserDetails, Serializable {
 
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     //@JoinColumn(name = "orders_id")
-    private List<Order> orders;
+    private Set<Order> orders;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "client_role", joinColumns = @JoinColumn(name = "client_id"))

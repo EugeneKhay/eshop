@@ -20,8 +20,7 @@ public class DataConfig {
     public DataSource getDataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/eshoptest");
-//        dataSource.setUrl("jdbc:postgresql://localhost:5432/prodordtest");
+        dataSource.setUrl("jdbc:postgresql://localhost:5432/baseerror");
         dataSource.setUsername("postgres");
         dataSource.setPassword("papercut");
         return dataSource;
@@ -40,6 +39,7 @@ public class DataConfig {
         sessionBuilder.addAnnotatedClass(Order.class);
         sessionBuilder.addAnnotatedClass(Product.class);
         sessionBuilder.addAnnotatedClass(ProductParameteres.class);
+        sessionBuilder.addAnnotatedClass(ProductToOrder.class);
         return sessionBuilder.buildSessionFactory();
     }
 

@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
@@ -8,17 +8,18 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="//ajax.aspnetcdn.com/ajax/jquery.ui/1.10.3/jquery-ui.min.js"></script>
 </head>
-
 <body>
 
 <div class="container">
 
+    <!-- Title -->
     <div class="row" id="personalTitle">
         <div class="col-sm">
             <h3> My account </h3>
         </div>
     </div>
 
+    <!-- Nav -->
     <div class="row" id="persNav">
         <div class="col-sm-3">
             <nav aria-label="breadcrumb">
@@ -38,24 +39,22 @@
         </div>
     </div>
 
+    <!-- Personal data -->
     <div class="row">
-        <table style="width: 65%; color: black; margin: 0 auto" class="table table-borderless">
+        <table style="width: 100%; color: black; margin: 0 auto" class="table table-borderless">
         <tr style="background: transparent; color: black">
-            <th>First name: ${client.firstName}</th>
-            <th>Last name: ${client.lastName}</th>
-            <th>Date of birth: ${client.birthDate}</th>
-            <th>Email: ${client.email}</th>
-            <th>Password: ${client.password}</th>
-            <c:set var = "address" scope = "session" value = "${client.address}"/>
-
-            <th>Country: ${address.country}</th>
-            <th>City: ${address.city}</th>
-            <th>Post code: ${address.postCode}</th>
-            <th>Street: ${address.street}</th>
-            <th>House number: ${address.houseNumber}</th>
-            <th>Flat number: ${address.flatNumber}</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Date of birth</th>
+            <th>Email</th>
+            <th>Password</th>
+            <th>Country</th>
+            <th>City</th>
+            <th>Post code</th>
+            <th>Street</th>
+            <th>House number</th>
+            <th>Flat number</th>
             <th>
-                <td>
                     <div class="col-sm-1">
                          <button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#personal"> Edit </button>
                     </div>
@@ -132,113 +131,35 @@
                     </div>
                 </div>
             </div>
-                </td>
             </th>
+        </tr>
+        <tr>
+            <td>${client.firstName}</td>
+            <td>${client.lastName}</td>
+            <td>${client.birthDate}</td>
+            <td>${client.email}</td>
+            <td>${client.password}</td>
+            <c:set var = "address" scope = "session" value = "${client.address}"/>
+            <td>${address.country}</td>
+            <td>${address.city}</td>
+            <td>${address.postCode}</td>
+            <td>${address.street}</td>
+            <td>${address.houseNumber}</td>
+            <td>${address.flatNumber}</td>
         </tr>
         </table>
     </div>
 
-    <%--<div class="row">--%>
-                <%--<p>First name: ${client.firstName}</p>--%>
-                <%--<p>Last name: ${client.lastName}</p>--%>
-                <%--<p>Date of birth: ${client.birthDate}</p>--%>
-                <%--<p>Email: ${client.email}</p>--%>
-                <%--<p>Password: ${client.password}</p>--%>
-                <%--<c:set var = "address" scope = "session" value = "${client.address}"/>--%>
-                <%--<p>Country: ${address.country}</p>--%>
-                <%--<p>City: ${address.city}</p>--%>
-                <%--<p>Post code: ${address.postCode}</p>--%>
-                <%--<p>Street: ${address.street}</p>--%>
-                <%--<p>House number: ${address.houseNumber}</p>--%>
-                <%--<p>Flat number: ${address.flatNumber}</p>--%>
-                <%--<p>--%>
-                    <%--<div class="col-sm-1">--%>
-                        <%--<button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#personal"> Edit </button>--%>
-                    <%--</div>--%>
-                    <%--<!-- Modal window edit personal -->--%>
-                    <%--<div class="modal fade" id="personal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">--%>
-                        <%--<div class="modal-dialog" role="document">--%>
-                            <%--<div class="modal-content">--%>
-                                <%--<div class="modal-header">--%>
-                                    <%--<h5 class="modal-title" id="exampleModalLabel"> Edit data </h5>--%>
-                                    <%--<button type="button" class="close" data-dismiss="modal" aria-label="Close">--%>
-                                        <%--<span aria-hidden="true">&times;</span>--%>
-                                    <%--</button>--%>
-                                <%--</div>--%>
-                                <%--<div class="modal-body">--%>
-                                    <%--<form action="/edit" method="post" id="edited_data">--%>
-                                        <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
-                                        <%--<p>--%>
-                                            <%--<label for="first">First name</label>--%>
-                                            <%--<input type="text" id="first" name="first" value="${client.firstName}"/>--%>
-                                        <%--</p>--%>
-                                        <%--<p>--%>
-                                            <%--<label for="last">Last name</label>--%>
-                                            <%--<input type="text" id="last" name="last" value="${client.lastName}"/>--%>
-                                        <%--</p>--%>
-                                        <%--<p>--%>
-                                            <%--<label for="dateOfBirth">Date of birth</label>--%>
-                                            <%--<input type="text" id="dateOfBirth" name="dateOfBirth" value="${client.birthDate}"/>--%>
-                                        <%--</p>--%>
-                                        <%--<p>--%>
-                                            <%--<label for="email">Email</label>--%>
-                                            <%--<input type="text" id="email" name="email" value="${client.email}"/>--%>
-                                        <%--</p>--%>
-                                        <%--<p>--%>
-                                            <%--<label for="password">Password</label>--%>
-                                            <%--<input type="text" id="password" name="password" value="${client.password}"/>--%>
-                                        <%--</p>--%>
-                                        <%--<c:set var = "address" scope = "session" value = "${client.address}"/>--%>
-                                        <%--<p>--%>
-                                            <%--<label for="country">Country</label>--%>
-                                            <%--<input type="text" id="country" name="country" value="${address.country}"/>--%>
-                                        <%--</p>--%>
-                                        <%--<p>--%>
-                                            <%--<label for="city">City</label>--%>
-                                            <%--<input type="text" id="city" name="city" value="${address.city}"/>--%>
-                                        <%--</p>--%>
-                                        <%--<p>--%>
-                                            <%--<label for="postcode">Post code</label>--%>
-                                            <%--<input type="number" id="postcode" name="postcode" value="${address.postCode}"/>--%>
-                                        <%--</p>--%>
-                                        <%--<p>--%>
-                                            <%--<label for="street">Street</label>--%>
-                                            <%--<input type="text" id="street" name="street" value="${address.street}"/>--%>
-                                        <%--</p>--%>
-                                        <%--<p>--%>
-                                            <%--<label for="houseNumber">House number</label>--%>
-                                            <%--<input type="number" id="houseNumber" name="houseNumber" value="${address.houseNumber}"/>--%>
-                                        <%--</p>--%>
-                                        <%--<p>--%>
-                                            <%--<label for="flatNumber">Flat number</label>--%>
-                                            <%--<input type="number" id="flatNumber" name="flatNumber" value="${address.flatNumber}"/>--%>
-                                        <%--</p>--%>
-
-                                        <%--<input type="hidden" name="clientForEdit" value="${client.id}">--%>
-                                        <%--<button onclick="pers_submit()" type="submit" name="user_search" class="btn btn-secondary" data-dismiss="modal"> Submit </button>--%>
-                                        <%--<a href="/registration" class="btn btn-secondary btn-md active" role="button" aria-pressed="true"> New account</a>--%>
-
-                                    <%--</form>--%>
-                                    <%--<script type="text/javascript">--%>
-                                        <%--function pers_submit() {--%>
-                                            <%--document.getElementById("edited_data").submit();--%>
-                                        <%--}--%>
-                                    <%--</script>--%>
-                                <%--</div>--%>
-                            <%--</div>--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
-                <%--</p>--%>
-    <%--</div>--%>
-
-    <h3 style="margin: 30px; color: black">My orders</h3>
+    <!-- Orders -->
     <div class="row">
-        <table style="width: 80%; color: black; margin: 0 auto" class="table table-borderless">
+        <h4> My orders</h4>
+        <table style="width: 100%; color: black; margin: 0 auto" class="table table-borderless">
         <tr>
-            <th>Number of order</th>
+            <th>№</th>
             <th>Date of order</th>
             <th>Product name</th>
             <th>Price</th>
+            <th>Total sum</th>
             <th>Colour</th>
             <th>Brand</th>
             <th>Payment method</th>
@@ -250,44 +171,55 @@
         <c:set var = "orders" scope = "session" value = "${client.orders}"/>
         <c:forEach items="${orders}" var="order">
             <tr>
-                <td>${order.id}</td>
-                <td style="width: 100px">${order.dateOfOrder}</td>
                 <td>
-                        <c:forEach items="${order.productsInOrder}" var="product">
-                            <table style="width: 100px">
-                                <tr>${product.productName}</tr>
-                            </table>
-                        </c:forEach>
+                     ${order.id}
                 </td>
                 <td>
-                    <c:forEach items="${order.productsInOrder}" var="product">
-                            <table>
-                                <tr>${product.productPrice}</tr>
-                            </table>
-                        </c:forEach>
+                     ${order.dateOfOrder}
                 </td>
                 <td>
-                        <c:forEach items="${order.productsInOrder}" var="product">
-                            <c:set var = "parameters" scope = "session" value = "${product.productParameteres}"/>
-                            <table>
-                                <tr>${parameters.colour}</tr>
-                            </table>
-                        </c:forEach>
+                    <c:forEach items="${order.orderProducts}" var="order_product">
+                        <c:set var = "product" value = "${order_product.product}"/>
+                        <table style="width: 100px">
+                            <tr>${product.productName}:  ${order_product.amount}</tr>
+                        </table>
+                    </c:forEach>
                 </td>
                 <td>
-                        <c:forEach items="${order.productsInOrder}" var="product">
-                            <c:set var = "parameters" scope = "session" value = "${product.productParameteres}"/>
-                            <table>
-                                <tr>${parameters.brand}</tr>
-                            </table>
-                        </c:forEach>
+                    <c:forEach items="${order.orderProducts}" var="order_product">
+                        <c:set var = "product" value = "${order_product.product}"/>
+                        <table>
+                            <tr>${product.productPrice}</tr>
+                        </table>
+                    </c:forEach>
+                </td>
+                <td>
+                     ${order.sumOfOrder}
+                </td>
+                <td>
+                    <c:forEach items="${order.orderProducts}" var="order_product">
+                        <c:set var = "product" value = "${order_product.product}"/>
+                        <c:set var = "parameters" scope = "session" value = "${product.productParameteres}"/>
+                        <table>
+                            <tr>${parameters.colour}</tr>
+                        </table>
+                    </c:forEach>
+                </td>
+                <td>
+                    <c:forEach items="${order.orderProducts}" var="order_product">
+                        <c:set var = "product" value = "${order_product.product}"/>
+                        <c:set var = "parameters" scope = "session" value = "${product.productParameteres}"/>
+                        <table>
+                            <tr>${parameters.brand}</tr>
+                        </table>
+                    </c:forEach>
                 </td>
                 <td>${order.paymentMethod}</td>
                 <td>${order.deliveryMethod}</td>
                 <td>${order.paymentStatus}</td>
                 <td>${order.orderStatus}</td>
             </tr>
-            </c:forEach>
+        </c:forEach>
         </table>
     </div>
 </div>
@@ -392,3 +324,99 @@
 
 <%----%>
 <%--</tr>--%>
+
+
+
+
+<%--<div class="row">--%>
+<%--<p>First name: ${client.firstName}</p>--%>
+<%--<p>Last name: ${client.lastName}</p>--%>
+<%--<p>Date of birth: ${client.birthDate}</p>--%>
+<%--<p>Email: ${client.email}</p>--%>
+<%--<p>Password: ${client.password}</p>--%>
+<%--<c:set var = "address" scope = "session" value = "${client.address}"/>--%>
+<%--<p>Country: ${address.country}</p>--%>
+<%--<p>City: ${address.city}</p>--%>
+<%--<p>Post code: ${address.postCode}</p>--%>
+<%--<p>Street: ${address.street}</p>--%>
+<%--<p>House number: ${address.houseNumber}</p>--%>
+<%--<p>Flat number: ${address.flatNumber}</p>--%>
+<%--<p>--%>
+<%--<div class="col-sm-1">--%>
+<%--<button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#personal"> Edit </button>--%>
+<%--</div>--%>
+<%--<!-- Modal window edit personal -->--%>
+<%--<div class="modal fade" id="personal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">--%>
+<%--<div class="modal-dialog" role="document">--%>
+<%--<div class="modal-content">--%>
+<%--<div class="modal-header">--%>
+<%--<h5 class="modal-title" id="exampleModalLabel"> Edit data </h5>--%>
+<%--<button type="button" class="close" data-dismiss="modal" aria-label="Close">--%>
+<%--<span aria-hidden="true">&times;</span>--%>
+<%--</button>--%>
+<%--</div>--%>
+<%--<div class="modal-body">--%>
+<%--<form action="/edit" method="post" id="edited_data">--%>
+<%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
+<%--<p>--%>
+<%--<label for="first">First name</label>--%>
+<%--<input type="text" id="first" name="first" value="${client.firstName}"/>--%>
+<%--</p>--%>
+<%--<p>--%>
+<%--<label for="last">Last name</label>--%>
+<%--<input type="text" id="last" name="last" value="${client.lastName}"/>--%>
+<%--</p>--%>
+<%--<p>--%>
+<%--<label for="dateOfBirth">Date of birth</label>--%>
+<%--<input type="text" id="dateOfBirth" name="dateOfBirth" value="${client.birthDate}"/>--%>
+<%--</p>--%>
+<%--<p>--%>
+<%--<label for="email">Email</label>--%>
+<%--<input type="text" id="email" name="email" value="${client.email}"/>--%>
+<%--</p>--%>
+<%--<p>--%>
+<%--<label for="password">Password</label>--%>
+<%--<input type="text" id="password" name="password" value="${client.password}"/>--%>
+<%--</p>--%>
+<%--<c:set var = "address" scope = "session" value = "${client.address}"/>--%>
+<%--<p>--%>
+<%--<label for="country">Country</label>--%>
+<%--<input type="text" id="country" name="country" value="${address.country}"/>--%>
+<%--</p>--%>
+<%--<p>--%>
+<%--<label for="city">City</label>--%>
+<%--<input type="text" id="city" name="city" value="${address.city}"/>--%>
+<%--</p>--%>
+<%--<p>--%>
+<%--<label for="postcode">Post code</label>--%>
+<%--<input type="number" id="postcode" name="postcode" value="${address.postCode}"/>--%>
+<%--</p>--%>
+<%--<p>--%>
+<%--<label for="street">Street</label>--%>
+<%--<input type="text" id="street" name="street" value="${address.street}"/>--%>
+<%--</p>--%>
+<%--<p>--%>
+<%--<label for="houseNumber">House number</label>--%>
+<%--<input type="number" id="houseNumber" name="houseNumber" value="${address.houseNumber}"/>--%>
+<%--</p>--%>
+<%--<p>--%>
+<%--<label for="flatNumber">Flat number</label>--%>
+<%--<input type="number" id="flatNumber" name="flatNumber" value="${address.flatNumber}"/>--%>
+<%--</p>--%>
+
+<%--<input type="hidden" name="clientForEdit" value="${client.id}">--%>
+<%--<button onclick="pers_submit()" type="submit" name="user_search" class="btn btn-secondary" data-dismiss="modal"> Submit </button>--%>
+<%--<a href="/registration" class="btn btn-secondary btn-md active" role="button" aria-pressed="true"> New account</a>--%>
+
+<%--</form>--%>
+<%--<script type="text/javascript">--%>
+<%--function pers_submit() {--%>
+<%--document.getElementById("edited_data").submit();--%>
+<%--}--%>
+<%--</script>--%>
+<%--</div>--%>
+<%--</div>--%>
+<%--</div>--%>
+<%--</div>--%>
+<%--</p>--%>
+<%--</div>--%>

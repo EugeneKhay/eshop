@@ -140,9 +140,10 @@
                             <td>${order.id}</td>
                             <td>${client.firstName} ${client.lastName}</td>
                             <td>
-                                <c:forEach items="${order.productsInOrder}" var="product">
+                                <c:forEach items="${order.orderProducts}" var="order_product">
+                                    <c:set var = "product" scope = "session" value = "${order_product.product}"/>
                                     <table>
-                                        <tr>${product.productName}</tr>
+                                        <tr>${product.productName} - ${order_product.amount}</tr>
                                     </table>
                                 </c:forEach>
                             </td>

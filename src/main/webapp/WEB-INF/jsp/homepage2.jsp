@@ -63,12 +63,12 @@
                     </c:if>
                     <p>
                         <label for="username">Username</label>
-                        <input type="text" id="username" name="username"/>
+                        <input type="text" id="username" name="username"required/>
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     </p>
                     <p>
                         <label for="password">Password</label>
-                        <input type="password" id="password" name="password"/>
+                        <input style="margin-left: 5px" type="password" id="password" name="password" required/>
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     </p>
                     <button onclick="form_submit()" name="user_search" class="btn btn-secondary" data-dismiss="modal">Log in</button>
@@ -143,7 +143,7 @@
     <!-- Cards -->
     <div class="row">
             <c:forEach items="${items}" var="item">
-                <form action="/basket" method="post">
+                <form id="form-card" action="/basket" method="post">
                     <div class="card">
                         <img src="../resources/static/images/IPhoneX.png" class="card-img-top" alt="Image">
                         <div class="card-body">
