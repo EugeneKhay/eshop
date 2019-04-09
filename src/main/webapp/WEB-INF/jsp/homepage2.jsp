@@ -61,16 +61,16 @@
                             Invalid username and password.
                         </p>
                     </c:if>
-                    <p>
+                    <div class="form-group">
                         <label for="username">Username</label>
-                        <input type="text" id="username" name="username"required/>
-                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                    </p>
-                    <p>
+                        <input class="form-control form-control-md" type="text" id="username" name="username"required/>
+                        <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
+                    </div>
+                    <div class="form-group">
                         <label for="password">Password</label>
-                        <input style="margin-left: 5px" type="password" id="password" name="password" required/>
-                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                    </p>
+                        <input class="form-control form-control-md" type="password" id="password" name="password" required/>
+                        <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
+                    </div>
                     <button onclick="form_submit()" name="user_search" class="btn btn-secondary" data-dismiss="modal">Log in</button>
                     <a href="/registration" class="btn btn-secondary btn-md active" role="button" aria-pressed="true">Registration</a>
                 </form>
@@ -110,6 +110,7 @@
                 </ul>
             </div>
 
+            <!-- Basket -->
             <div class="col-sm-1">
                 <button type="button" class="btn btn-primary-outline">
                     <a href="/basket" style="color: aliceblue">
@@ -145,7 +146,7 @@
             <c:forEach items="${items}" var="item">
                 <form id="form-card" action="/basket" method="post">
                     <div class="card">
-                        <img src="../resources/static/images/IPhoneX.png" class="card-img-top" alt="Image">
+                        <img style="margin-top: 10px" src="../resources/static/images/IPhoneX.png" class="card-img-top" alt="Image">
                         <div class="card-body">
                             <h5 class="card-title">${item.productName}</h5>
                             <p class="card-text">${item.productPrice}</p>

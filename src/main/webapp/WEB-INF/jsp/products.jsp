@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-
 <%@ page import="com.e_shop.domain.Basket" %>
-
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -13,77 +11,81 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="../resources/static/css/style.css"/>
-
+    <link rel="stylesheet" type="text/css" href="/resources/static/css/style.css"/>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
 </head>
 <body>
 
 <div class="container">
-    <div class="row">
-        <div class="col-sm-8">
-            <h3 style="color: aliceblue">${pageName}</h3>
+    <div class="row" id="productsTitle">
+        <div class="col-sm-10">
+            <h3>${pageName}</h3>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-1">
             <sec:authorize access="isAuthenticated()">
-                <b style="color: aliceblue"> <a style="color: aliceblue" href="/personal"> <sec:authentication property="principal.username" /> </a> </b>
-                <a style="color: aliceblue; padding-left: 20px" href="/logout"> Logout </a>
+                <b style="color: black"> Account: <a style="color: black" href="/personal"> <sec:authentication property="principal.username" /> </a> </b>
+            </sec:authorize>
+        </div>
+        <div class="col-sm-1">
+            <sec:authorize access="isAuthenticated()">
+                <button type="button" class="btn btn-secondary btn-sm"><a style="color: aliceblue" href="/logout"/> Logout </button>
             </sec:authorize>
         </div>
     </div>
-</div>
 
-<div class="container" style="margin-top: 30px">
     <div class="row">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
+        <div class="col-sm">
+            <nav aria-label="breadcrumb">
+            <ol class="breadcrumb" style="background-color: transparent">
                 <li class="breadcrumb-item"><a href="/">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Products</li>
+                <li class="breadcrumb-item active" aria-current="page">${pageName}</li>
             </ol>
         </nav>
+        </div>
     </div>
 
+    <!-- Nav -->
     <div class="row">
-        <div class="col-sm-1" style="height: 100px;">
-            <span class="badge badge-secondary" >Logo</span>
-        </div>
-
-        <div class="col-sm">
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/phone"> Phones </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/tv"> TV & Video </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/audio"> Audio & Hi-Fi </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/laptop"> Laptops </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/tablet"> Tablets </a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-        </div>
-
         <div class="col-sm-1">
-            <button type="button" class="btn btn-secondary">
-                <a style="color: aliceblue" href="/basket">Basket</a>
-                <span class="badge badge-light"><%= ((Basket) session.getAttribute("shop_basket")).getProductsInBasket().values().stream().reduce((s1, s2) -> s1 + s2).orElse(0) %></span>
+        </div>
+        <div class="col-sm">
+            <ul class="nav justify-content-center">
+                <li class="nav-item">
+                    <a class="nav-link" href="/phone">Phones</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/tv">TV & Video</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/audio">Audio & Hi-Fi</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/laptop">Laptops</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/tablet">Tablets</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Basket -->
+        <div class="col-sm-1">
+            <button type="button" class="btn btn-primary-outline">
+                <a href="/basket" style="color: aliceblue">
+                    <span><img style="width: 45px; height: 30px" src="/resources/static/images/basket2.png"/> </span>
+                    <span class="badge badge-light"><%= ((Basket) session.getAttribute("shop_basket")).getProductsInBasket().values().stream().reduce((s1, s2) -> s1 + s2).orElse(0) %></span>
+                </a>
             </button>
         </div>
 
+        <!-- Sign In-->
         <div class="col-sm-1">
-            <button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#exampleModal">Sign In</button>
+            <button type="button" class="btn btn-primary-outline btn-md" data-toggle="modal" data-target="#exampleModal">
+                <span><img style="width: 45px; height: 45px" src="/resources/static/images/sign_in2.png"/> </span>
+            </button>
         </div>
 
+        <!-- Modal window -->
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -121,28 +123,27 @@
                 </div>
             </div>
         </div>
-
     </div>
 
-    <div style="color: aliceblue">
-        <h5>Search</h5>
-
-
-        <form method="post" action="/phone" style="width: 50%">
+    <!-- Search -->
+    <div class="row" style="margin-bottom: 100px; margin-top: 20px">
+       <div class="col-sm-3">
+        <form method="post" action="/phone">
+            <h5>Search</h5>
                 <div class="form-check form-group" >
                     <input class="form-check-input" type="checkbox" name="search_type1" value="Price" id="defaultCheck1">
                     <label class="form-check-label" for="defaultCheck1">Price</label>
-                    <input id="search_input1" type="text" name="search_res1" placeholder="price" style="color:aliceblue; margin-left: 25px; background-color: transparent">
+                    <input style="display: none" class="form-control form-control-md" id="search_input1" type="text" name="search_res1" required>
                 </div>
                 <div class="form-check form-group">
                     <input class="form-check-input" type="checkbox" name="search_type2" value="Brand" id="defaultCheck2">
                     <label class="form-check-label" for="defaultCheck2">Brand</label>
-                    <input id="search_input2" type="text" name="search_res2" placeholder="brand" style="color:aliceblue; margin-left: 19px; background-color: transparent">
+                    <input style="display: none" class="form-control form-control-md" id="search_input2" type="text" name="search_res2" required>
                 </div>
                 <div class="form-check form-group">
                     <input class="form-check-input" type="checkbox" name="search_type3" value="Colour" id="defaultCheck3">
                     <label class="form-check-label" for="defaultCheck3">Colour</label>
-                    <input id="search_input3" type="text" name="search_res3" placeholder="colour" style="color:aliceblue; margin-left: 15px; background-color: transparent">
+                    <input style="display: none" class="form-control form-control-md" id="search_input3" type="text" name="search_res3" required>
                 </div>
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <input type="hidden" name="page" value="${requestScope['javax.servlet.forward.request_uri']}"/>
@@ -150,60 +151,82 @@
                     <button class="btn btn-secondary" type="submit">Find/Clear</button>
                 </div>
         </form>
+       </div>
+        <div class="col-sm">
 
-
+        </div>
     </div>
 
-    <br>
-    <br>
-
+    <!-- Cards -->
     <div class="row" id="output">
         <c:forEach items="${items}" var="item">
-            <form class="card" style="border-color: #efefef; width: 15rem; margin-left: 15px; margin-top: 15px; background-color: transparent; color: aliceblue; float: left" action="/basket" method="post">
-                <img src="../resources/static/images/phones/" class="card-img-top" alt="...">
-                <div class="card-body" >
-                    <h5 class="card-title">${item.productName}</h5>
-                    <p class="card-text">${item.productPrice}</p>
+            <form id="form-card" action="/basket" method="post">
+                <div class="card">
+                    <img style="margin-top: 10px" src="/resources/static/images/IPhoneX.png" class="card-img-top" alt="Image">
+                    <div class="card-body">
+                        <h5 class="card-title">${item.productName}</h5>
+                        <p class="card-text">${item.productPrice}</p>
+                        <c:set var = "params" scope = "session" value = "${item.productParameteres}"/>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item" >${params.brand}</li>
+                            <li class="list-group-item" >${params.colour}</li>
+                        </ul>
+                        <input  type="hidden" name="item" value=${item.id}>
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        <button class="btn btn-secondary btn-sm justify-content-center" type="submit">Buy</button>
+                    </div>
                 </div>
-                <c:set var = "params" scope = "session" value = "${item.productParameteres}"/>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item" style="width: 17rem; background-color: transparent; color: aliceblue;">${params.brand}</li>
-                    <li class="list-group-item" style="width: 17rem; background-color: transparent; color: aliceblue;">${params.colour}</li>
-                </ul>
-                <input  type="hidden" name="item" value=${item.id}>
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                <button type="submit">Buy</button>
             </form>
         </c:forEach>
     </div>
-
     <br>
-
-</div>
-
-
-<br>
-<br>
-<br>
-<br>
-<div class="footer" style="color: aliceblue; margin-left: 30px">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-5" style="padding: 20px">
-                <p>Phone: 8 800 2000 600, 8 800 5353 777</p>
-                <p>Email: shop@eshop.com, info@eshop.com</p>
-            </div>
-            <div class="col-sm" style="padding: 20px">
-                <p>Address: Russia</p>
-                <p>SPb, Somestreet st., 35</p>
-            </div>
-            <div class="col-sm" style="padding: 20px">
-                <p>Social nets: </p>
-                <p>link1, link2</p>
+    <br>
+    <br>
+    <br>
+    <div class="footer" style="color: aliceblue; margin-left: 30px">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-5" style="padding: 20px">
+                    <p>Phone: 8 800 2000 600, 8 800 5353 777</p>
+                    <p>Email: shop@eshop.com, info@eshop.com</p>
+                </div>
+                <div class="col-sm" style="padding: 20px">
+                    <p>Address: Russia</p>
+                    <p>SPb, Somestreet st., 35</p>
+                </div>
+                <div class="col-sm" style="padding: 20px">
+                    <p>Social nets: </p>
+                    <p>link1, link2</p>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    $("#defaultCheck1").change(function(){
+        if(this.checked){
+            $("#search_input1").css({"display" : "block"});
+        }else{
+            $("#search_input1").css({"display" : "none"});
+        }
+    });
+    $("#defaultCheck2").change(function(){
+        if(this.checked){
+            $("#search_input2").css({"display" : "block"});
+        }else{
+            $("#search_input2").css({"display" : "none"});
+        }
+    });
+    $("#defaultCheck3").change(function(){
+        if(this.checked){
+            $("#search_input3").css({"display" : "block"});
+        }else{
+            $("#search_input3").css({"display" : "none"});
+        }
+    });
+</script>
+
 
 <script type="text/javascript" src="../resources/static/js/app2.js"/>
 <%--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>--%>

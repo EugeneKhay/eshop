@@ -120,42 +120,98 @@
 
         <!-- Orders -->
         <div id="orders" style="display: none">
-            <h3 style="color: black">List of orders</h3>
+            <h3 style="color: black">Orders</h3>
             <div class="row">
-                <table class="table table-borderless" style="color: black">
-                    <tr>
-                        <th>Order number</th>
-                        <th>Client</th>
-                        <th>Products</th>
-                        <th>Sum</th>
-                        <th>Date of order</th>
-                        <th>Payment method</th>
-                        <th>Delivery method</th>
-                        <th>Order status</th>
-                        <th>Payment status</th>
-                    </tr>
-                    <c:forEach items="${orders}" var="order">
+                <%--<table class="table table-borderless" style="color: black">--%>
+                    <%--<tr>--%>
+                        <%--<th>Order number</th>--%>
+                        <%--<th>Client</th>--%>
+                        <%--<th>Products</th>--%>
+                        <%--<th>Sum</th>--%>
+                        <%--<th>Date of order</th>--%>
+                        <%--<th>Payment method</th>--%>
+                        <%--<th>Delivery method</th>--%>
+                        <%--<th>Order status</th>--%>
+                        <%--<th>Payment status</th>--%>
+                    <%--</tr>--%>
+                    <%--<c:forEach items="${orders}" var="order">--%>
+                        <%--<tr>--%>
+                            <%--<c:set var = "client" scope = "session" value = "${order.client}"/>--%>
+                            <%--<td>${order.id}</td>--%>
+                            <%--<td>${client.firstName} ${client.lastName}</td>--%>
+                            <%--<td>--%>
+                                <%--<c:forEach items="${order.orderProducts}" var="order_product">--%>
+                                    <%--<c:set var = "product" scope = "session" value = "${order_product.product}"/>--%>
+                                    <%--<table>--%>
+                                        <%--<tr>${product.productName} - ${order_product.amount}</tr>--%>
+                                    <%--</table>--%>
+                                <%--</c:forEach>--%>
+                            <%--</td>--%>
+                            <%--<td>${order.sumOfOrder}</td>--%>
+                            <%--<td>${order.dateOfOrder}</td>--%>
+                            <%--<td>${order.paymentMethod}</td>--%>
+                            <%--<td>${order.deliveryMethod}</td>--%>
+                            <%--<td>${order.orderStatus}</td>--%>
+                            <%--<td>${order.paymentStatus}</td>--%>
+                        <%--</tr>--%>
+                    <%--</c:forEach>--%>
+                <%--</table>--%>
+
+                    <table class="table table-borderless" style="color: black">
                         <tr>
-                            <c:set var = "client" scope = "session" value = "${order.client}"/>
-                            <td>${order.id}</td>
-                            <td>${client.firstName} ${client.lastName}</td>
-                            <td>
-                                <c:forEach items="${order.orderProducts}" var="order_product">
-                                    <c:set var = "product" scope = "session" value = "${order_product.product}"/>
-                                    <table>
-                                        <tr>${product.productName} - ${order_product.amount}</tr>
-                                    </table>
-                                </c:forEach>
-                            </td>
-                            <td>${order.sumOfOrder}</td>
-                            <td>${order.dateOfOrder}</td>
-                            <td>${order.paymentMethod}</td>
-                            <td>${order.deliveryMethod}</td>
-                            <td>${order.orderStatus}</td>
-                            <td>${order.paymentStatus}</td>
+                            <th>№</th>
+                            <th>Client</th>
+                            <th>Products</th>
+                            <th>Price</th>
+                            <th>Pcs.</th>
+                            <th>Total sum</th>
+                            <th>Date of order</th>
+                            <th>Payment method</th>
+                            <th>Delivery method</th>
+                            <th>Order status</th>
+                            <th>Payment status</th>
                         </tr>
-                    </c:forEach>
-                </table>
+                        <c:forEach items="${orders}" var="order">
+                            <tr>
+                                <c:set var = "client" scope = "session" value = "${order.client}"/>
+                                <td>${order.id}</td>
+                                <td>${client.firstName} ${client.lastName}</td>
+                                <td>
+                                    <c:forEach items="${order.orderProducts}" var="order_product">
+                                        <c:set var = "product" scope = "session" value = "${order_product.product}"/>
+                                        <table>
+                                            <tr>${product.productName}</tr>
+                                        </table>
+                                    </c:forEach>
+                                </td>
+                                <td>
+                                    <c:forEach items="${order.orderProducts}" var="order_product">
+                                        <c:set var = "product" scope = "session" value = "${order_product.product}"/>
+                                        <table>
+                                            <tr>${product.productPrice}</tr>
+                                        </table>
+                                    </c:forEach>
+                                </td>
+                                <td>
+                                    <c:forEach items="${order.orderProducts}" var="order_product">
+                                        <c:set var = "product" scope = "session" value = "${order_product.product}"/>
+                                        <table>
+                                            <tr>${order_product.amount}</tr>
+                                        </table>
+                                    </c:forEach>
+                                </td>
+                                <td>${order.sumOfOrder}</td>
+                                <td>${order.dateOfOrder}</td>
+                                <td>${order.paymentMethod}</td>
+                                <td>${order.deliveryMethod}</td>
+                                <td>${order.orderStatus}</td>
+                                <td>${order.paymentStatus}</td>
+                            </tr>
+                        </c:forEach>
+                    </table>
+
+
+
             </div>
             <div class="col-sm-1">
                 <button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#editModal"> Edit </button>
@@ -209,7 +265,7 @@
 
         <!--Products -->
         <div id="products" style="display: none; width: 90%">
-            <h3 style="color: black">List of products</h3>
+            <h5 style="color: black">List of products</h5>
             <table class="table table-borderless" style="withdth: 65%; margin: 0 auto; color: black">
                         <tr>
                             <th>Product ID</th>
@@ -219,6 +275,7 @@
                             <th>Amount</th>
                             <th>Category</th>
                             <th>Colour</th>
+                            <th></th>
                         </tr>
                     <c:forEach items="${products}" var="product">
                         <tr>
@@ -284,20 +341,20 @@
                     </c:forEach>
                 </table>
 
-            <h3 style="margin: 0 auto; color: aliceblue">Add new product</h3>
+                <h5 style="color:black; margin-top: 20px">Add new product</h5>
                     <form method="post" action="/addproducts">
-                        <b style="color:aliceblue"> Enter product properties </b>
+                        <b style="color:black"> Enter product properties </b>
                         <div class="form-group">
-                            <label style="color: aliceblue" for="productName"> Product name </label>
-                            <input style="background: transparent; color: aliceblue" class="form-control form-control-md" name="productName" type="text" class="form-control" id="productName" aria-describedby="emailHelp" placeholder="">
+                            <label for="productName"> Product name </label>
+                            <input class="form-control form-control-md" name="productName" type="text" class="form-control" id="productName" aria-describedby="emailHelp" required>
                         </div>
                         <div class="form-group">
-                            <label style="color: aliceblue" for="productPrice"> Product price </label>
-                            <input style="background: transparent; color: aliceblue" class="form-control form-control-md" name="productPrice" type="number" class="form-control" id="productPrice" aria-describedby="emailHelp" placeholder="">
+                            <label  for="productPrice"> Product price </label>
+                            <input  class="form-control form-control-md" name="productPrice" type="number" class="form-control" id="productPrice" aria-describedby="emailHelp" required>
                         </div>
-                        <div style="width: 30%">
-                            <label style="color: aliceblue" for="productPrice"> Product type </label>
-                            <select class="custom-select mr-sm-2" name="category" id="category" style=" color: aliceblue; background: transparent">
+                        <div>
+                            <label for="productPrice"> Product type </label>
+                            <select class="custom-select mr-sm-2" name="category" id="category" required>
                                 <option selected>Choose category</option>
                                 <option value="PHONE"> PHONE </option>
                                 <option value="TV_VIDEO"> TV_VIDEO </option>
@@ -307,17 +364,17 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label style="color: aliceblue" for="productPrice">Amount</label>
-                            <input style="background: transparent; color: aliceblue" class="form-control form-control-md" name="amount" type="number" class="form-control" id="amount" aria-describedby="emailHelp" placeholder="">
+                            <label for="productPrice">Amount</label>
+                            <input class="form-control form-control-md" name="amount" type="number" class="form-control" id="amount" aria-describedby="emailHelp" required>
                         </div>
-                        <p><b style="color:aliceblue"> Enter product parameteres: </b></p>
+                        <b style="color:black"> Enter product parameters </b>
                         <div class="form-group">
-                            <label style="color: aliceblue" for="productPrice"> Colour </label>
-                            <input style="background: transparent; color: aliceblue" class="form-control form-control-md" name="colour" type="text" class="form-control" id="colour" aria-describedby="emailHelp" placeholder="">
+                            <label for="productPrice"> Colour </label>
+                            <input class="form-control form-control-md" name="colour" type="text" class="form-control" id="colour" aria-describedby="emailHelp" required>
                         </div>
                         <div class="form-group">
-                            <label style="color: aliceblue" for="productPrice"> Brand </label>
-                            <input style="background: transparent; color: aliceblue" class="form-control form-control-md" name="brand" type="text" class="form-control" id="brand" aria-describedby="emailHelp" placeholder="">
+                            <label for="productPrice"> Brand </label>
+                            <input class="form-control form-control-md" name="brand" type="text" class="form-control" id="brand" aria-describedby="emailHelp" required>
                         </div>
                         <button type="submit" class="btn btn-secondary"> Add product </button>
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>

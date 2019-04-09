@@ -34,4 +34,6 @@ public class ClientAddress {
         this.houseNumber = houseNumber;
         this.flatNumber = flatNumber;
     }
+
+
 }

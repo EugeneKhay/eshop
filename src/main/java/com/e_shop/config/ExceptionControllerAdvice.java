@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 import java.lang.ClassCastException;
+import java.util.stream.Stream;
 
 @ControllerAdvice
 public class ExceptionControllerAdvice {
@@ -26,7 +27,8 @@ public class ExceptionControllerAdvice {
 
     @ExceptionHandler(Exception.class)
     public ModelAndView handleException(Exception ex) {
-
+        Stream.of(ex.getStackTrace()).forEach(System.out::println);
+        System.out.println(ex.getMessage());
         ModelAndView model = new ModelAndView();
         model.addObject("errMsg", "Sorry, something went wrong :(");
         model.setViewName("error");

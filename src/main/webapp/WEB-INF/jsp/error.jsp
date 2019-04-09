@@ -22,9 +22,9 @@
 <div class="container" style="margin-top: 40px">
 
     <div class="row">
-        <div>
+        <div class="col-sm">
             <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
+                <ol class="breadcrumb" style="background-color: transparent">
                     <li class="breadcrumb-item"><a href="/">Home</a></li>
                     <li class="breadcrumb-item"><a href="/phone">Products</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Error</li>
@@ -32,9 +32,16 @@
             </nav>
         </div>
 
-        <div class="col-sm-2">
-            <button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#exampleModal">Sign In</button>
+        <!-- Sign In-->
+        <div class="col-sm-1">
+            <button type="button" class="btn btn-primary-outline btn-md" data-toggle="modal" data-target="#exampleModal">
+                <span><img style="width: 45px; height: 45px" src="/resources/static/images/sign_in2.png"/> </span>
+            </button>
         </div>
+
+        <%--<div class="col-sm-2">--%>
+            <%--<button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#exampleModal">Sign In</button>--%>
+        <%--</div>--%>
     </div>
 
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

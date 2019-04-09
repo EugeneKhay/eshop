@@ -146,6 +146,7 @@
             <td>${address.street}</td>
             <td>${address.houseNumber}</td>
             <td>${address.flatNumber}</td>
+            <td> </td>
         </tr>
         </table>
     </div>
@@ -158,7 +159,8 @@
             <th>№</th>
             <th>Date of order</th>
             <th>Product name</th>
-            <th>Price</th>
+            <th>Pcs.</th>
+            <th>Product price</th>
             <th>Total sum</th>
             <th>Colour</th>
             <th>Brand</th>
@@ -181,7 +183,15 @@
                     <c:forEach items="${order.orderProducts}" var="order_product">
                         <c:set var = "product" value = "${order_product.product}"/>
                         <table style="width: 100px">
-                            <tr>${product.productName}:  ${order_product.amount}</tr>
+                            <tr>${product.productName}</tr>
+                        </table>
+                    </c:forEach>
+                </td>
+                <td>
+                    <c:forEach items="${order.orderProducts}" var="order_product">
+                        <c:set var = "product" value = "${order_product.product}"/>
+                        <table style="width: 100px">
+                            <tr>${order_product.amount}</tr>
                         </table>
                     </c:forEach>
                 </td>

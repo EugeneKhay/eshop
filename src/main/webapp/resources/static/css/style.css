@@ -11,8 +11,13 @@ body{
 }
 .form-control{
     background-color: transparent;
-    width: 30%;
+    width: 100%;
 }
+
+label{
+    color: black;
+}
+
 table {
     font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
     font-size: 14px;
@@ -116,22 +121,25 @@ tr td:last-child {
 
 /* Registration */
 
-#regTitle{
-    font-family: "Dancing+Script", "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
-}
-#fill{
-    /*text-align: center;*/
-    margin-top: 40px;
-}
-#regForm{
-    width: 45%;
-    margin: 0 auto;
-}
+/*#regTitle{*/
+    /*font-family: "Dancing+Script", "Century Gothic", CenturyGothic, AppleGothic, sans-serif;*/
+/*}*/
+/*!*#fill{*!*/
+    /*!*!*text-align: center;*!*!*/
+    /*!*margin-top: 40px;*!*/
+/*!*}*!*/
+/*#regForm{*/
+    /*width: 45%;*/
+    /*margin: 0 auto;*/
+/*}*/
 
 
 
 :root {
     --color-primary: #2eec96;
+    --color-error: red;
+    --gray-lighter: white;
+    --gray: white;
     --selection-color: #abffd9;
     --unitless-max-font-size: 18;
 }
@@ -163,7 +171,7 @@ form {
 form h1 {
     margin-bottom: 1.5rem;
     padding-bottom: 1rem;
-    border-bottom: 1px solid var(--gray-lighter);
+    /*border-bottom: 1px solid var(--gray-lighter);*/
     font-size: var(--font-size-3);
     text-align: center;
 }
@@ -208,7 +216,7 @@ input:optional + .help-text::before {
 }
 
 input:read-only {
-    border-color: var(--gray-lighter) !important;
+    border-color: var(--gray-lighter);
     color: var(--gray);
     cursor: not-allowed;
 }
@@ -273,6 +281,13 @@ input[type='checkbox'] + label {
 }
 #persNav{
     margin-bottom: 40px;
+}
+
+/* Products */
+
+#productsTitle{
+    font-family: "Dancing+Script", "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+    ma
 }
 
 
