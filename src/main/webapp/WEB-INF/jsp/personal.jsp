@@ -71,56 +71,54 @@
                         <div class="modal-body">
                             <form action="/edit" method="post" id="edited_data">
                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                <p>
+                                <div class="form-group">
                                     <label for="first">First name</label>
-                                    <input type="text" id="first" name="first" value="${client.firstName}"/>
-                                </p>
-                                <p>
+                                    <input class="form-control form-control-md" type="text" id="first" name="first" value="${client.firstName}"/>
+                                </div>
+                                <div class="form-group">
                                     <label for="last">Last name</label>
-                                    <input type="text" id="last" name="last" value="${client.lastName}"/>
-                                </p>
-                                <p>
+                                    <input class="form-control form-control-md" type="text" id="last" name="last" value="${client.lastName}"/>
+                                </div>
+                                <div class="form-group">
                                     <label for="dateOfBirth">Date of birth</label>
-                                    <input type="text" id="dateOfBirth" name="dateOfBirth" value="${client.birthDate}"/>
-                                </p>
-                                <p>
+                                    <input class="form-control form-control-md" type="text" id="dateOfBirth" name="dateOfBirth" value="${client.birthDate}"/>
+                                </div>
+                                <div class="form-group">
                                     <label for="email">Email</label>
-                                    <input type="text" id="email" name="email" value="${client.email}"/>
-                                </p>
-                                <p>
+                                    <input class="form-control form-control-md" type="text" id="email" name="email" value="${client.email}"/>
+                                </div>
+                                <div class="form-group">
                                     <label for="password">Password</label>
-                                    <input type="text" id="password" name="password" value="${client.password}"/>
-                                </p>
+                                    <input class="form-control form-control-md" type="text" id="password" name="password" value="${client.password}"/>
+                                </div>
                                 <c:set var = "address" scope = "session" value = "${client.address}"/>
-                                <p>
+                                <div class="form-group">
                                     <label for="country">Country</label>
-                                    <input type="text" id="country" name="country" value="${address.country}"/>
-                                </p>
-                                <p>
+                                    <input class="form-control form-control-md" type="text" id="country" name="country" value="${address.country}"/>
+                                </div>
+                                <div class="form-group">
                                     <label for="city">City</label>
-                                    <input type="text" id="city" name="city" value="${address.city}"/>
-                                </p>
-                                <p>
+                                    <input class="form-control form-control-md" type="text" id="city" name="city" value="${address.city}"/>
+                                </div>
+                                <div class="form-group">
                                     <label for="postcode">Post code</label>
-                                    <input type="number" id="postcode" name="postcode" value="${address.postCode}"/>
-                                </p>
-                                <p>
+                                    <input class="form-control form-control-md" type="number" id="postcode" name="postcode" value="${address.postCode}"/>
+                                </div>
+                                <div class="form-group">
                                     <label for="street">Street</label>
-                                    <input type="text" id="street" name="street" value="${address.street}"/>
-                                </p>
-                                <p>
+                                    <input class="form-control form-control-md" type="text" id="street" name="street" value="${address.street}"/>
+                                </div>
+                                <div class="form-group">
                                     <label for="houseNumber">House number</label>
-                                    <input type="number" id="houseNumber" name="houseNumber" value="${address.houseNumber}"/>
-                                </p>
-                                <p>
+                                    <input class="form-control form-control-md" type="number" id="houseNumber" name="houseNumber" value="${address.houseNumber}"/>
+                                </div>
+                                <div class="form-group">
                                     <label for="flatNumber">Flat number</label>
-                                    <input type="number" id="flatNumber" name="flatNumber" value="${address.flatNumber}"/>
-                                </p>
-
+                                    <input class="form-control form-control-md" type="number" id="flatNumber" name="flatNumber" value="${address.flatNumber}"/>
+                                </div>
                                 <input type="hidden" name="clientForEdit" value="${client.id}">
                                 <button onclick="pers_submit()" type="submit" name="user_search" class="btn btn-secondary" data-dismiss="modal"> Submit </button>
                                 <a href="/registration" class="btn btn-secondary btn-md active" role="button" aria-pressed="true"> New account</a>
-
                             </form>
                             <script type="text/javascript">
                                 function pers_submit() {

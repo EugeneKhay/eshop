@@ -1,5 +1,6 @@
 package com.e_shop.config;
 
+import com.e_shop.exception.LoginException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
@@ -14,6 +15,16 @@ public class ExceptionControllerAdvice {
         ModelAndView model = new ModelAndView();
         model.addObject("errMsg", "Sorry, not enough amount of product");
         model.setViewName("error");
+        return model;
+    }
+
+    @ExceptionHandler(LoginException.class)
+    public ModelAndView handleMyException3(LoginException mex) {
+        ModelAndView model = new ModelAndView();
+        model.addObject("errMsg", "Sorry, user with such login already exists." +
+                "Please, enter another login.");
+        model.setViewName("error");
+        System.out.println(mex.getCause());
         return model;
     }
 

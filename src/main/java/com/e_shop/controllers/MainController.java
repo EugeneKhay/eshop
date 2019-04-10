@@ -3,6 +3,7 @@ package com.e_shop.controllers;
 import com.e_shop.domain.*;
 import com.e_shop.enums.ProductCategory;
 import com.e_shop.enums.Role;
+import com.e_shop.exception.LoginException;
 import com.e_shop.services.ClientService;
 import com.e_shop.services.OrderService;
 import com.e_shop.services.ProductService;
@@ -58,7 +59,7 @@ public class MainController {
                       @RequestParam(name = "postcode") int postcode,
                       @RequestParam(name = "street") String street,
                       @RequestParam(name = "house") int house,
-                      @RequestParam(name = "flat") int flat) {
+                      @RequestParam(name = "flat") int flat) throws Exception {
         ClientAddress address = new ClientAddress(country, city, postcode, street, house,flat);
         Client client = new Client();
         client.setFirstName(firstName);
@@ -68,7 +69,10 @@ public class MainController {
         client.setPassword(password);
         client.setAddress(address);
         client.setRoles(Collections.singleton(Role.ROLE_USER));
-        clientService.saveClient(client);
+
+        if (clientService.checkLogin(firstName)) {
+            clientService.saveClient(client);
+        } else throw new LoginException();
         return "redirect:/";
     }
 
@@ -103,8 +107,12 @@ public class MainController {
         client.setEmail(email);
         ClientAddress newAddress = new ClientAddress(country, city, postcode, street, houseNumber, flatNumber);
         client.setAddress(newAddress);
-        clientService.saveClient(client);
-        model.addAttribute("client", client);
+
+        if (clientService.checkLogin(firstName)) {
+            clientService.saveClient(client);
+            model.addAttribute("client", client);
+        } else throw new LoginException();
+
         return "personal";
     }
 

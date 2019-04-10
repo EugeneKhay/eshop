@@ -384,7 +384,7 @@
         <!-- Clients -->
         <div id="clients" style="display: none">
             <h3 style="color: black">List of clients</h3>
-            <table class="table table-borderless" style="width: 65%; margin: 0 auto; color: black">
+            <table class="table table-borderless" style="width: 100%; margin: 0 auto; color: black">
                 <tr>
                             <th>ID</th>
                             <th>First name</th>

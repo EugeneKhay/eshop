@@ -55,6 +55,16 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
+    public boolean checkLogin(String login) {
+        List<Client> collect = getAllClients()
+                .stream()
+                .filter(client -> client.getFirstName().equals(login))
+                .collect(Collectors.toList());
+        if (collect.size() == 0) return true;
+        return false;
+    }
+
+    @Override
     public List<Client> getTenBestClientsPerPeriod(LocalDate start, LocalDate finish)
     {
         Map<Client, Long> ordersOfClientMap = new HashMap<>();

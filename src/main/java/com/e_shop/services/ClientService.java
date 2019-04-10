@@ -22,6 +22,8 @@ public interface ClientService extends UserDetailsService {
 
     List<Client> getAllClientsPerPeriod(LocalDate start, LocalDate finish);
 
+    boolean checkLogin(String login);
+
 
 
 

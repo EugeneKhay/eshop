@@ -172,7 +172,7 @@ form h1 {
     margin-bottom: 1.5rem;
     padding-bottom: 1rem;
     /*border-bottom: 1px solid var(--gray-lighter);*/
-    font-size: var(--font-size-3);
+    /*font-size: var(--font-size-3);*/
     text-align: center;
 }
 
@@ -287,7 +287,6 @@ input[type='checkbox'] + label {
 
 #productsTitle{
     font-family: "Dancing+Script", "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
-    ma
 }
 
 

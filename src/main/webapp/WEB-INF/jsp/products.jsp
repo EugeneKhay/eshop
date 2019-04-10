@@ -127,62 +127,86 @@
 
     <!-- Search -->
     <div class="row" style="margin-bottom: 100px; margin-top: 20px">
-       <div class="col-sm-3">
-        <form method="post" action="/phone">
-            <h5>Search</h5>
+        <div class="col-sm-2">
+            <form method="post" action="/phone">
+                <h5>Search</h5>
                 <div class="form-check form-group" >
                     <input class="form-check-input" type="checkbox" name="search_type1" value="Price" id="defaultCheck1">
                     <label class="form-check-label" for="defaultCheck1">Price</label>
-                    <input style="display: none" class="form-control form-control-md" id="search_input1" type="text" name="search_res1" required>
+                    <input style="display: none" class="form-control form-control-md" id="search_input11" type="number" name="search_res11" placeholder="min" >
+                    <input style="display: none" class="form-control form-control-md" id="search_input12" type="number" name="search_res12" placeholder="max" >
                 </div>
                 <div class="form-check form-group">
                     <input class="form-check-input" type="checkbox" name="search_type2" value="Brand" id="defaultCheck2">
                     <label class="form-check-label" for="defaultCheck2">Brand</label>
-                    <input style="display: none" class="form-control form-control-md" id="search_input2" type="text" name="search_res2" required>
+                    <input style="display: none" class="form-control form-control-md" id="search_input2" type="text" name="search_res2" >
                 </div>
                 <div class="form-check form-group">
                     <input class="form-check-input" type="checkbox" name="search_type3" value="Colour" id="defaultCheck3">
                     <label class="form-check-label" for="defaultCheck3">Colour</label>
-                    <input style="display: none" class="form-control form-control-md" id="search_input3" type="text" name="search_res3" required>
+                    <input style="display: none" class="form-control form-control-md" id="search_input3" type="text" name="search_res3" >
                 </div>
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <input type="hidden" name="page" value="${requestScope['javax.servlet.forward.request_uri']}"/>
                 <div class="input-group-append">
                     <button class="btn btn-secondary" type="submit">Find/Clear</button>
                 </div>
-        </form>
-       </div>
+            </form>
+        </div>
+        <!-- Cards -->
         <div class="col-sm">
-
+            <div class="row" id="output">
+                <c:forEach items="${items}" var="item">
+                    <form id="form-card" action="/basket" method="post">
+                        <div class="card">
+                            <img style="margin-top: 10px" src="/resources/static/images/IPhoneX.png" class="card-img-top" alt="Image">
+                            <div class="card-body">
+                                <h5 class="card-title">${item.productName}</h5>
+                                <p class="card-text">${item.productPrice}</p>
+                                <c:set var = "params" scope = "session" value = "${item.productParameteres}"/>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item" >${params.brand}</li>
+                                    <li class="list-group-item" >${params.colour}</li>
+                                </ul>
+                                <input  type="hidden" name="item" value=${item.id}>
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                <button class="btn btn-secondary btn-sm justify-content-center" type="submit">Buy</button>
+                            </div>
+                        </div>
+                    </form>
+                </c:forEach>
+            </div>
         </div>
     </div>
 
-    <!-- Cards -->
-    <div class="row" id="output">
-        <c:forEach items="${items}" var="item">
-            <form id="form-card" action="/basket" method="post">
-                <div class="card">
-                    <img style="margin-top: 10px" src="/resources/static/images/IPhoneX.png" class="card-img-top" alt="Image">
-                    <div class="card-body">
-                        <h5 class="card-title">${item.productName}</h5>
-                        <p class="card-text">${item.productPrice}</p>
-                        <c:set var = "params" scope = "session" value = "${item.productParameteres}"/>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item" >${params.brand}</li>
-                            <li class="list-group-item" >${params.colour}</li>
-                        </ul>
-                        <input  type="hidden" name="item" value=${item.id}>
-                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                        <button class="btn btn-secondary btn-sm justify-content-center" type="submit">Buy</button>
-                    </div>
-                </div>
-            </form>
-        </c:forEach>
-    </div>
+
+    <%--<div class="row" id="output">--%>
+        <%--<c:forEach items="${items}" var="item">--%>
+            <%--<form id="form-card" action="/basket" method="post">--%>
+                <%--<div class="card">--%>
+                    <%--<img style="margin-top: 10px" src="/resources/static/images/IPhoneX.png" class="card-img-top" alt="Image">--%>
+                    <%--<div class="card-body">--%>
+                        <%--<h5 class="card-title">${item.productName}</h5>--%>
+                        <%--<p class="card-text">${item.productPrice}</p>--%>
+                        <%--<c:set var = "params" scope = "session" value = "${item.productParameteres}"/>--%>
+                        <%--<ul class="list-group list-group-flush">--%>
+                            <%--<li class="list-group-item" >${params.brand}</li>--%>
+                            <%--<li class="list-group-item" >${params.colour}</li>--%>
+                        <%--</ul>--%>
+                        <%--<input  type="hidden" name="item" value=${item.id}>--%>
+                        <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
+                        <%--<button class="btn btn-secondary btn-sm justify-content-center" type="submit">Buy</button>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+            <%--</form>--%>
+        <%--</c:forEach>--%>
+    <%--</div>--%>
+
     <br>
     <br>
     <br>
     <br>
+
     <div class="footer" style="color: aliceblue; margin-left: 30px">
         <div class="container">
             <div class="row">
@@ -206,9 +230,11 @@
 <script>
     $("#defaultCheck1").change(function(){
         if(this.checked){
-            $("#search_input1").css({"display" : "block"});
+            $("#search_input11").css({"display" : "block"});
+            $("#search_input12").css({"display" : "block"});
         }else{
-            $("#search_input1").css({"display" : "none"});
+            $("#search_input11").css({"display" : "none"});
+            $("#search_input12").css({"display" : "none"});
         }
     });
     $("#defaultCheck2").change(function(){
@@ -271,3 +297,38 @@
 <%--</div>--%>
 <%--</div>--%>
 <%--</form>--%>
+
+
+
+
+
+
+<%--<div class="row" style="margin-bottom: 100px; margin-top: 20px">--%>
+<%--<div class="col-sm-3">--%>
+<%--<form method="post" action="/phone">--%>
+<%--<h5>Search</h5>--%>
+<%--<div class="form-check form-group" >--%>
+<%--<input class="form-check-input" type="checkbox" name="search_type1" value="Price" id="defaultCheck1">--%>
+<%--<label class="form-check-label" for="defaultCheck1">Price</label>--%>
+<%--<input style="display: none" class="form-control form-control-md" id="search_input1" type="text" name="search_res1" required>--%>
+<%--</div>--%>
+<%--<div class="form-check form-group">--%>
+<%--<input class="form-check-input" type="checkbox" name="search_type2" value="Brand" id="defaultCheck2">--%>
+<%--<label class="form-check-label" for="defaultCheck2">Brand</label>--%>
+<%--<input style="display: none" class="form-control form-control-md" id="search_input2" type="text" name="search_res2" required>--%>
+<%--</div>--%>
+<%--<div class="form-check form-group">--%>
+<%--<input class="form-check-input" type="checkbox" name="search_type3" value="Colour" id="defaultCheck3">--%>
+<%--<label class="form-check-label" for="defaultCheck3">Colour</label>--%>
+<%--<input style="display: none" class="form-control form-control-md" id="search_input3" type="text" name="search_res3" required>--%>
+<%--</div>--%>
+<%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
+<%--<input type="hidden" name="page" value="${requestScope['javax.servlet.forward.request_uri']}"/>--%>
+<%--<div class="input-group-append">--%>
+<%--<button class="btn btn-secondary" type="submit">Find/Clear</button>--%>
+<%--</div>--%>
+<%--</form>--%>
+<%--</div>--%>
+<%--<div class="col-sm">--%>
+<%--</div>--%>
+<%--</div>--%>
