@@ -26,6 +26,8 @@ public class Product {
 
     private int amount;
 
+    private String imagePath;
+
     @Enumerated(EnumType.STRING)
     private ProductCategory category;
 
@@ -33,12 +35,13 @@ public class Product {
     @JoinColumn(name = "parameters_id")
     private ProductParameteres productParameteres;
 
-    public Product(String productName, double productPrice, ProductCategory category, ProductParameteres productParameteres, int amount) {
+    public Product(String productName, double productPrice, int amount, String imagePath, ProductCategory category, ProductParameteres productParameteres) {
         this.productName = productName;
         this.productPrice = productPrice;
+        this.amount = amount;
+        this.imagePath = imagePath;
         this.category = category;
         this.productParameteres = productParameteres;
-        this.amount = amount;
     }
 
     @Override

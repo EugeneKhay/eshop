@@ -21,6 +21,8 @@ import java.util.List;
 @Transactional
 public class AdminService {
 
+    private final static String IMAGE_PATH = "../resources/static/images/";
+
     @Autowired
     private ClientService clientService;
 
@@ -72,10 +74,11 @@ public class AdminService {
     }
 
     public void addNewProduct(String productName, double productPrice, String category, int amount,
-                              String colour, String brand) {
+                              String colour, String brand, String image) {
         ProductParameteres productParameteres = new ProductParameteres(colour, brand);
         ProductCategory productCategory = ProductCategory.valueOf(category);
-        Product product = new Product(productName, productPrice, productCategory, productParameteres, amount);
+        String imagePath = IMAGE_PATH + image;
+        Product product = new Product(productName, productPrice, amount, imagePath, productCategory, productParameteres);
         productService.saveProduct(product);
     }
 

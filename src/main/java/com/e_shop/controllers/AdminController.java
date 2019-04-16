@@ -43,8 +43,9 @@ public class AdminController {
                              @RequestParam(name = "category") String category,
                              @RequestParam(name = "amount") int amount,
                              @RequestParam(name = "colour") String colour,
-                             @RequestParam(name = "brand") String brand) {
-        adminService.addNewProduct(productName, productPrice, category, amount, colour, brand);
+                             @RequestParam(name = "brand") String brand,
+                             @RequestParam(name = "image") String image) {
+        adminService.addNewProduct(productName, productPrice, category, amount, colour, brand, image);
         return "adminpage";
     }
 

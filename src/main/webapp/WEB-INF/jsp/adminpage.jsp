@@ -376,6 +376,10 @@
                             <label for="productPrice"> Brand </label>
                             <input class="form-control form-control-md" name="brand" type="text" class="form-control" id="brand" aria-describedby="emailHelp" required>
                         </div>
+                        <div class="form-group">
+                            <label for="image"> Image </label>
+                            <input class="form-control form-control-md" name="image" type="text" class="form-control" id="image" aria-describedby="emailHelp" required>
+                        </div>
                         <button type="submit" class="btn btn-secondary"> Add product </button>
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     </form>

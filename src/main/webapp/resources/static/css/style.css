@@ -1,9 +1,19 @@
 body{
-    background-image: url(/resources/static/images/wood-pane.jpg);
+    /*background-image: url(/resources/static/images/white-brick-small.jpg);*/
     margin-top: 30px;
     /*margin-bottom: 50px;*/
     color: black;
+    font-family: "Dancing+Script", "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
 }
+img{
+    width: 60px;
+    height: 230px;
+}
+
+/*.header{*/
+    /*background-color: #a1a1a1;*/
+/*}*/
+
 .footer{
     text-align: center;
     margin-bottom: 10px;

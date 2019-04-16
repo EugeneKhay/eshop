@@ -20,7 +20,7 @@
 <body>
 
 <div class="container">
-
+    <div class="header">
     <div class="row" id="title">
         <div id="shopname" class="col-sm-9">
             <h3>E-shop of gadgets & electronics</h3>
@@ -129,6 +129,8 @@
 
         </div>
 
+    </div>
+
     <div class="row" id="text">
         <h5>High level of practice orientation</h5>
         <p>Another key component of working at E-shop is a high level of practice orientation from the word go. This means that vocational trainees are given the opportunity to get to know all the departments and categories of products in a store, while more experienced employees are provided with regular product, customer relations or sales strategy training courses.</p>
@@ -146,7 +148,8 @@
             <c:forEach items="${items}" var="item">
                 <form id="form-card" action="/basket" method="post">
                     <div class="card">
-                        <img style="margin-top: 10px" src="../resources/static/images/IPhoneX.png" class="card-img-top" alt="Image">
+                        <%--<img style="margin-top: 10px" src="../resources/static/images/IPhoneX.png" class="card-img-top" alt="Image">--%>
+                        <img style="margin-top: 10px" src="${item.imagePath}" class="card-img-top" alt="Image">
                         <div class="card-body">
                             <h5 class="card-title">${item.productName}</h5>
                             <p class="card-text">${item.productPrice}</p>
@@ -158,6 +161,8 @@
                             <input  type="hidden" name="item" value=${item.id}>
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                             <button class="btn btn-secondary btn-sm justify-content-center" type="submit">Buy</button>
+                            <br>
+                            <br>
                         </div>
                     </div>
                 </form>
