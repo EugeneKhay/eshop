@@ -4,6 +4,8 @@ import com.e_shop.domain.*;
 import com.e_shop.enums.ProductCategory;
 import com.e_shop.enums.Role;
 import com.e_shop.exception.LoginException;
+//import com.e_shop.jms.MessageSender;
+import com.e_shop.jms.Producer;
 import com.e_shop.services.ClientService;
 import com.e_shop.services.OrderService;
 import com.e_shop.services.ProductService;
@@ -31,6 +33,10 @@ public class MainController {
     @Autowired
     private OrderService orderService;
 
+    //EXP
+    @Autowired
+    private Producer sender;
+
     Basket basket;
 
     @GetMapping("/")
@@ -40,6 +46,11 @@ public class MainController {
 //        List<Product> allProducts = productService.getAllProducts();
         List<Product> allProducts = orderService.getBestsellers();
         model.addAttribute("items", allProducts);
+
+        //EXP
+        Product testProduct = allProducts.get(0);
+        sender.sendMessage("QU!", testProduct.getProductName());
+
         return "homepage2";
     }
 
