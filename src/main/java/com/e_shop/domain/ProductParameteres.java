@@ -1,5 +1,6 @@
 package com.e_shop.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -21,6 +22,7 @@ public class ProductParameteres {
     private String brand;
 
     @OneToOne(mappedBy = "productParameteres")
+    @JsonBackReference
     private Product product;
 
     public ProductParameteres(String colour, String brand) {
@@ -44,5 +46,10 @@ public class ProductParameteres {
         return "ProductParameteres{" +
                 "id=" + id +
                 '}';
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

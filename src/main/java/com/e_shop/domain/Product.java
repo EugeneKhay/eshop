@@ -3,6 +3,7 @@ package com.e_shop.domain;
 import com.e_shop.domain.ProductParameteres;
 import com.e_shop.enums.PaymentMethod;
 import com.e_shop.enums.ProductCategory;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -34,6 +35,7 @@ public class Product implements Serializable {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "parameters_id")
+    @JsonManagedReference
     private ProductParameteres productParameteres;
 
     public Product(String productName, double productPrice, int amount, String imagePath, ProductCategory category, ProductParameteres productParameteres) {

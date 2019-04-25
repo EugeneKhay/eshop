@@ -22,10 +22,11 @@ function clients() {
     $("#stats").css({"display" : "none"});
     $("#orders").css({"display" : "none"});
 }
-
-// function changeproduct() {
-//     $("#changeproduct").css({"display" : "block"});
+// function changeProduct() {
+//     $("#edited_data_order").css({"display" : "block"});
 // }
+
+
 
 
 
@@ -108,3 +109,4 @@ stickyFooter();
 $(window).resize(function () {
     stickyFooter();
 });
+

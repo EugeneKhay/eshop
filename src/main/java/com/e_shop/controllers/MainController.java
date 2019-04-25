@@ -4,8 +4,9 @@ import com.e_shop.domain.*;
 import com.e_shop.enums.ProductCategory;
 import com.e_shop.enums.Role;
 import com.e_shop.exception.LoginException;
+//import com.e_shop.jms.Producer;
 //import com.e_shop.jms.MessageSender;
-import com.e_shop.jms.Producer;
+import com.e_shop.jms.MessageSender;
 import com.e_shop.services.ClientService;
 import com.e_shop.services.OrderService;
 import com.e_shop.services.ProductService;
@@ -19,7 +20,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
 
 @Controller
 public class MainController {
@@ -33,9 +35,8 @@ public class MainController {
     @Autowired
     private OrderService orderService;
 
-    //EXP
     @Autowired
-    private Producer sender;
+    private MessageSender sender;
 
     Basket basket;
 
@@ -43,14 +44,9 @@ public class MainController {
     public String homepage(HttpSession session, Model model) {
         if (basket == null) basket = new Basket();
         session.setAttribute("shop_basket", basket);
-//        List<Product> allProducts = productService.getAllProducts();
-        List<Product> allProducts = orderService.getBestsellers();
-        model.addAttribute("items", allProducts);
-
-        //EXP
-        Product testProduct = allProducts.get(0);
-        sender.sendMessage("QU!", testProduct.getProductName());
-
+        List<Product> bestsellers = orderService.getBestsellers();
+        model.addAttribute("items", bestsellers);
+        sender.sendMessage("Bestsellers updated");
         return "homepage2";
     }
 

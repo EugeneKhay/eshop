@@ -107,7 +107,7 @@ public class OrderServiceImpl implements OrderService {
         Set<Product> bestTenProducts = new LinkedHashSet<>();
         freqOfProducts.forEach(p -> {
             for (Map.Entry<Product, Long> entry : productsOfPeriod.entrySet()) {
-                if (p == entry.getValue())
+                if (entry.getValue() == p)
                     bestTenProducts.add(entry.getKey());
             }
         });

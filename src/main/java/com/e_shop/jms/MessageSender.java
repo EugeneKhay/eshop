@@ -1,4 +1,4 @@
-//package com.e_shop.jms;
+package com.e_shop.jms;
 ////
 ////import javax.jms.JMSException;
 ////import javax.jms.Message;
@@ -28,3 +28,26 @@
 ////    public MessageSender() {
 ////    }
 ////}
+
+
+
+
+
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jms.core.JmsTemplate;
+import org.springframework.stereotype.Component;
+
+@Component
+public class MessageSender {
+
+    @Autowired
+    JmsTemplate jmsTemplate;
+
+    public void sendMessage(final String message) {
+        System.out.println("Sending message... ");
+        jmsTemplate.send(session -> session.createTextMessage(message));
+    }
+
+}

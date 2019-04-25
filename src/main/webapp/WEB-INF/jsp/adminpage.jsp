@@ -288,54 +288,43 @@
                             <td>${product.category}</td>
                             <td>${parameters.colour}</td>
                             <td>
-                                <div class="col-sm-1">
-                                    <button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#editOrder"> Edit </button>
+                                <div>
+                                    <button type="button" class="btn btn-secondary" onclick="changeProduct2(${product.id})"> Change </button>
                                 </div>
-
-                                <!-- Modal window 3-->
-                                <div class="modal fade" id="editOrder" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel"> Edit product </h5>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <form action="/editproduct" method="post" id="edited_data_order">
+                                <script type="text/javascript">
+                                    function changeProduct2(id) {
+                                        $("#" + id + "").css({"display" : "block"});
+                                    }
+                                </script>
+                                <form action="/editproduct" method="post" id="${product.id}" style="display: none">
                                                                 <input type="hidden" name="productForEdit" value="${product.id}">
                                                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                                                <p>
+                                                                <div class="form-group">
                                                                     <label for="name" style="color: black">Product name</label>
-                                                                    <input type="text" id="name" name="name" value="${product.productName}"/>
-                                                                </p>
-                                                                <p>
+                                                                    <input class="form-control form-control-md" type="text" id="name" name="name" value="${product.productName}"/>
+                                                                </div>
+                                                                <div class="form-group">
                                                                     <label for="brand2" style="color: black">Brand</label>
-                                                                    <input type="text" id="brand2" name="brand" value="${parameters.brand}"/>
-                                                                </p>
-                                                                <p>
+                                                                    <input class="form-control form-control-md" type="text" id="brand2" name="brand" value="${parameters.brand}"/>
+                                                                </div>
+                                                                <div class="form-group">
                                                                     <label for="price" style="color: black">Price</label>
-                                                                    <input type="number" id="price" name="price" value="${product.productPrice}"/>
-                                                                </p>
-                                                                <p>
+                                                                    <input class="form-control form-control-md" type="number" id="price" name="price" value="${product.productPrice}"/>
+                                                                </div>
+                                                                <div class="form-group">
                                                                     <label for="amount2" style="color: black">Amount</label>
-                                                                    <input type="number" id="amount2" name="amount" value="${product.amount}"/>
-                                                                </p>
-                                                                <p>
+                                                                    <input class="form-control form-control-md" type="number" id="amount2" name="amount" value="${product.amount}"/>
+                                                                </div>
+                                                                <div class="form-group">
                                                                     <label for="category2" style="color: black">Category</label>
-                                                                    <input type="text" id="category2" name="category" value="${product.category}"/>
-                                                                </p>
-                                                                <p>
+                                                                    <input class="form-control form-control-md" type="text" id="category2" name="category" value="${product.category}"/>
+                                                                </div>
+                                                                <div class="form-group">
                                                                     <label for="color" style="color: black">Color</label>
-                                                                    <input type="text" id="color" name="color" value="${parameters.colour}"/>
-                                                                </p>
+                                                                    <input class="form-control form-control-md" type="text" id="color" name="color" value="${parameters.colour}"/>
+                                                                </div>
                                                                 <button onclick="form2_submit()" name="user_search" class="btn btn-secondary" data-dismiss="modal"> Submit </button>
                                                             </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
                             </td>
                         </tr>
                     </c:forEach>
