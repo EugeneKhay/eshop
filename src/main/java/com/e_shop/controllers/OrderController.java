@@ -12,6 +12,8 @@ import com.e_shop.services.ClientService;
 import com.e_shop.services.OrderService;
 import com.e_shop.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -40,6 +42,9 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
+    @Autowired
+    private JavaMailSender mailSender;
+
     private Logger logger = Logger.getLogger("logger");
 
 
@@ -50,6 +55,13 @@ public class OrderController {
                                Model model) {
         orderService.makeNewOrder(session, paymentMethod, deliveryMethod);
         model.addAttribute("items", productService.getAllProducts());
+
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo("seelenrauf@mail.ru");
+        message.setSubject("New order");
+        message.setText("Congratulations! You are fool!");
+        //mailSender.send(message);
+
         logger.info("The order created and saved to DB");
         return "homepage2";
     }
