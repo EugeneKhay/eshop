@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 @Controller
 public class BasketController {
@@ -23,10 +24,13 @@ public class BasketController {
     @Autowired
     private BasketService basketService;
 
+    private Logger logger = Logger.getLogger("logger");
+
     @GetMapping("/basket")
     public String getBasket(HttpServletRequest request, Model model) {
         Map<Product, Integer> productsInBasket = basketService.getProductsInBasket(request);
         model.addAttribute("items", productsInBasket);
+        logger.info("Go to basket page");
         return "basket";
     }
 
@@ -38,8 +42,10 @@ public class BasketController {
         List<Product> products = basketService.prepareProductsForBasket(id, page, session);
         model.addAttribute("items", products);
         if (page == null) {
+            logger.info("Product added to basket");
             return "homepage2";
         }
+        logger.info("Product added to basket");
         return "products";
     }
 
@@ -48,6 +54,7 @@ public class BasketController {
     public ResponseEntity<Double> deleteFromBasketAjax(@RequestParam(name = "delete") int id,
                                                        HttpSession session) {
         Double totalPrice = basketService.deleteFromBAsket(id, session);
+        logger.info("Product deleted from basket completely");
         return new ResponseEntity<>(totalPrice, HttpStatus.OK);
     }
 
@@ -56,6 +63,7 @@ public class BasketController {
     public ResponseEntity<List> editOrderFromBasketMinusAjax(@RequestParam(name = "editOrderMinus") int id,
                                                              HttpSession session) {
         List<Number> result = basketService.editOrderMinus(id, session);
+        logger.info("Item of product removed from basket");
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -64,6 +72,7 @@ public class BasketController {
     public ResponseEntity<List> editOrderFromBasketPlusAjax(@RequestParam(name = "editOrderPlus") int id,
                                                             HttpSession session) {
         List<Number> result = basketService.editOrderPlus(id, session);
+        logger.info("Item of product added to basket");
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

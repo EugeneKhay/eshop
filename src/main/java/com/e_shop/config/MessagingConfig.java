@@ -1,7 +1,7 @@
 package com.e_shop.config;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
-import org.apache.activemq.artemis.jms.client.ActiveMQJMSConnectionFactory;
+//import org.apache.activemq.artemis.jms.client.ActiveMQJMSConnectionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.connection.UserCredentialsConnectionFactoryAdapter;
@@ -9,7 +9,7 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jndi.JndiObjectFactoryBean;
 
 import javax.jms.ConnectionFactory;
-import javax.jms.JMSContext;
+//import javax.jms.JMSContext;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;

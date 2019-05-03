@@ -62,6 +62,7 @@ public class OrderServiceImpl implements OrderService {
         return dao.getOrdersPerPeriodForClient(client, start, finish);
     }
 
+    //Delete
     public LocalDate getDate(String day, String month, String year) {
         String[] array = {day, month, year};
         int[] dateInInt = Arrays.stream(array).mapToInt(Integer::valueOf).toArray();
@@ -171,6 +172,14 @@ public class OrderServiceImpl implements OrderService {
         orderForEditing.setPaymentStatus(PaymentStatus.valueOf(paymentStatus));
         orderForEditing.setOrderStatus(OrderStatus.valueOf(orderStatus));
         updateOrder(id, paymentStatus, orderStatus);
+    }
+
+    public void setDao(OrderDao dao) {
+        this.dao = dao;
+    }
+
+    public void setProductService(ProductService productService) {
+        this.productService = productService;
     }
 }
 

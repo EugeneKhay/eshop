@@ -26,7 +26,7 @@ public class AdminServiceTest {
     }
 
     @Test
-    public void getMessage() {
+    public void getMessageTest() {
         LocalDate start = LocalDate.of(2019, 2, 23);
         LocalDate finish = LocalDate.of(2019, 3, 8);
         String expected = "Info for the period from 23.02.2019 to 08.03.2019";

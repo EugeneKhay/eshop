@@ -13,8 +13,10 @@ public class CatalogService {
     @Autowired
     private ProductService productService;
 
-    public List<Product> getDataForPostCatalog(Double search_dataPrice1, Double search_dataPrice2, String search_dataBrand,
-                                               String search_dataColour, String page) {
+    public List<Product> getDataForPostCatalog(Double search_dataPrice1, Double search_dataPrice2,
+                                               String search_dataBrand,
+                                               String search_dataColour,
+                                               String page) {
         String productType = page.substring(1).toUpperCase();
         ProductCategory category = ProductCategory.valueOf(productType);
 
@@ -35,6 +37,10 @@ public class CatalogService {
             searchResult.retainAll(filteredByColour);
         }
         return searchResult;
+    }
+
+    public CatalogService(ProductService productService) {
+        this.productService = productService;
     }
 }
 

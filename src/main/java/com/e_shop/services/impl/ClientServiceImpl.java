@@ -98,4 +98,11 @@ public class ClientServiceImpl implements ClientService {
         return dao.getClientByName(s);
     }
 
+    public void setDao(ClientDao dao) {
+        this.dao = dao;
+    }
+
+    public void setOrderService(OrderService orderService) {
+        this.orderService = orderService;
+    }
 }

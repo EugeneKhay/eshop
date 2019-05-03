@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Logger;
 
 @Controller
 @RequestMapping
@@ -39,6 +40,9 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
+    private Logger logger = Logger.getLogger("logger");
+
+
     @PostMapping("/confirm")
     public String confirmOrder(HttpSession session,
                                @RequestParam(name = "paymentMethod") String paymentMethod,
@@ -46,6 +50,7 @@ public class OrderController {
                                Model model) {
         orderService.makeNewOrder(session, paymentMethod, deliveryMethod);
         model.addAttribute("items", productService.getAllProducts());
+        logger.info("The order created and saved to DB");
         return "homepage2";
     }
 
@@ -56,6 +61,7 @@ public class OrderController {
                                    Model model) {
         orderService.editOrder(id, paymentStatus, orderStatus);
         model.addAttribute("orders", orderService.getAllOrders());
+        logger.info("The order's parameteres changed by admin");
         return "adminpage";
     }
 }

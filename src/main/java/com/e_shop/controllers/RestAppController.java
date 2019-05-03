@@ -20,6 +20,14 @@ public class RestAppController {
     @RequestMapping(value= "/bestsellers", method = RequestMethod.GET)
     public List<Product> getMyData() {
         List<Product> bestsellers = orderService.getBestsellers();
+        for (Product p: bestsellers) {
+            String[] split = p.getImagePath().split("/");
+            p.setImagePath(split[split.length-1]);
+        }
         return bestsellers;
+    }
+
+    public RestAppController(OrderService orderService) {
+        this.orderService = orderService;
     }
 }

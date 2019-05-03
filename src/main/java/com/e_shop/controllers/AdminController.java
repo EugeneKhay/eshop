@@ -46,18 +46,21 @@ public class AdminController {
                              @RequestParam(name = "brand") String brand,
                              @RequestParam(name = "image") String image) {
         adminService.addNewProduct(productName, productPrice, category, amount, colour, brand, image);
+        logger.info("Product added");
         return "adminpage";
     }
 
     @GetMapping("/viewproducts")
     public String showProducts(Model model) {
         model.addAttribute("products", productService.getAllProducts());
+        logger.info("Showing all products");
         return "adminpage";
     }
 
     @GetMapping("/viewclients")
     public String showClients(Model model) {
         model.addAttribute("clients", clientService.getAllClients());
+        logger.info("Showing all clients");
         return "adminpage";
     }
 
@@ -68,6 +71,7 @@ public class AdminController {
         LocalDate start = adminService.getStartDate(startParameter);
         LocalDate finish = adminService.getFinishDate(finishParameter);
         adminService.setStats(model, start, finish);
+        logger.info("Stats setted");
         return "adminpage";
     }
 }

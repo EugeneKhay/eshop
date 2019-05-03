@@ -188,7 +188,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/jboss/jboss-client -->
+
         <dependency>
             <groupId>jboss</groupId>
             <artifactId>jboss-client</artifactId>
