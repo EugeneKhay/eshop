@@ -1,11 +1,13 @@
 package com.e_shop.controllers;
 
+import com.e_shop.domain.Client;
 import com.e_shop.domain.Product;
 import com.e_shop.services.impl.BasketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +32,13 @@ public class BasketController {
     public String getBasket(HttpServletRequest request, Model model) {
         Map<Product, Integer> productsInBasket = basketService.getProductsInBasket(request);
         model.addAttribute("items", productsInBasket);
+        try {
+            Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            model.addAttribute("addresses", client.getAddressList());
+            model.addAttribute("client", client);
+        } catch (ClassCastException ex) {
+            logger.info("Not authorized attempt go to basket page");
+        }
         logger.info("Go to basket page");
         return "basket";
     }

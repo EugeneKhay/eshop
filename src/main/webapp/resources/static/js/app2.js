@@ -47,6 +47,10 @@ function form2_submit() {
     document.getElementById("edited_data_order").submit();
 }
 
+// function form3_submit() {
+//     document.getElementById("add_adr").submit();
+// }
+
 function deleteItem(id) {
     $.ajax({
             url : '/delete',

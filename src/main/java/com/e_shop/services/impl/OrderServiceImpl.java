@@ -6,6 +6,7 @@ import com.e_shop.enums.DeliveryMethod;
 import com.e_shop.enums.OrderStatus;
 import com.e_shop.enums.PaymentMethod;
 import com.e_shop.enums.PaymentStatus;
+import com.e_shop.exception.NoProductInBasketException;
 import com.e_shop.services.OrderService;
 import com.e_shop.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -134,11 +135,9 @@ public class OrderServiceImpl implements OrderService {
         Order order = new Order();
         Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Basket basket = (Basket) session.getAttribute("shop_basket");
-//        Set<Product> products = basket.getProductsInBasket().keySet();
         double sum = sumOfOrder(basket);
         order.setClient(client);
 
-//        //EXP
         List<ProductToOrder> productToOrderList = new ArrayList<>();
         for (Map.Entry<Product, Integer> entry: basket.getProductsInBasket().entrySet()) {
             ProductToOrder productToOrder = new ProductToOrder();
@@ -147,14 +146,17 @@ public class OrderServiceImpl implements OrderService {
             productToOrder.setOrder(order);
             productToOrderList.add(productToOrder);
         }
-
-//        order.setProductsInOrder(products);
         order.setOrderProducts(productToOrderList);
         order.setDeliveryMethod(DeliveryMethod.valueOf(deliveryMethod));
         order.setPaymentMethod(PaymentMethod.valueOf(paymentMethod));
         order.setDateOfOrder(LocalDate.now());
         order.setSumOfOrder(sum);
-        saveOrders(order);
+
+        //EXP
+        if (productToOrderList.size() > 0) {
+            saveOrders(order);
+        } else throw new NoProductInBasketException();
+
         for (Map.Entry<Product, Integer> entry : basket.getProductsInBasket().entrySet()) {
             int amount = productService.decreaseProductAmountInStock(entry.getKey(), entry.getValue());
             productService.saveNewAmountOfProduct(entry.getKey(), amount);

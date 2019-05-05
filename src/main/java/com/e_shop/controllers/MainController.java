@@ -22,6 +22,8 @@ import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.logging.Logger;
 
 @Controller
 public class MainController {
@@ -39,6 +41,9 @@ public class MainController {
     private MessageSender sender;
 
     Basket basket;
+
+    private Logger logger = Logger.getLogger("logger");
+
 
     @GetMapping("/")
     public String homepage(HttpSession session, Model model) {
@@ -60,32 +65,19 @@ public class MainController {
                       @RequestParam(name = "lastName") String lastName,
                       @RequestParam(name = "birthDate") @DateTimeFormat(pattern="yyyy-MM-dd")LocalDate birthDate,
                       @RequestParam(name = "email") String email,
-                      @RequestParam(name = "password") String password,
-                      @RequestParam(name = "country") String country,
-                      @RequestParam(name = "city") String city,
-                      @RequestParam(name = "postcode") int postcode,
-                      @RequestParam(name = "street") String street,
-                      @RequestParam(name = "house") int house,
-                      @RequestParam(name = "flat") int flat) throws Exception {
-        ClientAddress address = new ClientAddress(country, city, postcode, street, house,flat);
-        Client client = new Client();
-        client.setFirstName(firstName);
-        client.setLastName(lastName);
-        client.setBirthDate(birthDate);
-        client.setEmail(email);
-        client.setPassword(password);
-        client.setAddress(address);
-        client.setRoles(Collections.singleton(Role.ROLE_USER));
-
-        if (clientService.checkLogin(firstName)) {
-            clientService.saveClient(client);
-        } else throw new LoginException();
+                      @RequestParam(name = "password") String password)
+//                      @RequestParam(name = "country") String country,
+//                      @RequestParam(name = "city") String city,
+//                      @RequestParam(name = "postcode") int postcode,
+//                      @RequestParam(name = "street") String street,
+//                      @RequestParam(name = "house") int house,
+//                      @RequestParam(name = "flat") int flat)
+    {
+        clientService.registerNewClient(firstName, lastName, birthDate, email, password);
+                                        //country, city, postcode, street, house, flat);
         return "redirect:/";
     }
 
-    /*
-     * client data - from security context
-     */
     @GetMapping("/personal")
     public String enter(Model model) {
         Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -100,31 +92,85 @@ public class MainController {
                                  @RequestParam(name = "last") String lastName,
                                  @RequestParam(name = "password") String password,
                                  @RequestParam(name = "email") String email,
-                                 @RequestParam(name = "country") String country,
-                                 @RequestParam(name = "city") String city,
-                                 @RequestParam(name = "postcode") int postcode,
-                                 @RequestParam(name = "street") String street,
-                                 @RequestParam(name = "houseNumber") int houseNumber,
-                                 @RequestParam(name = "flatNumber") int flatNumber,
+//                                 @RequestParam(name = "country", required = false) String country,
+//                                 @RequestParam(name = "city", required = false) String city,
+//                                 @RequestParam(name = "postcode", required = false) Integer postcode,
+//                                 @RequestParam(name = "street", required = false) String street,
+//                                 @RequestParam(name = "houseNumber", required = false) Integer houseNumber,
+//                                 @RequestParam(name = "flatNumber", required = false) Integer flatNumber,
                                  Model model) {
-        Client client = clientService.getClientById(clientId);
-        client.setFirstName(firstName);
-        client.setLastName(lastName);
-        client.setPassword(password);
-        client.setEmail(email);
-        ClientAddress newAddress = new ClientAddress(country, city, postcode, street, houseNumber, flatNumber);
-        client.setAddress(newAddress);
-
-        if (clientService.checkLogin(firstName)) {
-            clientService.saveClient(client);
-            model.addAttribute("client", client);
-        } else throw new LoginException();
-
+        Client client = clientService.editClientPersonalData(clientId, firstName, lastName, password, email);
+                                                             //country, city, postcode, street, houseNumber, flatNumber);
+        model.addAttribute("client", client);
         return "personal";
     }
 
+    @PostMapping("/addaddress")
+    public String addClientAddress (@RequestParam(name = "country", required = false) String country,
+                                     @RequestParam(name = "city", required = false) String city,
+                                     @RequestParam(name = "postcode", required = false) Integer postcode,
+                                     @RequestParam(name = "street", required = false) String street,
+                                     @RequestParam(name = "houseNumber", required = false) Integer houseNumber,
+                                     @RequestParam(name = "flatNumber", required = false) Integer flatNumber,
+                                     Model model) {
+        Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        ClientAddress address = new ClientAddress();
+        address.setCountry(country);
+        address.setCity(city);
+        address.setPostCode(postcode);
+        address.setStreet(street);
+        address.setHouseNumber(houseNumber);
+        address.setFlatNumber(flatNumber);
+        List<ClientAddress> addresses = client.getAddressList();
+        addresses.add(address);
+        clientService.saveAddress(address);
+        client.setAddressList(addresses);
+        clientService.saveClient(client);
+        logger.info("Try to save address");
+        model.addAttribute("client", client);
+        model.addAttribute("addresses", addresses);
+        return "basket";
+    }
+
+    @PostMapping("/editaddress")
+    public String editClientAddress (@RequestParam(name = "addressForEdit") int addressId,
+                                     @RequestParam(name = "country") String country,
+                                     @RequestParam(name = "city") String city,
+                                     @RequestParam(name = "postcode") String postcode,
+                                     @RequestParam(name = "street") String street,
+                                     @RequestParam(name = "houseNumber") String houseNumber,
+                                     @RequestParam(name = "flatNumber") String flatNumber,
+                                     Model model) {
+        Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        ClientAddress newAddress = clientService.getAddressById(addressId);
+        logger.info("Old address " + newAddress + " retrieved");
+        newAddress.setCountry(country);
+        newAddress.setCity(city);
+        newAddress.setPostCode(Integer.valueOf(postcode));
+        newAddress.setStreet(street);
+        newAddress.setHouseNumber(Integer.valueOf(houseNumber));
+        newAddress.setFlatNumber(Integer.valueOf(flatNumber));
+        clientService.saveAddress(newAddress);
+        logger.info("New address " + newAddress + " saved");
+        List<ClientAddress> addresses = client.getAddressList();
+        addresses.remove(clientService.getAddressById(addressId));
+        addresses.add(newAddress);
+        client.setAddressList(addresses);
+        model.addAttribute("client", client);
+        return "personal";
+    }
+
+
+
+
+
+
+
+
+
+
     @PostMapping("/editproduct")
-    public String editClientData(@RequestParam(name = "productForEdit") int productId,
+    public String editProduct(@RequestParam(name = "productForEdit") int productId,
                                  @RequestParam(name = "name") String productName,
                                  @RequestParam(name = "brand") String brand,
                                  @RequestParam(name = "price") double price,

@@ -10,9 +10,11 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -34,54 +36,43 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .formLogin()
                     .loginPage("/login")
-                    .defaultSuccessUrl("/",true)
+                    .successHandler(getHandler())
+                    //.defaultSuccessUrl("/",true)
                     .failureUrl("/")
                     .permitAll()
                 .and()
-//                    .logout()
-//                    .invalidateHttpSession(true)
-//                    .logoutSuccessUrl("/")
-//                    .permitAll();
                     .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                     .logoutSuccessHandler(logoutSuccessHandler())
                     .logoutSuccessUrl("/")
                     .invalidateHttpSession(false)
                     .permitAll();
-
-//        AntPathRequestMatcher pathRequestMatcher = new AntPathRequestMatcher("/logout");
-//        http.logout().logoutRequestMatcher(pathRequestMatcher);
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-//        auth.inMemoryAuthentication()
-//                .withUser("khan")
-//                .password(encoder.encode("solo"))
-//                .roles("ADMIN");
-        auth.userDetailsService(clientService)
-                .passwordEncoder(NoOpPasswordEncoder.getInstance());
+        //PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        auth.userDetailsService(clientService).passwordEncoder(passwordEncoder());
 
     }
 
-    //FIX Password Encoder
-//    @Autowired
-//    public void configureUsers(AuthenticationManagerBuilder auth) throws Exception {
-//        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-//        auth.inMemoryAuthentication()
-//                .withUser("user")
-//                .password(encoder.encode("user"))
-//                .roles("USER")
-//                .and()
-//                .withUser("Khan")
-//                .password(encoder.encode("solo"))
-//                .roles("ADMIN");
-//    }
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
 
     @Bean
     public LogoutSuccessHandler logoutSuccessHandler() {
         return new CustomLogoutSuccessHandler();
     }
+
+    //EXP
+    @Bean
+    public AuthenticationSuccessHandler getHandler() {
+        return new CustomAuthenticationSuccessHandler();
+    }
+
+
 
 }
 

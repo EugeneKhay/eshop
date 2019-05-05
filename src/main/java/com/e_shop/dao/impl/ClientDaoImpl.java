@@ -2,6 +2,7 @@ package com.e_shop.dao.impl;
 
 import com.e_shop.dao.ClientDao;
 import com.e_shop.domain.Client;
+import com.e_shop.domain.ClientAddress;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +26,30 @@ public class ClientDaoImpl implements ClientDao {
     }
 
     @Override
+    public Client getClientByEmail(String email) {
+        String hql = "FROM Client WHERE email = :paramId";
+        Query query = sessionFactory.getCurrentSession().createQuery(hql);
+        query.setParameter("paramId", email);
+        Client client = (Client) query.list().get(0);
+        return client;
+    }
+
+    @Override
     public Client getClientById(int id) {
         String hql = "FROM Client WHERE id = :paramId";
         Query query = sessionFactory.getCurrentSession().createQuery(hql);
         query.setParameter("paramId", id);
         Client client = (Client) query.list().get(0);
         return client;
+    }
+
+    @Override
+    public ClientAddress getAddressById(int id) {
+        String hql = "FROM ClientAddress WHERE id = :paramId";
+        Query query = sessionFactory.getCurrentSession().createQuery(hql);
+        query.setParameter("paramId", id);
+        ClientAddress address = (ClientAddress) query.list().get(0);
+        return address;
     }
 
     @Override
@@ -44,6 +63,11 @@ public class ClientDaoImpl implements ClientDao {
     @Override
     public void saveClient(Client client) {
         sessionFactory.getCurrentSession().saveOrUpdate(client);
+    }
+
+    @Override
+    public void saveAddress(ClientAddress address) {
+        sessionFactory.getCurrentSession().saveOrUpdate(address);
     }
 
 //    @Override

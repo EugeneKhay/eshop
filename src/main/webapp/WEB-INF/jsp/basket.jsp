@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
     <meta charset="utf-8">
@@ -42,11 +43,52 @@
                 </button>
             </sec:authorize>
         </div>
+        <!-- Sign In-->
+        <div class="col-sm-1">
+            <button type="button" class="btn btn-primary-outline btn-md" data-toggle="modal" data-target="#exampleModal">
+                <span><img style="width: 45px; height: 45px" src="/resources/static/images/sign_in2.png"/> </span>
+            </button>
+        </div>
     </div>
 
-    <%-- Table --%>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Please, sign in</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <c:url var="loginUrl" value="/login" />
+                    <form action="${loginUrl}" method="post" id="search_form">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        <c:if test="${param.error != null}">
+                            <p>
+                                Invalid username and password.
+                            </p>
+                        </c:if>
+                        <div class="form-group">
+                            <label for="username">E-mail</label>
+                            <input class="form-control form-control-md" type="text" id="username" name="username"required/>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input class="form-control form-control-md" type="password" id="password" name="password" required/>
+                        </div>
+                        <button onclick="form_submit()" name="user_search" class="btn btn-secondary" data-dismiss="modal">Log in</button>
+                        <a href="/registration" class="btn btn-secondary btn-md active" role="button" aria-pressed="true">Registration</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<%-- Table --%>
     <div class="row">
-            <table class="table" style="width: 65%; color: black">
+            <table class="table" style="width: 80%; color: black; margin: 0 auto">
                 <tr>
                     <th>Product ID</th>
                     <th>Product name</th>
@@ -55,6 +97,7 @@
                     <th>Category</th>
                     <th>Colour</th>
                     <th>Brand</th>
+                    <th>Change amount</th>
                 </tr>
                 <c:forEach items="${items}" var="entry">
                     <c:set var = "product" scope = "session" value = "${entry.key}"/>
@@ -84,47 +127,179 @@
 
     <!-- Total price -->
     <div class="row" id="price">
-        <div class="col-sm-2">
+        <div class="col-sm-4" style="text-align: center">
             <h5> Total price: </h5>
         </div>
-        <div class="col-sm-10" id="totalPrice">
-            <h5> ${sessionScope.totalPrice}</h5>
+        <div class="col-sm-8"  style="text-align: left">
+            <h5 id="totalPrice"> ${sessionScope.totalPrice}</h5>
         </div>
     </div>
+    <br>
 
     <!-- Confirm -->
-    <form method="post" action="/confirm" id="confirm">
+    <sec:authorize access="isAuthenticated()">
+    <form method="post" action="/confirm" style="width: 80%">
         <div class="row">
-            <div class="col-sm-4">
-                <p>Payment Method</p>
-                <div class="form-check form-group" >
-                    <input class="form-check-input" type="checkbox" name="paymentMethod" value="CARD" id="defaultCheck1">
-                    <label class="form-check-label" for="defaultCheck1">Card</label>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm">
+                        <p>Client: <sec:authentication property="principal.firstName" /> <sec:authentication property="principal.lastName" /></p>
+                        <p>Please, choose payment and delivery method</p>
+                    </div>
                 </div>
-                <div class="form-check form-group">
-                    <input class="form-check-input" type="checkbox" name="paymentMethod" value="CASH" id="defaultCheck2">
-                    <label class="form-check-label" for="defaultCheck2">Cash</label>
+                <br>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <p>Payment Method</p>
+
+                        <%--<div class="form-check form-group" >--%>
+                            <%--<input class="form-check-input" type="checkbox" name="paymentMethod" value="CARD" id="defaultCheck1">--%>
+                            <%--<label class="form-check-label" for="defaultCheck1">Card</label>--%>
+                        <%--</div>--%>
+                            <%--<div class="form-check form-group">--%>
+                            <%--<input class="form-check-input" type="checkbox" name="paymentMethod" value="CASH" id="defaultCheck2">--%>
+                            <%--<label class="form-check-label" for="defaultCheck2">Cash</label>--%>
+                            <%--</div>--%>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="paymentMethod" id="exampleRadios1" value="CARD">
+                            <label class="form-check-label" for="exampleRadios1">Card</label>
+                        </div>
+                        <br>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="paymentMethod" id="exampleRadios2" value="CASH">
+                            <label class="form-check-label" for="exampleRadios2">Cash</label>
+                        </div>
+                    </div>
+                    <div class="col-sm" style="display: none" id="carddata">
+                        <p>Enter your card data:</p>
+                        <p>Input card data</p>
+                    </div>
+                    <script>
+                        $("#exampleRadios1").change(function(){
+                            if(this.checked){
+                                $("#carddata").css({"display" : "block"});
+                            }
+                        });
+                        $("#exampleRadios2").change(function(){
+                            if(this.checked){
+                                $("#carddata").css({"display" : "none"});
+                            }
+                        });
+                    </script>
                 </div>
+                <br>
+                <br>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <p>Delivery method</p>
+
+                        <%--<div class="form-check form-group">--%>
+                            <%--<input class="form-check-input" type="checkbox" name="deliveryMethod" value="COURIER" id="defaultCheck3">--%>
+                            <%--<label class="form-check-label" for="defaultCheck3">Courier</label>--%>
+                        <%--</div>--%>
+                            <%--<div class="form-check form-group">--%>
+                            <%--<input class="form-check-input" type="checkbox" name="deliveryMethod" value="SELF" id="defaultCheck4">--%>
+                            <%--<label class="form-check-label" for="defaultCheck4">Self</label>--%>
+                            <%--</div>--%>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="deliveryMethod" id="exampleRadios3" value="COURIER">
+                            <label class="form-check-label" for="exampleRadios3">Courier</label>
+                        </div>
+                        <br>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="deliveryMethod" id="exampleRadios4" value="SELF">
+                            <label class="form-check-label" for="exampleRadios4">Self</label>
+                        </div>
+                    </div>
+                    <div class="col-sm" style="display: none" id="addressdata">
+                        <p>Please, choose address for delivery:</p>
+                            <c:forEach items="${addresses}" var="item">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="deliveryMethod" id="delivery" value="${item}">
+                                    <label class="form-check-label" for="delivery">${item}</label>
+                                </div>
+                                <br>
+                            </c:forEach>
+                            <div>
+                                <button type="button" class="btn btn-secondary" onclick="changeAddress()"> Change </button>
+                            </div>
+                            <script type="text/javascript">
+                                function changeAddress() {
+                                    $("#add").toggle();
+                                }
+                            </script>
+                            <br>
+                    </div>
+                    <script>
+                        $("#exampleRadios3").change(function(){
+                            if(this.checked){
+                                $("#addressdata").css({"display" : "block"});
+                            }
+                        });
+                        $("#exampleRadios4").change(function(){
+                            if(this.checked){
+                                $("#addressdata").css({"display" : "none"});
+                            }
+                        });
+                    </script>
+                </div>
+                <br>
+                <br>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        <div class="input-group-append">
+                            <button class="btn btn-secondary" type="submit">Confirm</button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-            <div class="col-sm-4">
-                <p>Delivery method</p>
-                <div class="form-check form-group">
-                    <input class="form-check-input" type="checkbox" name="deliveryMethod" value="COURIER" id="defaultCheck3">
-                    <label class="form-check-label" for="defaultCheck3">Courier</label>
-                </div>
-                <div class="form-check form-group">
-                    <input class="form-check-input" type="checkbox" name="deliveryMethod" value="SELF" id="defaultCheck4">
-                    <label class="form-check-label" for="defaultCheck4">Self</label>
-                </div>
-            </div>
-            <div class="col-sm">
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                <div class="input-group-append">
-                    <button class="btn btn-secondary" type="submit">Confirm</button>
-                </div>
-            </div>
+
         </div>
     </form>
+    </sec:authorize>
+
+    <!-- Add address form -->
+    <div id="add" style="display: none; width: 80%; margin: 0 auto">
+        <form action="/addaddress" method="post" id="add_adr">
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            <div class="form-group">
+                <label for="country" style="color: black">Country</label>
+                <input class="form-control form-control-md" type="text" id="country" name="country"/>
+            </div>
+            <div class="form-group">
+                <label for="city" style="color: black">City</label>
+                <input class="form-control form-control-md" type="text" id="city" name="city" />
+            </div>
+            <div class="form-group">
+                <label for="postcode" style="color: black">Postcode</label>
+                <input class="form-control form-control-md" type="number" id="postcode" name="postcode" />
+            </div>
+            <div class="form-group">
+                <label for="street" style="color: black">Street</label>
+                <input class="form-control form-control-md" type="text" id="street" name="street" />
+            </div>
+            <div class="form-group">
+                <label for="houseNumber" style="color: black">House number</label>
+                <input class="form-control form-control-md" type="number" id="houseNumber" name="houseNumber" />
+            </div>
+            <div class="form-group">
+                <label for="flatNumber" style="color: black">Flat number</label>
+                <input class="form-control form-control-md" type="number" id="flatNumber" name="flatNumber" />
+            </div>
+            <button onclick="form3_submit()" name="user_search" class="btn btn-secondary" data-dismiss="modal"> Submit </button>
+            <script>
+                function form3_submit() {
+                    document.getElementById("add_adr").submit();
+                };
+            </script>
+        </form>
+    </div>
+
 <br>
 <br>
 <br>

@@ -32,7 +32,7 @@
         </div>
         <div class="col-sm-1">
             <sec:authorize access="isAuthenticated()">
-                <b style="color: black"> Account: <a style="color: black" href="/personal"> <sec:authentication property="principal.username" /> </a> </b>
+                <b style="color: black"> Account: <a style="color: black" href="/personal"> <sec:authentication property="principal.firstName" /> </a> </b>
             </sec:authorize>
         </div>
         <div class="col-sm-1">
@@ -62,7 +62,7 @@
                         </p>
                     </c:if>
                     <div class="form-group">
-                        <label for="username">Username</label>
+                        <label for="username">E-mail</label>
                         <input class="form-control form-control-md" type="text" id="username" name="username"required/>
                         <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
                     </div>
@@ -82,13 +82,7 @@
     <!--Nav-->
     <div class="row" id="navigation">
 
-            <div class="col-sm-1">
-                <%--<nav aria-label="breadcrumb">--%>
-                    <%--<ol class="breadcrumb">--%>
-                        <%--<li class="breadcrumb-item active" aria-current="page">Home</li>--%>
-                    <%--</ol>--%>
-                <%--</nav>--%>
-            </div>
+            <div class="col-sm-1"></div>
 
             <div class="col-sm">
                 <ul class="nav justify-content-center">

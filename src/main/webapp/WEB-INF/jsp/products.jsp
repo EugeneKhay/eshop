@@ -23,7 +23,7 @@
         </div>
         <div class="col-sm-1">
             <sec:authorize access="isAuthenticated()">
-                <b style="color: black"> Account: <a style="color: black" href="/personal"> <sec:authentication property="principal.username" /> </a> </b>
+                <b style="color: black"> Account: <a style="color: black" href="/personal"> <sec:authentication property="principal.firstName" /> </a> </b>
             </sec:authorize>
         </div>
         <div class="col-sm-1">
@@ -159,8 +159,10 @@
                 <c:forEach items="${items}" var="item">
                     <form id="form-card" action="/basket" method="post">
                         <div class="card">
-                            <img style="margin-top: 10px" src="/resources/static/images/IPhoneX.png" class="card-img-top" alt="Image">
-                            <div class="card-body">
+                            <%--<img style="margin-top: 10px" src="/resources/static/images/IPhoneX.png" class="card-img-top" alt="Image">--%>
+                                <img style="margin-top: 10px" src="${item.imagePath}" class="card-img-top" alt="Image">
+
+                                <div class="card-body">
                                 <h5 class="card-title">${item.productName}</h5>
                                 <p class="card-text">${item.productPrice}</p>
                                 <c:set var = "params" scope = "session" value = "${item.productParameteres}"/>

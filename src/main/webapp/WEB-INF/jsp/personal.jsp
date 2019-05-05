@@ -41,19 +41,13 @@
 
     <!-- Personal data -->
     <div class="row">
+        <h4> Personal data</h4>
         <table style="width: 100%; color: black; margin: 0 auto" class="table table-borderless">
         <tr style="background: transparent; color: black">
             <th>First name</th>
             <th>Last name</th>
             <th>Date of birth</th>
             <th>Email</th>
-            <th>Password</th>
-            <th>Country</th>
-            <th>City</th>
-            <th>Post code</th>
-            <th>Street</th>
-            <th>House number</th>
-            <th>Flat number</th>
             <th>
                     <div class="col-sm-1">
                          <button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#personal"> Edit </button>
@@ -91,31 +85,31 @@
                                     <label for="password">Password</label>
                                     <input class="form-control form-control-md" type="text" id="password" name="password" value="${client.password}"/>
                                 </div>
-                                <c:set var = "address" scope = "session" value = "${client.address}"/>
-                                <div class="form-group">
-                                    <label for="country">Country</label>
-                                    <input class="form-control form-control-md" type="text" id="country" name="country" value="${address.country}"/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="city">City</label>
-                                    <input class="form-control form-control-md" type="text" id="city" name="city" value="${address.city}"/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="postcode">Post code</label>
-                                    <input class="form-control form-control-md" type="number" id="postcode" name="postcode" value="${address.postCode}"/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="street">Street</label>
-                                    <input class="form-control form-control-md" type="text" id="street" name="street" value="${address.street}"/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="houseNumber">House number</label>
-                                    <input class="form-control form-control-md" type="number" id="houseNumber" name="houseNumber" value="${address.houseNumber}"/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="flatNumber">Flat number</label>
-                                    <input class="form-control form-control-md" type="number" id="flatNumber" name="flatNumber" value="${address.flatNumber}"/>
-                                </div>
+                                <%--<c:set var = "address" scope = "session" value = "${client.address}"/>--%>
+                                <%--<div class="form-group">--%>
+                                    <%--<label for="country">Country</label>--%>
+                                    <%--<input class="form-control form-control-md" type="text" id="country" name="country" value="${address.country}"/>--%>
+                                <%--</div>--%>
+                                <%--<div class="form-group">--%>
+                                    <%--<label for="city">City</label>--%>
+                                    <%--<input class="form-control form-control-md" type="text" id="city" name="city" value="${address.city}"/>--%>
+                                <%--</div>--%>
+                                <%--<div class="form-group">--%>
+                                    <%--<label for="postcode">Post code</label>--%>
+                                    <%--<input class="form-control form-control-md" type="number" id="postcode" name="postcode" value="${address.postCode}"/>--%>
+                                <%--</div>--%>
+                                <%--<div class="form-group">--%>
+                                    <%--<label for="street">Street</label>--%>
+                                    <%--<input class="form-control form-control-md" type="text" id="street" name="street" value="${address.street}"/>--%>
+                                <%--</div>--%>
+                                <%--<div class="form-group">--%>
+                                    <%--<label for="houseNumber">House number</label>--%>
+                                    <%--<input class="form-control form-control-md" type="number" id="houseNumber" name="houseNumber" value="${address.houseNumber}"/>--%>
+                                <%--</div>--%>
+                                <%--<div class="form-group">--%>
+                                    <%--<label for="flatNumber">Flat number</label>--%>
+                                    <%--<input class="form-control form-control-md" type="number" id="flatNumber" name="flatNumber" value="${address.flatNumber}"/>--%>
+                                <%--</div>--%>
                                 <input type="hidden" name="clientForEdit" value="${client.id}">
                                 <button onclick="pers_submit()" type="submit" name="user_search" class="btn btn-secondary" data-dismiss="modal"> Submit </button>
                                 <a href="/registration" class="btn btn-secondary btn-md active" role="button" aria-pressed="true"> New account</a>
@@ -136,22 +130,132 @@
             <td>${client.lastName}</td>
             <td>${client.birthDate}</td>
             <td>${client.email}</td>
-            <td>${client.password}</td>
-            <c:set var = "address" scope = "session" value = "${client.address}"/>
-            <td>${address.country}</td>
-            <td>${address.city}</td>
-            <td>${address.postCode}</td>
-            <td>${address.street}</td>
-            <td>${address.houseNumber}</td>
-            <td>${address.flatNumber}</td>
-            <td> </td>
+            <td></td>
         </tr>
         </table>
     </div>
 
+    <br>
+
+    <!-- Addresses -->
+    <div class="row">
+        <h4> Addresses</h4>
+        <table style="width: 100%; color: black; margin: 0 auto" class="table table-borderless">
+            <tr style="background: transparent; color: black">
+                <th>Country</th>
+                <th>City</th>
+                <th>Post code</th>
+                <th>Street</th>
+                <th>House number</th>
+                <th>Flat number</th>
+                <th></th>
+            </tr>
+            <c:forEach items="${client.addressList}" var="address">
+                <tr>
+                    <td>${address.country}</td>
+                    <td>${address.city}</td>
+                    <td>${address.postCode}</td>
+                    <td>${address.street}</td>
+                    <td>${address.houseNumber}</td>
+                    <td>${address.flatNumber}</td>
+                    <td>
+                        <div>
+                            <button type="button" class="btn btn-secondary" onclick="changeAddress(${address.id})"> Change </button>
+                        </div>
+                        <script type="text/javascript">
+                            function changeAddress(id) {
+                                $("#" + id + "").toggle();
+                                //$("#address").toggle();
+                            }
+                        </script>
+                        <div class="row" id="${address.id}" style="display: none">
+                            <%--<form action="/editaddress" method="post">--%>
+                                <%--<input type="hidden" name="addressForEdit" value="${address.id}">--%>
+                                <%--<input type="hidden" name="clientId" value="${client.id}">--%>
+                                <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
+                                <%--<input class="form-control form-control-md" type="text" id="country" name="country" value="${address.country}"/>--%>
+                                <%--<input class="form-control form-control-md" type="text" id="city" name="city" value="${address.city}"/>--%>
+                                <%--&lt;%&ndash;<input class="form-control form-control-md" type="text" id="postcode" name="postcode" value="${address.postcode}"/>&ndash;%&gt;--%>
+                                <%--<input class="form-control form-control-md" type="text" id="street" name="street" value="${address.street}"/>--%>
+                                <%--<input class="form-control form-control-md" type="text" id="houseNumber" name="houseNumber" value="${address.houseNumber}"/>--%>
+                                <%--<input class="form-control form-control-md" type="text" id="flatNumber" name="flatNumber" value="${address.flatNumber}"/>--%>
+                                <%--<button type="submit" name="user_search" class="btn btn-secondary" data-dismiss="modal"> Submit </button>--%>
+                            </form>
+                                    <form action="/editaddress" method="post" >
+                                    <%--<input type="hidden" name="client" value="${client.id}">--%>
+                                    <input type="hidden" name="addressForEdit" value="${address.id}">
+                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                    <div class="form-group">
+                                    <label for="country" style="color: black">Country</label>
+                                    <input class="form-control form-control-md" type="text" id="country" name="country" value="${address.country}"/>
+                                    </div>
+                                    <div class="form-group">
+                                    <label for="city" style="color: black">City</label>
+                                    <input class="form-control form-control-md" type="text" id="city" name="city" value="${address.city}"/>
+                                    </div>
+
+                                    <div class="form-group">
+                                    <label for="freakfield" style="color: black">Postcode</label>
+                                    <input class="form-control form-control-md" type="text" id="freakfield" name="postcode" value="${address.postCode}"/>
+                                    </div>
+
+                                    <div class="form-group">
+                                    <label for="street" style="color: black">Street</label>
+                                    <input class="form-control form-control-md" type="text" id="street" name="street" value="${address.street}"/>
+                                    </div>
+                                    <div class="form-group">
+                                    <label for="houseNumber" style="color: black">House number</label>
+                                    <input class="form-control form-control-md" type="number" id="houseNumber" name="houseNumber" value="${address.houseNumber}"/>
+                                    </div>
+                                    <div class="form-group">
+                                    <label for="flatNumber" style="color: black">Flat number</label>
+                                    <input class="form-control form-control-md" type="number" id="flatNumber" name="flatNumber" value="${address.flatNumber}"/>
+                                    </div>
+                                    <button type="submit" name="user_search" class="btn btn-secondary" data-dismiss="modal"> Submit </button>
+                                    </form>
+                        </div>
+                            <%--<form action="/editaddress" method="post" >--%>
+                                <%--&lt;%&ndash;<input type="hidden" name="client" value="${client.id}">&ndash;%&gt;--%>
+                                <%--<input type="hidden" name="addressForEdit" value="${address.id}">--%>
+                                <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
+                                <%--<div class="form-group">--%>
+                                    <%--<label for="country" style="color: black">Country</label>--%>
+                                    <%--<input class="form-control form-control-md" type="text" id="country" name="country" value="${address.country}"/>--%>
+                                <%--</div>--%>
+                                <%--<div class="form-group">--%>
+                                    <%--<label for="city" style="color: black">City</label>--%>
+                                    <%--<input class="form-control form-control-md" type="text" id="city" name="city" value="${address.city}"/>--%>
+                                <%--</div>--%>
+                                <%--<div class="form-group">--%>
+                                    <%--<label for="postcode" style="color: black">Postcode</label>--%>
+                                    <%--<input class="form-control form-control-md" type="number" id="postcode" name="postcode" value="${address.postcode}"/>--%>
+                                <%--</div>--%>
+                                <%--<div class="form-group">--%>
+                                    <%--<label for="street" style="color: black">Street</label>--%>
+                                    <%--<input class="form-control form-control-md" type="text" id="street" name="street" value="${address.street}"/>--%>
+                                <%--</div>--%>
+                                <%--<div class="form-group">--%>
+                                    <%--<label for="houseNumber" style="color: black">House number</label>--%>
+                                    <%--<input class="form-control form-control-md" type="number" id="houseNumber" name="houseNumber" value="${address.houseNumber}"/>--%>
+                                <%--</div>--%>
+                                <%--<div class="form-group">--%>
+                                    <%--<label for="flatNumber" style="color: black">Flat number</label>--%>
+                                    <%--<input class="form-control form-control-md" type="number" id="flatNumber" name="flatNumber" value="${address.flatNumber}"/>--%>
+                                <%--</div>--%>
+                                <%--<button type="submit" name="user_search" class="btn btn-secondary" data-dismiss="modal"> Submit </button>--%>
+                            <%--</form>--%>
+                        <%--</div>--%>
+                    </td>
+                </tr>
+            </c:forEach>
+        </table>
+    </div>
+
+    <br>
+
     <!-- Orders -->
     <div class="row">
-        <h4> My orders</h4>
+        <h4> Orders</h4>
         <table style="width: 100%; color: black; margin: 0 auto" class="table table-borderless">
         <tr>
             <th>№</th>
@@ -230,26 +334,31 @@
         </c:forEach>
         </table>
     </div>
-</div>
+
+
+
 <br>
 <br>
 <br>
 <br>
 <br>
-<div class="footer" style="color: black; margin-left: 30px">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-5" style="padding: 20px">
-                <p>Phone: 8 800 2000 600, 8 800 5353 777</p>
-                <p>Email: shop@eshop.com, info@eshop.com</p>
-            </div>
-            <div class="col-sm" style="padding: 20px">
-                <p>Address: Russia</p>
-                <p>SPb, Somestreet st., 35</p>
-            </div>
-            <div class="col-sm" style="padding: 20px">
-                <p>Social nets: </p>
-                <p>link1, link2</p>
+
+    <!-- Footer -->
+    <div class="row" style="color: black; margin-left: 30px">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-5" style="padding: 20px">
+                    <p>Phone: 8 800 2000 600, 8 800 5353 777</p>
+                    <p>Email: shop@eshop.com, info@eshop.com</p>
+                </div>
+                <div class="col-sm" style="padding: 20px">
+                    <p>Address: Russia</p>
+                    <p>SPb, Somestreet st., 35</p>
+                </div>
+                <div class="col-sm" style="padding: 20px">
+                    <p>Social nets: </p>
+                    <p>link1, link2</p>
+                </div>
             </div>
         </div>
     </div>

@@ -4,13 +4,17 @@ import com.e_shop.dao.ClientDao;
 //import com.e_shop.dao2.GenericDao;
 //import com.e_shop.dao2.IGenericDao;
 import com.e_shop.domain.Client;
+import com.e_shop.domain.ClientAddress;
 import com.e_shop.domain.Order;
+import com.e_shop.enums.Role;
+import com.e_shop.exception.LoginException;
 import com.e_shop.services.ClientService;
 import com.e_shop.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +31,9 @@ public class ClientServiceImpl implements ClientService {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public Client getClientByName(String name) {
@@ -58,10 +65,64 @@ public class ClientServiceImpl implements ClientService {
     public boolean checkLogin(String login) {
         List<Client> collect = getAllClients()
                 .stream()
-                .filter(client -> client.getFirstName().equals(login))
+                .filter(client -> client.getEmail().equals(login))
                 .collect(Collectors.toList());
         if (collect.size() == 0) return true;
         return false;
+    }
+
+    @Override
+    public boolean registerNewClient(String firstName, String lastName, LocalDate birthDate, String email, String password) {
+                                     //String country, String city, int postcode, String street, int house, int flat) {
+
+//        ClientAddress address = new ClientAddress(country, city, postcode, street, house, flat);
+//        List<ClientAddress> clientAddresses = new ArrayList<>();
+//        clientAddresses.add(address);
+
+        Client client = new Client();
+        client.setFirstName(firstName);
+        client.setLastName(lastName);
+        client.setBirthDate(birthDate);
+        client.setEmail(email);
+        client.setPassword(passwordEncoder.encode(password));
+//        client.setAddress(address);
+        //client.setAddressList(clientAddresses);
+        client.setRoles(Collections.singleton(Role.ROLE_USER));
+        if (checkLogin(email)) {
+            saveClient(client);
+            return true;
+        } else {
+            throw new LoginException();
+        }
+    }
+
+    @Override
+    public Client editClientPersonalData(int id, String firstName, String lastName, String password, String email) {
+                                         //String country, String city, int postcode, String street, int houseNumber, int flatNumber) {
+        Client client = getClientById(id);
+        client.setFirstName(firstName);
+        client.setLastName(lastName);
+        client.setPassword(passwordEncoder.encode(password));
+        client.setEmail(email);
+
+//        ClientAddress newAddress = new ClientAddress(country, city, postcode, street, houseNumber, flatNumber);
+//        List<ClientAddress> clientAddresses = new ArrayList<>();
+//        clientAddresses.add(newAddress);
+////        client.setAddress(newAddress);
+//        client.setAddressList(clientAddresses);
+
+        saveClient(client);
+        return client;
+    }
+
+    @Override
+    public ClientAddress getAddressById(int id) {
+        return dao.getAddressById(id);
+    }
+
+    @Override
+    public void saveAddress(ClientAddress address) {
+        dao.saveAddress(address);
     }
 
     @Override
@@ -95,7 +156,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        return dao.getClientByName(s);
+        return dao.getClientByEmail(s);
     }
 
     public void setDao(ClientDao dao) {

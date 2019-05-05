@@ -293,7 +293,7 @@
                                 </div>
                                 <script type="text/javascript">
                                     function changeProduct2(id) {
-                                        $("#" + id + "").css({"display" : "block"});
+                                        $("#" + id + "").toggle();
                                     }
                                 </script>
                                 <form action="/editproduct" method="post" id="${product.id}" style="display: none">
@@ -329,8 +329,20 @@
                         </tr>
                     </c:forEach>
                 </table>
+                <br>
 
-                <h5 style="color:black; margin-top: 20px">Add new product</h5>
+                <div>
+                    <button type="button" class="btn btn-secondary" onclick="addProduct()"> Add new product </button>
+                </div>
+                <script type="text/javascript">
+                    function addProduct() {
+                        $("#newProduct").toggle();
+                    }
+                </script>
+
+
+                <div id="newProduct" style="display: none">
+                <h5  style="color:black; margin-top: 20px">Add new product</h5>
                     <form method="post" action="/addproducts">
                         <b style="color:black"> Enter product properties </b>
                         <div class="form-group">
@@ -372,6 +384,7 @@
                         <button type="submit" class="btn btn-secondary"> Add product </button>
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     </form>
+                </div>
             </div>
 
         <!-- Clients -->
@@ -384,8 +397,7 @@
                             <th>Last name</th>
                             <th>Date of birth</th>
                             <th>Email</th>
-                            <th>Password</th>
-                            <th>Address</th>
+                            <%--<th>Address</th>--%>
                         </tr>
                 <c:forEach items="${clients}" var="client">
                             <tr>
@@ -394,9 +406,8 @@
                                 <td>${client.lastName}</td>
                                 <td>${client.birthDate}</td>
                                 <td>${client.email}</td>
-                                <td>${client.password}</td>
-                                <c:set var = "address" scope = "session" value = "${client.address}"/>
-                                <td>${address.country}, ${address.city}, ${address.postCode}, ${address.street}, ${address.houseNumber}, ${address.flatNumber}</td>
+                                <%--<c:set var = "address" scope = "session" value = "${client.address}"/>--%>
+                                <%--<td>${address.country}, ${address.city}, ${address.postCode}, ${address.street}, ${address.houseNumber}, ${address.flatNumber}</td>--%>
                             </tr>
                         </c:forEach>
             </table>

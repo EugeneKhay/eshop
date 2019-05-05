@@ -53,17 +53,21 @@ public class OrderController {
                                @RequestParam(name = "paymentMethod") String paymentMethod,
                                @RequestParam(name = "deliveryMethod") String deliveryMethod,
                                Model model) {
-        orderService.makeNewOrder(session, paymentMethod, deliveryMethod);
-        model.addAttribute("items", productService.getAllProducts());
+//        orderService.makeNewOrder(session, paymentMethod, deliveryMethod);
+        Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Set<Order> orders = client.getOrders();
+        orders.add(orderService.makeNewOrder(session, paymentMethod, deliveryMethod));
+        model.addAttribute("client", client);
 
         SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("4358514@gmail.com");
         message.setTo("seelenrauf@mail.ru");
         message.setSubject("New order");
         message.setText("Congratulations! You are fool!");
         //mailSender.send(message);
 
         logger.info("The order created and saved to DB");
-        return "homepage2";
+        return "personal";
     }
 
     @PostMapping("/editorder")

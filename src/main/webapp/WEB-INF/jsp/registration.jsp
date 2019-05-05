@@ -27,7 +27,7 @@
         <div class="row" id="fill">
 
         <div class="container">
-            <form method="post" action="/registration">
+            <form method="post" action="/registration" style="width: 60%">
                 <h1> Please, fill in the form: </h1>
                 <div class="form-group">
                     <label for="required-input">First name</label>
@@ -49,30 +49,30 @@
                     <label for="required-input4">Password</label>
                     <input class="form-control form-control-md" type="text" id="required-input4" name="password" required>
                 </div>
-                <div class="form-group">
-                    <label for="required-input5">Country</label>
-                    <input class="form-control form-control-md" type="text" id="required-input5" name="country" required>
-                </div>
-                <div class="form-group">
-                    <label for="required-input6">City</label>
-                    <input class="form-control form-control-md" type="text" id="required-input6" name="city" required>
-                </div>
-                <div class="form-group">
-                    <label for="required-input7">Post code</label>
-                    <input class="form-control form-control-md" type="number" id="required-input7" name="postcode" required>
-                </div>
-                <div class="form-group">
-                    <label for="required-input8">Street</label>
-                    <input class="form-control form-control-md" type="text" id="required-input8" name="street" required>
-                </div>
-                <div class="form-group">
-                    <label for="required-input9">House</label>
-                    <input class="form-control form-control-md" type="number" id="required-input9" name="house" required>
-                </div>
-                <div class="form-group">
-                    <label for="required-input10">Flat</label>
-                    <input class="form-control form-control-md" type="number" id="required-input10" name="flat" required>
-                </div>
+                <%--<div class="form-group">--%>
+                    <%--<label for="required-input5">Country</label>--%>
+                    <%--<input class="form-control form-control-md" type="text" id="required-input5" name="country" required>--%>
+                <%--</div>--%>
+                <%--<div class="form-group">--%>
+                    <%--<label for="required-input6">City</label>--%>
+                    <%--<input class="form-control form-control-md" type="text" id="required-input6" name="city" required>--%>
+                <%--</div>--%>
+                <%--<div class="form-group">--%>
+                    <%--<label for="required-input7">Post code</label>--%>
+                    <%--<input class="form-control form-control-md" type="number" id="required-input7" name="postcode" required>--%>
+                <%--</div>--%>
+                <%--<div class="form-group">--%>
+                    <%--<label for="required-input8">Street</label>--%>
+                    <%--<input class="form-control form-control-md" type="text" id="required-input8" name="street" required>--%>
+                <%--</div>--%>
+                <%--<div class="form-group">--%>
+                    <%--<label for="required-input9">House</label>--%>
+                    <%--<input class="form-control form-control-md" type="number" id="required-input9" name="house" required>--%>
+                <%--</div>--%>
+                <%--<div class="form-group">--%>
+                    <%--<label for="required-input10">Flat</label>--%>
+                    <%--<input class="form-control form-control-md" type="number" id="required-input10" name="flat" required>--%>
+                <%--</div>--%>
                 <button type="submit" class="btn btn-secondary">Submit</button>
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             </form>

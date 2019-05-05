@@ -3,6 +3,8 @@ package com.e_shop.domain;
 import com.e_shop.enums.Role;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -33,12 +35,22 @@ public class Client implements UserDetails, Serializable {
 
     private String password;
 
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "address_id")
-    private ClientAddress address;
+//    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+//    @JoinColumn(name = "address_id")
+//    private ClientAddress address;
+
+    //EXP
+//    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+//    @OneToMany(mappedBy = "client")
+
+    @Fetch(value = FetchMode.SUBSELECT)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "client_addresses",
+            joinColumns = @JoinColumn(name = "client_id"),
+            inverseJoinColumns = @JoinColumn(name = "address_id"))
+    private List<ClientAddress> addressList;
 
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
-    //@JoinColumn(name = "orders_id")
     private Set<Order> orders;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
@@ -51,9 +63,14 @@ public class Client implements UserDetails, Serializable {
         return getRoles();
     }
 
+//    @Override
+//    public String getUsername() {
+//        return firstName;
+//    }
+
     @Override
     public String getUsername() {
-        return firstName;
+        return email;
     }
 
     @Override
