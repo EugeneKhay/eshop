@@ -52,19 +52,19 @@ public class OrderController {
     public String confirmOrder(HttpSession session,
                                @RequestParam(name = "paymentMethod") String paymentMethod,
                                @RequestParam(name = "deliveryMethod") String deliveryMethod,
+                               @RequestParam(name = "deliveryAddress", required = false) String deliveryAddress,
                                Model model) {
-//        orderService.makeNewOrder(session, paymentMethod, deliveryMethod);
         Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Set<Order> orders = client.getOrders();
-        orders.add(orderService.makeNewOrder(session, paymentMethod, deliveryMethod));
+        orders.add(orderService.makeNewOrder(session, paymentMethod, deliveryMethod, deliveryAddress));
         model.addAttribute("client", client);
 
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("4358514@gmail.com");
-        message.setTo("seelenrauf@mail.ru");
-        message.setSubject("New order");
-        message.setText("Congratulations! You are fool!");
-        //mailSender.send(message);
+//        SimpleMailMessage message = new SimpleMailMessage();
+//        message.setFrom("4358514@gmail.com");
+//        message.setTo("seelenrauf@mail.ru");
+//        message.setSubject("New order");
+//        message.setText("Congratulations! You are fool!");
+//        mailSender.send(message);
 
         logger.info("The order created and saved to DB");
         return "personal";

@@ -46,6 +46,21 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
+    public Client getClientByEmail(String email) {
+        return dao.getClientByEmail(email);
+    }
+
+    @Override
+    public List<Client> getAllClientsByEmail(String email) {
+        return dao.getAllClientsByEmail(email);
+    }
+
+//    @Override
+//    public List<Client> getClientByEmail2(String email) {
+//        return dao.getAllClientsByEmail(email);
+//    }
+
+    @Override
     public List<Client> getAllClients() {
         return dao.getAllClients();
     }
@@ -63,11 +78,14 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public boolean checkLogin(String login) {
-        List<Client> collect = getAllClients()
-                .stream()
-                .filter(client -> client.getEmail().equals(login))
-                .collect(Collectors.toList());
-        if (collect.size() == 0) return true;
+//        List<Client> collect = getAllClients()
+//                .stream()
+//                .filter(client -> client.getEmail().equals(login))
+//                .collect(Collectors.toList());
+//        if (collect.size() == 0) return true;
+//        return false;
+        List<Client> clientByEmail = getAllClientsByEmail(login);
+        if (clientByEmail.size() == 0) return true;
         return false;
     }
 

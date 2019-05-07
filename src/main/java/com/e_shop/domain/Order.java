@@ -4,6 +4,7 @@ import com.e_shop.enums.DeliveryMethod;
 import com.e_shop.enums.OrderStatus;
 import com.e_shop.enums.PaymentMethod;
 import com.e_shop.enums.PaymentStatus;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,6 +33,11 @@ public class Order {
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<ProductToOrder> orderProducts = new ArrayList<>();
+
+    //EXP
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id")
+    private ClientAddress addressForDelivery;
 
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;

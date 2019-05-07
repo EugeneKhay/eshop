@@ -35,6 +35,15 @@ public class ClientDaoImpl implements ClientDao {
     }
 
     @Override
+    public List<Client> getAllClientsByEmail(String email) {
+        String hql = "FROM Client WHERE email = :paramId";
+        Query query = sessionFactory.getCurrentSession().createQuery(hql);
+        query.setParameter("paramId", email);
+        List list = query.list();
+        return list;
+    }
+
+    @Override
     public Client getClientById(int id) {
         String hql = "FROM Client WHERE id = :paramId";
         Query query = sessionFactory.getCurrentSession().createQuery(hql);

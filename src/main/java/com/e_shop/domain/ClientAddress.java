@@ -1,5 +1,6 @@
 package com.e_shop.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.LazyCollection;
@@ -26,19 +27,16 @@ public class ClientAddress {
     private int houseNumber;
     private int flatNumber;
 
-//    @OneToMany(mappedBy = "address", fetch = FetchType.EAGER)
-//    private List<Client> clientList;
-
-    //EXP
-//    @ManyToOne(optional = false, cascade = CascadeType.ALL)
-//    @JoinColumn(name = "client_id")
-
     //@LazyCollection(LazyCollectionOption.FALSE)
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "client_addresses",
             joinColumns = @JoinColumn(name = "address_id"),
             inverseJoinColumns = @JoinColumn(name = "client_id"))
     private List<Client> clients;
+
+    //EXP
+    @OneToOne(mappedBy = "addressForDelivery")
+    private Order order;
 
     public ClientAddress(String country, String city, int postCode, String street, int houseNumber, int flatNumber) {
         this.country = country;
@@ -68,3 +66,12 @@ public class ClientAddress {
         return Objects.hash(id);
     }
 }
+
+
+
+//    @OneToMany(mappedBy = "address", fetch = FetchType.EAGER)
+//    private List<Client> clientList;
+
+//EXP
+//    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+//    @JoinColumn(name = "client_id")

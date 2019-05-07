@@ -160,15 +160,6 @@ public class MainController {
         return "personal";
     }
 
-
-
-
-
-
-
-
-
-
     @PostMapping("/editproduct")
     public String editProduct(@RequestParam(name = "productForEdit") int productId,
                                  @RequestParam(name = "name") String productName,

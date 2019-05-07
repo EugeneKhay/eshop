@@ -12,6 +12,8 @@ public interface ClientDao {
 
     Client getClientByEmail(String name);
 
+    List<Client> getAllClientsByEmail(String name);
+
     Client getClientById(int id);
 
     ClientAddress getAddressById(int id);

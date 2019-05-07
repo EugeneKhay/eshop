@@ -1,9 +1,6 @@
 package com.e_shop.services;
 
-import com.e_shop.domain.Basket;
-import com.e_shop.domain.Client;
-import com.e_shop.domain.Order;
-import com.e_shop.domain.Product;
+import com.e_shop.domain.*;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
@@ -37,6 +34,8 @@ public interface OrderService {
     List<Order> getOrdersPerPeriodForClient(Client client, LocalDate start, LocalDate finish);
 
     Order makeNewOrder(HttpSession session, String paymentMethod, String deliveryMethod);
+
+    Order makeNewOrder(HttpSession session, String paymentMethod, String deliveryMethod, String deliveryAddress);
 
     void editOrder(int id, String paymentStatus, String orderStatus);
 }

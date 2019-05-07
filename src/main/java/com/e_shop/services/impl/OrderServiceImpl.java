@@ -9,6 +9,7 @@ import com.e_shop.enums.PaymentStatus;
 import com.e_shop.exception.NoProductInBasketException;
 import com.e_shop.services.OrderService;
 import com.e_shop.services.ProductService;
+import com.sun.xml.bind.v2.TODO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -58,17 +59,20 @@ public class OrderServiceImpl implements OrderService {
         return dao.getOrdersPerPeriod(start, finish);
     }
 
+    //delete later, useless method
+    @Override
+    public LocalDate getDate(String day, String month, String year) {
+        return null;
+    }
+
     @Override
     public List<Order> getOrdersPerPeriodForClient(Client client, LocalDate start, LocalDate finish) {
         return dao.getOrdersPerPeriodForClient(client, start, finish);
     }
 
-    //Delete
-    public LocalDate getDate(String day, String month, String year) {
-        String[] array = {day, month, year};
-        int[] dateInInt = Arrays.stream(array).mapToInt(Integer::valueOf).toArray();
-        LocalDate date = LocalDate.of(dateInInt[2], dateInInt[1], dateInInt[0]);
-        return date;
+    @Override
+    public Order makeNewOrder(HttpSession session, String paymentMethod, String deliveryMethod) {
+        return makeNewOrder(session, paymentMethod, deliveryMethod, null);
     }
 
     public long getTotalAmountOfOrdersPerPeriod(LocalDate start, LocalDate finish) {
@@ -130,11 +134,26 @@ public class OrderServiceImpl implements OrderService {
         return sum;
     }
 
+    //EXP
     @Override
-    public Order makeNewOrder(HttpSession session, String paymentMethod, String deliveryMethod) {
+    public Order makeNewOrder(HttpSession session, String paymentMethod, String deliveryMethod, String deliveryAddress) {
         Order order = new Order();
         Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Basket basket = (Basket) session.getAttribute("shop_basket");
+
+        //TODO make separate
+        if (deliveryAddress != null) {
+            String[] splittedAddress = deliveryAddress.split(", ");
+            String country = splittedAddress[0];
+            String city = splittedAddress[1];
+            int postCode = Integer.valueOf(splittedAddress[2]);
+            String street = splittedAddress[3];
+            int houseNumber = Integer.valueOf(splittedAddress[4]);
+            int flatNumber = Integer.valueOf(splittedAddress[5]);
+            ClientAddress address = new ClientAddress(country, city, postCode, street, houseNumber, flatNumber);
+            order.setAddressForDelivery(address);
+        }
+
         double sum = sumOfOrder(basket);
         order.setClient(client);
 
@@ -152,10 +171,13 @@ public class OrderServiceImpl implements OrderService {
         order.setDateOfOrder(LocalDate.now());
         order.setSumOfOrder(sum);
 
+
         //EXP
         if (productToOrderList.size() > 0) {
             saveOrders(order);
-        } else throw new NoProductInBasketException();
+        } else {
+            throw new NoProductInBasketException();
+        }
 
         for (Map.Entry<Product, Integer> entry : basket.getProductsInBasket().entrySet()) {
             int amount = productService.decreaseProductAmountInStock(entry.getKey(), entry.getValue());

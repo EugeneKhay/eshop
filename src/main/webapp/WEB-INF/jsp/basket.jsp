@@ -218,7 +218,7 @@
                         <p>Please, choose address for delivery:</p>
                             <c:forEach items="${addresses}" var="item">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="deliveryMethod" id="delivery" value="${item}">
+                                    <input class="form-check-input" type="checkbox" name="deliveryAddress" id="delivery" value="${item}">
                                     <label class="form-check-label" for="delivery">${item}</label>
                                 </div>
                                 <br>
