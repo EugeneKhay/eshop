@@ -85,31 +85,6 @@
                                     <label for="password">Password</label>
                                     <input class="form-control form-control-md" type="text" id="password" name="password" value="${client.password}"/>
                                 </div>
-                                <%--<c:set var = "address" scope = "session" value = "${client.address}"/>--%>
-                                <%--<div class="form-group">--%>
-                                    <%--<label for="country">Country</label>--%>
-                                    <%--<input class="form-control form-control-md" type="text" id="country" name="country" value="${address.country}"/>--%>
-                                <%--</div>--%>
-                                <%--<div class="form-group">--%>
-                                    <%--<label for="city">City</label>--%>
-                                    <%--<input class="form-control form-control-md" type="text" id="city" name="city" value="${address.city}"/>--%>
-                                <%--</div>--%>
-                                <%--<div class="form-group">--%>
-                                    <%--<label for="postcode">Post code</label>--%>
-                                    <%--<input class="form-control form-control-md" type="number" id="postcode" name="postcode" value="${address.postCode}"/>--%>
-                                <%--</div>--%>
-                                <%--<div class="form-group">--%>
-                                    <%--<label for="street">Street</label>--%>
-                                    <%--<input class="form-control form-control-md" type="text" id="street" name="street" value="${address.street}"/>--%>
-                                <%--</div>--%>
-                                <%--<div class="form-group">--%>
-                                    <%--<label for="houseNumber">House number</label>--%>
-                                    <%--<input class="form-control form-control-md" type="number" id="houseNumber" name="houseNumber" value="${address.houseNumber}"/>--%>
-                                <%--</div>--%>
-                                <%--<div class="form-group">--%>
-                                    <%--<label for="flatNumber">Flat number</label>--%>
-                                    <%--<input class="form-control form-control-md" type="number" id="flatNumber" name="flatNumber" value="${address.flatNumber}"/>--%>
-                                <%--</div>--%>
                                 <input type="hidden" name="clientForEdit" value="${client.id}">
                                 <button onclick="pers_submit()" type="submit" name="user_search" class="btn btn-secondary" data-dismiss="modal"> Submit </button>
                                 <a href="/registration" class="btn btn-secondary btn-md active" role="button" aria-pressed="true"> New account</a>
@@ -160,29 +135,36 @@
                     <td>${address.flatNumber}</td>
                     <td>
                         <div>
-                            <button type="button" class="btn btn-secondary" onclick="changeAddress(${address.id})"> Change </button>
+                            <div class="btn-toolbar" role="toolbar">
+                                <div class="btn-group mr-2" role="group">
+                                    <button type="button" class="btn btn-secondary" onclick="changeAddress(${address.id})"> Change </button>
+                                </div>
+                                <div class="btn-group" role="group">
+                                    <button type="button" class="btn btn-secondary" onclick="deleteform(${address.id})"> Delete </button>
+                                </div>
+                            </div>
+
+                            <form action="/deleteaddress" method="post" style="display: none" id="${address.id}del">
+                                <input type="hidden" name="addressForDelete" value="${address.id}">
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            </form>
+
+                            <script>
+                                function deleteform(id) {
+                                    $("#" + id + "del").submit();
+                                }
+                            </script>
+                            <script type="text/javascript">
+                                function changeAddress(id) {
+                                    $("#" + id + "").toggle();
+                                }
+                            </script>
                         </div>
-                        <script type="text/javascript">
-                            function changeAddress(id) {
-                                $("#" + id + "").toggle();
-                                //$("#address").toggle();
-                            }
-                        </script>
+
                         <div class="row" id="${address.id}" style="display: none">
-                            <%--<form action="/editaddress" method="post">--%>
-                                <%--<input type="hidden" name="addressForEdit" value="${address.id}">--%>
-                                <%--<input type="hidden" name="clientId" value="${client.id}">--%>
-                                <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
-                                <%--<input class="form-control form-control-md" type="text" id="country" name="country" value="${address.country}"/>--%>
-                                <%--<input class="form-control form-control-md" type="text" id="city" name="city" value="${address.city}"/>--%>
-                                <%--&lt;%&ndash;<input class="form-control form-control-md" type="text" id="postcode" name="postcode" value="${address.postcode}"/>&ndash;%&gt;--%>
-                                <%--<input class="form-control form-control-md" type="text" id="street" name="street" value="${address.street}"/>--%>
-                                <%--<input class="form-control form-control-md" type="text" id="houseNumber" name="houseNumber" value="${address.houseNumber}"/>--%>
-                                <%--<input class="form-control form-control-md" type="text" id="flatNumber" name="flatNumber" value="${address.flatNumber}"/>--%>
-                                <%--<button type="submit" name="user_search" class="btn btn-secondary" data-dismiss="modal"> Submit </button>--%>
+                            <br>
                             </form>
                                     <form action="/editaddress" method="post" >
-                                    <%--<input type="hidden" name="client" value="${client.id}">--%>
                                     <input type="hidden" name="addressForEdit" value="${address.id}">
                                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                     <div class="form-group">
@@ -196,7 +178,7 @@
 
                                     <div class="form-group">
                                     <label for="freakfield" style="color: black">Postcode</label>
-                                    <input class="form-control form-control-md" type="text" id="freakfield" name="postcode" value="${address.postCode}"/>
+                                    <input class="form-control form-control-md" type="number" id="freakfield" name="postcode" value="${address.postCode}"/>
                                     </div>
 
                                     <div class="form-group">
@@ -214,37 +196,6 @@
                                     <button type="submit" name="user_search" class="btn btn-secondary" data-dismiss="modal"> Submit </button>
                                     </form>
                         </div>
-                            <%--<form action="/editaddress" method="post" >--%>
-                                <%--&lt;%&ndash;<input type="hidden" name="client" value="${client.id}">&ndash;%&gt;--%>
-                                <%--<input type="hidden" name="addressForEdit" value="${address.id}">--%>
-                                <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
-                                <%--<div class="form-group">--%>
-                                    <%--<label for="country" style="color: black">Country</label>--%>
-                                    <%--<input class="form-control form-control-md" type="text" id="country" name="country" value="${address.country}"/>--%>
-                                <%--</div>--%>
-                                <%--<div class="form-group">--%>
-                                    <%--<label for="city" style="color: black">City</label>--%>
-                                    <%--<input class="form-control form-control-md" type="text" id="city" name="city" value="${address.city}"/>--%>
-                                <%--</div>--%>
-                                <%--<div class="form-group">--%>
-                                    <%--<label for="postcode" style="color: black">Postcode</label>--%>
-                                    <%--<input class="form-control form-control-md" type="number" id="postcode" name="postcode" value="${address.postcode}"/>--%>
-                                <%--</div>--%>
-                                <%--<div class="form-group">--%>
-                                    <%--<label for="street" style="color: black">Street</label>--%>
-                                    <%--<input class="form-control form-control-md" type="text" id="street" name="street" value="${address.street}"/>--%>
-                                <%--</div>--%>
-                                <%--<div class="form-group">--%>
-                                    <%--<label for="houseNumber" style="color: black">House number</label>--%>
-                                    <%--<input class="form-control form-control-md" type="number" id="houseNumber" name="houseNumber" value="${address.houseNumber}"/>--%>
-                                <%--</div>--%>
-                                <%--<div class="form-group">--%>
-                                    <%--<label for="flatNumber" style="color: black">Flat number</label>--%>
-                                    <%--<input class="form-control form-control-md" type="number" id="flatNumber" name="flatNumber" value="${address.flatNumber}"/>--%>
-                                <%--</div>--%>
-                                <%--<button type="submit" name="user_search" class="btn btn-secondary" data-dismiss="modal"> Submit </button>--%>
-                            <%--</form>--%>
-                        <%--</div>--%>
                     </td>
                 </tr>
             </c:forEach>

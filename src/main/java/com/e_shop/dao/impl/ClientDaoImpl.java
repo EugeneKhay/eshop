@@ -79,6 +79,14 @@ public class ClientDaoImpl implements ClientDao {
         sessionFactory.getCurrentSession().saveOrUpdate(address);
     }
 
+    @Override
+    public void deleteAddressById(int id) {
+        String hql = "DELETE ClientAddress where id = :paramId";
+        Query query = sessionFactory.getCurrentSession().createQuery(hql);
+        query.setParameter("paramId", id);
+        int result = query.executeUpdate();
+    }
+
 //    @Override
 //    public List<Client> getAllClientsPerPeriod(LocalDate start, LocalDate finish) {
 //        String hql = "FROM Client AS c WHERE c.orders between :start and :finish";

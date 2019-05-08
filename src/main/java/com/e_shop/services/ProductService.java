@@ -3,6 +3,7 @@ package com.e_shop.services;
 import com.e_shop.domain.Product;
 import com.e_shop.enums.ProductCategory;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -35,6 +36,8 @@ public interface ProductService {
     List<Product> getAllProductsByColour(String colour, String type);
 
     String getPageName(String page);
+
+    void editProductByAdmin(int productId, String productName, String brand, double price, int amount, String category, String colour);
 
 
 

@@ -2,6 +2,7 @@ package com.e_shop.services.impl;
 
 import com.e_shop.dao.ProductDAO;
 import com.e_shop.domain.Product;
+import com.e_shop.domain.ProductParameteres;
 import com.e_shop.enums.ProductCategory;
 import com.e_shop.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +61,19 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public String getPageName(String page) {
         return dao.getPageName(page);
+    }
+
+    @Override
+    public void editProductByAdmin(int productId, String productName, String brand, double price, int amount, String category, String colour) {
+        ProductCategory productCategory = ProductCategory.valueOf(category);
+        ProductParameteres parameteres = new ProductParameteres(colour, brand);
+        Product product = getProductById(productId);
+        product.setProductName(productName);
+        product.setProductPrice(price);
+        product.setAmount(amount);
+        product.setCategory(productCategory);
+        product.setProductParameteres(parameteres);
+        saveProduct(product);
     }
 
     @Override

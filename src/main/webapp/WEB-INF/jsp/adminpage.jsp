@@ -122,41 +122,6 @@
         <div id="orders" style="display: none">
             <h3 style="color: black">Orders</h3>
             <div class="row">
-                <%--<table class="table table-borderless" style="color: black">--%>
-                    <%--<tr>--%>
-                        <%--<th>Order number</th>--%>
-                        <%--<th>Client</th>--%>
-                        <%--<th>Products</th>--%>
-                        <%--<th>Sum</th>--%>
-                        <%--<th>Date of order</th>--%>
-                        <%--<th>Payment method</th>--%>
-                        <%--<th>Delivery method</th>--%>
-                        <%--<th>Order status</th>--%>
-                        <%--<th>Payment status</th>--%>
-                    <%--</tr>--%>
-                    <%--<c:forEach items="${orders}" var="order">--%>
-                        <%--<tr>--%>
-                            <%--<c:set var = "client" scope = "session" value = "${order.client}"/>--%>
-                            <%--<td>${order.id}</td>--%>
-                            <%--<td>${client.firstName} ${client.lastName}</td>--%>
-                            <%--<td>--%>
-                                <%--<c:forEach items="${order.orderProducts}" var="order_product">--%>
-                                    <%--<c:set var = "product" scope = "session" value = "${order_product.product}"/>--%>
-                                    <%--<table>--%>
-                                        <%--<tr>${product.productName} - ${order_product.amount}</tr>--%>
-                                    <%--</table>--%>
-                                <%--</c:forEach>--%>
-                            <%--</td>--%>
-                            <%--<td>${order.sumOfOrder}</td>--%>
-                            <%--<td>${order.dateOfOrder}</td>--%>
-                            <%--<td>${order.paymentMethod}</td>--%>
-                            <%--<td>${order.deliveryMethod}</td>--%>
-                            <%--<td>${order.orderStatus}</td>--%>
-                            <%--<td>${order.paymentStatus}</td>--%>
-                        <%--</tr>--%>
-                    <%--</c:forEach>--%>
-                <%--</table>--%>
-
                     <table class="table table-borderless" style="color: black">
                         <tr>
                             <th>№</th>
@@ -168,6 +133,7 @@
                             <th>Date of order</th>
                             <th>Payment method</th>
                             <th>Delivery method</th>
+                            <th>Delivery address</th>
                             <th>Order status</th>
                             <th>Payment status</th>
                         </tr>
@@ -204,6 +170,7 @@
                                 <td>${order.dateOfOrder}</td>
                                 <td>${order.paymentMethod}</td>
                                 <td>${order.deliveryMethod}</td>
+                                <td>${order.addressForDelivery}</td>
                                 <td>${order.orderStatus}</td>
                                 <td>${order.paymentStatus}</td>
                             </tr>

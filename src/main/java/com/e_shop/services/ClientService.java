@@ -40,6 +40,13 @@ public interface ClientService extends UserDetailsService {
 
     void saveAddress(ClientAddress address);
 
+    Client createAddressForClient(String country, String city, int postcode, String street, int houseNumber, int flatNumber);
+
+    Client editAddressForClient(int addressForEdit, String country, String city, int postcode, String street, int houseNumber, int flatNumber);
+
+    void deleteAddressById(int id);
+
+
 
 
 

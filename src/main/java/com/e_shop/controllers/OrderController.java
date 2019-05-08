@@ -23,13 +23,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Logger;
 
 @Controller
@@ -53,7 +55,7 @@ public class OrderController {
                                @RequestParam(name = "paymentMethod") String paymentMethod,
                                @RequestParam(name = "deliveryMethod") String deliveryMethod,
                                @RequestParam(name = "deliveryAddress", required = false) String deliveryAddress,
-                               Model model) {
+                               Model model) throws MessagingException {
         Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Set<Order> orders = client.getOrders();
         orders.add(orderService.makeNewOrder(session, paymentMethod, deliveryMethod, deliveryAddress));
@@ -63,8 +65,40 @@ public class OrderController {
 //        message.setFrom("4358514@gmail.com");
 //        message.setTo("seelenrauf@mail.ru");
 //        message.setSubject("New order");
-//        message.setText("Congratulations! You are fool!");
+//        message.setText("Congratulations!");
 //        mailSender.send(message);
+
+//        Properties prop = new Properties();
+//        prop.put("mail.smtp.auth", true);
+//        prop.put("mail.smtp.starttls.enable", "true");
+//        prop.put("mail.smtp.host", "smtp.yandex.ru");
+//        prop.put("mail.smtp.port", "25");
+//
+//        Session sessionMail = Session.getInstance(prop, new Authenticator() {
+//            @Override
+//            protected PasswordAuthentication getPasswordAuthentication() {
+//                return new PasswordAuthentication("eshopivanov", "qwerty007");
+//            }
+//        });
+//
+//        Message message = new MimeMessage(sessionMail);
+//        message.setFrom(new InternetAddress("eshopivanov@yandex.ru"));
+//        message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("seelenrauf@mail.ru"));
+//        message.setSubject("Mail Subject");
+//
+//        String msg = "This is my first email using JavaMailer";
+//
+//        MimeBodyPart mimeBodyPart = new MimeBodyPart();
+//        mimeBodyPart.setContent(msg, "text/html");
+//
+//        Multipart multipart = new MimeMultipart();
+//        multipart.addBodyPart(mimeBodyPart);
+//
+//        message.setContent(multipart);
+//
+//        Transport.send(message);
+
+
 
         logger.info("The order created and saved to DB");
         return "personal";

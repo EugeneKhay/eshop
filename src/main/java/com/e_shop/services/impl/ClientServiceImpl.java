@@ -11,6 +11,7 @@ import com.e_shop.exception.LoginException;
 import com.e_shop.services.ClientService;
 import com.e_shop.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -20,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,6 +36,9 @@ public class ClientServiceImpl implements ClientService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    private Logger logger = Logger.getLogger("logger");
+
 
     @Override
     public Client getClientByName(String name) {
@@ -78,12 +83,6 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public boolean checkLogin(String login) {
-//        List<Client> collect = getAllClients()
-//                .stream()
-//                .filter(client -> client.getEmail().equals(login))
-//                .collect(Collectors.toList());
-//        if (collect.size() == 0) return true;
-//        return false;
         List<Client> clientByEmail = getAllClientsByEmail(login);
         if (clientByEmail.size() == 0) return true;
         return false;
@@ -91,20 +90,12 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public boolean registerNewClient(String firstName, String lastName, LocalDate birthDate, String email, String password) {
-                                     //String country, String city, int postcode, String street, int house, int flat) {
-
-//        ClientAddress address = new ClientAddress(country, city, postcode, street, house, flat);
-//        List<ClientAddress> clientAddresses = new ArrayList<>();
-//        clientAddresses.add(address);
-
         Client client = new Client();
         client.setFirstName(firstName);
         client.setLastName(lastName);
         client.setBirthDate(birthDate);
         client.setEmail(email);
         client.setPassword(passwordEncoder.encode(password));
-//        client.setAddress(address);
-        //client.setAddressList(clientAddresses);
         client.setRoles(Collections.singleton(Role.ROLE_USER));
         if (checkLogin(email)) {
             saveClient(client);
@@ -116,19 +107,11 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Client editClientPersonalData(int id, String firstName, String lastName, String password, String email) {
-                                         //String country, String city, int postcode, String street, int houseNumber, int flatNumber) {
         Client client = getClientById(id);
         client.setFirstName(firstName);
         client.setLastName(lastName);
         client.setPassword(passwordEncoder.encode(password));
         client.setEmail(email);
-
-//        ClientAddress newAddress = new ClientAddress(country, city, postcode, street, houseNumber, flatNumber);
-//        List<ClientAddress> clientAddresses = new ArrayList<>();
-//        clientAddresses.add(newAddress);
-////        client.setAddress(newAddress);
-//        client.setAddressList(clientAddresses);
-
         saveClient(client);
         return client;
     }
@@ -141,6 +124,43 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public void saveAddress(ClientAddress address) {
         dao.saveAddress(address);
+    }
+
+    @Override
+    public Client createAddressForClient(String country, String city, int postcode, String street, int houseNumber, int flatNumber) {
+        ClientAddress address = new ClientAddress(country, city, postcode, street, houseNumber, flatNumber);
+        Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<ClientAddress> addresses = client.getAddressList();
+        addresses.add(address);
+        saveAddress(address);
+        client.setAddressList(addresses);
+        saveClient(client);
+        return client;
+    }
+
+    @Override
+    public Client editAddressForClient(int addressForEdit, String country, String city, int postcode, String street, int houseNumber, int flatNumber) {
+        Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        ClientAddress newAddress = getAddressById(addressForEdit);
+        logger.info("Old address " + newAddress + " retrieved");
+        newAddress.setCountry(country);
+        newAddress.setCity(city);
+        newAddress.setPostCode(postcode);
+        newAddress.setStreet(street);
+        newAddress.setHouseNumber(houseNumber);
+        newAddress.setFlatNumber(flatNumber);
+        saveAddress(newAddress);
+        logger.info("New address " + newAddress + " saved");
+        List<ClientAddress> addresses = client.getAddressList();
+        addresses.remove(getAddressById(addressForEdit));
+        addresses.add(newAddress);
+        client.setAddressList(addresses);
+        return client;
+    }
+
+    @Override
+    public void deleteAddressById(int id) {
+        dao.deleteAddressById(id);
     }
 
     @Override
