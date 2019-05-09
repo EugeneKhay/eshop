@@ -20,16 +20,17 @@ public class CatalogController {
     @Autowired
     private CatalogService catalogService;
 
-    @PostMapping("/phone")
+    @PostMapping("/{page}")
     public String postCatalog(@RequestParam(name = "search_res11", required = false) Double search_dataPrice1,
                               @RequestParam(name = "search_res12", required = false) Double search_dataPrice2,
                               @RequestParam(name = "search_res2", required = false) String search_dataBrand,
                               @RequestParam(name = "search_res3", required = false) String search_dataColour,
-                              @RequestParam(name = "page") String page,
+                              @PathVariable(name = "page") String page,
                               Model model) {
-        List<Product> dataForPostCatalog = catalogService.getDataForPostCatalog(search_dataPrice1, search_dataPrice2, search_dataBrand, search_dataColour, page);
+        List<Product> dataForPostCatalog = catalogService.getDataForPostCatalog(search_dataPrice1, search_dataPrice2,
+                                                                                search_dataBrand, search_dataColour, page);
         model.addAttribute("items", dataForPostCatalog);
-        model.addAttribute("pageName", productService.getPageName(page));
+        model.addAttribute("pageName", page);
         return "products";
     }
 }

@@ -1,9 +1,11 @@
 package com.eshop.dao;
 
+import com.eshop.domain.CategoryOfProduct;
 import com.eshop.domain.Product;
 import com.eshop.enums.ProductCategory;
 
 import java.util.List;
+import java.util.Set;
 
 public interface ProductDAO {
 
@@ -25,7 +27,11 @@ public interface ProductDAO {
 
     List<Product> getAllProductsByColour(String colour, String type);
 
-    List<Product> getAllProductsByCategory(ProductCategory category);
+    //List<Product> getAllProductsByCategory(ProductCategory category);
+
+    List<Product> getAllProductsByCategory(CategoryOfProduct category);
+
+    List<Product> getAllProductsByCategory(String category);
 
     void saveProduct(Product product);
 
@@ -33,10 +39,9 @@ public interface ProductDAO {
 
     String getPageName(String page);
 
+    Set<CategoryOfProduct> getAllCategories();
 
+    void saveCategory(CategoryOfProduct category);
 
-
-
-
-
+    List<CategoryOfProduct> getCategoryByName(String categoryName);
 }

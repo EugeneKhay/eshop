@@ -18,6 +18,7 @@ public class ProductParameteres {
     private Integer id;
 
     private String colour;
+
     private String brand;
 
     @OneToOne(mappedBy = "productParameteres")

@@ -1,5 +1,6 @@
 package com.eshop.controller;
 
+import com.eshop.domain.CategoryOfProduct;
 import com.eshop.service.ClientService;
 import com.eshop.service.ProductService;
 import com.eshop.service.impl.AdminService;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.logging.Logger;
 
 
@@ -44,9 +46,22 @@ public class AdminController {
                              @RequestParam(name = "amount") int amount,
                              @RequestParam(name = "colour") String colour,
                              @RequestParam(name = "brand") String brand,
-                             @RequestParam(name = "image") String image) {
+                             @RequestParam(name = "image", required = false) String image,
+                             Model model) {
         adminService.addNewProduct(productName, productPrice, category, amount, colour, brand, image);
+        model.addAttribute("categories", productService.getAllCategories());
         logger.info("Product added");
+        return "adminpage";
+    }
+
+    @PostMapping("/addnewcategory")
+    public String addCategory(@RequestParam(name = "categoryName") String categoryName, Model model) {
+            if (adminService.checkCategory(categoryName)) {
+                CategoryOfProduct category = new CategoryOfProduct(categoryName);
+                productService.saveCategory(category);
+                logger.info("Category added");
+            }
+        model.addAttribute("categories", productService.getAllCategories());
         return "adminpage";
     }
 

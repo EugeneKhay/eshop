@@ -108,7 +108,8 @@
                         <td>${product.productName}</td>
                         <td>${product.productPrice}</td>
                         <td id="amount${product.id}edit">${amount}</td>
-                        <td>${product.category}</td>
+                        <%--<td>${product.category}</td>--%>
+                        <td>${product.productCategory}</td>
                         <c:set var = "parameters" scope = "session" value = "${product.productParameteres}"/>
                         <td>${parameters.colour}</td>
                         <td>${parameters.brand}</td>

@@ -50,21 +50,27 @@
         </div>
         <div class="col-sm">
             <ul class="nav justify-content-center">
-                <li class="nav-item">
-                    <a class="nav-link" href="/phone">Phones</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/tv">TV & Video</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/audio">Audio & Hi-Fi</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/laptop">Laptops</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/tablet">Tablets</a>
-                </li>
+                <%--<li class="nav-item">--%>
+                    <%--<a class="nav-link" href="/phone">Phones</a>--%>
+                <%--</li>--%>
+                <%--<li class="nav-item">--%>
+                    <%--<a class="nav-link" href="/tv">TV & Video</a>--%>
+                <%--</li>--%>
+                <%--<li class="nav-item">--%>
+                    <%--<a class="nav-link" href="/audio">Audio & Hi-Fi</a>--%>
+                <%--</li>--%>
+                <%--<li class="nav-item">--%>
+                    <%--<a class="nav-link" href="/laptop">Laptops</a>--%>
+                <%--</li>--%>
+                <%--<li class="nav-item">--%>
+                    <%--<a class="nav-link" href="/tablet">Tablets</a>--%>
+                <%--</li>--%>
+                <c:forEach items="${categories}" var="category">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/${category}">${category}</a>
+                    </li>
+                    <%--<option value="${category}"> ${category} </option>--%>
+                </c:forEach>
             </ul>
         </div>
 
@@ -107,12 +113,12 @@
                             <p>
                                 <label for="username">Username</label>
                                 <input type="text" id="username" name="username"/>
-                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
                             </p>
                             <p>
                                 <label for="password">Password</label>
                                 <input type="password" id="password" name="password"/>
-                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
                             </p>
                             <button onclick="form_submit()" name="user_search" class="btn btn-secondary" data-dismiss="modal">Log in</button>
                             <!--<button type="button" class="btn btn-secondary"><a href="/registration">Registration</a></button>-->
@@ -128,7 +134,8 @@
     <!-- Search -->
     <div class="row" style="margin-bottom: 100px; margin-top: 20px">
         <div class="col-sm-2">
-            <form method="post" action="/phone">
+            <c:url var="searching" value="${requestScope['javax.servlet.forward.request_uri']}" />
+            <form method="post" action="${searching}">
                 <h5>Search</h5>
                 <div class="form-check form-group" >
                     <input class="form-check-input" type="checkbox" name="search_type1" value="Price" id="defaultCheck1">
@@ -147,21 +154,19 @@
                     <input style="display: none" class="form-control form-control-md" id="search_input3" type="text" name="search_res3" >
                 </div>
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                <input type="hidden" name="page" value="${requestScope['javax.servlet.forward.request_uri']}"/>
                 <div class="input-group-append">
                     <button class="btn btn-secondary" type="submit">Find/Clear</button>
                 </div>
             </form>
         </div>
+
         <!-- Cards -->
         <div class="col-sm">
             <div class="row" id="output">
                 <c:forEach items="${items}" var="item">
                     <form id="form-card" action="/basket" method="post">
                         <div class="card">
-                            <%--<img style="margin-top: 10px" src="/resources/static/images/IPhoneX.png" class="card-img-top" alt="Image">--%>
                                 <img style="margin-top: 10px" src="${item.imagePath}" class="card-img-top" alt="Image">
-
                                 <div class="card-body">
                                 <h5 class="card-title">${item.productName}</h5>
                                 <p class="card-text">${item.productPrice}</p>
@@ -172,9 +177,7 @@
                                 </ul>
                                 <input  type="hidden" name="item" value=${item.id}>
                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-
                                 <input type="hidden" name="page" value="${requestScope['javax.servlet.forward.request_uri']}"/>
-
                                 <button class="btn btn-secondary btn-sm justify-content-center" type="submit">Buy</button>
                             </div>
                         </div>

@@ -60,7 +60,7 @@
                     <button type="button" class="btn btn-secondary" onclick="stats()"> Statistics</button>
                 </div>
                 <div class="btn-group mr-2" role="group" aria-label="Second group">
-                    <button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#exampleModal">Change period</button>
+                    <button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#exampleModal"> Change period </button>
                 </div>
             </div>
         </div>
@@ -252,7 +252,8 @@
                             <td>${parameters.brand}</td>
                             <td>${product.productPrice}</td>
                             <td>${product.amount}</td>
-                            <td>${product.category}</td>
+                            <%--<td>${product.category}</td>--%>
+                            <td>${product.productCategory}</td>
                             <td>${parameters.colour}</td>
                             <td>
                                 <div>
@@ -284,7 +285,7 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="category2" style="color: black">Category</label>
-                                                                    <input class="form-control form-control-md" type="text" id="category2" name="category" value="${product.category}"/>
+                                                                    <input class="form-control form-control-md" type="text" id="category2" name="category" value="${product.productCategory}"/>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="color" style="color: black">Color</label>
@@ -299,14 +300,34 @@
                 <br>
 
                 <div>
+                    <button type="button" class="btn btn-secondary" onclick="addCategory()"> Add new category </button>
+                </div>
+                <br>
+                <div>
                     <button type="button" class="btn btn-secondary" onclick="addProduct()"> Add new product </button>
                 </div>
+
                 <script type="text/javascript">
                     function addProduct() {
                         $("#newProduct").toggle();
+                    };
+                    function addCategory() {
+                        $("#newCategory").toggle();
                     }
                 </script>
 
+                <div id="newCategory" style="display: none">
+                    <h5  style="color:black; margin-top: 20px">Add new category of products</h5>
+                    <form method="post" action="/addnewcategory">
+                        <b style="color:black"> Enter category name </b>
+                        <div class="form-group">
+                            <label for="categoryName"> Product name </label>
+                            <input class="form-control form-control-md" name="categoryName" type="text" class="form-control" id="categoryName" aria-describedby="emailHelp" required>
+                        </div>
+                        <button type="submit" class="btn btn-secondary"> Add </button>
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    </form>
+                </div>
 
                 <div id="newProduct" style="display: none">
                 <h5  style="color:black; margin-top: 20px">Add new product</h5>
@@ -324,11 +345,14 @@
                             <label for="productPrice"> Product type </label>
                             <select class="custom-select mr-sm-2" name="category" id="category" required>
                                 <option selected>Choose category</option>
-                                <option value="PHONE"> PHONE </option>
-                                <option value="TV_VIDEO"> TV_VIDEO </option>
-                                <option value="AUDIO"> AUDIO </option>
-                                <option value="LAPTOP"> LAPTOP </option>
-                                <option value="TABLET"> TABLET </option>
+                                <%--<option value="PHONE"> PHONE </option>--%>
+                                <%--<option value="TV_VIDEO"> TV_VIDEO </option>--%>
+                                <%--<option value="AUDIO"> AUDIO </option>--%>
+                                <%--<option value="LAPTOP"> LAPTOP </option>--%>
+                                <%--<option value="TABLET"> TABLET </option>--%>
+                                <c:forEach items="${categories}" var="category">
+                                    <option value="${category}"> ${category} </option>
+                                </c:forEach>
                             </select>
                         </div>
                         <div class="form-group">
@@ -352,7 +376,14 @@
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     </form>
                 </div>
-            </div>
+
+                <div>
+                    <c:forEach items="${categories}" var="cate">
+                        <p>${cate}</p>
+                    </c:forEach>
+                </div>
+
+        </div>
 
         <!-- Clients -->
         <div id="clients" style="display: none">

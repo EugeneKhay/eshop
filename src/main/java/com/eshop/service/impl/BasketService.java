@@ -1,6 +1,7 @@
 package com.eshop.service.impl;
 
 import com.eshop.domain.Basket;
+import com.eshop.domain.CategoryOfProduct;
 import com.eshop.domain.Product;
 import com.eshop.enums.ProductCategory;
 import com.eshop.service.ProductService;
@@ -40,13 +41,15 @@ public class BasketService {
             totalPrice += (entry.getKey().getProductPrice() * entry.getValue());
         }
         session.setAttribute("totalPrice", totalPrice);
-        ProductCategory category = product.getCategory();
+        //ProductCategory category = product.getCategory();
+        CategoryOfProduct category = product.getProductCategory();
         List<Product> productsForView;
         //if came from homepage
         if (page == null) {
             productsForView = productService.getAllProducts();
         } else
             // if came from page of any category of products
+            //productsForView = productService.getAllProductsByCategory(category);
             productsForView = productService.getAllProductsByCategory(category);
         return productsForView;
     }

@@ -1,9 +1,6 @@
 package com.eshop.controller;
 
-import com.eshop.domain.Basket;
-import com.eshop.domain.Client;
-import com.eshop.domain.ClientAddress;
-import com.eshop.domain.Product;
+import com.eshop.domain.*;
 import com.eshop.jms.MessageSender;
 import com.eshop.service.ClientService;
 import com.eshop.service.OrderService;
@@ -14,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpSession;
@@ -47,6 +45,7 @@ public class MainController {
         session.setAttribute("shop_basket", basket);
         List<Product> bestsellers = orderService.getBestsellers();
         model.addAttribute("items", bestsellers);
+        model.addAttribute("categories", productService.getAllCategories());
         sender.sendMessage("Bestsellers updated");
         return "homepage2";
     }
@@ -136,6 +135,21 @@ public class MainController {
         productService.editProductByAdmin(productId, productName, brand, price, amount, category, colour);
         model.addAttribute("products", productService.getAllProducts());
         return "adminpage";
+    }
+
+    @GetMapping("/{category}")
+    public String get(@PathVariable(name = "category") String cat, Model model) {
+        //TODO move to service
+        String end = cat.substring(1);
+        String start = cat.substring(0,1).toUpperCase();
+        String res = start + end;
+
+        CategoryOfProduct category = new CategoryOfProduct(res);
+        List<Product> allProductsByCategory = productService.getAllProductsByCategory(res);
+        model.addAttribute("items", allProductsByCategory);
+        model.addAttribute("pageName", category.getCategoryName());
+
+        return "products";
     }
 }
 

@@ -27,22 +27,37 @@ public class Product implements Serializable {
 
     private String imagePath;
 
-    @Enumerated(EnumType.STRING)
-    private ProductCategory category;
+//    @Enumerated(EnumType.STRING)
+//    private ProductCategory category;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "parameters_id")
     @JsonManagedReference
     private ProductParameteres productParameteres;
 
-    public Product(String productName, double productPrice, int amount, String imagePath, ProductCategory category, ProductParameteres productParameteres) {
+    //EXP
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "category_id")
+    @JsonManagedReference
+    private CategoryOfProduct productCategory;
+
+    public Product(String productName, double productPrice, int amount, String imagePath, ProductParameteres productParameteres, CategoryOfProduct productCategory) {
         this.productName = productName;
         this.productPrice = productPrice;
         this.amount = amount;
         this.imagePath = imagePath;
-        this.category = category;
         this.productParameteres = productParameteres;
+        this.productCategory = productCategory;
     }
+
+    //    public Product(String productName, double productPrice, int amount, String imagePath, ProductCategory category, ProductParameteres productParameteres) {
+//        this.productName = productName;
+//        this.productPrice = productPrice;
+//        this.amount = amount;
+//        this.imagePath = imagePath;
+//        this.category = category;
+//        this.productParameteres = productParameteres;
+//    }
 
     @Override
     public boolean equals(Object o) {

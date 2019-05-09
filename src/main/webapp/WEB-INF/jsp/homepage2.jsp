@@ -86,21 +86,27 @@
 
             <div class="col-sm">
                 <ul class="nav justify-content-center">
+                        <%--<li class="nav-item">--%>
+                            <%--<a class="nav-link" href="/phone">Phones</a>--%>
+                        <%--</li>--%>
+                        <%--<li class="nav-item">--%>
+                            <%--<a class="nav-link" href="/tv">TV & Video</a>--%>
+                        <%--</li>--%>
+                        <%--<li class="nav-item">--%>
+                            <%--<a class="nav-link" href="/audio">Audio & Hi-Fi</a>--%>
+                        <%--</li>--%>
+                        <%--<li class="nav-item">--%>
+                            <%--<a class="nav-link" href="/laptop">Laptops</a>--%>
+                        <%--</li>--%>
+                        <%--<li class="nav-item">--%>
+                            <%--<a class="nav-link" href="/tablet">Tablets</a>--%>
+                        <%--</li>--%>
+                    <c:forEach items="${categories}" var="category">
                         <li class="nav-item">
-                            <a class="nav-link" href="/phone">Phones</a>
+                            <a class="nav-link" href="/${category}">${category}</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/tv">TV & Video</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/audio">Audio & Hi-Fi</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/laptop">Laptops</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/tablet">Tablets</a>
-                        </li>
+                        <%--<option value="${category}"> ${category} </option>--%>
+                    </c:forEach>
                 </ul>
             </div>
 
@@ -169,7 +175,7 @@
 
     <style>
         .cardparent {
-            /*width: 1200px;*/
+            width: 1200px;
             height:600px;
             overflow: hidden;
             overflow-x: scroll;

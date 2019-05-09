@@ -1,9 +1,11 @@
 package com.eshop.service;
 
+import com.eshop.domain.CategoryOfProduct;
 import com.eshop.domain.Product;
 import com.eshop.enums.ProductCategory;
 
 import java.util.List;
+import java.util.Set;
 
 public interface ProductService {
 
@@ -25,7 +27,11 @@ public interface ProductService {
 
     int saveNewAmountOfProduct(Product product, int amount);
 
-    List<Product> getAllProductsByCategory(ProductCategory category);
+    //List<Product> getAllProductsByCategory(ProductCategory category);
+
+    List<Product> getAllProductsByCategory(CategoryOfProduct category);
+
+    List<Product> getAllProductsByCategory(String category);
 
     List<Product> getAllProductsByBrand(String brand, String type);
 
@@ -37,7 +43,9 @@ public interface ProductService {
 
     void editProductByAdmin(int productId, String productName, String brand, double price, int amount, String category, String colour);
 
+    Set<CategoryOfProduct> getAllCategories();
 
+    void saveCategory(CategoryOfProduct category);
 
-
+    List<CategoryOfProduct> getCategoryByName(String categoryName);
 }

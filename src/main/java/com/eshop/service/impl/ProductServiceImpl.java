@@ -1,6 +1,7 @@
 package com.eshop.service.impl;
 
 import com.eshop.dao.ProductDAO;
+import com.eshop.domain.CategoryOfProduct;
 import com.eshop.domain.Product;
 import com.eshop.domain.ProductParameteres;
 import com.eshop.enums.ProductCategory;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -63,17 +65,46 @@ public class ProductServiceImpl implements ProductService {
         return dao.getPageName(page);
     }
 
+//    @Override
+//    public void editProductByAdmin(int productId, String productName, String brand, double price, int amount, String category, String colour) {
+//        ProductCategory productCategory = ProductCategory.valueOf(category);
+//        ProductParameteres parameteres = new ProductParameteres(colour, brand);
+//        Product product = getProductById(productId);
+//        product.setProductName(productName);
+//        product.setProductPrice(price);
+//        product.setAmount(amount);
+//        product.setCategory(productCategory);
+//        product.setProductParameteres(parameteres);
+//        saveProduct(product);
+//    }
+
     @Override
     public void editProductByAdmin(int productId, String productName, String brand, double price, int amount, String category, String colour) {
-        ProductCategory productCategory = ProductCategory.valueOf(category);
+        //ProductCategory productCategory = ProductCategory.valueOf(category);
+        CategoryOfProduct productCategory = new CategoryOfProduct(category);
         ProductParameteres parameteres = new ProductParameteres(colour, brand);
         Product product = getProductById(productId);
         product.setProductName(productName);
         product.setProductPrice(price);
         product.setAmount(amount);
-        product.setCategory(productCategory);
+        product.setProductCategory(productCategory);
         product.setProductParameteres(parameteres);
         saveProduct(product);
+    }
+
+    @Override
+    public Set<CategoryOfProduct> getAllCategories() {
+        return dao.getAllCategories();
+    }
+
+    @Override
+    public void saveCategory(CategoryOfProduct category) {
+        dao.saveCategory(category);
+    }
+
+    @Override
+    public List<CategoryOfProduct> getCategoryByName(String categoryName) {
+        return dao.getCategoryByName(categoryName);
     }
 
     @Override
@@ -96,8 +127,17 @@ public class ProductServiceImpl implements ProductService {
         return dao.saveNewAmountOfProduct(product, amount);
     }
 
+//    @Override
+//    public List<Product> getAllProductsByCategory(ProductCategory category) {
+//        return dao.getAllProductsByCategory(category);
+//    }
+
     @Override
-    public List<Product> getAllProductsByCategory(ProductCategory category) {
+    public List<Product> getAllProductsByCategory(CategoryOfProduct category) {
+        return dao.getAllProductsByCategory(category);
+    }
+    @Override
+    public List<Product> getAllProductsByCategory(String category) {
         return dao.getAllProductsByCategory(category);
     }
 
