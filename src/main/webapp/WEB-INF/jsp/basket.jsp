@@ -300,6 +300,14 @@
         </form>
     </div>
 
+
+    <%--<script>--%>
+        <%--var mess = "${exception}";--%>
+        <%--if (mess == "No address for delivery!") {--%>
+            <%--alert(mess);--%>
+        <%--}--%>
+    <%--</script>--%>
+
 <br>
 <br>
 <br>

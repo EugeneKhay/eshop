@@ -1,6 +1,6 @@
 <%@ page import="java.util.List" %>
-<%@ page import="com.eshop.domain.Product" %>
-<%@ page import="com.e_shop.domain.Basket" %>
+<%@ page import="com.eshopadd.domain.Product" %>
+<%@ page import="com.eshop.domain.Basket" %>
 <!DOCTYPE html>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>

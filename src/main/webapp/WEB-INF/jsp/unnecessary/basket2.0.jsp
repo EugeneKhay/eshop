@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<%@ page import="com.eshop.domain.Product" %>
+<%@ page import="com.eshopadd.domain.Product" %>
 <%@ page import="java.util.ArrayList" %><%--
   Created by IntelliJ IDEA.
   User: evgenijhajmovskij

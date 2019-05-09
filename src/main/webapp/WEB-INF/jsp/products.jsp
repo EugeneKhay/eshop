@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<%@ page import="com.e_shop.domain.Basket" %>
+<%@ page import="com.eshop.domain.Basket" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -172,6 +172,9 @@
                                 </ul>
                                 <input  type="hidden" name="item" value=${item.id}>
                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
+                                <input type="hidden" name="page" value="${requestScope['javax.servlet.forward.request_uri']}"/>
+
                                 <button class="btn btn-secondary btn-sm justify-content-center" type="submit">Buy</button>
                             </div>
                         </div>

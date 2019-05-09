@@ -1,4 +1,4 @@
-<%@ page import="com.e_shop.domain.Basket" %>
+<%@ page import="com.eshop.domain.Basket" %>
 <!DOCTYPE html>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
@@ -138,30 +138,50 @@
     </div>
 
     <!-- Cards -->
-    <div class="row">
+    <div class="row" >
+        <div class="cardparent">
             <c:forEach items="${items}" var="item">
-                <form id="form-card" action="/basket" method="post">
-                    <div class="card">
-                        <%--<img style="margin-top: 10px" src="../resources/static/images/IPhoneX.png" class="card-img-top" alt="Image">--%>
-                        <img style="margin-top: 10px" src="${item.imagePath}" class="card-img-top" alt="Image">
-                        <div class="card-body">
-                            <h5 class="card-title">${item.productName}</h5>
-                            <p class="card-text">${item.productPrice}</p>
-                            <c:set var = "params" scope = "session" value = "${item.productParameteres}"/>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item" >${params.brand}</li>
-                                <li class="list-group-item" >${params.colour}</li>
-                            </ul>
-                            <input  type="hidden" name="item" value=${item.id}>
-                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                            <button class="btn btn-secondary btn-sm justify-content-center" type="submit">Buy</button>
-                            <br>
-                            <br>
+                <div class="cardchild">
+                    <form id="form-card" action="/basket" method="post">
+                        <div class="card" >
+                            <%--<img style="margin-top: 10px" src="../resources/static/images/IPhoneX.png" class="card-img-top" alt="Image">--%>
+                            <img style="margin-top: 10px" src="${item.imagePath}" class="card-img-top" alt="Image">
+                            <div class="card-body">
+                                <h5 class="card-title">${item.productName}</h5>
+                                <p class="card-text">${item.productPrice}</p>
+                                <c:set var = "params" scope = "session" value = "${item.productParameteres}"/>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item" >${params.brand}</li>
+                                    <li class="list-group-item" >${params.colour}</li>
+                                </ul>
+                                <input  type="hidden" name="item" value=${item.id}>
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                <button class="btn btn-secondary btn-sm justify-content-center" type="submit">Buy</button>
+                                <br>
+                                <br>
+                            </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </c:forEach>
         </div>
+    </div>
+
+    <style>
+        .cardparent {
+            /*width: 1200px;*/
+            height:600px;
+            overflow: hidden;
+            overflow-x: scroll;
+            white-space:nowrap;
+        }
+        .cardchild {
+            display: inline-block;
+            vertical-align: top;
+            width: 15rem;
+            height:600px;
+        }
+    </style>
 
     <div>
         <br>
