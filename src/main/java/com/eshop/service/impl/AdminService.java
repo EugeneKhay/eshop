@@ -64,10 +64,6 @@ public class AdminService {
         for (int i = 0; i < tenBest.size(); i++) {
             output.add(tenBest.get(i).getFirstName() + " " + tenBest.get(i).getLastName() + ", " + integers.get(i) +  " orders");
         }
-
-            //productService.getAllCategories().forEach(System.out::println);
-
-
         model.addAttribute("output", output);
     }
 

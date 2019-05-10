@@ -2,6 +2,7 @@ package com.eshop.controller;
 
 import com.eshop.domain.Client;
 import com.eshop.domain.Order;
+import com.eshop.sender.EmailSender;
 import com.eshop.service.OrderService;
 import com.eshop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +29,8 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @Autowired
-    private JavaMailSender mailSender;
+//    @Autowired
+//    private JavaMailSender mailSender;
 
     private Logger logger = Logger.getLogger("logger");
 
@@ -45,44 +46,8 @@ public class OrderController {
         orders.add(orderService.makeNewOrder(session, paymentMethod, deliveryMethod, deliveryAddress));
         model.addAttribute("client", client);
 
-//        SimpleMailMessage message = new SimpleMailMessage();
-//        message.setFrom("4358514@gmail.com");
-//        message.setTo("seelenrauf@mail.ru");
-//        message.setSubject("New order");
-//        message.setText("Congratulations!");
-//        mailSender.send(message);
-
-//        Properties prop = new Properties();
-//        prop.put("mail.smtp.auth", true);
-//        prop.put("mail.smtp.starttls.enable", "true");
-//        prop.put("mail.smtp.host", "smtp.yandex.ru");
-//        prop.put("mail.smtp.port", "25");
-//
-//        Session sessionMail = Session.getInstance(prop, new Authenticator() {
-//            @Override
-//            protected PasswordAuthentication getPasswordAuthentication() {
-//                return new PasswordAuthentication("eshopivanov", "qwerty007");
-//            }
-//        });
-//
-//        Message message = new MimeMessage(sessionMail);
-//        message.setFrom(new InternetAddress("eshopivanov@yandex.ru"));
-//        message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("seelenrauf@mail.ru"));
-//        message.setSubject("Mail Subject");
-//
-//        String msg = "This is my first email using JavaMailer";
-//
-//        MimeBodyPart mimeBodyPart = new MimeBodyPart();
-//        mimeBodyPart.setContent(msg, "text/html");
-//
-//        Multipart multipart = new MimeMultipart();
-//        multipart.addBodyPart(mimeBodyPart);
-//
-//        message.setContent(multipart);
-//
-//        Transport.send(message);
-
-
+//        EmailSender.sendEmail();
+//        SmsSender.sendSMS();
 
         logger.info("The order created and saved to DB");
         return "personal";

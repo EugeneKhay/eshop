@@ -7,6 +7,7 @@ import com.eshop.domain.Product;
 import com.eshop.enums.ProductCategory;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
+import org.postgresql.util.PSQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -200,6 +201,15 @@ public class ProductDaoImpl implements ProductDAO {
         query.setParameter("param", categoryName);
         List<CategoryOfProduct> category = query.list();
         return category;
+    }
+
+    @Override
+    public int deleteCategoryByName(String categoryName) {
+            String hql = "DELETE CategoryOfProduct where categoryName = :paramName";
+            Query query = sessionFactory.getCurrentSession().createQuery(hql);
+            query.setParameter("paramName", categoryName);
+            int result = query.executeUpdate();
+            return result;
     }
 
 

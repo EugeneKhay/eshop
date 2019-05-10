@@ -242,7 +242,9 @@
                             <th>Amount</th>
                             <th>Category</th>
                             <th>Colour</th>
-                            <th></th>
+                            <th>
+                                <button type="button" class="btn btn-secondary" onclick="addProduct()"> Add new product </button>
+                            </th>
                         </tr>
                     <c:forEach items="${products}" var="product">
                         <tr>
@@ -252,7 +254,6 @@
                             <td>${parameters.brand}</td>
                             <td>${product.productPrice}</td>
                             <td>${product.amount}</td>
-                            <%--<td>${product.category}</td>--%>
                             <td>${product.productCategory}</td>
                             <td>${parameters.colour}</td>
                             <td>
@@ -298,14 +299,9 @@
                     </c:forEach>
                 </table>
                 <br>
-
-                <div>
-                    <button type="button" class="btn btn-secondary" onclick="addCategory()"> Add new category </button>
-                </div>
-                <br>
-                <div>
-                    <button type="button" class="btn btn-secondary" onclick="addProduct()"> Add new product </button>
-                </div>
+                <%--<div>--%>
+                    <%--<button type="button" class="btn btn-secondary" onclick="addProduct()"> Add new product </button>--%>
+                <%--</div>--%>
 
                 <script type="text/javascript">
                     function addProduct() {
@@ -316,72 +312,125 @@
                     }
                 </script>
 
-                <div id="newCategory" style="display: none">
-                    <h5  style="color:black; margin-top: 20px">Add new category of products</h5>
-                    <form method="post" action="/addnewcategory">
-                        <b style="color:black"> Enter category name </b>
-                        <div class="form-group">
-                            <label for="categoryName"> Product name </label>
-                            <input class="form-control form-control-md" name="categoryName" type="text" class="form-control" id="categoryName" aria-describedby="emailHelp" required>
-                        </div>
-                        <button type="submit" class="btn btn-secondary"> Add </button>
-                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                    </form>
-                </div>
-
                 <div id="newProduct" style="display: none">
                 <h5  style="color:black; margin-top: 20px">Add new product</h5>
-                    <form method="post" action="/addproducts">
-                        <b style="color:black"> Enter product properties </b>
-                        <div class="form-group">
-                            <label for="productName"> Product name </label>
-                            <input class="form-control form-control-md" name="productName" type="text" class="form-control" id="productName" aria-describedby="emailHelp" required>
+                <form method="post" action="/addproducts">
+                    <b style="color:black"> Enter product properties </b>
+                    <div class="form-group">
+                        <label for="productName"> Product name </label>
+                        <input class="form-control form-control-md" name="productName" type="text" class="form-control" id="productName" aria-describedby="emailHelp" required>
+                    </div>
+                    <div class="form-group">
+                        <label  for="productPrice"> Product price </label>
+                        <input  class="form-control form-control-md" name="productPrice" type="number" class="form-control" id="productPrice" aria-describedby="emailHelp" required>
+                    </div>
+                    <div>
+                        <label for="productPrice"> Product type </label>
+                        <select class="custom-select mr-sm-2" name="category" id="category" required>
+                            <option selected>Choose category</option>
+                            <c:forEach items="${categories}" var="category">
+                                <option value="${category}"> ${category} </option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="productPrice">Amount</label>
+                        <input class="form-control form-control-md" name="amount" type="number" class="form-control" id="amount" aria-describedby="emailHelp" required>
+                    </div>
+                    <b style="color:black"> Enter product parameters </b>
+                    <div class="form-group">
+                        <label for="productPrice"> Colour </label>
+                        <input class="form-control form-control-md" name="colour" type="text" class="form-control" id="colour" aria-describedby="emailHelp" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="productPrice"> Brand </label>
+                        <input class="form-control form-control-md" name="brand" type="text" class="form-control" id="brand" aria-describedby="emailHelp" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="image"> Image </label>
+                        <input class="form-control form-control-md" name="image" type="text" class="form-control" id="image" aria-describedby="emailHelp" required>
+                    </div>
+                    <button type="submit" class="btn btn-secondary"> Add product </button>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                </form>
+            </div>
+
+                <br>
+
+                <div id="categories" >
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm">
+                                <table class="table table-borderless" style="margin: 0 auto; color: black">
+                                    <tr>
+                                        <th> Category name </th>
+                                        <th>
+                                            <button type="button" class="btn btn-secondary" onclick="addCategory()"> Add new category </button>
+                                        </th>
+                                    </tr>
+                                    <c:forEach items="${categories}" var="category">
+                                        <tr>
+                                            <td>${category}</td>
+                                            <td>
+                                                <div>
+                                                    <form action="/deletecategory" method="post" id="${category.categoryName}">
+                                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                                        <input type="hidden" name="categoryForRemove" value="${category.categoryName}"/>
+                                                        <button type="submit" class="btn btn-secondary"> Delete </button>
+                                                    </form>
+                                                    <%--<button type="button" class="btn btn-secondary" onclick="deleteCategory(${category.categoryName})"> Delete </button>--%>
+                                                    <%--<script type="text/javascript">--%>
+                                                        <%--function deleteCategory(name) {--%>
+                                                            <%--$("#" + name).submit();--%>
+                                                            <%--console.log(name);--%>
+                                                        <%--};--%>
+                                                    <%--</script>--%>
+                                                </div>
+
+                                            </td>
+                                        </tr>
+
+                                    </c:forEach>
+                                </table>
+
+                            </div>
+                            <div class="col-sm">
+                                <div id="newCategory" style="display: none">
+                                    <h5  style="color:black; margin-top: 20px">Add new category of products</h5>
+                                    <form method="post" action="/addnewcategory">
+                                        <b style="color:black"> Enter category name </b>
+                                        <div class="form-group">
+                                            <label for="categoryName"> Product name </label>
+                                            <input class="form-control form-control-md" name="categoryName" type="text" class="form-control" id="categoryName" aria-describedby="emailHelp" required>
+                                        </div>
+                                        <button type="submit" class="btn btn-secondary"> Add </button>
+                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label  for="productPrice"> Product price </label>
-                            <input  class="form-control form-control-md" name="productPrice" type="number" class="form-control" id="productPrice" aria-describedby="emailHelp" required>
-                        </div>
-                        <div>
-                            <label for="productPrice"> Product type </label>
-                            <select class="custom-select mr-sm-2" name="category" id="category" required>
-                                <option selected>Choose category</option>
-                                <%--<option value="PHONE"> PHONE </option>--%>
-                                <%--<option value="TV_VIDEO"> TV_VIDEO </option>--%>
-                                <%--<option value="AUDIO"> AUDIO </option>--%>
-                                <%--<option value="LAPTOP"> LAPTOP </option>--%>
-                                <%--<option value="TABLET"> TABLET </option>--%>
-                                <c:forEach items="${categories}" var="category">
-                                    <option value="${category}"> ${category} </option>
-                                </c:forEach>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="productPrice">Amount</label>
-                            <input class="form-control form-control-md" name="amount" type="number" class="form-control" id="amount" aria-describedby="emailHelp" required>
-                        </div>
-                        <b style="color:black"> Enter product parameters </b>
-                        <div class="form-group">
-                            <label for="productPrice"> Colour </label>
-                            <input class="form-control form-control-md" name="colour" type="text" class="form-control" id="colour" aria-describedby="emailHelp" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="productPrice"> Brand </label>
-                            <input class="form-control form-control-md" name="brand" type="text" class="form-control" id="brand" aria-describedby="emailHelp" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="image"> Image </label>
-                            <input class="form-control form-control-md" name="image" type="text" class="form-control" id="image" aria-describedby="emailHelp" required>
-                        </div>
-                        <button type="submit" class="btn btn-secondary"> Add product </button>
-                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                    </form>
+                    </div>
                 </div>
 
-                <div>
-                    <c:forEach items="${categories}" var="cate">
-                        <p>${cate}</p>
-                    </c:forEach>
-                </div>
+                <%--<div id="newCategory" style="display: none">--%>
+                    <%--<h5  style="color:black; margin-top: 20px">Add new category of products</h5>--%>
+                    <%--<form method="post" action="/addnewcategory">--%>
+                        <%--<b style="color:black"> Enter category name </b>--%>
+                        <%--<div class="form-group">--%>
+                            <%--<label for="categoryName"> Product name </label>--%>
+                            <%--<input class="form-control form-control-md" name="categoryName" type="text" class="form-control" id="categoryName" aria-describedby="emailHelp" required>--%>
+                        <%--</div>--%>
+                        <%--<button type="submit" class="btn btn-secondary"> Add </button>--%>
+                        <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
+                    <%--</form>--%>
+                <%--</div>--%>
+
+
+                <%--<div>--%>
+                    <%--<c:forEach items="${categories}" var="cate">--%>
+                        <%--<p>${cate}</p>--%>
+                    <%--</c:forEach>--%>
+                <%--</div>--%>
 
         </div>
 
@@ -448,18 +497,7 @@
 
 
 
-<%--<div class="col-sm-2">--%>
-<%--<div class="btn-group-vertical" role="group" aria-label="Basic example">--%>
-<%--<button type="button" class="btn btn-secondary" onclick="orders()"> Orders </button>--%>
-<%--<button type="button" class="btn btn-secondary" onclick="products()">Products</button>--%>
-<%--<button type="button" class="btn btn-secondary" onclick="clients()"> Clients</button>--%>
-<%--<button type="button" class="btn btn-secondary" onclick="stats()"> Statistics</button>--%>
-<%--</div>--%>
-<%--</div>--%>
 
-<%--<div class="col-sm-1">--%>
-<%--<button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#exampleModal">Change period</button>--%>
-<%--</div>--%>
 
 
 

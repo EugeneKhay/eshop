@@ -108,6 +108,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public int deleteCategoryByName(String categoryName) {
+        return dao.deleteCategoryByName(categoryName);
+    }
+
+    @Override
     public void saveProduct(Product product) {
         dao.saveProduct(product);
     }

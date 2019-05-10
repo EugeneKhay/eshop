@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 
 @Controller
@@ -62,6 +64,15 @@ public class AdminController {
                 logger.info("Category added");
             }
         model.addAttribute("categories", productService.getAllCategories());
+        return "adminpage";
+    }
+
+    //EXP
+    @PostMapping("/deletecategory")
+    public String deleteCategory(@RequestParam(name = "categoryForRemove") String categoryName, Model model) {
+        productService.deleteCategoryByName(categoryName);
+        Set<CategoryOfProduct> allCategories = productService.getAllCategories();
+        model.addAttribute("categories", allCategories);
         return "adminpage";
     }
 

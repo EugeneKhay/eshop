@@ -43,19 +43,31 @@ public class BasketController {
         return "basket";
     }
 
+//    @PostMapping("/basket")
+//    public String addToBasket(@RequestParam(name = "item") int id,
+//                              @RequestParam(name = "page", required = false) String page,
+//                              HttpSession session,
+//                              Model model) {
+//        List<Product> products = basketService.prepareProductsForBasket(id, page, session);
+//        model.addAttribute("items", products);
+//        if (page == null) {
+//            logger.info("Product added to basket");
+//            return "homepage2";
+//        }
+//        logger.info("Product added to basket");
+//        return "products";
+//
+//    }
+
     @PostMapping("/basket")
-    public String addToBasket(@RequestParam(name = "item") int id,
-                              @RequestParam(name = "page", required = false) String page,
-                              HttpSession session,
-                              Model model) {
-        List<Product> products = basketService.prepareProductsForBasket(id, page, session);
-        model.addAttribute("items", products);
-        if (page == null) {
-            logger.info("Product added to basket");
-            return "homepage2";
-        }
-        logger.info("Product added to basket");
-        return "products";
+    public void addToBasket(@RequestParam(name = "item") int id,
+                            @RequestParam(name = "page", required = false) String page,
+                            HttpSession session,
+                            HttpServletRequest request,
+                            Model model) {
+        basketService.prepareProductsForBasket(id, page, session);
+        getBasket(request, model);
+
     }
 
     @GetMapping(value = "/delete", produces = {MediaType.APPLICATION_JSON_VALUE})

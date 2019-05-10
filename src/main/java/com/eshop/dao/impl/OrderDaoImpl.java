@@ -21,7 +21,7 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public Order getOrderById(Integer id) {
-        String hql = "FROM com.e_shop.domain.Order WHERE id = :param";
+        String hql = "FROM Order WHERE id = :param";
         Query query = sessionFactory.getCurrentSession().createQuery(hql);
         query.setParameter("param", id);
         Order order = (Order) query.list().get(0);
@@ -30,7 +30,7 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public List<Order> getAllOrders() {
-        String hql = "FROM com.e_shop.domain.Order";
+        String hql = "FROM Order";
         Query query = sessionFactory.getCurrentSession().createQuery(hql);
         return query.list();
     }
@@ -42,7 +42,7 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public int updateOrder(int orderId, String payStatus, String ordStatus) {
-        String hql = "update com.eshop.domain.Order set paymentStatus = :payParam, orderStatus = :ordParam where id = :idParam";
+        String hql = "update Order set paymentStatus = :payParam, orderStatus = :ordParam where id = :idParam";
         Query query = sessionFactory.getCurrentSession().createQuery(hql);
         query.setParameter("idParam", orderId);
         query.setParameter("payParam", PaymentStatus.valueOf(payStatus));

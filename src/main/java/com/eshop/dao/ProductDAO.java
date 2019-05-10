@@ -3,6 +3,7 @@ package com.eshop.dao;
 import com.eshop.domain.CategoryOfProduct;
 import com.eshop.domain.Product;
 import com.eshop.enums.ProductCategory;
+import org.hibernate.query.Query;
 
 import java.util.List;
 import java.util.Set;
@@ -44,4 +45,7 @@ public interface ProductDAO {
     void saveCategory(CategoryOfProduct category);
 
     List<CategoryOfProduct> getCategoryByName(String categoryName);
+
+    int deleteCategoryByName(String categoryName);
+
 }

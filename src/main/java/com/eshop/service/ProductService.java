@@ -48,4 +48,7 @@ public interface ProductService {
     void saveCategory(CategoryOfProduct category);
 
     List<CategoryOfProduct> getCategoryByName(String categoryName);
+
+    int deleteCategoryByName(String categoryName);
+
 }
