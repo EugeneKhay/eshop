@@ -3,6 +3,7 @@ package com.eshop.dao.impl;
 import com.eshop.dao.OrderDao;
 import com.eshop.domain.Client;
 import com.eshop.domain.Order;
+import com.eshop.domain.ShopAddress;
 import com.eshop.enums.OrderStatus;
 import com.eshop.enums.PaymentStatus;
 import org.hibernate.SessionFactory;
@@ -11,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public class OrderDaoImpl implements OrderDao {
@@ -37,7 +40,8 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public void saveOrders(Order order) {
-        sessionFactory.getCurrentSession().save(order);
+        //sessionFactory.getCurrentSession().save(order);
+        sessionFactory.getCurrentSession().saveOrUpdate(order);
     }
 
     @Override
@@ -68,5 +72,17 @@ public class OrderDaoImpl implements OrderDao {
         query.setParameter("start", start);
         query.setParameter("finish", finish);
         return query.list();
+    }
+
+    @Override
+    public void saveShop(ShopAddress address) {
+        sessionFactory.getCurrentSession().saveOrUpdate(address);
+    }
+
+    @Override
+    public Set<ShopAddress> getAllShops() {
+        String hql = "FROM ShopAddress";
+        Query query = sessionFactory.getCurrentSession().createQuery(hql);
+        return new HashSet<>(query.list());
     }
 }

@@ -5,6 +5,7 @@ import com.eshop.domain.*;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 public interface OrderService {
 
@@ -34,7 +35,16 @@ public interface OrderService {
 
     Order makeNewOrder(HttpSession session, String paymentMethod, String deliveryMethod);
 
-    Order makeNewOrder(HttpSession session, String paymentMethod, String deliveryMethod, String deliveryAddress);
+    //Order makeNewOrder(HttpSession session, String paymentMethod, String deliveryMethod, String deliveryAddress);
+    Order makeNewOrder(HttpSession session, String paymentMethod, String deliveryMethod, String deliveryAddress, String collectAffress);
 
     void editOrder(int id, String paymentStatus, String orderStatus);
+
+    void sendMessages();
+
+    void saveShop(ShopAddress address);
+
+    Set<ShopAddress> getAllShops();
+
+
 }

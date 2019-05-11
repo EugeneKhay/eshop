@@ -41,6 +41,7 @@ public class DataConfig {
         sessionBuilder.addAnnotatedClass(ProductParameteres.class);
         sessionBuilder.addAnnotatedClass(ProductToOrder.class);
         sessionBuilder.addAnnotatedClass(CategoryOfProduct.class);
+        sessionBuilder.addAnnotatedClass(ShopAddress.class);
         return sessionBuilder.buildSessionFactory();
     }
 

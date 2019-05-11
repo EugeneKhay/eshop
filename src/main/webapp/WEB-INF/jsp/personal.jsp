@@ -220,6 +220,7 @@
             <th>Payment method</th>
             <th>Delivery method</th>
             <th>Delivery address</th>
+            <th>Self pickup address</th>
             <th>Payment status</th>
             <th>Order status</th>
         </tr>
@@ -281,6 +282,7 @@
                 <td>${order.paymentMethod}</td>
                 <td>${order.deliveryMethod}</td>
                 <td>${order.addressForDelivery}</td>
+                <td>${order.addressForSelfCollect}</td>
                 <td>${order.paymentStatus}</td>
                 <td>${order.orderStatus}</td>
             </tr>

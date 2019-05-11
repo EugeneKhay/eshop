@@ -37,6 +37,10 @@ public class Order {
     @JoinColumn(name = "address_id")
     private ClientAddress addressForDelivery;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_self_id")
+    private ShopAddress addressForSelfCollect;
+
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
 

@@ -153,16 +153,6 @@
                 <div class="row">
                     <div class="col-sm-4">
                         <p>Payment Method</p>
-
-                        <%--<div class="form-check form-group" >--%>
-                            <%--<input class="form-check-input" type="checkbox" name="paymentMethod" value="CARD" id="defaultCheck1">--%>
-                            <%--<label class="form-check-label" for="defaultCheck1">Card</label>--%>
-                        <%--</div>--%>
-                            <%--<div class="form-check form-group">--%>
-                            <%--<input class="form-check-input" type="checkbox" name="paymentMethod" value="CASH" id="defaultCheck2">--%>
-                            <%--<label class="form-check-label" for="defaultCheck2">Cash</label>--%>
-                            <%--</div>--%>
-
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="paymentMethod" id="exampleRadios1" value="CARD">
                             <label class="form-check-label" for="exampleRadios1">Card</label>
@@ -195,16 +185,6 @@
                 <div class="row">
                     <div class="col-sm-4">
                         <p>Delivery method</p>
-
-                        <%--<div class="form-check form-group">--%>
-                            <%--<input class="form-check-input" type="checkbox" name="deliveryMethod" value="COURIER" id="defaultCheck3">--%>
-                            <%--<label class="form-check-label" for="defaultCheck3">Courier</label>--%>
-                        <%--</div>--%>
-                            <%--<div class="form-check form-group">--%>
-                            <%--<input class="form-check-input" type="checkbox" name="deliveryMethod" value="SELF" id="defaultCheck4">--%>
-                            <%--<label class="form-check-label" for="defaultCheck4">Self</label>--%>
-                            <%--</div>--%>
-
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="deliveryMethod" id="exampleRadios3" value="COURIER">
                             <label class="form-check-label" for="exampleRadios3">Courier</label>
@@ -225,7 +205,7 @@
                                 <br>
                             </c:forEach>
                             <div>
-                                <button type="button" class="btn btn-secondary" onclick="changeAddress()"> Change </button>
+                                <button type="button" class="btn btn-secondary" onclick="changeAddress()"> Add new </button>
                             </div>
                             <script type="text/javascript">
                                 function changeAddress() {
@@ -234,15 +214,28 @@
                             </script>
                             <br>
                     </div>
+                    <div class="col-sm" style="display: none" id="addressself">
+                        <p>Please, choose the shop to collect your order:</p>
+                        <c:forEach items="${addressesSelf}" var="item">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="collectAddress" id="self" value="${item}">
+                                <label class="form-check-label" for="self">${item}</label>
+                            </div>
+                            <br>
+                        </c:forEach>
+                        <br>
+                    </div>
                     <script>
                         $("#exampleRadios3").change(function(){
                             if(this.checked){
                                 $("#addressdata").css({"display" : "block"});
+                                $("#addressself").css({"display" : "none"});
                             }
                         });
                         $("#exampleRadios4").change(function(){
                             if(this.checked){
                                 $("#addressdata").css({"display" : "none"});
+                                $("#addressself").css({"display" : "block"});
                             }
                         });
                     </script>

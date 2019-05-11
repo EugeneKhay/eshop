@@ -1,7 +1,10 @@
 package com.eshop.controller;
 
 import com.eshop.domain.CategoryOfProduct;
+import com.eshop.domain.Client;
+import com.eshop.domain.ShopAddress;
 import com.eshop.service.ClientService;
+import com.eshop.service.OrderService;
 import com.eshop.service.ProductService;
 import com.eshop.service.impl.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +34,9 @@ public class AdminController {
 
     @Autowired
     private AdminService adminService;
+
+    @Autowired
+    private OrderService orderService;
 
     @GetMapping("/admin")
     public String view(Model model) {
@@ -98,6 +104,24 @@ public class AdminController {
         LocalDate finish = adminService.getFinishDate(finishParameter);
         adminService.setStats(model, start, finish);
         logger.info("Stats setted");
+        return "adminpage";
+    }
+
+    @PostMapping("/addshop")
+    public String addClientAddress (@RequestParam(name = "country", required = false) String country,
+                                    @RequestParam(name = "city", required = false) String city,
+                                    @RequestParam(name = "postcode", required = false) int postcode,
+                                    @RequestParam(name = "street", required = false) String street,
+                                    @RequestParam(name = "houseNumber", required = false) int houseNumber,
+                                    @RequestParam(name = "phone", required = false) String phone,
+                                    Model model) {
+        //Client clientForView = clientService.createAddressForClient(country, city, postcode, street, houseNumber, flatNumber);
+
+        ShopAddress shopAddress = new ShopAddress(country, city, postcode, street, houseNumber, phone);
+        orderService.saveShop(shopAddress);
+        logger.info("Shop address saved");
+        //model.addAttribute("client", clientForView);
+        //model.addAttribute("addresses", clientForView.getAddressList());
         return "adminpage";
     }
 }

@@ -2,6 +2,7 @@ package com.eshop.controller;
 
 import com.eshop.domain.Client;
 import com.eshop.domain.Product;
+import com.eshop.service.OrderService;
 import com.eshop.service.impl.BasketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,6 +27,9 @@ public class BasketController {
     @Autowired
     private BasketService basketService;
 
+    @Autowired
+    private OrderService orderService;
+
     private Logger logger = Logger.getLogger("logger");
 
     @GetMapping("/basket")
@@ -36,6 +40,7 @@ public class BasketController {
             Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             model.addAttribute("addresses", client.getAddressList());
             model.addAttribute("client", client);
+            model.addAttribute("addressesSelf", orderService.getAllShops());
         } catch (ClassCastException ex) {
             logger.info("Not authorized attempt go to basket page");
         }

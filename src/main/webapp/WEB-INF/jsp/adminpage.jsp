@@ -373,18 +373,17 @@
                                             <td>${category}</td>
                                             <td>
                                                 <div>
-                                                    <form action="/deletecategory" method="post" id="${category.categoryName}">
+                                                    <form action="/deletecategory" method="post" id="${category.categoryName}" style="display: none">
                                                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                                         <input type="hidden" name="categoryForRemove" value="${category.categoryName}"/>
-                                                        <button type="submit" class="btn btn-secondary"> Delete </button>
+                                                        <%--<button type="submit" class="btn btn-secondary"> Delete </button>--%>
                                                     </form>
-                                                    <%--<button type="button" class="btn btn-secondary" onclick="deleteCategory(${category.categoryName})"> Delete </button>--%>
-                                                    <%--<script type="text/javascript">--%>
-                                                        <%--function deleteCategory(name) {--%>
-                                                            <%--$("#" + name).submit();--%>
-                                                            <%--console.log(name);--%>
-                                                        <%--};--%>
-                                                    <%--</script>--%>
+                                                    <button type="button" class="btn btn-secondary" onclick="deleteCategory()"> Delete </button>
+                                                    <script type="text/javascript">
+                                                        function deleteCategory() {
+                                                            document.getElementById(${category.categoryName}).submit();
+                                                        };
+                                                    </script>
                                                 </div>
 
                                             </td>
@@ -459,6 +458,44 @@
                         </c:forEach>
             </table>
         </div>
+
+        <!-- Shop addresses -->
+        <div id="shops">
+
+            <form action="/addshop" method="post" id="add_shop">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                <div class="form-group">
+                    <label for="country" style="color: black">Country</label>
+                    <input class="form-control form-control-md" type="text" id="country" name="country"/>
+                </div>
+                <div class="form-group">
+                    <label for="city" style="color: black">City</label>
+                    <input class="form-control form-control-md" type="text" id="city" name="city" />
+                </div>
+                <div class="form-group">
+                    <label for="postcode" style="color: black">Postcode</label>
+                    <input class="form-control form-control-md" type="number" id="postcode" name="postcode" />
+                </div>
+                <div class="form-group">
+                    <label for="street" style="color: black">Street</label>
+                    <input class="form-control form-control-md" type="text" id="street" name="street" />
+                </div>
+                <div class="form-group">
+                    <label for="houseNumber" style="color: black">House number</label>
+                    <input class="form-control form-control-md" type="number" id="houseNumber" name="houseNumber" />
+                </div>
+                <div class="form-group">
+                    <label for="phone" style="color: black">Phone number</label>
+                    <input class="form-control form-control-md" type="text" id="phone" name="phone" />
+                </div>
+                <button onclick="form7_submit()" name="user_search" class="btn btn-secondary" data-dismiss="modal"> Submit </button>
+                <script>
+                    function form7_submit() {
+                        document.getElementById("add_shop").submit();
+                    };
+                </script>
+            </form>
+
     </div>
     </div>
 </div>
