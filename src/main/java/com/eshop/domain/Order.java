@@ -29,15 +29,25 @@ public class Order {
     @JoinColumn(name = "client_id")
     private Client client;
 
+    //TODO check
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<ProductToOrder> orderProducts = new ArrayList<>();
+    //private List<ProductToOrder> orderProducts = new ArrayList<>();
+    private Set<ProductToOrder> orderProducts = new HashSet<>();
 
-    //EXP
-    @OneToOne(cascade = CascadeType.ALL)
+
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "address_id")
+//    private ClientAddress addressForDelivery;
+
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private ClientAddress addressForDelivery;
 
-    @OneToOne(cascade = CascadeType.ALL)
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "address_self_id")
+//    private ShopAddress addressForSelfCollect;
+
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_self_id")
     private ShopAddress addressForSelfCollect;
 

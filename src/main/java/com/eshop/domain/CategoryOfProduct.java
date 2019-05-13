@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -19,9 +20,13 @@ public class CategoryOfProduct {
 
     private String categoryName;
 
-    @OneToOne(mappedBy = "productCategory")
+//    @OneToOne(mappedBy = "productCategory")
+//    @JsonBackReference
+//    private Product product;
+
+    @OneToMany(mappedBy = "productCategory")
     @JsonBackReference
-    private Product product;
+    private List<Product> product;
 
     public CategoryOfProduct(String categoryName) {
         this.categoryName = categoryName;

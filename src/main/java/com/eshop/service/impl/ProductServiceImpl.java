@@ -113,6 +113,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public CategoryOfProduct getSingleCategoryByName(String name) {
+        return dao.getSingleCategoryByName(name);
+    }
+
+    @Override
     public void saveProduct(Product product) {
         dao.saveProduct(product);
     }

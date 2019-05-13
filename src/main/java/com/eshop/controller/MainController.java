@@ -5,6 +5,7 @@ import com.eshop.jms.MessageSender;
 import com.eshop.service.ClientService;
 import com.eshop.service.OrderService;
 import com.eshop.service.ProductService;
+import com.eshop.service.impl.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,6 +15,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.util.NestedServletException;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.util.List;
@@ -24,6 +28,9 @@ public class MainController {
 
     @Autowired
     private ClientService clientService;
+
+    @Autowired
+    private AdminService adminService;
 
     @Autowired
     private ProductService productService;
@@ -67,8 +74,13 @@ public class MainController {
 
     @GetMapping("/personal")
     public String enterMyAccount(Model model) {
+        // TODO clientForView
         Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("client", client);
+        Integer id = client.getId();
+        Client clientById = clientService.getClientById(id);
+//        System.out.println("Client ID: " + id);
+        //model.addAttribute("client", client);
+        model.addAttribute("client", clientById);
         return "personal";
     }
 
@@ -84,20 +96,21 @@ public class MainController {
         return "personal";
     }
 
-    @PostMapping("/addaddress")
-    public String addClientAddress (@RequestParam(name = "country", required = false) String country,
-                                    @RequestParam(name = "city", required = false) String city,
-                                    @RequestParam(name = "postcode", required = false) int postcode,
-                                    @RequestParam(name = "street", required = false) String street,
-                                    @RequestParam(name = "houseNumber", required = false) int houseNumber,
-                                    @RequestParam(name = "flatNumber", required = false) int flatNumber,
-                                    Model model) {
-        Client clientForView = clientService.createAddressForClient(country, city, postcode, street, houseNumber, flatNumber);
-        logger.info("Save address");
-        model.addAttribute("client", clientForView);
-        model.addAttribute("addresses", clientForView.getAddressList());
-        return "basket";
-    }
+//    @PostMapping("/addaddress")
+//    public String addClientAddress (@RequestParam(name = "country", required = false) String country,
+//                                    @RequestParam(name = "city", required = false) String city,
+//                                    @RequestParam(name = "postcode", required = false) int postcode,
+//                                    @RequestParam(name = "street", required = false) String street,
+//                                    @RequestParam(name = "houseNumber", required = false) int houseNumber,
+//                                    @RequestParam(name = "flatNumber", required = false) int flatNumber,
+//                                    Model model,
+//                                    HttpServletRequest request) {
+//        Client clientForView = clientService.createAddressForClient(country, city, postcode, street, houseNumber, flatNumber);
+//        logger.info("Save address");
+//        model.addAttribute("client", clientForView);
+//        model.addAttribute("addresses", clientForView.getAddressList());
+//        return "basket";
+//    }
 
     @PostMapping("/editaddress")
     public String editClientAddress (@RequestParam(name = "addressForEdit") int addressId,
@@ -114,12 +127,17 @@ public class MainController {
     }
 
     @PostMapping("/deleteaddress")
-    public String deleteClientAddress(@RequestParam(name = "addressForDelete") int id, Model model) {
-        Client clientForView = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        ClientAddress addressById = clientService.getAddressById(id);
-        clientForView.getAddressList().remove(addressById);
+    public String deleteClientAddress(@RequestParam(name = "addressForDelete") int id,
+                                      //@RequestParam(name = "addressForDelete") int ver,
+                                      Model model) {
         clientService.deleteAddressById(id);
-        model.addAttribute("client", clientForView);
+        //clientService.deleteAddressById(id, ver);
+        // TODO clientForView
+        Client clientForView = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Integer id1 = clientForView.getId();
+        Client clientById = clientService.getClientById(id1);
+
+        model.addAttribute("client", clientById);
         return "personal";
     }
 
@@ -133,7 +151,11 @@ public class MainController {
                               @RequestParam(name = "color") String colour,
                               Model model) {
         productService.editProductByAdmin(productId, productName, brand, price, amount, category, colour);
-        model.addAttribute("products", productService.getAllProducts());
+        //model.addAttribute("products", productService.getAllProducts());
+        //TODO make separate
+        LocalDate start = LocalDate.of(2019, 1, 1);
+        LocalDate finish = LocalDate.now();
+        adminService.setStats(model, start, finish);
         return "adminpage";
     }
 
@@ -148,7 +170,7 @@ public class MainController {
         List<Product> allProductsByCategory = productService.getAllProductsByCategory(res);
         model.addAttribute("items", allProductsByCategory);
         model.addAttribute("pageName", category.getCategoryName());
-
+        model.addAttribute("categories", productService.getAllCategories());
         return "products";
     }
 }

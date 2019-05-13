@@ -53,7 +53,7 @@
                          <button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#personal"> Edit </button>
                     </div>
                     <!-- Modal window edit personal -->
-                    <div class="modal fade" id="personal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="personal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -123,7 +123,61 @@
                 <th>Street</th>
                 <th>House number</th>
                 <th>Flat number</th>
-                <th></th>
+                <th>
+                    <div class="col-sm-1">
+                        <button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#addnewaddr"> Add </button>
+                    </div>
+
+                    <!-- Modal window for add new address -->
+                    <div class="modal fade" id="addnewaddr" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel2"> Add new address </h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+
+                                        <form action="/addaddress" method="post" id="add_adr">
+                                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                            <div class="form-group">
+                                                <label for="country2" style="color: black">Country</label>
+                                                <input class="form-control form-control-md" type="text" id="country2" name="country"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="city2" style="color: black">City</label>
+                                                <input class="form-control form-control-md" type="text" id="city2" name="city" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="postcode2" style="color: black">Postcode</label>
+                                                <input class="form-control form-control-md" type="number" id="postcode2" name="postcode" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="street2" style="color: black">Street</label>
+                                                <input class="form-control form-control-md" type="text" id="street2" name="street" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="houseNumber2" style="color: black">House number</label>
+                                                <input class="form-control form-control-md" type="number" id="houseNumber2" name="houseNumber" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="flatNumber2" style="color: black">Flat number</label>
+                                                <input class="form-control form-control-md" type="number" id="flatNumber2" name="flatNumber" />
+                                            </div>
+                                            <button onclick="form4_submit()" name="user_search" class="btn btn-secondary" data-dismiss="modal"> Add </button>
+                                            <script>
+                                                function form4_submit() {
+                                                    document.getElementById("add_adr").submit();
+                                                };
+                                            </script>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </th>
             </tr>
             <c:forEach items="${client.addressList}" var="address">
                 <tr>
@@ -143,58 +197,57 @@
                                     <button type="button" class="btn btn-secondary" onclick="deleteform(${address.id})"> Delete </button>
                                 </div>
                             </div>
-
-                            <form action="/deleteaddress" method="post" style="display: none" id="${address.id}del">
+                        </div>
+                        <form action="/deleteaddress" method="post" style="display: none" id="${address.id}del">
                                 <input type="hidden" name="addressForDelete" value="${address.id}">
+
+                                <%--<input type="hidden" name="version" value="${address.version}">--%>
+
                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                             </form>
-
-                            <script>
+                        <script>
                                 function deleteform(id) {
                                     $("#" + id + "del").submit();
                                 }
                             </script>
-                            <script type="text/javascript">
+                        <script type="text/javascript">
                                 function changeAddress(id) {
                                     $("#" + id + "").toggle();
                                 }
                             </script>
-                        </div>
+    </div>
 
                         <div class="row" id="${address.id}" style="display: none">
                             <br>
-                            </form>
-                                    <form action="/editaddress" method="post" >
-                                    <input type="hidden" name="addressForEdit" value="${address.id}">
-                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                    <div class="form-group">
+                            <form action="/editaddress" method="post" >
+                                <input type="hidden" name="addressForEdit" value="${address.id}">
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                <div class="form-group">
                                     <label for="country" style="color: black">Country</label>
                                     <input class="form-control form-control-md" type="text" id="country" name="country" value="${address.country}"/>
-                                    </div>
-                                    <div class="form-group">
+                                </div>
+                                <div class="form-group">
                                     <label for="city" style="color: black">City</label>
                                     <input class="form-control form-control-md" type="text" id="city" name="city" value="${address.city}"/>
-                                    </div>
-
-                                    <div class="form-group">
+                                </div>
+                                <div class="form-group">
                                     <label for="freakfield" style="color: black">Postcode</label>
                                     <input class="form-control form-control-md" type="number" id="freakfield" name="postcode" value="${address.postCode}"/>
-                                    </div>
-
-                                    <div class="form-group">
+                                </div>
+                                <div class="form-group">
                                     <label for="street" style="color: black">Street</label>
                                     <input class="form-control form-control-md" type="text" id="street" name="street" value="${address.street}"/>
-                                    </div>
-                                    <div class="form-group">
+                                </div>
+                                <div class="form-group">
                                     <label for="houseNumber" style="color: black">House number</label>
                                     <input class="form-control form-control-md" type="number" id="houseNumber" name="houseNumber" value="${address.houseNumber}"/>
-                                    </div>
-                                    <div class="form-group">
+                                </div>
+                                <div class="form-group">
                                     <label for="flatNumber" style="color: black">Flat number</label>
                                     <input class="form-control form-control-md" type="number" id="flatNumber" name="flatNumber" value="${address.flatNumber}"/>
-                                    </div>
-                                    <button type="submit" name="user_search" class="btn btn-secondary" data-dismiss="modal"> Submit </button>
-                                    </form>
+                                </div>
+                                <button type="submit" name="user_search" class="btn btn-secondary" data-dismiss="modal"> Submit </button>
+                            </form>
                         </div>
                     </td>
                 </tr>

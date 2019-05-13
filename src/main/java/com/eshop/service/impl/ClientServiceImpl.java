@@ -10,6 +10,7 @@ import com.eshop.enums.Role;
 import com.eshop.exception.LoginException;
 import com.eshop.service.ClientService;
 import com.eshop.service.OrderService;
+import org.hibernate.StaleObjectStateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -127,18 +128,41 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Client createAddressForClient(String country, String city, int postcode, String street, int houseNumber, int flatNumber) {
+        //TODO clientForView
         ClientAddress address = new ClientAddress(country, city, postcode, street, houseNumber, flatNumber);
         Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        List<ClientAddress> addresses = client.getAddressList();
+
+//        List<Client> clientList = new ArrayList<>();
+//        address.setClients(clientList);
+//        address.getClients().add(client);
+
+        Set<ClientAddress> addresses = client.getAddressList();
         addresses.add(address);
-        saveAddress(address);
+
+        //saveAddress(address);
+
         client.setAddressList(addresses);
         saveClient(client);
-        return client;
+
+        Integer id = client.getId();
+        return getClientById(id);
+
+        //return client;
+    }
+
+    @Override
+    public void deleteAddressById(int id) {
+        try {
+            dao.deleteAddressById(id);
+            logger.info("Address " + id + " deleted");
+        } catch (Exception ex) {
+            logger.info("Update or delete violates foreign key constraint");
+        }
     }
 
     @Override
     public Client editAddressForClient(int addressForEdit, String country, String city, int postcode, String street, int houseNumber, int flatNumber) {
+        //TODO clientForView
         Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         ClientAddress newAddress = getAddressById(addressForEdit);
         logger.info("Old address " + newAddress + " retrieved");
@@ -150,17 +174,22 @@ public class ClientServiceImpl implements ClientService {
         newAddress.setFlatNumber(flatNumber);
         saveAddress(newAddress);
         logger.info("New address " + newAddress + " saved");
-        List<ClientAddress> addresses = client.getAddressList();
+        Set<ClientAddress> addresses = client.getAddressList();
         addresses.remove(getAddressById(addressForEdit));
         addresses.add(newAddress);
         client.setAddressList(addresses);
-        return client;
+        //Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Integer id = client.getId();
+        return getClientById(id);
+        //return client;
     }
 
-    @Override
-    public void deleteAddressById(int id) {
-        dao.deleteAddressById(id);
-    }
+
+
+//    @Override
+//    public void deleteAddressById(int id, int ver) {
+//        dao.deleteAddressById(id, ver);
+//    }
 
     @Override
     public List<Client> getTenBestClientsPerPeriod(LocalDate start, LocalDate finish)

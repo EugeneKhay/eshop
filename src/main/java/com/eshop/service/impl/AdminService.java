@@ -56,8 +56,8 @@ public class AdminService {
         model.addAttribute("products", productService.getAllProducts());
         model.addAttribute("clients", clientService.getAllClients());
         model.addAttribute("period", getMessage(start, finish));
-        //EXP
         model.addAttribute("categories", productService.getAllCategories());
+        model.addAttribute("shops", orderService.getAllShops());
         List<Client> tenBest = clientService.getTenBestClientsPerPeriod(start, finish);
         List<Integer> integers = numberOfOrdersForTenBestClients(tenBest, start, finish);
         List<String> output = new ArrayList<>();
@@ -87,7 +87,8 @@ public class AdminService {
 //            productCategory = productService.getCategoryByName(category).get(0);
 //        }
 
-        CategoryOfProduct productCategory = new CategoryOfProduct(category);
+        //CategoryOfProduct productCategory = new CategoryOfProduct(category);
+        CategoryOfProduct productCategory = productService.getSingleCategoryByName(category);
         String imagePath = IMAGE_PATH + image;
         Product product = new Product(productName, productPrice, amount, imagePath, productParameteres, productCategory);
         productService.saveProduct(product);

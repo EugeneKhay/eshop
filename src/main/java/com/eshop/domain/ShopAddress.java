@@ -24,8 +24,22 @@ public class ShopAddress {
     private int houseNumber;
     private String phoneNumber;
 
-    @OneToOne(mappedBy = "addressForSelfCollect")
-    private Order order;
+//    @OneToOne(mappedBy = "addressForSelfCollect")
+//    private Order order;
+
+    @OneToMany(mappedBy = "addressForSelfCollect", fetch = FetchType.EAGER)
+    private List<Order> order;
+
+
+    //    @OneToMany(mappedBy = "address", fetch = FetchType.EAGER)
+//    private List<Client> clientList;
+
+//EXP
+//    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+//    @JoinColumn(name = "client_id")
+
+
+
 
     public ShopAddress(String country, String city, int postCode, String street, int houseNumber, String phoneNumber) {
         this.country = country;

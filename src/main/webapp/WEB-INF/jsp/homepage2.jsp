@@ -14,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Dancing+Script" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="../resources/static/css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="/resources/static/css/style.css"/>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
@@ -31,9 +31,12 @@
             </sec:authorize>
         </div>
         <div class="col-sm-1">
-            <sec:authorize access="isAuthenticated()">
-                <b style="color: black"> Account: <a style="color: black" href="/personal"> <sec:authentication property="principal.firstName" /> </a> </b>
-            </sec:authorize>
+            <%--<sec:authorize access="isAuthenticated()">--%>
+                <%--<b style="color: black"> Account: <a style="color: black" href="/personal"> <sec:authentication property="principal.firstName" /> </a> </b>--%>
+            <%--</sec:authorize>--%>
+                <sec:authorize access="hasRole('USER')">
+                    <b style="color: black"> Account: <a style="color: black" href="/personal"> <sec:authentication property="principal.firstName" /> </a> </b>
+                </sec:authorize>
         </div>
         <div class="col-sm-1">
             <sec:authorize access="isAuthenticated()">
@@ -115,7 +118,7 @@
                 <button type="button" class="btn btn-primary-outline">
                     <a href="/basket" style="color: aliceblue">
                         <span><img style="width: 45px; height: 30px" src="/resources/static/images/basket2.png"/> </span>
-                        <span class="badge badge-light"><%= ((Basket) session.getAttribute("shop_basket")).getProductsInBasket().values().stream().reduce((s1, s2) -> s1 + s2).orElse(0) %></span>
+                        <span class="badge badge-light" id="basketCount2"><%= ((Basket) session.getAttribute("shop_basket")).getProductsInBasket().values().stream().reduce((s1, s2) -> s1 + s2).orElse(0) %></span>
                     </a>
                 </button>
             </div>
@@ -131,13 +134,7 @@
 
     </div>
 
-    <div class="row" id="text">
-        <h5>High level of practice orientation</h5>
-        <p>Another key component of working at E-shop is a high level of practice orientation from the word go. This means that vocational trainees are given the opportunity to get to know all the departments and categories of products in a store, while more experienced employees are provided with regular product, customer relations or sales strategy training courses.</p>
-        <br>
-        <h5>Individual development</h5>
-        <p>At E-shop, the individual strengths of employees are cultivated to enable them to develop their full potential. Employees are provided with individual support during their vocational training and later they profit from a mentoring system. Every employee is also given a great deal of individual responsibility and autonomy is encouraged. At MediaMarkt, people are the key – that is the core principle of our corporate philosophy.</p>
-    </div>
+
 
     <div class="row">
         <h5 style="margin-bottom: 50px; text-align: center">Our bestsellers:</h5>
@@ -148,7 +145,7 @@
         <div class="cardparent">
             <c:forEach items="${items}" var="item">
                 <div class="cardchild">
-                    <form id="form-card" action="/basket" method="post">
+                    <%--<form id="form-card" action="/basket" method="post">--%>
                         <div class="card" >
                             <%--<img style="margin-top: 10px" src="../resources/static/images/IPhoneX.png" class="card-img-top" alt="Image">--%>
                             <img style="margin-top: 10px" src="${item.imagePath}" class="card-img-top" alt="Image">
@@ -162,15 +159,24 @@
                                 </ul>
                                 <input  type="hidden" name="item" value=${item.id}>
                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                <button class="btn btn-secondary btn-sm justify-content-center" type="submit">Buy</button>
+                                <%--<button class="btn btn-secondary btn-sm justify-content-center" type="submit">Buy</button>--%>
+                                <button onclick="add(${item.id})" type="submit" class="btn btn-secondary"> Buy </button>
                                 <br>
                                 <br>
                             </div>
                         </div>
-                    </form>
+                    <%--</form>--%>
                 </div>
             </c:forEach>
         </div>
+    </div>
+
+    <div class="row" id="text">
+        <h5>High level of practice orientation</h5>
+        <p>Another key component of working at E-shop is a high level of practice orientation from the word go. This means that vocational trainees are given the opportunity to get to know all the departments and categories of products in a store, while more experienced employees are provided with regular product, customer relations or sales strategy training courses.</p>
+        <br>
+        <h5>Individual development</h5>
+        <p>At E-shop, the individual strengths of employees are cultivated to enable them to develop their full potential. Employees are provided with individual support during their vocational training and later they profit from a mentoring system. Every employee is also given a great deal of individual responsibility and autonomy is encouraged. At MediaMarkt, people are the key – that is the core principle of our corporate philosophy.</p>
     </div>
 
     <style>

@@ -1,6 +1,7 @@
 package com.eshop.dao;
 
 import com.eshop.domain.Client;
+import com.eshop.domain.ClientAddress;
 import com.eshop.domain.Order;
 import com.eshop.domain.ShopAddress;
 
@@ -28,7 +29,9 @@ public interface OrderDao {
 
     Set<ShopAddress> getAllShops();
 
+    ShopAddress getShopById(Integer id);
 
+    ClientAddress getClientAddressById(Integer id);
 }
 
 

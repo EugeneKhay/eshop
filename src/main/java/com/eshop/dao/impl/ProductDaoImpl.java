@@ -184,6 +184,15 @@ public class ProductDaoImpl implements ProductDAO {
         return new HashSet<>(query.list());
     }
 
+    @Override
+    public CategoryOfProduct getSingleCategoryByName(String name) {
+        String hql = "FROM CategoryOfProduct WHERE categoryName = :param";
+        Query query = sessionFactory.getCurrentSession().createQuery(hql);
+        query.setParameter("param", name);
+        CategoryOfProduct category = (CategoryOfProduct) query.list().get(0);
+        return category;
+    }
+
 //    @Override
 //    public void saveCategory(CategoryOfProduct category) {
 //        sessionFactory.getCurrentSession().save(category);

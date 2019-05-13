@@ -1,7 +1,7 @@
 //package com.eshop.config;
 //
 //import com.eshop.exception.LoginException;
-//import com.eshop.exception.NoDeliveryAddressException;
+//import com.eshop.exception.NoAddressException;
 //import com.eshop.exception.NoProductInBasketException;
 //import org.postgresql.util.PSQLException;
 //import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -32,8 +32,8 @@
 //        return model;
 //    }
 //
-//    @ExceptionHandler(NoDeliveryAddressException.class)
-//    public ModelAndView handleMyException4(NoDeliveryAddressException mex) {
+//    @ExceptionHandler(NoAddressException.class)
+//    public ModelAndView handleMyException4(NoAddressException mex) {
 //        ModelAndView model = new ModelAndView();
 //        model.addObject("errMsg", mex.getMessage());
 //        //model.addObject("exception", "No address for delivery!");

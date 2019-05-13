@@ -1,7 +1,6 @@
 package com.eshop.controller;
 
 import com.eshop.domain.CategoryOfProduct;
-import com.eshop.domain.Client;
 import com.eshop.domain.ShopAddress;
 import com.eshop.service.ClientService;
 import com.eshop.service.OrderService;
@@ -15,10 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 
 @Controller
@@ -39,8 +36,9 @@ public class AdminController {
     private OrderService orderService;
 
     @GetMapping("/admin")
-    public String view(Model model) {
+    public String viewAdminPage(Model model) {
         logger.info("Go to adminpage");
+        //TODO make separate
         LocalDate start = LocalDate.of(2019, 1, 1);
         LocalDate finish = LocalDate.now();
         adminService.setStats(model, start, finish);
@@ -57,8 +55,12 @@ public class AdminController {
                              @RequestParam(name = "image", required = false) String image,
                              Model model) {
         adminService.addNewProduct(productName, productPrice, category, amount, colour, brand, image);
-        model.addAttribute("categories", productService.getAllCategories());
+        //model.addAttribute("categories", productService.getAllCategories());
         logger.info("Product added");
+        //TODO make separate
+        LocalDate start = LocalDate.of(2019, 1, 1);
+        LocalDate finish = LocalDate.now();
+        adminService.setStats(model, start, finish);
         return "adminpage";
     }
 
@@ -69,7 +71,11 @@ public class AdminController {
                 productService.saveCategory(category);
                 logger.info("Category added");
             }
-        model.addAttribute("categories", productService.getAllCategories());
+        //model.addAttribute("categories", productService.getAllCategories());
+        //TODO make separate
+        LocalDate start = LocalDate.of(2019, 1, 1);
+        LocalDate finish = LocalDate.now();
+        adminService.setStats(model, start, finish);
         return "adminpage";
     }
 
@@ -78,23 +84,27 @@ public class AdminController {
     public String deleteCategory(@RequestParam(name = "categoryForRemove") String categoryName, Model model) {
         productService.deleteCategoryByName(categoryName);
         Set<CategoryOfProduct> allCategories = productService.getAllCategories();
-        model.addAttribute("categories", allCategories);
+        //model.addAttribute("categories", allCategories);
+        //TODO make separate
+        LocalDate start = LocalDate.of(2019, 1, 1);
+        LocalDate finish = LocalDate.now();
+        adminService.setStats(model, start, finish);
         return "adminpage";
     }
 
-    @GetMapping("/viewproducts")
-    public String showProducts(Model model) {
-        model.addAttribute("products", productService.getAllProducts());
-        logger.info("Showing all products");
-        return "adminpage";
-    }
-
-    @GetMapping("/viewclients")
-    public String showClients(Model model) {
-        model.addAttribute("clients", clientService.getAllClients());
-        logger.info("Showing all clients");
-        return "adminpage";
-    }
+//    @GetMapping("/viewproducts")
+//    public String showProducts(Model model) {
+//        model.addAttribute("products", productService.getAllProducts());
+//        logger.info("Showing all products");
+//        return "adminpage";
+//    }
+//
+//    @GetMapping("/viewclients")
+//    public String showClients(Model model) {
+//        model.addAttribute("clients", clientService.getAllClients());
+//        logger.info("Showing all clients");
+//        return "adminpage";
+//    }
 
     @PostMapping("/admin")
     public String getStats(@RequestParam(name = "start", required = false) @DateTimeFormat(pattern="yyyy-MM-dd")LocalDate startParameter,
@@ -122,6 +132,41 @@ public class AdminController {
         logger.info("Shop address saved");
         //model.addAttribute("client", clientForView);
         //model.addAttribute("addresses", clientForView.getAddressList());
+//        return "adminpage";
+        //TODO make separate
+        LocalDate start = LocalDate.of(2019, 1, 1);
+        LocalDate finish = LocalDate.now();
+        adminService.setStats(model, start, finish);
+        return "adminpage";
+    }
+
+    @PostMapping("/deleteshop")
+    public String deleteShop(@RequestParam(name = "shopForDelete") int id, Model model) {
+        return null;
+    }
+
+    @PostMapping("/editshop")
+    public String editShop(@RequestParam(name = "shopForEdit") int id,
+                           @RequestParam(name = "country") String country,
+                           @RequestParam(name = "city") String city,
+                           @RequestParam(name = "postcode") int postcode ,
+                           @RequestParam(name = "street") String street,
+                           @RequestParam(name = "houseNumber") int houseNumber ,
+                           @RequestParam(name = "phone") String phone,
+                           Model model) {
+        ShopAddress shopById = orderService.getShopById(id);
+        shopById.setCountry(country);
+        shopById.setCity(city);
+        shopById.setPostCode(postcode);
+        shopById.setStreet(street);
+        shopById.setHouseNumber(houseNumber);
+        shopById.setPhoneNumber(phone);
+        orderService.saveShop(shopById);
+        //viewAdminPage(model);
+        //TODO make separate
+        LocalDate start = LocalDate.of(2019, 1, 1);
+        LocalDate finish = LocalDate.now();
+        adminService.setStats(model, start, finish);
         return "adminpage";
     }
 }

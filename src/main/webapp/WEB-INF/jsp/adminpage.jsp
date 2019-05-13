@@ -15,6 +15,7 @@
 <body>
 <div class="container">
 
+    <!-- Title -->
     <div class="row" id="adminTitle">
         <div class="col-sm">
             <h3> Admin page </h3>
@@ -43,6 +44,7 @@
         </div>
     </div>
 
+    <!-- Period -->
     <div class="row" id="stat">
         <div class="col-sm">
             <h5> ${period}</h5>
@@ -55,9 +57,10 @@
             <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                 <div class="btn-group mr-2" role="group" aria-label="First group">
                     <button type="button" class="btn btn-secondary" onclick="orders()"> Orders </button>
-                    <button type="button" class="btn btn-secondary" onclick="products()">Products</button>
+                    <button type="button" class="btn btn-secondary" onclick="products()"> Catalog </button>
                     <button type="button" class="btn btn-secondary" onclick="clients()"> Clients</button>
                     <button type="button" class="btn btn-secondary" onclick="stats()"> Statistics</button>
+                    <button type="button" class="btn btn-secondary" onclick="shops()"> Shops </button>
                 </div>
                 <div class="btn-group mr-2" role="group" aria-label="Second group">
                     <button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#exampleModal"> Change period </button>
@@ -66,7 +69,7 @@
         </div>
     </div>
 
-    <!-- Modal window-->
+    <!-- Modal window change period-->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -91,6 +94,55 @@
                 </div>
             </div>
         </div>
+
+    <!-- Modal window add shop -->
+    <div class="modal fade" id="addShop" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 style="color: black" class="modal-title" id="exampleModalLabel3"> Enter shop data: </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/addshop" method="post" id="add_shop">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        <div class="form-group">
+                            <label for="country" style="color: black">Country</label>
+                            <input class="form-control form-control-md" type="text" id="country" name="country"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="city" style="color: black">City</label>
+                            <input class="form-control form-control-md" type="text" id="city" name="city" />
+                        </div>
+                        <div class="form-group">
+                            <label for="postcode" style="color: black">Postcode</label>
+                            <input class="form-control form-control-md" type="number" id="postcode" name="postcode" />
+                        </div>
+                        <div class="form-group">
+                            <label for="street" style="color: black">Street</label>
+                            <input class="form-control form-control-md" type="text" id="street" name="street" />
+                        </div>
+                        <div class="form-group">
+                            <label for="houseNumber" style="color: black">House number</label>
+                            <input class="form-control form-control-md" type="number" id="houseNumber" name="houseNumber" />
+                        </div>
+                        <div class="form-group">
+                            <label for="phone" style="color: black">Phone number</label>
+                            <input class="form-control form-control-md" type="text" id="phone" name="phone" />
+                        </div>
+                        <button onclick="form7_submit()" name="user_search" class="btn btn-secondary" data-dismiss="modal"> Submit </button>
+                        <script>
+                            function form7_submit() {
+                                document.getElementById("add_shop").submit();
+                            };
+                        </script>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="row" id="info">
 
@@ -124,7 +176,11 @@
             <div class="row">
                     <table class="table table-borderless" style="color: black">
                         <tr>
-                            <th>№</th>
+                            <th>
+                                <div class="col-sm-1">
+                                    <button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#editModal"> № </button>
+                                </div>
+                            </th>
                             <th>Client</th>
                             <th>Products</th>
                             <th>Price</th>
@@ -134,6 +190,7 @@
                             <th>Payment method</th>
                             <th>Delivery method</th>
                             <th>Delivery address</th>
+                            <th>Pickup address</th>
                             <th>Order status</th>
                             <th>Payment status</th>
                         </tr>
@@ -142,6 +199,7 @@
                                 <c:set var = "client" scope = "session" value = "${order.client}"/>
                                 <td>${order.id}</td>
                                 <td>${client.firstName} ${client.lastName}</td>
+
                                 <td>
                                     <c:forEach items="${order.orderProducts}" var="order_product">
                                         <c:set var = "product" scope = "session" value = "${order_product.product}"/>
@@ -166,23 +224,22 @@
                                         </table>
                                     </c:forEach>
                                 </td>
+
                                 <td>${order.sumOfOrder}</td>
                                 <td>${order.dateOfOrder}</td>
                                 <td>${order.paymentMethod}</td>
                                 <td>${order.deliveryMethod}</td>
                                 <td>${order.addressForDelivery}</td>
+                                <td>${order.addressForSelfCollect}</td>
                                 <td>${order.orderStatus}</td>
                                 <td>${order.paymentStatus}</td>
                             </tr>
                         </c:forEach>
                     </table>
-
-
-
             </div>
-            <div class="col-sm-1">
-                <button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#editModal"> Edit </button>
-            </div>
+            <%--<div class="col-sm-1">--%>
+                <%--<button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#editModal"> Edit </button>--%>
+            <%--</div>--%>
 
             <!-- Modal window 2-->
             <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
@@ -231,206 +288,205 @@
         </div>
 
         <!--Products -->
-        <div id="products" style="display: none; width: 90%">
-            <h5 style="color: black">List of products</h5>
-            <table class="table table-borderless" style="withdth: 65%; margin: 0 auto; color: black">
-                        <tr>
-                            <th>Product ID</th>
-                            <th>Product name</th>
-                            <th>Brand</th>
-                            <th>Price</th>
-                            <th>Amount</th>
-                            <th>Category</th>
-                            <th>Colour</th>
-                            <th>
-                                <button type="button" class="btn btn-secondary" onclick="addProduct()"> Add new product </button>
-                            </th>
-                        </tr>
-                    <c:forEach items="${products}" var="product">
-                        <tr>
-                            <c:set var = "parameters" scope = "session" value = "${product.productParameteres}"/>
-                            <td>${product.id}</td>
-                            <td>${product.productName}</td>
-                            <td>${parameters.brand}</td>
-                            <td>${product.productPrice}</td>
-                            <td>${product.amount}</td>
-                            <td>${product.productCategory}</td>
-                            <td>${parameters.colour}</td>
-                            <td>
-                                <div>
-                                    <button type="button" class="btn btn-secondary" onclick="changeProduct2(${product.id})"> Change </button>
-                                </div>
-                                <script type="text/javascript">
-                                    function changeProduct2(id) {
-                                        $("#" + id + "").toggle();
-                                    }
-                                </script>
-                                <form action="/editproduct" method="post" id="${product.id}" style="display: none">
-                                                                <input type="hidden" name="productForEdit" value="${product.id}">
-                                                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                                                <div class="form-group">
-                                                                    <label for="name" style="color: black">Product name</label>
-                                                                    <input class="form-control form-control-md" type="text" id="name" name="name" value="${product.productName}"/>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="brand2" style="color: black">Brand</label>
-                                                                    <input class="form-control form-control-md" type="text" id="brand2" name="brand" value="${parameters.brand}"/>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="price" style="color: black">Price</label>
-                                                                    <input class="form-control form-control-md" type="number" id="price" name="price" value="${product.productPrice}"/>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="amount2" style="color: black">Amount</label>
-                                                                    <input class="form-control form-control-md" type="number" id="amount2" name="amount" value="${product.amount}"/>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="category2" style="color: black">Category</label>
-                                                                    <input class="form-control form-control-md" type="text" id="category2" name="category" value="${product.productCategory}"/>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="color" style="color: black">Color</label>
-                                                                    <input class="form-control form-control-md" type="text" id="color" name="color" value="${parameters.colour}"/>
-                                                                </div>
-                                                                <button onclick="form2_submit()" name="user_search" class="btn btn-secondary" data-dismiss="modal"> Submit </button>
-                                                            </form>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </table>
-                <br>
-                <%--<div>--%>
-                    <%--<button type="button" class="btn btn-secondary" onclick="addProduct()"> Add new product </button>--%>
-                <%--</div>--%>
-
-                <script type="text/javascript">
-                    function addProduct() {
-                        $("#newProduct").toggle();
-                    };
-                    function addCategory() {
-                        $("#newCategory").toggle();
-                    }
-                </script>
-
-                <div id="newProduct" style="display: none">
-                <h5  style="color:black; margin-top: 20px">Add new product</h5>
-                <form method="post" action="/addproducts">
-                    <b style="color:black"> Enter product properties </b>
-                    <div class="form-group">
-                        <label for="productName"> Product name </label>
-                        <input class="form-control form-control-md" name="productName" type="text" class="form-control" id="productName" aria-describedby="emailHelp" required>
-                    </div>
-                    <div class="form-group">
-                        <label  for="productPrice"> Product price </label>
-                        <input  class="form-control form-control-md" name="productPrice" type="number" class="form-control" id="productPrice" aria-describedby="emailHelp" required>
-                    </div>
-                    <div>
-                        <label for="productPrice"> Product type </label>
-                        <select class="custom-select mr-sm-2" name="category" id="category" required>
-                            <option selected>Choose category</option>
-                            <c:forEach items="${categories}" var="category">
-                                <option value="${category}"> ${category} </option>
-                            </c:forEach>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="productPrice">Amount</label>
-                        <input class="form-control form-control-md" name="amount" type="number" class="form-control" id="amount" aria-describedby="emailHelp" required>
-                    </div>
-                    <b style="color:black"> Enter product parameters </b>
-                    <div class="form-group">
-                        <label for="productPrice"> Colour </label>
-                        <input class="form-control form-control-md" name="colour" type="text" class="form-control" id="colour" aria-describedby="emailHelp" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="productPrice"> Brand </label>
-                        <input class="form-control form-control-md" name="brand" type="text" class="form-control" id="brand" aria-describedby="emailHelp" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="image"> Image </label>
-                        <input class="form-control form-control-md" name="image" type="text" class="form-control" id="image" aria-describedby="emailHelp" required>
-                    </div>
-                    <button type="submit" class="btn btn-secondary"> Add product </button>
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                </form>
-            </div>
-
-                <br>
-
-                <div id="categories" >
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm">
-                                <table class="table table-borderless" style="margin: 0 auto; color: black">
-                                    <tr>
-                                        <th> Category name </th>
-                                        <th>
-                                            <button type="button" class="btn btn-secondary" onclick="addCategory()"> Add new category </button>
-                                        </th>
-                                    </tr>
-                                    <c:forEach items="${categories}" var="category">
-                                        <tr>
-                                            <td>${category}</td>
-                                            <td>
-                                                <div>
-                                                    <form action="/deletecategory" method="post" id="${category.categoryName}" style="display: none">
-                                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                                        <input type="hidden" name="categoryForRemove" value="${category.categoryName}"/>
-                                                        <%--<button type="submit" class="btn btn-secondary"> Delete </button>--%>
-                                                    </form>
-                                                    <button type="button" class="btn btn-secondary" onclick="deleteCategory()"> Delete </button>
-                                                    <script type="text/javascript">
-                                                        function deleteCategory() {
-                                                            document.getElementById(${category.categoryName}).submit();
-                                                        };
-                                                    </script>
-                                                </div>
-
-                                            </td>
-                                        </tr>
-
-                                    </c:forEach>
-                                </table>
-
-                            </div>
-                            <div class="col-sm">
-                                <div id="newCategory" style="display: none">
-                                    <h5  style="color:black; margin-top: 20px">Add new category of products</h5>
-                                    <form method="post" action="/addnewcategory">
-                                        <b style="color:black"> Enter category name </b>
-                                        <div class="form-group">
-                                            <label for="categoryName"> Product name </label>
-                                            <input class="form-control form-control-md" name="categoryName" type="text" class="form-control" id="categoryName" aria-describedby="emailHelp" required>
+        <div id="products" style="display: none">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-9">
+                        <h5 style="color: black">List of products</h5>
+                        <table class="table table-borderless" style="withdth: 65%; margin: 0 auto; color: black">
+                            <tr>
+                                <th>Product ID</th>
+                                <th>Product name</th>
+                                <th>Brand</th>
+                                <th>Price</th>
+                                <th>Amount</th>
+                                <th>Category</th>
+                                <th>Colour</th>
+                                <th>
+                                    <div class="btn-group mr-2" role="group" aria-label="Second group">
+                                        <button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#addProduct"> Add </button>
+                                    </div>
+                                </th>
+                            </tr>
+                            <c:forEach items="${products}" var="product">
+                                <tr>
+                                    <c:set var = "parameters" scope = "session" value = "${product.productParameteres}"/>
+                                    <td>${product.id}</td>
+                                    <td>${product.productName}</td>
+                                    <td>${parameters.brand}</td>
+                                    <td>${product.productPrice}</td>
+                                    <td>${product.amount}</td>
+                                    <td>${product.productCategory}</td>
+                                    <td>${parameters.colour}</td>
+                                    <td>
+                                        <div>
+                                            <button type="button" class="btn btn-secondary" onclick="changeProduct2(${product.id})"> Change </button>
                                         </div>
-                                        <button type="submit" class="btn btn-secondary"> Add </button>
-                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                    </form>
+                                        <script type="text/javascript">
+                                            function changeProduct2(id) {
+                                                $("#" + id + "").toggle();
+                                            }
+                                        </script>
+                                        <form action="/editproduct" method="post" id="${product.id}" style="display: none">
+                                            <input type="hidden" name="productForEdit" value="${product.id}">
+                                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                            <div class="form-group">
+                                                <label for="name" style="color: black">Product name</label>
+                                                <input class="form-control form-control-md" type="text" id="name" name="name" value="${product.productName}"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="brand2" style="color: black">Brand</label>
+                                                <input class="form-control form-control-md" type="text" id="brand2" name="brand" value="${parameters.brand}"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="price" style="color: black">Price</label>
+                                                <input class="form-control form-control-md" type="number" id="price" name="price" value="${product.productPrice}"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="amount2" style="color: black">Amount</label>
+                                                <input class="form-control form-control-md" type="number" id="amount2" name="amount" value="${product.amount}"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="category2" style="color: black">Category</label>
+                                                <input class="form-control form-control-md" type="text" id="category2" name="category" value="${product.productCategory}"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="color" style="color: black">Color</label>
+                                                <input class="form-control form-control-md" type="text" id="color" name="color" value="${parameters.colour}"/>
+                                            </div>
+                                            <button onclick="form2_submit()" name="user_search" class="btn btn-secondary" data-dismiss="modal"> Submit </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </table>
+
+                        <!-- Modal window add product -->
+                        <div class="modal fade" id="addProduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel9" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 style="color: black" class="modal-title" id="exampleModalLabel"> Enter product properties </h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form method="post" action="/addproducts">
+                                            <b style="color:black"> Enter product properties </b>
+                                            <div class="form-group">
+                                                <label for="productName"> Product name </label>
+                                                <input class="form-control form-control-md" name="productName" type="text" class="form-control" id="productName" aria-describedby="emailHelp" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label  for="productPrice"> Product price </label>
+                                                <input  class="form-control form-control-md" name="productPrice" type="number" class="form-control" id="productPrice" aria-describedby="emailHelp" required>
+                                            </div>
+                                            <div>
+                                                <label for="productPrice"> Product type </label>
+                                                <select class="custom-select mr-sm-2" name="category" id="category" required>
+                                                    <option selected>Choose category</option>
+                                                    <c:forEach items="${categories}" var="category">
+                                                        <option value="${category}"> ${category} </option>
+                                                    </c:forEach>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="productPrice">Amount</label>
+                                                <input class="form-control form-control-md" name="amount" type="number" class="form-control" id="amount" aria-describedby="emailHelp" required>
+                                            </div>
+                                            <b style="color:black"> Enter product parameters </b>
+                                            <div class="form-group">
+                                                <label for="productPrice"> Colour </label>
+                                                <input class="form-control form-control-md" name="colour" type="text" class="form-control" id="colour" aria-describedby="emailHelp" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="productPrice"> Brand </label>
+                                                <input class="form-control form-control-md" name="brand" type="text" class="form-control" id="brand" aria-describedby="emailHelp" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="image"> Image </label>
+                                                <input class="form-control form-control-md" name="image" type="text" class="form-control" id="image" aria-describedby="emailHelp" required>
+                                            </div>
+                                            <button type="submit" class="btn btn-secondary"> Add product </button>
+                                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-3">
+                        <h5 style="color: black">List of categories</h5>
+                        <div id="categories" >
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <table class="table table-borderless" style="margin: 0 auto; color: black">
+                                            <tr>
+                                                <th> Category name </th>
+                                                <th>
+                                                    <div class="btn-group mr-2" role="group" aria-label="Second group">
+                                                        <button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#addCategory"> Add </button>
+                                                    </div>
+                                                </th>
+                                            </tr>
+                                            <c:forEach items="${categories}" var="category">
+                                                <tr>
+                                                    <td>${category}</td>
+                                                    <td>
+                                                        <div>
+                                                            <form action="/deletecategory" method="post" id="${category.categoryName}" style="display: none">
+                                                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                                                <input type="hidden" name="categoryForRemove" value="${category.categoryName}"/>
+                                                            </form>
+                                                            <button type="button" class="btn btn-secondary" onclick="deleteCategory()"> Delete </button>
+                                                            <script type="text/javascript">
+                                                                function deleteCategory() {
+                                                                    document.getElementById(${category.categoryName}).submit();
+                                                                };
+                                                            </script>
+                                                        </div>
+
+                                                    </td>
+                                                </tr>
+
+                                            </c:forEach>
+                                        </table>
+
+                                        <!-- Modal window add category -->
+                                        <div class="modal fade" id="addCategory" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel9" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 style="color: black" class="modal-title" id="ex"> Enter category name </h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form method="post" action="/addnewcategory">
+                                                            <b style="color:black"> Enter category name </b>
+                                                            <div class="form-group">
+                                                                <label for="categoryName"> Product name </label>
+                                                                <input class="form-control form-control-md" name="categoryName" type="text" class="form-control" id="categoryName" aria-describedby="emailHelp" required>
+                                                            </div>
+                                                            <button type="submit" class="btn btn-secondary"> Add </button>
+                                                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <%--<div id="newCategory" style="display: none">--%>
-                    <%--<h5  style="color:black; margin-top: 20px">Add new category of products</h5>--%>
-                    <%--<form method="post" action="/addnewcategory">--%>
-                        <%--<b style="color:black"> Enter category name </b>--%>
-                        <%--<div class="form-group">--%>
-                            <%--<label for="categoryName"> Product name </label>--%>
-                            <%--<input class="form-control form-control-md" name="categoryName" type="text" class="form-control" id="categoryName" aria-describedby="emailHelp" required>--%>
-                        <%--</div>--%>
-                        <%--<button type="submit" class="btn btn-secondary"> Add </button>--%>
-                        <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
-                    <%--</form>--%>
-                <%--</div>--%>
-
-
-                <%--<div>--%>
-                    <%--<c:forEach items="${categories}" var="cate">--%>
-                        <%--<p>${cate}</p>--%>
-                    <%--</c:forEach>--%>
-                <%--</div>--%>
-
+            </div>
         </div>
 
         <!-- Clients -->
@@ -438,67 +494,125 @@
             <h3 style="color: black">List of clients</h3>
             <table class="table table-borderless" style="width: 100%; margin: 0 auto; color: black">
                 <tr>
-                            <th>ID</th>
-                            <th>First name</th>
-                            <th>Last name</th>
-                            <th>Date of birth</th>
-                            <th>Email</th>
-                            <%--<th>Address</th>--%>
-                        </tr>
+                    <th>ID</th>
+                    <th>First name</th>
+                    <th>Last name</th>
+                    <th>Date of birth</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                </tr>
                 <c:forEach items="${clients}" var="client">
-                            <tr>
-                                <td>${client.id}</td>
-                                <td>${client.firstName}</td>
-                                <td>${client.lastName}</td>
-                                <td>${client.birthDate}</td>
-                                <td>${client.email}</td>
-                                <%--<c:set var = "address" scope = "session" value = "${client.address}"/>--%>
-                                <%--<td>${address.country}, ${address.city}, ${address.postCode}, ${address.street}, ${address.houseNumber}, ${address.flatNumber}</td>--%>
-                            </tr>
-                        </c:forEach>
+                    <tr>
+                        <td>${client.id}</td>
+                        <td>${client.firstName}</td>
+                        <td>${client.lastName}</td>
+                        <td>${client.birthDate}</td>
+                        <td>${client.email}</td>
+                        <td>
+                            <c:forEach items="${client.addressList}" var="address">
+                                <table>
+                                    <tr> ${address} </tr>
+                                </table>
+                            </c:forEach>
+                        </td>
+                    </tr>
+                </c:forEach>
             </table>
         </div>
 
-        <!-- Shop addresses -->
-        <div id="shops">
+        <!-- Shops -->
+        <div id="shops" style="display: none">
+            <h3 style="color: black"> List of shops </h3>
+            <table class="table table-borderless" style="color: black">
+                <tr>
+                    <th>Country</th>
+                    <th>City</th>
+                    <th>Post code</th>
+                    <th>Street</th>
+                    <th>House number</th>
+                    <th>Phone</th>
+                    <th></th>
+                    <th>
+                        <div class="btn-group mr-2" role="group" aria-label="Third group">
+                            <button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#addShop"> Add shop </button>
+                        </div>
+                    </th>
+                </tr>
+                <c:forEach items="${shops}" var="shop">
+                    <tr>
+                        <td>${shop.country}</td>
+                        <td>${shop.city}</td>
+                        <td>${shop.postCode}</td>
+                        <td>${shop.street}</td>
+                        <td>${shop.houseNumber}</td>
+                        <td>${shop.phoneNumber}</td>
+                        <td></td>
+                        <td>
+                            <div>
+                                <div class="btn-toolbar" role="toolbar">
+                                    <div class="btn-group" role="group">
+                                        <button type="button" class="btn btn-secondary" onclick="editShop(${shop.id})"> Edit </button>
+                                    </div>
+                                    <div class="btn-group" role="group">
+                                        <%--<button type="button" class="btn btn-secondary" onclick="deleteShop(${shop.id})"> Delete </button>--%>
+                                    </div>
+                                </div>
+                            </div>
 
-            <form action="/addshop" method="post" id="add_shop">
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                <div class="form-group">
-                    <label for="country" style="color: black">Country</label>
-                    <input class="form-control form-control-md" type="text" id="country" name="country"/>
-                </div>
-                <div class="form-group">
-                    <label for="city" style="color: black">City</label>
-                    <input class="form-control form-control-md" type="text" id="city" name="city" />
-                </div>
-                <div class="form-group">
-                    <label for="postcode" style="color: black">Postcode</label>
-                    <input class="form-control form-control-md" type="number" id="postcode" name="postcode" />
-                </div>
-                <div class="form-group">
-                    <label for="street" style="color: black">Street</label>
-                    <input class="form-control form-control-md" type="text" id="street" name="street" />
-                </div>
-                <div class="form-group">
-                    <label for="houseNumber" style="color: black">House number</label>
-                    <input class="form-control form-control-md" type="number" id="houseNumber" name="houseNumber" />
-                </div>
-                <div class="form-group">
-                    <label for="phone" style="color: black">Phone number</label>
-                    <input class="form-control form-control-md" type="text" id="phone" name="phone" />
-                </div>
-                <button onclick="form7_submit()" name="user_search" class="btn btn-secondary" data-dismiss="modal"> Submit </button>
-                <script>
-                    function form7_submit() {
-                        document.getElementById("add_shop").submit();
-                    };
-                </script>
-            </form>
+                            <form action="/deleteshop" method="post" style="display: none" id="${shop.id}del">
+                                <input type="hidden" name="shopForDelete" value="${shop.id}">
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            </form>
+                            <script>
+                                function deleteShop(id) {
+                                    $("#" + id + "del").submit();
+                                }
+                                function editShop(id) {
+                                    $("#" + id).toggle();
+                                }
+                            </script>
 
-    </div>
+                            <!-- edit shop -->
+                            <div id="${shop.id}" style="display: none">
+                                <form action="/editshop" method="post" >
+                                    <input type="hidden" name="shopForEdit" value="${shop.id}">
+                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                    <div class="form-group">
+                                        <label for="country2" style="color: black">Country</label>
+                                        <input class="form-control form-control-md" type="text" id="country2" name="country" value="${shop.country}"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="city2" style="color: black">City</label>
+                                        <input class="form-control form-control-md" type="text" id="city2" name="city" value="${shop.city}"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="freakfield" style="color: black">Postcode</label>
+                                        <input class="form-control form-control-md" type="number" id="freakfield" name="postcode" value="${shop.postCode}"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="street2" style="color: black">Street</label>
+                                        <input class="form-control form-control-md" type="text" id="street2" name="street" value="${shop.street}"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="houseNumber2" style="color: black">House number</label>
+                                        <input class="form-control form-control-md" type="number" id="houseNumber2" name="houseNumber" value="${shop.houseNumber}"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="flatNumber" style="color: black"> Phone </label>
+                                        <input class="form-control form-control-md" type="text" id="flatNumber" name="phone" value="${shop.phoneNumber}"/>
+                                    </div>
+                                    <button type="submit" class="btn btn-secondary"> Submit </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                </c:forEach>
+            </table>
+        </div>
+
     </div>
 </div>
+
 <br>
 <br>
 <br>

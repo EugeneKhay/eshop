@@ -199,26 +199,26 @@
                         <p>Please, choose address for delivery:</p>
                             <c:forEach items="${addresses}" var="item">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="deliveryAddress" id="delivery" value="${item}">
+                                    <input class="form-check-input" type="checkbox" name="deliveryAddress" id="delivery" value="${item.id}">
                                     <label class="form-check-label" for="delivery">${item}</label>
                                 </div>
                                 <br>
                             </c:forEach>
-                            <div>
-                                <button type="button" class="btn btn-secondary" onclick="changeAddress()"> Add new </button>
-                            </div>
-                            <script type="text/javascript">
-                                function changeAddress() {
-                                    $("#add").toggle();
-                                }
-                            </script>
+                            <%--<div>--%>
+                                <%--<button type="button" class="btn btn-secondary" onclick="changeAddress()"> Add new </button>--%>
+                            <%--</div>--%>
+                            <%--<script type="text/javascript">--%>
+                                <%--function changeAddress() {--%>
+                                    <%--$("#add").toggle();--%>
+                                <%--}--%>
+                            <%--</script>--%>
                             <br>
                     </div>
                     <div class="col-sm" style="display: none" id="addressself">
                         <p>Please, choose the shop to collect your order:</p>
                         <c:forEach items="${addressesSelf}" var="item">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="collectAddress" id="self" value="${item}">
+                                <input class="form-check-input" type="checkbox" name="collectAddress" id="self" value="${item.id}">
                                 <label class="form-check-label" for="self">${item}</label>
                             </div>
                             <br>
@@ -257,42 +257,42 @@
     </form>
     </sec:authorize>
 
-    <!-- Add address form -->
-    <div id="add" style="display: none; width: 80%; margin: 0 auto">
-        <form action="/addaddress" method="post" id="add_adr">
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-            <div class="form-group">
-                <label for="country" style="color: black">Country</label>
-                <input class="form-control form-control-md" type="text" id="country" name="country"/>
-            </div>
-            <div class="form-group">
-                <label for="city" style="color: black">City</label>
-                <input class="form-control form-control-md" type="text" id="city" name="city" />
-            </div>
-            <div class="form-group">
-                <label for="postcode" style="color: black">Postcode</label>
-                <input class="form-control form-control-md" type="number" id="postcode" name="postcode" />
-            </div>
-            <div class="form-group">
-                <label for="street" style="color: black">Street</label>
-                <input class="form-control form-control-md" type="text" id="street" name="street" />
-            </div>
-            <div class="form-group">
-                <label for="houseNumber" style="color: black">House number</label>
-                <input class="form-control form-control-md" type="number" id="houseNumber" name="houseNumber" />
-            </div>
-            <div class="form-group">
-                <label for="flatNumber" style="color: black">Flat number</label>
-                <input class="form-control form-control-md" type="number" id="flatNumber" name="flatNumber" />
-            </div>
-            <button onclick="form3_submit()" name="user_search" class="btn btn-secondary" data-dismiss="modal"> Submit </button>
-            <script>
-                function form3_submit() {
-                    document.getElementById("add_adr").submit();
-                };
-            </script>
-        </form>
-    </div>
+    <%--<!-- Add address form -->--%>
+    <%--<div id="add" style="display: none; width: 80%; margin: 0 auto">--%>
+        <%--<form action="/addaddress" method="post" id="add_adr">--%>
+            <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
+            <%--<div class="form-group">--%>
+                <%--<label for="country" style="color: black">Country</label>--%>
+                <%--<input class="form-control form-control-md" type="text" id="country" name="country"/>--%>
+            <%--</div>--%>
+            <%--<div class="form-group">--%>
+                <%--<label for="city" style="color: black">City</label>--%>
+                <%--<input class="form-control form-control-md" type="text" id="city" name="city" />--%>
+            <%--</div>--%>
+            <%--<div class="form-group">--%>
+                <%--<label for="postcode" style="color: black">Postcode</label>--%>
+                <%--<input class="form-control form-control-md" type="number" id="postcode" name="postcode" />--%>
+            <%--</div>--%>
+            <%--<div class="form-group">--%>
+                <%--<label for="street" style="color: black">Street</label>--%>
+                <%--<input class="form-control form-control-md" type="text" id="street" name="street" />--%>
+            <%--</div>--%>
+            <%--<div class="form-group">--%>
+                <%--<label for="houseNumber" style="color: black">House number</label>--%>
+                <%--<input class="form-control form-control-md" type="number" id="houseNumber" name="houseNumber" />--%>
+            <%--</div>--%>
+            <%--<div class="form-group">--%>
+                <%--<label for="flatNumber" style="color: black">Flat number</label>--%>
+                <%--<input class="form-control form-control-md" type="number" id="flatNumber" name="flatNumber" />--%>
+            <%--</div>--%>
+            <%--<button onclick="form3_submit()" name="user_search" class="btn btn-secondary" data-dismiss="modal"> Submit </button>--%>
+            <%--<script>--%>
+                <%--function form3_submit() {--%>
+                    <%--document.getElementById("add_adr").submit();--%>
+                <%--};--%>
+            <%--</script>--%>
+        <%--</form>--%>
+    <%--</div>--%>
 
 
     <%--<script>--%>

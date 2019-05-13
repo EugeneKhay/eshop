@@ -17,6 +17,10 @@ public class ClientAddress {
     @GeneratedValue
     private Integer id;
 
+    @Version
+    //@Column(name="VERSION")
+    private Integer version;
+
     private String country;
     private String city;
     private int postCode;
@@ -31,9 +35,12 @@ public class ClientAddress {
             inverseJoinColumns = @JoinColumn(name = "client_id"))
     private List<Client> clients;
 
-    //EXP
-    @OneToOne(mappedBy = "addressForDelivery")
-    private Order order;
+
+//    @OneToOne(mappedBy = "addressForDelivery")
+//    private Order order;
+
+    @OneToMany(mappedBy = "addressForDelivery", fetch = FetchType.EAGER)
+    private List<Order> order;
 
     public ClientAddress(String country, String city, int postCode, String street, int houseNumber, int flatNumber) {
         this.country = country;
@@ -55,12 +62,17 @@ public class ClientAddress {
         if (this == o) return true;
         if (!(o instanceof ClientAddress)) return false;
         ClientAddress address = (ClientAddress) o;
-        return id.equals(address.id);
+        return postCode == address.postCode &&
+                houseNumber == address.houseNumber &&
+                flatNumber == address.flatNumber &&
+                country.equals(address.country) &&
+                city.equals(address.city) &&
+                street.equals(address.street);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(country, city, postCode, street, houseNumber, flatNumber);
     }
 }
 

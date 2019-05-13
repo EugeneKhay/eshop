@@ -26,7 +26,35 @@ public class BasketService {
         return products;
     }
 
-    public List<Product> prepareProductsForBasket( int id, String page, HttpSession session) {
+//    public List<Product> prepareProductsForBasket( int id, String page, HttpSession session) {
+//        Product product = productService.getProductById(id);
+//        Basket basket = (Basket) session.getAttribute("shop_basket");
+//        if (basket.getProductsInBasket().containsKey(product)) {
+//            int amountInBasketBeforeAdd = basket.getProductsInBasket().get(product);
+//            basket.getProductsInBasket().put(product, amountInBasketBeforeAdd + 1);
+//        } else {
+//            basket.getProductsInBasket().put(product, 1);
+//        }
+//        session.setAttribute("shop_basket", basket);
+//        double totalPrice = 0;
+//        for (Map.Entry<Product, Integer> entry: basket.getProductsInBasket().entrySet()) {
+//            totalPrice += (entry.getKey().getProductPrice() * entry.getValue());
+//        }
+//        session.setAttribute("totalPrice", totalPrice);
+//
+//        CategoryOfProduct category = product.getProductCategory();
+//        List<Product> productsForView;
+//        //if came from homepage
+//        if (page == null) {
+//            productsForView = productService.getAllProducts();
+//        } else
+//            // if came from page of any category of products
+//            //productsForView = productService.getAllProductsByCategory(category);
+//            productsForView = productService.getAllProductsByCategory(category);
+//        return productsForView;
+//    }
+
+    public Integer prepareProductsForBasket( int id, HttpSession session) {
         Product product = productService.getProductById(id);
         Basket basket = (Basket) session.getAttribute("shop_basket");
         if (basket.getProductsInBasket().containsKey(product)) {
@@ -41,17 +69,12 @@ public class BasketService {
             totalPrice += (entry.getKey().getProductPrice() * entry.getValue());
         }
         session.setAttribute("totalPrice", totalPrice);
-        //ProductCategory category = product.getCategory();
-        CategoryOfProduct category = product.getProductCategory();
-        List<Product> productsForView;
-        //if came from homepage
-        if (page == null) {
-            productsForView = productService.getAllProducts();
-        } else
-            // if came from page of any category of products
-            //productsForView = productService.getAllProductsByCategory(category);
-            productsForView = productService.getAllProductsByCategory(category);
-        return productsForView;
+        Integer shop_basket = ((Basket) session.getAttribute("shop_basket")).getProductsInBasket()
+                .values()
+                .stream()
+                .reduce((s1, s2) -> s1 + s2)
+                .orElse(0);
+        return shop_basket;
     }
 
     public Double deleteFromBAsket(int id, HttpSession session) {

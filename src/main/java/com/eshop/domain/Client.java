@@ -43,12 +43,16 @@ public class Client implements UserDetails, Serializable {
 //    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
 //    @OneToMany(mappedBy = "client")
 
-    @Fetch(value = FetchMode.SUBSELECT)
+
+
+
+
+    //@Fetch(value = FetchMode.SUBSELECT)
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "client_addresses",
             joinColumns = @JoinColumn(name = "client_id"),
             inverseJoinColumns = @JoinColumn(name = "address_id"))
-    private List<ClientAddress> addressList;
+    private Set<ClientAddress> addressList;
 
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     private Set<Order> orders;

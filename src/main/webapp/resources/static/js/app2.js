@@ -3,23 +3,34 @@ function stats() {
     $("#orders").css({"display" : "none"});
     $("#products").css({"display" : "none"});
     $("#clients").css({"display" : "none"});
+    $("#shops").css({"display" : "none"});
 }
 function orders() {
     $("#orders").css({"display" : "block"});
     $("#stats").css({"display" : "none"});
     $("#products").css({"display" : "none"});
     $("#clients").css({"display" : "none"});
+    $("#shops").css({"display" : "none"});
 }
 function products() {
     $("#products").css({"display" : "block"});
     $("#stats").css({"display" : "none"});
     $("#orders").css({"display" : "none"});
     $("#clients").css({"display" : "none"});
+    $("#shops").css({"display" : "none"});
 }
 function clients() {
     $("#clients").css({"display" : "block"});
     $("#products").css({"display" : "none"});
     $("#stats").css({"display" : "none"});
+    $("#orders").css({"display" : "none"});
+    $("#shops").css({"display" : "none"});
+}
+function shops() {
+    $("#shops").css({"display" : "block"});
+    $("#products").css({"display" : "none"});
+    $("#stats").css({"display" : "none"});
+    $("#clients").css({"display" : "none"});
     $("#orders").css({"display" : "none"});
 }
 // function changeProduct() {
@@ -83,16 +94,31 @@ function increase(id) {
 
 function decrease(id) {
     $.ajax({
-            url : '/editOrderMinus',
-            type: 'GET',
-            dataType: 'json',
-            data : ({
-                editOrderMinus: id
-            }),
-            success: function (result) {
-                $('#totalPrice').text(result[0]);
-                $('#amount'+id+'edit').text(result[1]);
-            }
+        url : '/editOrderMinus',
+        type: 'GET',
+        dataType: 'json',
+        data : ({
+            editOrderMinus: id
+        }),
+        success: function (result) {
+            $('#totalPrice').text(result[0]);
+            $('#amount'+id+'edit').text(result[1]);
+        }
+    });
+}
+
+function add(id) {
+    $.ajax({
+        url : '/basket',
+        type: 'GET',
+        dataType: 'json',
+        data : ({
+            item: id
+        }),
+        success: function (result) {
+            $('#basketCount').text(result);
+            $('#basketCount2').text(result);
+        }
     });
 }
 

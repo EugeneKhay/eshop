@@ -43,6 +43,8 @@ public interface ClientService extends UserDetailsService {
 
     void deleteAddressById(int id);
 
+    //void deleteAddressById(int id, int ver);
+
 
 
 

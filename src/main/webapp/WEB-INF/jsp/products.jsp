@@ -46,7 +46,7 @@
 
     <!-- Nav -->
     <div class="row">
-        <div class="col-sm-1">
+        <div class="col-sm-1" style="margin-top: 60px">
         </div>
         <div class="col-sm">
             <ul class="nav justify-content-center">
@@ -79,7 +79,7 @@
             <button type="button" class="btn btn-primary-outline">
                 <a href="/basket" style="color: aliceblue">
                     <span><img style="width: 45px; height: 30px" src="/resources/static/images/basket2.png"/> </span>
-                    <span class="badge badge-light"><%= ((Basket) session.getAttribute("shop_basket")).getProductsInBasket().values().stream().reduce((s1, s2) -> s1 + s2).orElse(0) %></span>
+                    <span class="badge badge-light" id="basketCount"><%= ((Basket) session.getAttribute("shop_basket")).getProductsInBasket().values().stream().reduce((s1, s2) -> s1 + s2).orElse(0) %></span>
                 </a>
             </button>
         </div>
@@ -133,10 +133,10 @@
 
     <!-- Search -->
     <div class="row" style="margin-bottom: 100px; margin-top: 20px">
-        <div class="col-sm-2">
+        <div class="col-sm-3">
             <c:url var="searching" value="${requestScope['javax.servlet.forward.request_uri']}" />
             <form method="post" action="${searching}">
-                <h5>Search</h5>
+                <h5>Filter</h5>
                 <div class="form-check form-group" >
                     <input class="form-check-input" type="checkbox" name="search_type1" value="Price" id="defaultCheck1">
                     <label class="form-check-label" for="defaultCheck1">Price</label>
@@ -164,9 +164,32 @@
         <div class="col-sm">
             <div class="row" id="output">
                 <c:forEach items="${items}" var="item">
-                    <form id="form-card" action="/basket" method="post">
+                    <%--<form id="form-card" action="/basket" method="post">--%>
                         <div class="card">
-                                <img style="margin-top: 10px" src="${item.imagePath}" class="card-img-top" alt="Image">
+                                <%--<img style="margin-top: 10px" src="${item.imagePath}" class="card-img-top" alt="Image">--%>
+
+                                <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                                        <div class="carousel-inner">
+                                            <div class="carousel-item active" data-interval="100000">
+                                                <img src="/resources/static/images/phone1.jpg" class="d-block w-100" alt="1">
+                                            </div>
+                                            <div class="carousel-item" data-interval="100000">
+                                                <img src="/resources/static/images/phone2.jpg" class="d-block w-100" alt="2">
+                                            </div>
+                                            <div class="carousel-item" data-interval="100000">
+                                                <img src="/resources/static/images/phone3.jpg" class="d-block w-100" alt="3">
+                                            </div>
+                                        </div>
+                                        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                                    </div>
+
                                 <div class="card-body">
                                 <h5 class="card-title">${item.productName}</h5>
                                 <p class="card-text">${item.productPrice}</p>
@@ -178,10 +201,13 @@
                                 <input  type="hidden" name="item" value=${item.id}>
                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                 <input type="hidden" name="page" value="${requestScope['javax.servlet.forward.request_uri']}"/>
-                                <button class="btn btn-secondary btn-sm justify-content-center" type="submit">Buy</button>
-                            </div>
+
+                                <%--<button class="btn btn-secondary btn-sm justify-content-center" type="submit">Buy</button>--%>
+                                <button onclick="add(${item.id})" type="submit" class="btn btn-secondary"> Buy </button>
+
+                                </div>
                         </div>
-                    </form>
+                    <%--</form>--%>
                 </c:forEach>
             </div>
         </div>

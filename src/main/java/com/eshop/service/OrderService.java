@@ -19,6 +19,7 @@ public interface OrderService {
 
     List<Order> getOrdersPerPeriod(LocalDate start, LocalDate finish);
 
+    //TODO delete unused
     LocalDate getDate(String day, String month, String year);
 
     double getTotalSumOfAllOrdersPerPeriod(LocalDate start, LocalDate finish);
@@ -33,10 +34,10 @@ public interface OrderService {
 
     List<Order> getOrdersPerPeriodForClient(Client client, LocalDate start, LocalDate finish);
 
+    //TODO delete unused
     Order makeNewOrder(HttpSession session, String paymentMethod, String deliveryMethod);
 
-    //Order makeNewOrder(HttpSession session, String paymentMethod, String deliveryMethod, String deliveryAddress);
-    Order makeNewOrder(HttpSession session, String paymentMethod, String deliveryMethod, String deliveryAddress, String collectAffress);
+    Order makeNewOrder(HttpSession session, String paymentMethod, String deliveryMethod, Integer deliveryAddress, Integer collectAffress);
 
     void editOrder(int id, String paymentStatus, String orderStatus);
 
@@ -45,6 +46,10 @@ public interface OrderService {
     void saveShop(ShopAddress address);
 
     Set<ShopAddress> getAllShops();
+
+    ClientAddress getClientAddressById(Integer id);
+
+    ShopAddress getShopById(Integer id);
 
 
 }

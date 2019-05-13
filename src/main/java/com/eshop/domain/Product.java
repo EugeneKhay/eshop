@@ -35,8 +35,12 @@ public class Product implements Serializable {
     @JsonManagedReference
     private ProductParameteres productParameteres;
 
-    //EXP
-    @OneToOne(cascade = CascadeType.ALL)
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "category_id")
+//    @JsonManagedReference
+//    private CategoryOfProduct productCategory;
+
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")
     @JsonManagedReference
     private CategoryOfProduct productCategory;

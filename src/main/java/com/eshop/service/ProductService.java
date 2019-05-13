@@ -51,4 +51,7 @@ public interface ProductService {
 
     int deleteCategoryByName(String categoryName);
 
+    CategoryOfProduct getSingleCategoryByName(String name);
+
+
 }

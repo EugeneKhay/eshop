@@ -42,6 +42,8 @@ public interface ProductDAO {
 
     Set<CategoryOfProduct> getAllCategories();
 
+    CategoryOfProduct getSingleCategoryByName(String name);
+
     void saveCategory(CategoryOfProduct category);
 
     List<CategoryOfProduct> getCategoryByName(String categoryName);

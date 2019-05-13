@@ -2,6 +2,7 @@ package com.eshop.dao.impl;
 
 import com.eshop.dao.OrderDao;
 import com.eshop.domain.Client;
+import com.eshop.domain.ClientAddress;
 import com.eshop.domain.Order;
 import com.eshop.domain.ShopAddress;
 import com.eshop.enums.OrderStatus;
@@ -79,10 +80,30 @@ public class OrderDaoImpl implements OrderDao {
         sessionFactory.getCurrentSession().saveOrUpdate(address);
     }
 
+    //TODO remove set
     @Override
     public Set<ShopAddress> getAllShops() {
         String hql = "FROM ShopAddress";
         Query query = sessionFactory.getCurrentSession().createQuery(hql);
         return new HashSet<>(query.list());
     }
+
+    @Override
+    public ShopAddress getShopById(Integer id) {
+        String hql = "FROM ShopAddress WHERE id = :param";
+        Query query = sessionFactory.getCurrentSession().createQuery(hql);
+        query.setParameter("param", id);
+        ShopAddress address = (ShopAddress) query.list().get(0);
+        return address;
+    }
+
+    @Override
+    public ClientAddress getClientAddressById(Integer id) {
+        String hql = "FROM ClientAddress WHERE id = :param";
+        Query query = sessionFactory.getCurrentSession().createQuery(hql);
+        query.setParameter("param", id);
+        ClientAddress address = (ClientAddress) query.list().get(0);
+        return address;
+    }
 }
+

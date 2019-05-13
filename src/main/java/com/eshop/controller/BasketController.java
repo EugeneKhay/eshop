@@ -1,7 +1,9 @@
 package com.eshop.controller;
 
+import com.eshop.domain.Basket;
 import com.eshop.domain.Client;
 import com.eshop.domain.Product;
+import com.eshop.service.ClientService;
 import com.eshop.service.OrderService;
 import com.eshop.service.impl.BasketService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,9 @@ public class BasketController {
     @Autowired
     private OrderService orderService;
 
+    @Autowired
+    private ClientService clientService;
+
     private Logger logger = Logger.getLogger("logger");
 
     @GetMapping("/basket")
@@ -37,9 +42,14 @@ public class BasketController {
         Map<Product, Integer> productsInBasket = basketService.getProductsInBasket(request);
         model.addAttribute("items", productsInBasket);
         try {
+            // TODO make separate method
             Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            model.addAttribute("addresses", client.getAddressList());
-            model.addAttribute("client", client);
+            Integer id = client.getId();
+            Client clientForView = clientService.getClientById(id);
+
+            model.addAttribute("addresses", clientForView.getAddressList());
+            //model.addAttribute("client", client);
+            model.addAttribute("client", clientForView);
             model.addAttribute("addressesSelf", orderService.getAllShops());
         } catch (ClassCastException ex) {
             logger.info("Not authorized attempt go to basket page");
@@ -48,31 +58,12 @@ public class BasketController {
         return "basket";
     }
 
-//    @PostMapping("/basket")
-//    public String addToBasket(@RequestParam(name = "item") int id,
-//                              @RequestParam(name = "page", required = false) String page,
-//                              HttpSession session,
-//                              Model model) {
-//        List<Product> products = basketService.prepareProductsForBasket(id, page, session);
-//        model.addAttribute("items", products);
-//        if (page == null) {
-//            logger.info("Product added to basket");
-//            return "homepage2";
-//        }
-//        logger.info("Product added to basket");
-//        return "products";
-//
-//    }
-
-    @PostMapping("/basket")
-    public void addToBasket(@RequestParam(name = "item") int id,
-                            @RequestParam(name = "page", required = false) String page,
-                            HttpSession session,
-                            HttpServletRequest request,
-                            Model model) {
-        basketService.prepareProductsForBasket(id, page, session);
-        getBasket(request, model);
-
+    @GetMapping(value = "/basket", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseBody
+    public ResponseEntity<Integer> addToBasketAjax(@RequestParam(name = "item") int id,
+                                                   HttpSession session) {
+        Integer shop_basket = basketService.prepareProductsForBasket(id, session);
+        return new ResponseEntity<>(shop_basket, HttpStatus.OK);
     }
 
     @GetMapping(value = "/delete", produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -101,5 +92,65 @@ public class BasketController {
         logger.info("Item of product added to basket");
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+    @PostMapping("/addaddress")
+    public String addClientAddress (@RequestParam(name = "country", required = false) String country,
+                                    @RequestParam(name = "city", required = false) String city,
+                                    @RequestParam(name = "postcode", required = false) int postcode,
+                                    @RequestParam(name = "street", required = false) String street,
+                                    @RequestParam(name = "houseNumber", required = false) int houseNumber,
+                                    @RequestParam(name = "flatNumber", required = false) int flatNumber,
+                                    Model model,
+                                    HttpServletRequest request) {
+        Client clientForView = clientService.createAddressForClient(country, city, postcode, street, houseNumber, flatNumber);
+        logger.info("Save address");
+        model.addAttribute("client", clientForView);
+        model.addAttribute("addresses", clientForView.getAddressList());
+        //getBasket(request, model);
+        return "personal";
+    }
 }
+
+
+
+
+//    @PostMapping("/basket")
+//    public String addToBasket(@RequestParam(name = "item") int id,
+//                              @RequestParam(name = "page", required = false) String page,
+//                              HttpSession session,
+//                              Model model) {
+//        List<Product> products = basketService.prepareProductsForBasket(id, page, session);
+//        model.addAttribute("items", products);
+//        if (page == null) {
+//            logger.info("Product added to basket");
+//            return "homepage2";
+//        }
+//        logger.info("Product added to basket");
+//        return "products";
+//
+//    }
+
+//    @PostMapping("/basket")
+//    public void addToBasket(@RequestParam(name = "item") int id,
+//                            @RequestParam(name = "page", required = false) String page,
+//                            HttpSession session,
+//                            HttpServletRequest request,
+//                            Model model) {
+//        basketService.prepareProductsForBasket(id, page, session);
+//        getBasket(request, model);
+//
+//    }
+
+//    @PostMapping("/basket")
+//    public String addToBasket(@RequestParam(name = "item") int id,
+//                              @RequestParam(name = "page", required = false) String page,
+//                              HttpSession session
+////                            HttpServletRequest request,
+////                            Model model
+//    ) {
+//        basketService.prepareProductsForBasket(id, page, session);
+//        if (page == null) return "redirect:/";
+//        return "redirect:" + page;
+//
+//    }
 
