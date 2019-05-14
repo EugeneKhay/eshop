@@ -46,6 +46,10 @@
                     <input class="form-control form-control-md" type="email" id="valid-email" name="email" required>
                 </div>
                 <div class="form-group">
+                    <label for="valid-email2">Phone</label>
+                    <input class="form-control form-control-md" type="text" id="valid-email2" name="phone" required>
+                </div>
+                <div class="form-group">
                     <label for="required-input4">Password</label>
                     <input class="form-control form-control-md" type="text" id="required-input4" name="password" required>
                 </div>

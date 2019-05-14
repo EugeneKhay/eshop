@@ -39,11 +39,31 @@ public class AdminController {
     public String viewAdminPage(Model model) {
         logger.info("Go to adminpage");
         //TODO make separate
-        LocalDate start = LocalDate.of(2019, 1, 1);
-        LocalDate finish = LocalDate.now();
-        adminService.setStats(model, start, finish);
+//        LocalDate start = LocalDate.of(2019, 1, 1);
+//        LocalDate finish = LocalDate.now();
+//        adminService.setStats(model, start, finish);
+        adminService.setStatsDefaultDate(model);
         return "adminpage";
     }
+
+//    @PostMapping("/addproducts")
+//    public String addProduct(@RequestParam(name = "productName") String productName,
+//                             @RequestParam(name = "productPrice") double productPrice,
+//                             @RequestParam(name = "category") String category,
+//                             @RequestParam(name = "amount") int amount,
+//                             @RequestParam(name = "colour") String colour,
+//                             @RequestParam(name = "brand") String brand,
+//                             @RequestParam(name = "image", required = false) String image,
+//                             Model model) {
+//        adminService.addNewProduct(productName, productPrice, category, amount, colour, brand, image);
+//        //model.addAttribute("categories", productService.getAllCategories());
+//        logger.info("Product added");
+//        //TODO make separate
+//        LocalDate start = LocalDate.of(2019, 1, 1);
+//        LocalDate finish = LocalDate.now();
+//        adminService.setStats(model, start, finish);
+//        return "adminpage";
+//    }
 
     @PostMapping("/addproducts")
     public String addProduct(@RequestParam(name = "productName") String productName,
@@ -52,15 +72,19 @@ public class AdminController {
                              @RequestParam(name = "amount") int amount,
                              @RequestParam(name = "colour") String colour,
                              @RequestParam(name = "brand") String brand,
+                             @RequestParam(name = "weight") int weight,
+                             @RequestParam(name = "os", required = false) String operatingSystem,
                              @RequestParam(name = "image", required = false) String image,
                              Model model) {
-        adminService.addNewProduct(productName, productPrice, category, amount, colour, brand, image);
+        adminService.addNewProduct(productName, productPrice, category, amount,
+                                   colour, brand, weight, operatingSystem, image);
         //model.addAttribute("categories", productService.getAllCategories());
         logger.info("Product added");
         //TODO make separate
-        LocalDate start = LocalDate.of(2019, 1, 1);
-        LocalDate finish = LocalDate.now();
-        adminService.setStats(model, start, finish);
+//        LocalDate start = LocalDate.of(2019, 1, 1);
+//        LocalDate finish = LocalDate.now();
+//        adminService.setStats(model, start, finish);
+        adminService.setStatsDefaultDate(model);
         return "adminpage";
     }
 
@@ -73,9 +97,10 @@ public class AdminController {
             }
         //model.addAttribute("categories", productService.getAllCategories());
         //TODO make separate
-        LocalDate start = LocalDate.of(2019, 1, 1);
-        LocalDate finish = LocalDate.now();
-        adminService.setStats(model, start, finish);
+//        LocalDate start = LocalDate.of(2019, 1, 1);
+//        LocalDate finish = LocalDate.now();
+//        adminService.setStats(model, start, finish);
+        adminService.setStatsDefaultDate(model);
         return "adminpage";
     }
 
@@ -83,12 +108,13 @@ public class AdminController {
     @PostMapping("/deletecategory")
     public String deleteCategory(@RequestParam(name = "categoryForRemove") String categoryName, Model model) {
         productService.deleteCategoryByName(categoryName);
-        Set<CategoryOfProduct> allCategories = productService.getAllCategories();
+        //Set<CategoryOfProduct> allCategories = productService.getAllCategories();
         //model.addAttribute("categories", allCategories);
         //TODO make separate
-        LocalDate start = LocalDate.of(2019, 1, 1);
-        LocalDate finish = LocalDate.now();
-        adminService.setStats(model, start, finish);
+//        LocalDate start = LocalDate.of(2019, 1, 1);
+//        LocalDate finish = LocalDate.now();
+//        adminService.setStats(model, start, finish);
+        adminService.setStatsDefaultDate(model);
         return "adminpage";
     }
 
@@ -118,7 +144,7 @@ public class AdminController {
     }
 
     @PostMapping("/addshop")
-    public String addClientAddress (@RequestParam(name = "country", required = false) String country,
+    public String addShopAddress (@RequestParam(name = "country", required = false) String country,
                                     @RequestParam(name = "city", required = false) String city,
                                     @RequestParam(name = "postcode", required = false) int postcode,
                                     @RequestParam(name = "street", required = false) String street,
@@ -134,9 +160,10 @@ public class AdminController {
         //model.addAttribute("addresses", clientForView.getAddressList());
 //        return "adminpage";
         //TODO make separate
-        LocalDate start = LocalDate.of(2019, 1, 1);
-        LocalDate finish = LocalDate.now();
-        adminService.setStats(model, start, finish);
+//        LocalDate start = LocalDate.of(2019, 1, 1);
+//        LocalDate finish = LocalDate.now();
+//        adminService.setStats(model, start, finish);
+        adminService.setStatsDefaultDate(model);
         return "adminpage";
     }
 
@@ -154,19 +181,21 @@ public class AdminController {
                            @RequestParam(name = "houseNumber") int houseNumber ,
                            @RequestParam(name = "phone") String phone,
                            Model model) {
-        ShopAddress shopById = orderService.getShopById(id);
-        shopById.setCountry(country);
-        shopById.setCity(city);
-        shopById.setPostCode(postcode);
-        shopById.setStreet(street);
-        shopById.setHouseNumber(houseNumber);
-        shopById.setPhoneNumber(phone);
-        orderService.saveShop(shopById);
+//        ShopAddress shopById = orderService.getShopById(id);
+//        shopById.setCountry(country);
+//        shopById.setCity(city);
+//        shopById.setPostCode(postcode);
+//        shopById.setStreet(street);
+//        shopById.setHouseNumber(houseNumber);
+//        shopById.setPhoneNumber(phone);
+//        orderService.saveShop(shopById);
         //viewAdminPage(model);
         //TODO make separate
-        LocalDate start = LocalDate.of(2019, 1, 1);
-        LocalDate finish = LocalDate.now();
-        adminService.setStats(model, start, finish);
+//        LocalDate start = LocalDate.of(2019, 1, 1);
+//        LocalDate finish = LocalDate.now();
+//        adminService.setStats(model, start, finish);
+        orderService.editShopById(id, country, city, postcode, street, houseNumber, phone);
+        adminService.setStatsDefaultDate(model);
         return "adminpage";
     }
 }

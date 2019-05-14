@@ -89,12 +89,13 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public boolean registerNewClient(String firstName, String lastName, LocalDate birthDate, String email, String password) {
+    public boolean registerNewClient(String firstName, String lastName, LocalDate birthDate, String email, String phone, String password) {
         Client client = new Client();
         client.setFirstName(firstName);
         client.setLastName(lastName);
         client.setBirthDate(birthDate);
         client.setEmail(email);
+        client.setPhone(phone);
         client.setPassword(passwordEncoder.encode(password));
         client.setRoles(Collections.singleton(Role.ROLE_USER));
         if (checkLogin(email)) {
@@ -106,12 +107,13 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Client editClientPersonalData(int id, String firstName, String lastName, String password, String email) {
+    public Client editClientPersonalData(int id, String firstName, String lastName, String password, String email, String phone) {
         Client client = getClientById(id);
         client.setFirstName(firstName);
         client.setLastName(lastName);
         client.setPassword(passwordEncoder.encode(password));
         client.setEmail(email);
+        client.setPhone(phone);
         saveClient(client);
         return client;
     }
@@ -130,7 +132,11 @@ public class ClientServiceImpl implements ClientService {
     public Client createAddressForClient(String country, String city, int postcode, String street, int houseNumber, int flatNumber) {
         //TODO clientForView
         ClientAddress address = new ClientAddress(country, city, postcode, street, houseNumber, flatNumber);
-        Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Client client0 = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        Integer id = client0.getId();
+        Client client = getClientById(id);
+
 
 //        List<Client> clientList = new ArrayList<>();
 //        address.setClients(clientList);
@@ -144,10 +150,10 @@ public class ClientServiceImpl implements ClientService {
         client.setAddressList(addresses);
         saveClient(client);
 
-        Integer id = client.getId();
-        return getClientById(id);
+        //Integer id = client.getId();
+        //return getClientById(id);
 
-        //return client;
+        return client;
     }
 
     @Override
@@ -158,6 +164,14 @@ public class ClientServiceImpl implements ClientService {
         } catch (Exception ex) {
             logger.info("Update or delete violates foreign key constraint");
         }
+    }
+
+    @Override
+    public Client getClientForView() {
+        Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Integer id = client.getId();
+        Client clientForView = getClientById(id);
+        return clientForView;
     }
 
     @Override

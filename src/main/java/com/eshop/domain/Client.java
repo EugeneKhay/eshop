@@ -33,6 +33,8 @@ public class Client implements UserDetails, Serializable {
 
     private String email;
 
+    private String phone;
+
     private String password;
 
 //    @ManyToOne(optional = false, cascade = CascadeType.ALL)

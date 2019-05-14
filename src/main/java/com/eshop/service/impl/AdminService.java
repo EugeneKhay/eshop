@@ -67,6 +67,12 @@ public class AdminService {
         model.addAttribute("output", output);
     }
 
+    public void setStatsDefaultDate(Model model) {
+        LocalDate start = LocalDate.of(2019, 1, 1);
+        LocalDate finish = LocalDate.now();
+        setStats(model, start, finish);
+    }
+
     public List<Integer> numberOfOrdersForTenBestClients(List<Client> clientList, LocalDate start, LocalDate finish) {
         List<Integer> numbers = new ArrayList<>();
         for (Client client: clientList) {
@@ -77,8 +83,26 @@ public class AdminService {
     }
 
     public void addNewProduct(String productName, double productPrice, String category, int amount,
-                              String colour, String brand, String image) {
-        ProductParameteres productParameteres = new ProductParameteres(colour, brand);
+                              String colour, String brand, int weight, String operatingSystem, String image) {
+        ProductParameteres productParameteres = new ProductParameteres(colour, brand, weight, operatingSystem);
+        CategoryOfProduct productCategory = productService.getSingleCategoryByName(category);
+        String imagePath = IMAGE_PATH + image;
+        System.out.println(imagePath);
+        Product product = new Product(productName, productPrice, amount, imagePath, productParameteres, productCategory);
+        productService.saveProduct(product);
+    }
+
+    //check category doesn't exist
+    public boolean checkCategory(String categoryName) {
+        List<CategoryOfProduct> listOfCategoryByName = productService.getCategoryByName(categoryName);
+        if (listOfCategoryByName.size() == 0) return true;
+        return false;
+    }
+
+}
+
+
+
 
 //        CategoryOfProduct productCategory;
 //        if (checkCategory(category)) {
@@ -87,17 +111,4 @@ public class AdminService {
 //            productCategory = productService.getCategoryByName(category).get(0);
 //        }
 
-        //CategoryOfProduct productCategory = new CategoryOfProduct(category);
-        CategoryOfProduct productCategory = productService.getSingleCategoryByName(category);
-        String imagePath = IMAGE_PATH + image;
-        Product product = new Product(productName, productPrice, amount, imagePath, productParameteres, productCategory);
-        productService.saveProduct(product);
-    }
-
-    public boolean checkCategory(String categoryName) {
-        List<CategoryOfProduct> listOfCategoryByName = productService.getCategoryByName(categoryName);
-        if (listOfCategoryByName.size() == 0) return true;
-        return false;
-    }
-
-}
+//CategoryOfProduct productCategory = new CategoryOfProduct(category);

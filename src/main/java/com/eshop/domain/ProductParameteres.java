@@ -21,24 +21,19 @@ public class ProductParameteres {
 
     private String brand;
 
+    private int weight;
+
+    private String operatingSystem;
+
     @OneToOne(mappedBy = "productParameteres")
     @JsonBackReference
     private Product product;
 
-    public ProductParameteres(String colour, String brand) {
+    public ProductParameteres(String colour, String brand, int weight, String operatingSystem) {
         this.colour = colour;
         this.brand = brand;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof ProductParameteres)) return false;
-        ProductParameteres that = (ProductParameteres) o;
-        return id.equals(that.id) &&
-                colour.equals(that.colour) &&
-                brand.equals(that.brand) &&
-                product.equals(that.product);
+        this.weight = weight;
+        this.operatingSystem = operatingSystem;
     }
 
     @Override

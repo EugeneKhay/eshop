@@ -43,10 +43,11 @@ public class BasketController {
         model.addAttribute("items", productsInBasket);
         try {
             // TODO make separate method
-            Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Integer id = client.getId();
-            Client clientForView = clientService.getClientById(id);
+//            Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//            Integer id = client.getId();
+//            Client clientForView = clientService.getClientById(id);
 
+            Client clientForView = clientService.getClientForView();
             model.addAttribute("addresses", clientForView.getAddressList());
             //model.addAttribute("client", client);
             model.addAttribute("client", clientForView);
@@ -93,6 +94,7 @@ public class BasketController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    //TODO remove
     @PostMapping("/addaddress")
     public String addClientAddress (@RequestParam(name = "country", required = false) String country,
                                     @RequestParam(name = "city", required = false) String city,

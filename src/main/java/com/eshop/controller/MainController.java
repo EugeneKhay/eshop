@@ -6,6 +6,7 @@ import com.eshop.service.ClientService;
 import com.eshop.service.OrderService;
 import com.eshop.service.ProductService;
 import com.eshop.service.impl.AdminService;
+import com.eshop.service.impl.CatalogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,6 +29,9 @@ public class MainController {
 
     @Autowired
     private ClientService clientService;
+
+    @Autowired
+    private CatalogService catalogService;
 
     @Autowired
     private AdminService adminService;
@@ -53,6 +57,7 @@ public class MainController {
         List<Product> bestsellers = orderService.getBestsellers();
         model.addAttribute("items", bestsellers);
         model.addAttribute("categories", productService.getAllCategories());
+        //TODO replace
         sender.sendMessage("Bestsellers updated");
         return "homepage2";
     }
@@ -67,17 +72,20 @@ public class MainController {
                       @RequestParam(name = "lastName") String lastName,
                       @RequestParam(name = "birthDate") @DateTimeFormat(pattern="yyyy-MM-dd")LocalDate birthDate,
                       @RequestParam(name = "email") String email,
+                      @RequestParam(name = "phone") String phone,
                       @RequestParam(name = "password") String password) {
-        clientService.registerNewClient(firstName, lastName, birthDate, email, password);
+        clientService.registerNewClient(firstName, lastName, birthDate, email, phone, password);
         return "redirect:/";
     }
 
     @GetMapping("/personal")
     public String enterMyAccount(Model model) {
         // TODO clientForView
-        Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Integer id = client.getId();
-        Client clientById = clientService.getClientById(id);
+//        Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        Integer id = client.getId();
+//        Client clientById = clientService.getClientById(id);
+
+        Client clientById = clientService.getClientForView();
 //        System.out.println("Client ID: " + id);
         //model.addAttribute("client", client);
         model.addAttribute("client", clientById);
@@ -90,8 +98,9 @@ public class MainController {
                                  @RequestParam(name = "last") String lastName,
                                  @RequestParam(name = "password") String password,
                                  @RequestParam(name = "email") String email,
+                                 @RequestParam(name = "phone") String phone,
                                  Model model) {
-        Client clientForView = clientService.editClientPersonalData(clientId, firstName, lastName, password, email);
+        Client clientForView = clientService.editClientPersonalData(clientId, firstName, lastName, password, email, phone);
         model.addAttribute("client", clientForView);
         return "personal";
     }
@@ -133,9 +142,10 @@ public class MainController {
         clientService.deleteAddressById(id);
         //clientService.deleteAddressById(id, ver);
         // TODO clientForView
-        Client clientForView = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Integer id1 = clientForView.getId();
-        Client clientById = clientService.getClientById(id1);
+//        Client clientForView = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        Integer id1 = clientForView.getId();
+//        Client clientById = clientService.getClientById(id1);
+        Client clientById = clientService.getClientForView();
 
         model.addAttribute("client", clientById);
         return "personal";
@@ -149,24 +159,27 @@ public class MainController {
                               @RequestParam(name = "amount") int amount,
                               @RequestParam(name = "category") String category,
                               @RequestParam(name = "color") String colour,
+                              @RequestParam(name = "weight") int weight,
+                              @RequestParam(name = "operatingSystem") String operatingSystem,
                               Model model) {
-        productService.editProductByAdmin(productId, productName, brand, price, amount, category, colour);
+        productService.editProductByAdmin(productId, productName, brand, price, amount, category, colour, weight, operatingSystem);
         //model.addAttribute("products", productService.getAllProducts());
         //TODO make separate
-        LocalDate start = LocalDate.of(2019, 1, 1);
-        LocalDate finish = LocalDate.now();
-        adminService.setStats(model, start, finish);
+//        LocalDate start = LocalDate.of(2019, 1, 1);
+//        LocalDate finish = LocalDate.now();
+//        adminService.setStats(model, start, finish);
+        adminService.setStatsDefaultDate(model);
         return "adminpage";
     }
 
     @GetMapping("/{category}")
-    public String get(@PathVariable(name = "category") String cat, Model model) {
+    public String get(@PathVariable(name = "category") String page, Model model) {
         //TODO move to service
-        String end = cat.substring(1);
-        String start = cat.substring(0,1).toUpperCase();
+        String end = page.substring(1);
+        String start = page.substring(0,1).toUpperCase();
         String res = start + end;
-
         CategoryOfProduct category = new CategoryOfProduct(res);
+        //CategoryOfProduct category = catalogService.getCategoryByPage(page);
         List<Product> allProductsByCategory = productService.getAllProductsByCategory(res);
         model.addAttribute("items", allProductsByCategory);
         model.addAttribute("pageName", category.getCategoryName());

@@ -2,6 +2,7 @@ package com.eshop.service.impl;
 
 import com.eshop.domain.Basket;
 import com.eshop.domain.CategoryOfProduct;
+import com.eshop.domain.Client;
 import com.eshop.domain.Product;
 import com.eshop.enums.ProductCategory;
 import com.eshop.service.ProductService;
@@ -121,6 +122,15 @@ public class BasketService {
         return result;
     }
 
+    /**
+     * Set total price and amount of products in basket after adding product
+     * @param basket
+     * @param product
+     * @param amountAfter
+     * @param session
+     * @param totalPrice
+     * @return List<Number>
+     */
     public List<Number> setDataToSession(Basket basket, Product product, int amountAfter, HttpSession session, double totalPrice) {
         basket.getProductsInBasket().put(product, amountAfter);
         session.setAttribute("shop_basket", basket);
@@ -130,6 +140,7 @@ public class BasketService {
         result.add(amountAfter);
         return result;
     }
+
 
 
 

@@ -41,7 +41,8 @@ public interface ProductService {
 
     String getPageName(String page);
 
-    void editProductByAdmin(int productId, String productName, String brand, double price, int amount, String category, String colour);
+    void editProductByAdmin(int productId, String productName, String brand, double price, int amount,
+                            String category, String colour, int weight, String operatingSystem);
 
     Set<CategoryOfProduct> getAllCategories();
 

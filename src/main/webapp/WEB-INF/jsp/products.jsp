@@ -13,8 +13,15 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="/resources/static/css/style.css"/>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 </head>
 <body>
+
+
+
 
 <div class="container">
     <div class="row" id="productsTitle">
@@ -168,23 +175,28 @@
                         <div class="card">
                                 <%--<img style="margin-top: 10px" src="${item.imagePath}" class="card-img-top" alt="Image">--%>
 
-                                <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                                <div id="carouselExampleControls${item.id}" class="carousel slide" data-ride="carousel">
                                         <div class="carousel-inner">
+                                            <c:url var="imageUrl" value="${item.imagePath}" />
+
                                             <div class="carousel-item active" data-interval="100000">
-                                                <img src="/resources/static/images/phone1.jpg" class="d-block w-100" alt="1">
+                                                <%--<img src="${item.imagePath}/1.jpg" class="d-block w-100" alt="1">--%>
+                                                <img src="${imageUrl}/1.jpg" class="d-block w-100" alt="1">
                                             </div>
                                             <div class="carousel-item" data-interval="100000">
-                                                <img src="/resources/static/images/phone2.jpg" class="d-block w-100" alt="2">
+                                                <%--<img src="${item.imagePath}/2.jpg" class="d-block w-100" alt="2">--%>
+                                                <img src="${imageUrl}/2.jpg" class="d-block w-100" alt="2">
                                             </div>
                                             <div class="carousel-item" data-interval="100000">
-                                                <img src="/resources/static/images/phone3.jpg" class="d-block w-100" alt="3">
+                                                <%--<img src="${item.imagePath}/3.jpg" class="d-block w-100" alt="3">--%>
+                                                <img src="${imageUrl}/3.jpg" class="d-block w-100" alt="3">
                                             </div>
                                         </div>
-                                        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                                        <a class="carousel-control-prev" href="#carouselExampleControls${item.id}" role="button" data-slide="prev">
                                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                             <span class="sr-only">Previous</span>
                                         </a>
-                                        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                                        <a class="carousel-control-next" href="#carouselExampleControls${item.id}" role="button" data-slide="next">
                                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                             <span class="sr-only">Next</span>
                                         </a>
@@ -196,7 +208,9 @@
                                 <c:set var = "params" scope = "session" value = "${item.productParameteres}"/>
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item" >${params.brand}</li>
-                                    <li class="list-group-item" >${params.colour}</li>
+                                    <li class="list-group-item" >OS: ${params.operatingSystem}</li>
+                                    <li class="list-group-item" >Colour: ${params.colour}</li>
+                                    <li class="list-group-item" >Weight: ${params.weight} gr.</li>
                                 </ul>
                                 <input  type="hidden" name="item" value=${item.id}>
                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>

@@ -1,5 +1,6 @@
 package com.eshop.sender;
 
+import com.eshop.domain.Order;
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
@@ -11,12 +12,13 @@ public class SmsSender {
     public static final String AUTH_TOKEN =
             "d8e061e42f6d5afbabe048fb9a307c41";
 
-    public static void sendSMS() {
+    public static void sendSMS(String phoneNumber, int orderID) {
+        String body = "Order  N" + orderID + " confirmed";
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
         Message message = Message
-                .creator(new PhoneNumber("+79214358514"), // to
+                .creator(new PhoneNumber(phoneNumber), // to
                          new PhoneNumber("+12029196756"), // from
-                        "Where's Wallace?")
+                         body)
                 .create();
         System.out.println(message.getSid());
     }

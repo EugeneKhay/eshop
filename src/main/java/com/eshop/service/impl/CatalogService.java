@@ -36,6 +36,14 @@ public class CatalogService {
         return searchResult;
     }
 
+    public CategoryOfProduct getCategoryByPage(String page) {
+        String start = page.substring(0,1).toUpperCase();
+        String end = page.substring(1);
+        String res = start + end;
+        CategoryOfProduct category = new CategoryOfProduct(res);
+        return category;
+    }
+
     public CatalogService(ProductService productService) {
         this.productService = productService;
     }

@@ -11,6 +11,8 @@
     <link rel="stylesheet" type="text/css" href="/resources/static/css/style.css">
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="//ajax.aspnetcdn.com/ajax/jquery.ui/1.10.3/jquery-ui.min.js"></script>
+    <script src="<c:url value="/resources/static/js/app2.js"/>"></script>
+
 </head>
 <body>
 <div class="container">
@@ -291,17 +293,19 @@
         <div id="products" style="display: none">
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-9">
+                    <div class="col-sm-10">
                         <h5 style="color: black">List of products</h5>
-                        <table class="table table-borderless" style="withdth: 65%; margin: 0 auto; color: black">
+                        <table class="table table-borderless" style="withdth: 90%; margin: 0 auto; color: black">
                             <tr>
-                                <th>Product ID</th>
+                                <%--<th>Product ID</th>--%>
                                 <th>Product name</th>
                                 <th>Brand</th>
                                 <th>Price</th>
                                 <th>Amount</th>
                                 <th>Category</th>
+                                <th>OS</th>
                                 <th>Colour</th>
+                                <th>Weight</th>
                                 <th>
                                     <div class="btn-group mr-2" role="group" aria-label="Second group">
                                         <button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#addProduct"> Add </button>
@@ -311,13 +315,16 @@
                             <c:forEach items="${products}" var="product">
                                 <tr>
                                     <c:set var = "parameters" scope = "session" value = "${product.productParameteres}"/>
-                                    <td>${product.id}</td>
+                                    <%--<td>${product.id}</td>--%>
                                     <td>${product.productName}</td>
                                     <td>${parameters.brand}</td>
                                     <td>${product.productPrice}</td>
                                     <td>${product.amount}</td>
                                     <td>${product.productCategory}</td>
+
+                                    <td>${parameters.operatingSystem}</td>
                                     <td>${parameters.colour}</td>
+                                    <td>${parameters.weight}</td>
                                     <td>
                                         <div>
                                             <button type="button" class="btn btn-secondary" onclick="changeProduct2(${product.id})"> Change </button>
@@ -354,6 +361,14 @@
                                                 <label for="color" style="color: black">Color</label>
                                                 <input class="form-control form-control-md" type="text" id="color" name="color" value="${parameters.colour}"/>
                                             </div>
+                                            <div class="form-group">
+                                                <label for="weight2" style="color: black">Weight</label>
+                                                <input class="form-control form-control-md" type="number" id="weight2" name="weight" value="${parameters.weight}"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="operatingSystem" style="color: black"> Operating system </label>
+                                                <input class="form-control form-control-md" type="text" id="operatingSystem" name="operatingSystem" value="${parameters.operatingSystem}"/>
+                                            </div>
                                             <button onclick="form2_submit()" name="user_search" class="btn btn-secondary" data-dismiss="modal"> Submit </button>
                                         </form>
                                     </td>
@@ -383,7 +398,7 @@
                                                 <input  class="form-control form-control-md" name="productPrice" type="number" class="form-control" id="productPrice" aria-describedby="emailHelp" required>
                                             </div>
                                             <div>
-                                                <label for="productPrice"> Product type </label>
+                                                <label for="category"> Product type </label>
                                                 <select class="custom-select mr-sm-2" name="category" id="category" required>
                                                     <option selected>Choose category</option>
                                                     <c:forEach items="${categories}" var="category">
@@ -392,18 +407,30 @@
                                                 </select>
                                             </div>
                                             <div class="form-group">
-                                                <label for="productPrice">Amount</label>
+                                                <label for="amount">Amount</label>
                                                 <input class="form-control form-control-md" name="amount" type="number" class="form-control" id="amount" aria-describedby="emailHelp" required>
                                             </div>
                                             <b style="color:black"> Enter product parameters </b>
                                             <div class="form-group">
-                                                <label for="productPrice"> Colour </label>
+                                                <label for="colour"> Colour </label>
                                                 <input class="form-control form-control-md" name="colour" type="text" class="form-control" id="colour" aria-describedby="emailHelp" required>
                                             </div>
                                             <div class="form-group">
-                                                <label for="productPrice"> Brand </label>
+                                                <label for="brand"> Brand </label>
                                                 <input class="form-control form-control-md" name="brand" type="text" class="form-control" id="brand" aria-describedby="emailHelp" required>
                                             </div>
+                                            <div class="form-group">
+                                                <label for="weight"> Weight </label>
+                                                <input class="form-control form-control-md" name="weight" type="number" class="form-control" id="weight" aria-describedby="emailHelp" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="os"> OS </label>
+                                                <input class="form-control form-control-md" name="os" type="text" class="form-control" id="os" aria-describedby="emailHelp" required>
+                                            </div>
+
+
+
+
                                             <div class="form-group">
                                                 <label for="image"> Image </label>
                                                 <input class="form-control form-control-md" name="image" type="text" class="form-control" id="image" aria-describedby="emailHelp" required>
@@ -417,7 +444,7 @@
                         </div>
 
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-2">
                         <h5 style="color: black">List of categories</h5>
                         <div id="categories" >
                             <div class="container">
@@ -499,6 +526,7 @@
                     <th>Last name</th>
                     <th>Date of birth</th>
                     <th>Email</th>
+                    <th>Phone</th>
                     <th>Address</th>
                 </tr>
                 <c:forEach items="${clients}" var="client">
@@ -508,6 +536,7 @@
                         <td>${client.lastName}</td>
                         <td>${client.birthDate}</td>
                         <td>${client.email}</td>
+                        <td>${client.phone}</td>
                         <td>
                             <c:forEach items="${client.addressList}" var="address">
                                 <table>
@@ -638,7 +667,7 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="../resources/static/js/app2.js"/>
+<%--<script type="text/javascript" src="../resources/static/js/app2.js"/>--%>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

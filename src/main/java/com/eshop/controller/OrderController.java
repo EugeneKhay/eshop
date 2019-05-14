@@ -42,14 +42,15 @@ public class OrderController {
         //TODO remove to service
         Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Set<Order> orders = client.getOrders();
-        //orders.add(orderService.makeNewOrder(session, paymentMethod, deliveryMethod, deliveryAddress));
-        orders.add(orderService.makeNewOrder(session, paymentMethod, deliveryMethod, deliveryAddress, collectAddress));
+        Order order = orderService.makeNewOrder(session, paymentMethod, deliveryMethod, deliveryAddress, collectAddress);
+        orders.add(order);
         Integer id = client.getId();
         Client clientForView = clientService.getClientById(id);
+
         model.addAttribute("client", clientForView);
 
         //Turn on messages sending
-        //orderService.sendMessages();
+        //orderService.sendMessages(clientForView, order);
 
         logger.info("The order created and saved to DB");
         return "personal";
@@ -64,9 +65,10 @@ public class OrderController {
         //model.addAttribute("orders", orderService.getAllOrders());
         logger.info("The order's parameteres changed by admin");
         //TODO make separate
-        LocalDate start = LocalDate.of(2019, 1, 1);
-        LocalDate finish = LocalDate.now();
-        adminService.setStats(model, start, finish);
+//        LocalDate start = LocalDate.of(2019, 1, 1);
+//        LocalDate finish = LocalDate.now();
+//        adminService.setStats(model, start, finish);
+        adminService.setStatsDefaultDate(model);
         return "adminpage";
     }
 }

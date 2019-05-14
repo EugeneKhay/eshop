@@ -27,10 +27,10 @@ public interface ClientService extends UserDetailsService {
 
     boolean checkLogin(String login);
 
-    boolean registerNewClient( String firstName, String lastName, LocalDate birthDate, String email, String password);
+    boolean registerNewClient( String firstName, String lastName, LocalDate birthDate, String email, String phone, String password);
                                //String country, String city, int postcode, String street, int house, int flat);
 
-    Client editClientPersonalData(int id, String firstName, String lastName, String password, String email);
+    Client editClientPersonalData(int id, String firstName, String lastName, String password, String email, String phone);
                                     //String country, String city, int postcode, String street, int houseNumber, int flatNumber);
 
     ClientAddress getAddressById(int id);
@@ -44,6 +44,8 @@ public interface ClientService extends UserDetailsService {
     void deleteAddressById(int id);
 
     //void deleteAddressById(int id, int ver);
+
+    Client getClientForView();
 
 
 

@@ -122,7 +122,7 @@ public class OrderServiceImpl implements OrderService {
                     bestTenProducts.add(entry.getKey());
             }
         });
-        return bestTenProducts.stream().limit(12).collect(Collectors.toList());
+        return bestTenProducts.stream().limit(10).collect(Collectors.toList());
     }
 
     @Override
@@ -210,6 +210,18 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public void editShopById(int id, String country, String city, int postcode, String street, int houseNumber, String phone) {
+        ShopAddress shopById = getShopById(id);
+        shopById.setCountry(country);
+        shopById.setCity(city);
+        shopById.setPostCode(postcode);
+        shopById.setStreet(street);
+        shopById.setHouseNumber(houseNumber);
+        shopById.setPhoneNumber(phone);
+        saveShop(shopById);
+    }
+
+    @Override
     public void editOrder(int id, String paymentStatus, String orderStatus) {
         Order orderForEditing = getOrderById(id);
         orderForEditing.setPaymentStatus(PaymentStatus.valueOf(paymentStatus));
@@ -218,14 +230,15 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void sendMessages() {
+    public void sendMessages(Client client, Order order) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("4358514@gmail.com");
-        message.setTo("seelenrauf@mail.ru");
+        message.setTo(client.getEmail());
         message.setSubject("New order");
-        message.setText("Congratulations!");
+        //TODO set text
+        message.setText("Congratulations! Your order: " + order.getId() + ", products: " + order.getOrderProducts());
         mailSender.send(message);
-        SmsSender.sendSMS();
+        SmsSender.sendSMS(client.getPhone(), order.getId());
     }
 
     @Override

@@ -148,7 +148,9 @@
                     <%--<form id="form-card" action="/basket" method="post">--%>
                         <div class="card" >
                             <%--<img style="margin-top: 10px" src="../resources/static/images/IPhoneX.png" class="card-img-top" alt="Image">--%>
-                            <img style="margin-top: 10px" src="${item.imagePath}" class="card-img-top" alt="Image">
+                            <%--<img style="margin-top: 10px" src="${item.imagePath}" class="card-img-top" alt="Image">--%>
+                            <c:url var="imageUrl" value="${item.imagePath}" />
+                            <img style="margin-top: 10px" src="${imageUrl}/1.jpg" class="card-img-top" alt="Image">
                             <div class="card-body">
                                 <h5 class="card-title">${item.productName}</h5>
                                 <p class="card-text">${item.productPrice}</p>

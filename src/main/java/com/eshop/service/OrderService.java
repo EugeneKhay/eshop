@@ -1,6 +1,7 @@
 package com.eshop.service;
 
 import com.eshop.domain.*;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
@@ -41,7 +42,7 @@ public interface OrderService {
 
     void editOrder(int id, String paymentStatus, String orderStatus);
 
-    void sendMessages();
+    void sendMessages(Client client, Order order);
 
     void saveShop(ShopAddress address);
 
@@ -50,6 +51,8 @@ public interface OrderService {
     ClientAddress getClientAddressById(Integer id);
 
     ShopAddress getShopById(Integer id);
+
+    void editShopById(int id, String country, String city, int postcode, String street, int houseNumber, String phone);
 
 
 }

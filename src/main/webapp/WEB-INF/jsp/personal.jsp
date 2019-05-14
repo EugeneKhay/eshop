@@ -48,6 +48,7 @@
             <th>Last name</th>
             <th>Date of birth</th>
             <th>Email</th>
+            <th>Phone</th>
             <th>
                     <div class="col-sm-1">
                          <button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#personal"> Edit </button>
@@ -82,8 +83,12 @@
                                     <input class="form-control form-control-md" type="text" id="email" name="email" value="${client.email}"/>
                                 </div>
                                 <div class="form-group">
+                                    <label for="phone">Phone</label>
+                                    <input class="form-control form-control-md" type="text" id="phone" name="phone" value="${client.phone}"/>
+                                </div>
+                                <div class="form-group">
                                     <label for="password">Password</label>
-                                    <input class="form-control form-control-md" type="text" id="password" name="password" value="${client.password}"/>
+                                    <input class="form-control form-control-md" type="text" id="password" name="password"/>
                                 </div>
                                 <input type="hidden" name="clientForEdit" value="${client.id}">
                                 <button onclick="pers_submit()" type="submit" name="user_search" class="btn btn-secondary" data-dismiss="modal"> Submit </button>
@@ -105,6 +110,7 @@
             <td>${client.lastName}</td>
             <td>${client.birthDate}</td>
             <td>${client.email}</td>
+            <td>${client.phone}</td>
             <td></td>
         </tr>
         </table>
