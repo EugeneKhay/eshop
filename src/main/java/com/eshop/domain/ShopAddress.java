@@ -2,11 +2,13 @@ package com.eshop.domain;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Represents an address of particular shop.
+ */
 @Entity
 @Table(name = "shops_addresses")
 @Data
@@ -18,28 +20,19 @@ public class ShopAddress {
     private Integer id;
 
     private String country;
-    private String city;
-    private int postCode;
-    private String street;
-    private int houseNumber;
-    private String phoneNumber;
 
-//    @OneToOne(mappedBy = "addressForSelfCollect")
-//    private Order order;
+    private String city;
+
+    private int postCode;
+
+    private String street;
+
+    private int houseNumber;
+
+    private String phoneNumber;
 
     @OneToMany(mappedBy = "addressForSelfCollect", fetch = FetchType.EAGER)
     private List<Order> order;
-
-
-    //    @OneToMany(mappedBy = "address", fetch = FetchType.EAGER)
-//    private List<Client> clientList;
-
-//EXP
-//    @ManyToOne(optional = false, cascade = CascadeType.ALL)
-//    @JoinColumn(name = "client_id")
-
-
-
 
     public ShopAddress(String country, String city, int postCode, String street, int houseNumber, String phoneNumber) {
         this.country = country;

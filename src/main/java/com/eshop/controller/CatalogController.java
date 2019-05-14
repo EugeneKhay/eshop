@@ -1,21 +1,20 @@
 package com.eshop.controller;
 
 import com.eshop.domain.Product;
-import com.eshop.service.ProductService;
 import com.eshop.service.impl.CatalogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
 @Controller
 @RequestMapping
 public class CatalogController {
-
-    @Autowired
-    private ProductService productService;
 
     @Autowired
     private CatalogService catalogService;
@@ -27,8 +26,7 @@ public class CatalogController {
                               @RequestParam(name = "search_res3", required = false) String search_dataColour,
                               @PathVariable(name = "page") String page,
                               Model model) {
-        List<Product> dataForPostCatalog = catalogService.getDataForPostCatalog(search_dataPrice1, search_dataPrice2,
-                                                                                search_dataBrand, search_dataColour, page);
+        List<Product> dataForPostCatalog = catalogService.getDataForPostCatalog(search_dataPrice1, search_dataPrice2, search_dataBrand, search_dataColour, page);
         model.addAttribute("items", dataForPostCatalog);
         model.addAttribute("pageName", page);
         return "products";

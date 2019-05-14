@@ -9,11 +9,7 @@ import java.util.List;
 
 public interface ClientService extends UserDetailsService {
 
-    Client getClientByName(String name);
-
     Client getClientById(int id);
-
-    Client getClientByEmail(String email);
 
     List<Client> getAllClientsByEmail(String email);
 
@@ -23,15 +19,11 @@ public interface ClientService extends UserDetailsService {
 
     List<Client> getTenBestClientsPerPeriod(LocalDate start, LocalDate finish);
 
-    List<Client> getAllClientsPerPeriod(LocalDate start, LocalDate finish);
-
     boolean checkLogin(String login);
 
     boolean registerNewClient( String firstName, String lastName, LocalDate birthDate, String email, String phone, String password);
-                               //String country, String city, int postcode, String street, int house, int flat);
 
     Client editClientPersonalData(int id, String firstName, String lastName, String password, String email, String phone);
-                                    //String country, String city, int postcode, String street, int houseNumber, int flatNumber);
 
     ClientAddress getAddressById(int id);
 
@@ -42,8 +34,6 @@ public interface ClientService extends UserDetailsService {
     Client editAddressForClient(int addressForEdit, String country, String city, int postcode, String street, int houseNumber, int flatNumber);
 
     void deleteAddressById(int id);
-
-    //void deleteAddressById(int id, int ver);
 
     Client getClientForView();
 

@@ -13,16 +13,10 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="/resources/static/css/style.css"/>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
 </head>
 <body>
-
-
-
-
 <div class="container">
     <div class="row" id="productsTitle">
         <div class="col-sm-10">
@@ -57,26 +51,10 @@
         </div>
         <div class="col-sm">
             <ul class="nav justify-content-center">
-                <%--<li class="nav-item">--%>
-                    <%--<a class="nav-link" href="/phone">Phones</a>--%>
-                <%--</li>--%>
-                <%--<li class="nav-item">--%>
-                    <%--<a class="nav-link" href="/tv">TV & Video</a>--%>
-                <%--</li>--%>
-                <%--<li class="nav-item">--%>
-                    <%--<a class="nav-link" href="/audio">Audio & Hi-Fi</a>--%>
-                <%--</li>--%>
-                <%--<li class="nav-item">--%>
-                    <%--<a class="nav-link" href="/laptop">Laptops</a>--%>
-                <%--</li>--%>
-                <%--<li class="nav-item">--%>
-                    <%--<a class="nav-link" href="/tablet">Tablets</a>--%>
-                <%--</li>--%>
                 <c:forEach items="${categories}" var="category">
                     <li class="nav-item">
                         <a class="nav-link" href="/${category}">${category}</a>
                     </li>
-                    <%--<option value="${category}"> ${category} </option>--%>
                 </c:forEach>
             </ul>
         </div>
@@ -120,15 +98,12 @@
                             <p>
                                 <label for="username">Username</label>
                                 <input type="text" id="username" name="username"/>
-                                <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
                             </p>
                             <p>
                                 <label for="password">Password</label>
                                 <input type="password" id="password" name="password"/>
-                                <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
                             </p>
                             <button onclick="form_submit()" name="user_search" class="btn btn-secondary" data-dismiss="modal">Log in</button>
-                            <!--<button type="button" class="btn btn-secondary"><a href="/registration">Registration</a></button>-->
                             <a href="/registration" class="btn btn-secondary btn-md active" role="button" aria-pressed="true">Registration</a>
 
                         </form>
@@ -171,27 +146,20 @@
         <div class="col-sm">
             <div class="row" id="output">
                 <c:forEach items="${items}" var="item">
-                    <%--<form id="form-card" action="/basket" method="post">--%>
                         <div class="card">
-                                <%--<img style="margin-top: 10px" src="${item.imagePath}" class="card-img-top" alt="Image">--%>
-
                                 <div id="carouselExampleControls${item.id}" class="carousel slide" data-ride="carousel">
-                                        <div class="carousel-inner">
-                                            <c:url var="imageUrl" value="${item.imagePath}" />
-
-                                            <div class="carousel-item active" data-interval="100000">
-                                                <%--<img src="${item.imagePath}/1.jpg" class="d-block w-100" alt="1">--%>
-                                                <img src="${imageUrl}/1.jpg" class="d-block w-100" alt="1">
-                                            </div>
-                                            <div class="carousel-item" data-interval="100000">
-                                                <%--<img src="${item.imagePath}/2.jpg" class="d-block w-100" alt="2">--%>
-                                                <img src="${imageUrl}/2.jpg" class="d-block w-100" alt="2">
-                                            </div>
-                                            <div class="carousel-item" data-interval="100000">
-                                                <%--<img src="${item.imagePath}/3.jpg" class="d-block w-100" alt="3">--%>
-                                                <img src="${imageUrl}/3.jpg" class="d-block w-100" alt="3">
-                                            </div>
+                                    <div class="carousel-inner">
+                                        <c:url var="imageUrl" value="${item.imagePath}" />
+                                        <div class="carousel-item active" data-interval="100000">
+                                            <img src="${imageUrl}/1.jpg" class="d-block w-100" alt="1">
                                         </div>
+                                        <div class="carousel-item" data-interval="100000">
+                                            <img src="${imageUrl}/2.jpg" class="d-block w-100" alt="2">
+                                        </div>
+                                        <div class="carousel-item" data-interval="100000">
+                                            <img src="${imageUrl}/3.jpg" class="d-block w-100" alt="3">
+                                        </div>
+                                    </div>
                                         <a class="carousel-control-prev" href="#carouselExampleControls${item.id}" role="button" data-slide="prev">
                                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                             <span class="sr-only">Previous</span>
@@ -200,56 +168,30 @@
                                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                             <span class="sr-only">Next</span>
                                         </a>
-                                    </div>
-
+                                </div>
                                 <div class="card-body">
-                                <h5 class="card-title">${item.productName}</h5>
-                                <p class="card-text">${item.productPrice}</p>
-                                <c:set var = "params" scope = "session" value = "${item.productParameteres}"/>
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item" >${params.brand}</li>
-                                    <li class="list-group-item" >OS: ${params.operatingSystem}</li>
-                                    <li class="list-group-item" >Colour: ${params.colour}</li>
-                                    <li class="list-group-item" >Weight: ${params.weight} gr.</li>
-                                </ul>
-                                <input  type="hidden" name="item" value=${item.id}>
-                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                <input type="hidden" name="page" value="${requestScope['javax.servlet.forward.request_uri']}"/>
-
-                                <%--<button class="btn btn-secondary btn-sm justify-content-center" type="submit">Buy</button>--%>
-                                <button onclick="add(${item.id})" type="submit" class="btn btn-secondary"> Buy </button>
-
+                                    <h5 class="card-title">${item.productName}</h5>
+                                    <p class="card-text">${item.productPrice} ₽</p>
+                                    <c:set var = "params" scope = "session" value = "${item.productParameteres}"/>
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item" >${params.brand}</li>
+                                        <li class="list-group-item" >OS: ${params.operatingSystem}</li>
+                                        <li class="list-group-item" >Colour: ${params.colour}</li>
+                                        <li class="list-group-item" >Weight: ${params.weight} gr.</li>
+                                    </ul>
+                                    <input  type="hidden" name="item" value=${item.id}>
+                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                    <input type="hidden" name="page" value="${requestScope['javax.servlet.forward.request_uri']}"/>
+                                    <button onclick="add(${item.id})" type="submit" class="btn btn-secondary"> Buy </button>
                                 </div>
                         </div>
-                    <%--</form>--%>
                 </c:forEach>
             </div>
         </div>
     </div>
 
-
-    <%--<div class="row" id="output">--%>
-        <%--<c:forEach items="${items}" var="item">--%>
-            <%--<form id="form-card" action="/basket" method="post">--%>
-                <%--<div class="card">--%>
-                    <%--<img style="margin-top: 10px" src="/resources/static/images/IPhoneX.png" class="card-img-top" alt="Image">--%>
-                    <%--<div class="card-body">--%>
-                        <%--<h5 class="card-title">${item.productName}</h5>--%>
-                        <%--<p class="card-text">${item.productPrice}</p>--%>
-                        <%--<c:set var = "params" scope = "session" value = "${item.productParameteres}"/>--%>
-                        <%--<ul class="list-group list-group-flush">--%>
-                            <%--<li class="list-group-item" >${params.brand}</li>--%>
-                            <%--<li class="list-group-item" >${params.colour}</li>--%>
-                        <%--</ul>--%>
-                        <%--<input  type="hidden" name="item" value=${item.id}>--%>
-                        <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
-                        <%--<button class="btn btn-secondary btn-sm justify-content-center" type="submit">Buy</button>--%>
-                    <%--</div>--%>
-                <%--</div>--%>
-            <%--</form>--%>
-        <%--</c:forEach>--%>
-    <%--</div>--%>
-
+    <br>
+    <br>
     <br>
     <br>
     <br>
@@ -303,7 +245,6 @@
 
 
 <script type="text/javascript" src="../resources/static/js/app2.js"/>
-<%--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>--%>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>

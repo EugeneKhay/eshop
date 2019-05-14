@@ -3,10 +3,12 @@ package com.eshop.domain;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import java.util.Objects;
 
+/**
+ * A bundle of product parameteres.
+ */
 @Entity
 @Table(name = "parameters")
 @Data

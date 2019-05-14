@@ -11,7 +11,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
@@ -41,7 +40,6 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public void saveOrders(Order order) {
-        //sessionFactory.getCurrentSession().save(order);
         sessionFactory.getCurrentSession().saveOrUpdate(order);
     }
 

@@ -24,10 +24,4 @@ public interface ClientDao {
     void saveAddress(ClientAddress address);
 
     void deleteAddressById(int id);
-
-    //void deleteAddressById(int id, int ver);
-
-    //List<Client> getAllClientsPerPeriod(LocalDate start, LocalDate finish);
-
-
 }

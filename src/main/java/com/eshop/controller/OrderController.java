@@ -13,8 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpSession;
-import java.time.LocalDate;
-import java.util.*;
+import java.util.Set;
 import java.util.logging.Logger;
 
 @Controller
@@ -46,10 +45,9 @@ public class OrderController {
         orders.add(order);
         Integer id = client.getId();
         Client clientForView = clientService.getClientById(id);
-
         model.addAttribute("client", clientForView);
 
-        //Turn on messages sending
+        //TODO do not remove!!! Turn on messages sending
         //orderService.sendMessages(clientForView, order);
 
         logger.info("The order created and saved to DB");
@@ -62,38 +60,8 @@ public class OrderController {
                                    @RequestParam(name = "orderStatus") String orderStatus,
                                    Model model) {
         orderService.editOrder(id, paymentStatus, orderStatus);
-        //model.addAttribute("orders", orderService.getAllOrders());
         logger.info("The order's parameteres changed by admin");
-        //TODO make separate
-//        LocalDate start = LocalDate.of(2019, 1, 1);
-//        LocalDate finish = LocalDate.now();
-//        adminService.setStats(model, start, finish);
         adminService.setStatsDefaultDate(model);
         return "adminpage";
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

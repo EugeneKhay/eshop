@@ -1,8 +1,6 @@
 package com.eshop.service;
 
 import com.eshop.domain.*;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.util.List;
@@ -20,9 +18,6 @@ public interface OrderService {
 
     List<Order> getOrdersPerPeriod(LocalDate start, LocalDate finish);
 
-    //TODO delete unused
-    LocalDate getDate(String day, String month, String year);
-
     double getTotalSumOfAllOrdersPerPeriod(LocalDate start, LocalDate finish);
 
     long getTotalAmountOfOrdersPerPeriod(LocalDate start, LocalDate finish);
@@ -38,7 +33,7 @@ public interface OrderService {
     //TODO delete unused
     Order makeNewOrder(HttpSession session, String paymentMethod, String deliveryMethod);
 
-    Order makeNewOrder(HttpSession session, String paymentMethod, String deliveryMethod, Integer deliveryAddress, Integer collectAffress);
+    Order makeNewOrder(HttpSession session, String paymentMethod, String deliveryMethod, Integer deliveryAddress, Integer collectAddress);
 
     void editOrder(int id, String paymentStatus, String orderStatus);
 

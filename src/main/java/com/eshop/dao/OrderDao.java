@@ -4,7 +4,6 @@ import com.eshop.domain.Client;
 import com.eshop.domain.ClientAddress;
 import com.eshop.domain.Order;
 import com.eshop.domain.ShopAddress;
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
@@ -16,8 +15,6 @@ public interface OrderDao {
     List<Order> getAllOrders();
 
     void saveOrders(Order order);
-
-//    int updateOrder(Order order, String payStatus, String ordStatus);
 
     int updateOrder(int orderId, String payStatus, String ordStatus);
 

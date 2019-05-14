@@ -29,7 +29,6 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb" style="background-color: transparent">
                     <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item"><a href="/phone">Products</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Basket</li>
                 </ol>
             </nav>
@@ -204,14 +203,6 @@
                                 </div>
                                 <br>
                             </c:forEach>
-                            <%--<div>--%>
-                                <%--<button type="button" class="btn btn-secondary" onclick="changeAddress()"> Add new </button>--%>
-                            <%--</div>--%>
-                            <%--<script type="text/javascript">--%>
-                                <%--function changeAddress() {--%>
-                                    <%--$("#add").toggle();--%>
-                                <%--}--%>
-                            <%--</script>--%>
                             <br>
                     </div>
                     <div class="col-sm" style="display: none" id="addressself">
@@ -256,52 +247,6 @@
         </div>
     </form>
     </sec:authorize>
-
-    <%--<!-- Add address form -->--%>
-    <%--<div id="add" style="display: none; width: 80%; margin: 0 auto">--%>
-        <%--<form action="/addaddress" method="post" id="add_adr">--%>
-            <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
-            <%--<div class="form-group">--%>
-                <%--<label for="country" style="color: black">Country</label>--%>
-                <%--<input class="form-control form-control-md" type="text" id="country" name="country"/>--%>
-            <%--</div>--%>
-            <%--<div class="form-group">--%>
-                <%--<label for="city" style="color: black">City</label>--%>
-                <%--<input class="form-control form-control-md" type="text" id="city" name="city" />--%>
-            <%--</div>--%>
-            <%--<div class="form-group">--%>
-                <%--<label for="postcode" style="color: black">Postcode</label>--%>
-                <%--<input class="form-control form-control-md" type="number" id="postcode" name="postcode" />--%>
-            <%--</div>--%>
-            <%--<div class="form-group">--%>
-                <%--<label for="street" style="color: black">Street</label>--%>
-                <%--<input class="form-control form-control-md" type="text" id="street" name="street" />--%>
-            <%--</div>--%>
-            <%--<div class="form-group">--%>
-                <%--<label for="houseNumber" style="color: black">House number</label>--%>
-                <%--<input class="form-control form-control-md" type="number" id="houseNumber" name="houseNumber" />--%>
-            <%--</div>--%>
-            <%--<div class="form-group">--%>
-                <%--<label for="flatNumber" style="color: black">Flat number</label>--%>
-                <%--<input class="form-control form-control-md" type="number" id="flatNumber" name="flatNumber" />--%>
-            <%--</div>--%>
-            <%--<button onclick="form3_submit()" name="user_search" class="btn btn-secondary" data-dismiss="modal"> Submit </button>--%>
-            <%--<script>--%>
-                <%--function form3_submit() {--%>
-                    <%--document.getElementById("add_adr").submit();--%>
-                <%--};--%>
-            <%--</script>--%>
-        <%--</form>--%>
-    <%--</div>--%>
-
-
-    <%--<script>--%>
-        <%--var mess = "${exception}";--%>
-        <%--if (mess == "No address for delivery!") {--%>
-            <%--alert(mess);--%>
-        <%--}--%>
-    <%--</script>--%>
-
 <br>
 <br>
 <br>
@@ -324,8 +269,8 @@
         </div>
     </div>
 </div>
+
 <script type="text/javascript" src="../resources/static/js/app2.js"/>
-<%--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>--%>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>

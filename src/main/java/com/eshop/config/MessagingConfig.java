@@ -1,17 +1,14 @@
 package com.eshop.config;
 
-//import org.apache.activemq.artemis.jms.client.ActiveMQJMSConnectionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.connection.UserCredentialsConnectionFactoryAdapter;
 import org.springframework.jms.core.JmsTemplate;
-
-        import javax.jms.ConnectionFactory;
-//import javax.jms.JMSContext;
+import javax.jms.ConnectionFactory;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-        import java.util.Properties;
+import java.util.Properties;
 
 
 @Configuration
@@ -53,6 +50,3 @@ public class MessagingConfig {
 
 
 
-//        ActiveMQJMSConnectionFactory cf = (ActiveMQJMSConnectionFactory) ctx.lookup("jms/RemoteConnectionFactory");
-//        ConnectionFactory connectionFactory = InitialContext.doLookup("java:/jboss/jms/DefaultJMSConnectionFactory");
-//ConnectionFactory connectionFactory = ctx.doLookup("java:/jboss/jms/DefaultJMSConnectionFactory");

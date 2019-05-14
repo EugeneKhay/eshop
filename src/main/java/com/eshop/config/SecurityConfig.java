@@ -33,7 +33,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .formLogin()
                     .loginPage("/login")
                     .successHandler(getHandler())
-                    //.defaultSuccessUrl("/",true)
                     .failureUrl("/")
                     .permitAll()
                 .and()
@@ -46,7 +45,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        //PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
         auth.userDetailsService(clientService).passwordEncoder(passwordEncoder());
 
     }
@@ -56,19 +54,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-
     @Bean
     public LogoutSuccessHandler logoutSuccessHandler() {
         return new CustomLogoutSuccessHandler();
     }
 
-    //EXP
     @Bean
     public AuthenticationSuccessHandler getHandler() {
         return new CustomAuthenticationSuccessHandler();
     }
-
-
-
 }
 

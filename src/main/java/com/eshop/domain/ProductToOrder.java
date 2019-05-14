@@ -2,7 +2,6 @@ package com.eshop.domain;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 
 @Entity
@@ -30,18 +29,4 @@ public class ProductToOrder {
         this.product = product;
         this.amount = amount;
     }
-
 }
-
-
-
-
-
-//    @ManyToMany(fetch = FetchType.EAGER)
-//    @JoinTable(name="order_product2",
-//            joinColumns=@JoinColumn(name="productorder_id"),
-//            inverseJoinColumns=@JoinColumn(name="order_id"))
-//    private List<Order> orders;
-
-//    @OneToOne(mappedBy = "productToOrder")
-//    private Product productInOrder;

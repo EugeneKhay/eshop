@@ -3,18 +3,17 @@ package com.eshop.domain;
 import com.eshop.enums.Role;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 
+/**
+ * Represents the user of the application
+ */
 @Entity
 @Table(name = "clients")
 @Data
@@ -37,19 +36,6 @@ public class Client implements UserDetails, Serializable {
 
     private String password;
 
-//    @ManyToOne(optional = false, cascade = CascadeType.ALL)
-//    @JoinColumn(name = "address_id")
-//    private ClientAddress address;
-
-    //EXP
-//    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
-//    @OneToMany(mappedBy = "client")
-
-
-
-
-
-    //@Fetch(value = FetchMode.SUBSELECT)
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "client_addresses",
             joinColumns = @JoinColumn(name = "client_id"),
@@ -68,11 +54,6 @@ public class Client implements UserDetails, Serializable {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles();
     }
-
-//    @Override
-//    public String getUsername() {
-//        return firstName;
-//    }
 
     @Override
     public String getUsername() {

@@ -6,11 +6,15 @@ import com.eshop.enums.PaymentMethod;
 import com.eshop.enums.PaymentStatus;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
+/**
+ * Represents all related data of a particular order.
+ */
 @Entity
 @Table(name = "orders")
 @Data
@@ -31,21 +35,11 @@ public class Order {
 
     //TODO check
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    //private List<ProductToOrder> orderProducts = new ArrayList<>();
     private Set<ProductToOrder> orderProducts = new HashSet<>();
-
-
-//    @OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "address_id")
-//    private ClientAddress addressForDelivery;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private ClientAddress addressForDelivery;
-
-//    @OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "address_self_id")
-//    private ShopAddress addressForSelfCollect;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_self_id")
@@ -91,18 +85,3 @@ public class Order {
         return Objects.hash(id);
     }
 }
-
-
-
-//    @ManyToMany(fetch = FetchType.EAGER)
-//    @JoinTable (name="order_product",
-//            joinColumns=@JoinColumn (name="order_id"),
-//            inverseJoinColumns=@JoinColumn(name="product_id"))
-//    private Collection<Product> productsInOrder;
-
-
-//    @ManyToMany(fetch = FetchType.EAGER)
-//    @JoinTable (name="order_product2",
-//            joinColumns=@JoinColumn (name="order_id"),
-//            inverseJoinColumns=@JoinColumn(name="productorder_id"))
-//    private Collection<ProductToOrder> productsInOrder;

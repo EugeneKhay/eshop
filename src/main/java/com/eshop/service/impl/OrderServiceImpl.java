@@ -64,12 +64,6 @@ public class OrderServiceImpl implements OrderService {
         return dao.getOrdersPerPeriod(start, finish);
     }
 
-    //delete later, useless method
-    @Override
-    public LocalDate getDate(String day, String month, String year) {
-        return null;
-    }
-
     @Override
     public List<Order> getOrdersPerPeriodForClient(Client client, LocalDate start, LocalDate finish) {
         return dao.getOrdersPerPeriodForClient(client, start, finish);
@@ -167,7 +161,6 @@ public class OrderServiceImpl implements OrderService {
         order.setClient(client);
 
         //TODO check
-        //List<ProductToOrder> productToOrderList = new ArrayList<>();
         Set<ProductToOrder> productToOrderList = new HashSet<>();
         for (Map.Entry<Product, Integer> entry: basket.getProductsInBasket().entrySet()) {
             ProductToOrder productToOrder = new ProductToOrder();

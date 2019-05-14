@@ -30,7 +30,6 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb" style="background-color: transparent">
                     <li class="breadcrumb-item"><a href="/"> Home </a></li>
-                    <li class="breadcrumb-item"><a href="/phone"> Products </a></li>
                     <li class="breadcrumb-item"><a href="/basket"> Basket </a></li>
                     <li class="breadcrumb-item active" aria-current="page"> Admin </li>
                 </ol>
@@ -66,6 +65,9 @@
                 </div>
                 <div class="btn-group mr-2" role="group" aria-label="Second group">
                     <button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#exampleModal"> Change period </button>
+                </div>
+                <div class="btn-group mr-2" role="group" aria-label="Third group">
+                    <button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#editModal"> Process order </button>
                 </div>
             </div>
         </div>
@@ -178,11 +180,7 @@
             <div class="row">
                     <table class="table table-borderless" style="color: black">
                         <tr>
-                            <th>
-                                <div class="col-sm-1">
-                                    <button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#editModal"> № </button>
-                                </div>
-                            </th>
+                            <th>№</th>
                             <th>Client</th>
                             <th>Products</th>
                             <th>Price</th>
@@ -226,7 +224,6 @@
                                         </table>
                                     </c:forEach>
                                 </td>
-
                                 <td>${order.sumOfOrder}</td>
                                 <td>${order.dateOfOrder}</td>
                                 <td>${order.paymentMethod}</td>
@@ -239,9 +236,7 @@
                         </c:forEach>
                     </table>
             </div>
-            <%--<div class="col-sm-1">--%>
-                <%--<button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#editModal"> Edit </button>--%>
-            <%--</div>--%>
+
 
             <!-- Modal window 2-->
             <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
@@ -297,7 +292,6 @@
                         <h5 style="color: black">List of products</h5>
                         <table class="table table-borderless" style="withdth: 90%; margin: 0 auto; color: black">
                             <tr>
-                                <%--<th>Product ID</th>--%>
                                 <th>Product name</th>
                                 <th>Brand</th>
                                 <th>Price</th>
@@ -315,13 +309,11 @@
                             <c:forEach items="${products}" var="product">
                                 <tr>
                                     <c:set var = "parameters" scope = "session" value = "${product.productParameteres}"/>
-                                    <%--<td>${product.id}</td>--%>
                                     <td>${product.productName}</td>
                                     <td>${parameters.brand}</td>
                                     <td>${product.productPrice}</td>
                                     <td>${product.amount}</td>
                                     <td>${product.productCategory}</td>
-
                                     <td>${parameters.operatingSystem}</td>
                                     <td>${parameters.colour}</td>
                                     <td>${parameters.weight}</td>
@@ -427,10 +419,6 @@
                                                 <label for="os"> OS </label>
                                                 <input class="form-control form-control-md" name="os" type="text" class="form-control" id="os" aria-describedby="emailHelp" required>
                                             </div>
-
-
-
-
                                             <div class="form-group">
                                                 <label for="image"> Image </label>
                                                 <input class="form-control form-control-md" name="image" type="text" class="form-control" id="image" aria-describedby="emailHelp" required>
@@ -442,7 +430,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                     <div class="col-sm-2">
                         <h5 style="color: black">List of categories</h5>
@@ -506,7 +493,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -583,7 +569,6 @@
                                         <button type="button" class="btn btn-secondary" onclick="editShop(${shop.id})"> Edit </button>
                                     </div>
                                     <div class="btn-group" role="group">
-                                        <%--<button type="button" class="btn btn-secondary" onclick="deleteShop(${shop.id})"> Delete </button>--%>
                                     </div>
                                 </div>
                             </div>
@@ -638,7 +623,6 @@
                 </c:forEach>
             </table>
         </div>
-
     </div>
 </div>
 
@@ -667,7 +651,6 @@
         </div>
     </div>
 </div>
-<%--<script type="text/javascript" src="../resources/static/js/app2.js"/>--%>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

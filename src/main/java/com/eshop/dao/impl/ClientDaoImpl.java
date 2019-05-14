@@ -3,12 +3,10 @@ package com.eshop.dao.impl;
 import com.eshop.dao.ClientDao;
 import com.eshop.domain.Client;
 import com.eshop.domain.ClientAddress;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import java.util.List;
 
 @Repository
@@ -75,58 +73,16 @@ public class ClientDaoImpl implements ClientDao {
         sessionFactory.getCurrentSession().saveOrUpdate(client);
     }
 
-//    @Override
-//    public void saveAddress(ClientAddress address) {
-//        sessionFactory.getCurrentSession().saveOrUpdate(address);
-//    }
-
     @Override
     public void saveAddress(ClientAddress address) {
         sessionFactory.getCurrentSession().save(address);
     }
-
 
     @Override
     public void deleteAddressById(int id) {
         String hql = "DELETE ClientAddress where id = :paramId";
         Query query = sessionFactory.getCurrentSession().createQuery(hql);
         query.setParameter("paramId", id);
-        int result = query.executeUpdate();
+        query.executeUpdate();
     }
-
-//    @Override
-//    public void deleteAddressById(int id, int ver) {
-//        String hql = "DELETE ClientAddress where id = :paramId AND version = :paramVer";
-//        Query query = sessionFactory.getCurrentSession().createQuery(hql);
-//        query.setParameter("paramId", id);
-//        query.setParameter("paramVer", ver);
-//        int result = query.executeUpdate();
-//    }
-
-
-//    @Override
-//    public void deleteAddressById(int id) {
-//        ClientAddress address = getAddressById(id);
-//        Session currentSession = sessionFactory.getCurrentSession();
-//        String hql = "DELETE ClientAddress where id = :paramId";
-//        Query query = currentSession.createQuery(hql);
-//        query.setParameter("paramId", id);
-//        int result = query.executeUpdate();
-//        currentSession.evict(address);
-//    }
-
-
-
-
-
-
-
-//    @Override
-//    public List<Client> getAllClientsPerPeriod(LocalDate start, LocalDate finish) {
-//        String hql = "FROM Client AS c WHERE c.orders between :start and :finish";
-//        Query query = sessionFactory.getCurrentSession().createQuery(hql);
-//        query.setParameter("start", start);
-//        query.setParameter("finish", finish);
-//        return query.list();
-//    }
 }

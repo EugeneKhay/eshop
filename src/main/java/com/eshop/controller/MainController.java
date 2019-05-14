@@ -6,19 +6,14 @@ import com.eshop.service.ClientService;
 import com.eshop.service.OrderService;
 import com.eshop.service.ProductService;
 import com.eshop.service.impl.AdminService;
-import com.eshop.service.impl.CatalogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.util.NestedServletException;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.util.List;
@@ -29,9 +24,6 @@ public class MainController {
 
     @Autowired
     private ClientService clientService;
-
-    @Autowired
-    private CatalogService catalogService;
 
     @Autowired
     private AdminService adminService;
@@ -48,7 +40,6 @@ public class MainController {
     private Basket basket;
 
     private Logger logger = Logger.getLogger("logger");
-
 
     @GetMapping("/")
     public String homepage(HttpSession session, Model model) {
@@ -80,14 +71,7 @@ public class MainController {
 
     @GetMapping("/personal")
     public String enterMyAccount(Model model) {
-        // TODO clientForView
-//        Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        Integer id = client.getId();
-//        Client clientById = clientService.getClientById(id);
-
         Client clientById = clientService.getClientForView();
-//        System.out.println("Client ID: " + id);
-        //model.addAttribute("client", client);
         model.addAttribute("client", clientById);
         return "personal";
     }
@@ -105,21 +89,20 @@ public class MainController {
         return "personal";
     }
 
-//    @PostMapping("/addaddress")
-//    public String addClientAddress (@RequestParam(name = "country", required = false) String country,
-//                                    @RequestParam(name = "city", required = false) String city,
-//                                    @RequestParam(name = "postcode", required = false) int postcode,
-//                                    @RequestParam(name = "street", required = false) String street,
-//                                    @RequestParam(name = "houseNumber", required = false) int houseNumber,
-//                                    @RequestParam(name = "flatNumber", required = false) int flatNumber,
-//                                    Model model,
-//                                    HttpServletRequest request) {
-//        Client clientForView = clientService.createAddressForClient(country, city, postcode, street, houseNumber, flatNumber);
-//        logger.info("Save address");
-//        model.addAttribute("client", clientForView);
-//        model.addAttribute("addresses", clientForView.getAddressList());
-//        return "basket";
-//    }
+    @PostMapping("/addaddress")
+    public String addClientAddress (@RequestParam(name = "country", required = false) String country,
+                                    @RequestParam(name = "city", required = false) String city,
+                                    @RequestParam(name = "postcode", required = false) int postcode,
+                                    @RequestParam(name = "street", required = false) String street,
+                                    @RequestParam(name = "houseNumber", required = false) int houseNumber,
+                                    @RequestParam(name = "flatNumber", required = false) int flatNumber,
+                                    Model model) {
+        Client clientForView = clientService.createAddressForClient(country, city, postcode, street, houseNumber, flatNumber);
+        logger.info("Save address");
+        model.addAttribute("client", clientForView);
+        model.addAttribute("addresses", clientForView.getAddressList());
+        return "personal";
+    }
 
     @PostMapping("/editaddress")
     public String editClientAddress (@RequestParam(name = "addressForEdit") int addressId,
@@ -136,17 +119,9 @@ public class MainController {
     }
 
     @PostMapping("/deleteaddress")
-    public String deleteClientAddress(@RequestParam(name = "addressForDelete") int id,
-                                      //@RequestParam(name = "addressForDelete") int ver,
-                                      Model model) {
+    public String deleteClientAddress(@RequestParam(name = "addressForDelete") int id, Model model) {
         clientService.deleteAddressById(id);
-        //clientService.deleteAddressById(id, ver);
-        // TODO clientForView
-//        Client clientForView = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        Integer id1 = clientForView.getId();
-//        Client clientById = clientService.getClientById(id1);
         Client clientById = clientService.getClientForView();
-
         model.addAttribute("client", clientById);
         return "personal";
     }
@@ -163,23 +138,19 @@ public class MainController {
                               @RequestParam(name = "operatingSystem") String operatingSystem,
                               Model model) {
         productService.editProductByAdmin(productId, productName, brand, price, amount, category, colour, weight, operatingSystem);
-        //model.addAttribute("products", productService.getAllProducts());
-        //TODO make separate
-//        LocalDate start = LocalDate.of(2019, 1, 1);
-//        LocalDate finish = LocalDate.now();
-//        adminService.setStats(model, start, finish);
         adminService.setStatsDefaultDate(model);
         return "adminpage";
     }
 
     @GetMapping("/{category}")
     public String get(@PathVariable(name = "category") String page, Model model) {
+
         //TODO move to service
         String end = page.substring(1);
         String start = page.substring(0,1).toUpperCase();
         String res = start + end;
         CategoryOfProduct category = new CategoryOfProduct(res);
-        //CategoryOfProduct category = catalogService.getCategoryByPage(page);
+
         List<Product> allProductsByCategory = productService.getAllProductsByCategory(res);
         model.addAttribute("items", allProductsByCategory);
         model.addAttribute("pageName", category.getCategoryName());
@@ -187,10 +158,3 @@ public class MainController {
         return "products";
     }
 }
-
-
-
-
-
-
-

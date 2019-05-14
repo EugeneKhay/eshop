@@ -4,12 +4,10 @@ import com.eshop.dao.ProductDAO;
 import com.eshop.domain.CategoryOfProduct;
 import com.eshop.domain.Product;
 import com.eshop.domain.ProductParameteres;
-import com.eshop.enums.ProductCategory;
 import com.eshop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 import java.util.Set;
 
@@ -51,36 +49,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getAllProductsByColour(String colour) {
-        return dao.getAllProductsByColour(colour);
-    }
-
-    @Override
     public List<Product> getAllProductsByColour(String colour, String type) {
         return dao.getAllProductsByColour(colour, type);
     }
 
     @Override
-    public String getPageName(String page) {
-        return dao.getPageName(page);
-    }
-
-//    @Override
-//    public void editProductByAdmin(int productId, String productName, String brand, double price, int amount, String category, String colour) {
-//        ProductCategory productCategory = ProductCategory.valueOf(category);
-//        ProductParameteres parameteres = new ProductParameteres(colour, brand);
-//        Product product = getProductById(productId);
-//        product.setProductName(productName);
-//        product.setProductPrice(price);
-//        product.setAmount(amount);
-//        product.setCategory(productCategory);
-//        product.setProductParameteres(parameteres);
-//        saveProduct(product);
-//    }
-
-    @Override
     public void editProductByAdmin(int productId, String productName, String brand, double price, int amount, String category, String colour, int weight, String operatingSystem) {
-        //ProductCategory productCategory = ProductCategory.valueOf(category);
         CategoryOfProduct productCategory = new CategoryOfProduct(category);
         ProductParameteres parameteres = new ProductParameteres(colour, brand, weight, operatingSystem);
         Product product = getProductById(productId);
@@ -136,11 +110,6 @@ public class ProductServiceImpl implements ProductService {
     public int saveNewAmountOfProduct(Product product, int amount) {
         return dao.saveNewAmountOfProduct(product, amount);
     }
-
-//    @Override
-//    public List<Product> getAllProductsByCategory(ProductCategory category) {
-//        return dao.getAllProductsByCategory(category);
-//    }
 
     @Override
     public List<Product> getAllProductsByCategory(CategoryOfProduct category) {

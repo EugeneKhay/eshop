@@ -39,20 +39,9 @@ public class ClientServiceImpl implements ClientService {
 
     private Logger logger = Logger.getLogger("logger");
 
-
-    @Override
-    public Client getClientByName(String name) {
-        return dao.getClientByName(name);
-    }
-
     @Override
     public Client getClientById(int id) {
         return dao.getClientById(id);
-    }
-
-    @Override
-    public Client getClientByEmail(String email) {
-        return dao.getClientByEmail(email);
     }
 
     @Override
@@ -60,25 +49,14 @@ public class ClientServiceImpl implements ClientService {
         return dao.getAllClientsByEmail(email);
     }
 
-//    @Override
-//    public List<Client> getClientByEmail2(String email) {
-//        return dao.getAllClientsByEmail(email);
-//    }
-
     @Override
     public List<Client> getAllClients() {
         return dao.getAllClients();
     }
 
-
     @Override
     public void saveClient(Client client) {
         dao.saveClient(client);
-    }
-
-    @Override
-    public List<Client> getAllClientsPerPeriod(LocalDate start, LocalDate finish) {
-        return null;
     }
 
     @Override
@@ -132,27 +110,15 @@ public class ClientServiceImpl implements ClientService {
     public Client createAddressForClient(String country, String city, int postcode, String street, int houseNumber, int flatNumber) {
         //TODO clientForView
         ClientAddress address = new ClientAddress(country, city, postcode, street, houseNumber, flatNumber);
-        Client client0 = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
+        Client client0 = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Integer id = client0.getId();
         Client client = getClientById(id);
 
-
-//        List<Client> clientList = new ArrayList<>();
-//        address.setClients(clientList);
-//        address.getClients().add(client);
-
         Set<ClientAddress> addresses = client.getAddressList();
         addresses.add(address);
-
-        //saveAddress(address);
-
         client.setAddressList(addresses);
         saveClient(client);
-
-        //Integer id = client.getId();
-        //return getClientById(id);
-
         return client;
     }
 
@@ -192,18 +158,9 @@ public class ClientServiceImpl implements ClientService {
         addresses.remove(getAddressById(addressForEdit));
         addresses.add(newAddress);
         client.setAddressList(addresses);
-        //Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Integer id = client.getId();
         return getClientById(id);
-        //return client;
     }
-
-
-
-//    @Override
-//    public void deleteAddressById(int id, int ver) {
-//        dao.deleteAddressById(id, ver);
-//    }
 
     @Override
     public List<Client> getTenBestClientsPerPeriod(LocalDate start, LocalDate finish)
@@ -211,7 +168,6 @@ public class ClientServiceImpl implements ClientService {
         Map<Client, Long> ordersOfClientMap = new HashMap<>();
         List<Order> ordersPerPeriod = orderService.getOrdersPerPeriod(start, finish);
         List<Client> allClients = getAllClients();
-
         for (Client client: allClients) {
             long countOfOrderForClient = ordersPerPeriod.stream()
                                                         .filter(order -> order.getClient().equals(client))

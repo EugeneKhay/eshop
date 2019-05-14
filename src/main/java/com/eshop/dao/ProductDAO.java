@@ -2,9 +2,6 @@ package com.eshop.dao;
 
 import com.eshop.domain.CategoryOfProduct;
 import com.eshop.domain.Product;
-import com.eshop.enums.ProductCategory;
-import org.hibernate.query.Query;
-
 import java.util.List;
 import java.util.Set;
 
@@ -28,8 +25,6 @@ public interface ProductDAO {
 
     List<Product> getAllProductsByColour(String colour, String type);
 
-    //List<Product> getAllProductsByCategory(ProductCategory category);
-
     List<Product> getAllProductsByCategory(CategoryOfProduct category);
 
     List<Product> getAllProductsByCategory(String category);
@@ -37,8 +32,6 @@ public interface ProductDAO {
     void saveProduct(Product product);
 
     int saveNewAmountOfProduct(Product product, int amount);
-
-    String getPageName(String page);
 
     Set<CategoryOfProduct> getAllCategories();
 
@@ -49,5 +42,4 @@ public interface ProductDAO {
     List<CategoryOfProduct> getCategoryByName(String categoryName);
 
     int deleteCategoryByName(String categoryName);
-
 }

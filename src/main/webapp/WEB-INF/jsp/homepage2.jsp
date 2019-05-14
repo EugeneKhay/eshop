@@ -23,7 +23,7 @@
     <div class="header">
     <div class="row" id="title">
         <div id="shopname" class="col-sm-9">
-            <h3>E-shop of gadgets & electronics</h3>
+            <h3>E-shop. Gadgets & electronics</h3>
         </div>
         <div class="col-sm-1">
             <sec:authorize access="hasRole('ADMIN')">
@@ -31,9 +31,6 @@
             </sec:authorize>
         </div>
         <div class="col-sm-1">
-            <%--<sec:authorize access="isAuthenticated()">--%>
-                <%--<b style="color: black"> Account: <a style="color: black" href="/personal"> <sec:authentication property="principal.firstName" /> </a> </b>--%>
-            <%--</sec:authorize>--%>
                 <sec:authorize access="hasRole('USER')">
                     <b style="color: black"> Account: <a style="color: black" href="/personal"> <sec:authentication property="principal.firstName" /> </a> </b>
                 </sec:authorize>
@@ -67,12 +64,10 @@
                     <div class="form-group">
                         <label for="username">E-mail</label>
                         <input class="form-control form-control-md" type="text" id="username" name="username"required/>
-                        <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>
                         <input class="form-control form-control-md" type="password" id="password" name="password" required/>
-                        <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
                     </div>
                     <button onclick="form_submit()" name="user_search" class="btn btn-secondary" data-dismiss="modal">Log in</button>
                     <a href="/registration" class="btn btn-secondary btn-md active" role="button" aria-pressed="true">Registration</a>
@@ -89,26 +84,10 @@
 
             <div class="col-sm">
                 <ul class="nav justify-content-center">
-                        <%--<li class="nav-item">--%>
-                            <%--<a class="nav-link" href="/phone">Phones</a>--%>
-                        <%--</li>--%>
-                        <%--<li class="nav-item">--%>
-                            <%--<a class="nav-link" href="/tv">TV & Video</a>--%>
-                        <%--</li>--%>
-                        <%--<li class="nav-item">--%>
-                            <%--<a class="nav-link" href="/audio">Audio & Hi-Fi</a>--%>
-                        <%--</li>--%>
-                        <%--<li class="nav-item">--%>
-                            <%--<a class="nav-link" href="/laptop">Laptops</a>--%>
-                        <%--</li>--%>
-                        <%--<li class="nav-item">--%>
-                            <%--<a class="nav-link" href="/tablet">Tablets</a>--%>
-                        <%--</li>--%>
                     <c:forEach items="${categories}" var="category">
                         <li class="nav-item">
                             <a class="nav-link" href="/${category}">${category}</a>
                         </li>
-                        <%--<option value="${category}"> ${category} </option>--%>
                     </c:forEach>
                 </ul>
             </div>
@@ -129,12 +108,8 @@
                     <span><img style="width: 45px; height: 45px" src="/resources/static/images/sign_in2.png"/> </span>
                 </button>
             </div>
-
         </div>
-
     </div>
-
-
 
     <div class="row">
         <h5 style="margin-bottom: 50px; text-align: center">Our bestsellers:</h5>
@@ -145,15 +120,12 @@
         <div class="cardparent">
             <c:forEach items="${items}" var="item">
                 <div class="cardchild">
-                    <%--<form id="form-card" action="/basket" method="post">--%>
                         <div class="card" >
-                            <%--<img style="margin-top: 10px" src="../resources/static/images/IPhoneX.png" class="card-img-top" alt="Image">--%>
-                            <%--<img style="margin-top: 10px" src="${item.imagePath}" class="card-img-top" alt="Image">--%>
                             <c:url var="imageUrl" value="${item.imagePath}" />
                             <img style="margin-top: 10px" src="${imageUrl}/1.jpg" class="card-img-top" alt="Image">
                             <div class="card-body">
                                 <h5 class="card-title">${item.productName}</h5>
-                                <p class="card-text">${item.productPrice}</p>
+                                <p class="card-text">${item.productPrice} ₽</p>
                                 <c:set var = "params" scope = "session" value = "${item.productParameteres}"/>
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item" >${params.brand}</li>
@@ -161,17 +133,19 @@
                                 </ul>
                                 <input  type="hidden" name="item" value=${item.id}>
                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                <%--<button class="btn btn-secondary btn-sm justify-content-center" type="submit">Buy</button>--%>
-                                <button onclick="add(${item.id})" type="submit" class="btn btn-secondary"> Buy </button>
+                                <div>
+                                    <button onclick="add(${item.id})" type="submit" class="btn btn-secondary" > Add </button>
+                                </div>
                                 <br>
                                 <br>
                             </div>
                         </div>
-                    <%--</form>--%>
                 </div>
             </c:forEach>
         </div>
     </div>
+
+
 
     <div class="row" id="text">
         <h5>High level of practice orientation</h5>
@@ -227,120 +201,7 @@
 
 
 <script type="text/javascript" src="../resources/static/js/app2.js"/>
-<%--<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>--%>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<%--<div class="row">--%>
-<%--<div class="card" style="width: 17rem; background-color: transparent; color: aliceblue;">--%>
-<%--<img src="/resources/static/images/phones/" class="card-img-top" alt="..." >--%>
-<%--<div class="card-body">--%>
-<%--<h5 class="card-title">HIT 1</h5>--%>
-<%--<p class="card-text">special offer</p>--%>
-<%--</div>--%>
-<%--<ul class="list-group list-group-flush">--%>
-<%--<li class="list-group-item" style="background-color: transparent; color: aliceblue;">Description</li>--%>
-<%--<li class="list-group-item" style="background-color: transparent; color: aliceblue;">Common price</li>--%>
-<%--<li class="list-group-item" style="background-color: transparent; color: aliceblue;">Special price</li>--%>
-<%--</ul>--%>
-<%--<div class="card-body">--%>
-<%--<a href="#" class="card-link">Buy</a>--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--<div class="card" style="width: 17rem; background-color: transparent; color: aliceblue;">--%>
-<%--<img src="../resources/static/images/" class="card-img-top" alt="...">--%>
-<%--<div class="card-body">--%>
-<%--<h5 class="card-title">HIT 2</h5>--%>
-<%--<p class="card-text">special offer</p>--%>
-<%--</div>--%>
-<%--<ul class="list-group list-group-flush">--%>
-<%--<li class="list-group-item" style="background-color: transparent;">Description</li>--%>
-<%--<li class="list-group-item" style="background-color: transparent;">Common price</li>--%>
-<%--<li class="list-group-item" style="background-color: transparent;">Special price</li>--%>
-<%--</ul>--%>
-<%--<div class="card-body">--%>
-<%--<a href="#" class="card-link">Buy</a>--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--<div class="card" style="width: 17rem; background-color: transparent; color: aliceblue;">--%>
-<%--<img src="../resources/static/images/" class="card-img-top" alt="...">--%>
-<%--<div class="card-body">--%>
-<%--<h5 class="card-title">HIT 3</h5>--%>
-<%--<p class="card-text">special offer</p>--%>
-<%--</div>--%>
-<%--<ul class="list-group list-group-flush" >--%>
-<%--<li class="list-group-item" style="background-color: transparent;">Description</li>--%>
-<%--<li class="list-group-item" style="background-color: transparent;">Common price</li>--%>
-<%--<li class="list-group-item" style="background-color: transparent;">Special price</li>--%>
-<%--</ul>--%>
-<%--<div class="card-body">--%>
-<%--<a href="#" class="card-link" >Buy</a>--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--<div class="card" style="width: 17rem; background-color: transparent; color: aliceblue;">--%>
-<%--<img src="../resources/static/images/" class="card-img-top" alt="...">--%>
-<%--<div class="card-body">--%>
-<%--<h5 class="card-title">HIT 4</h5>--%>
-<%--<p class="card-text">special offer</p>--%>
-<%--</div>--%>
-<%--<ul class="list-group list-group-flush" style="background-color: transparent;">--%>
-<%--<li class="list-group-item" style="background-color: transparent;">Description</li>--%>
-<%--<li class="list-group-item" style="background-color: transparent;">Common price</li>--%>
-<%--<li class="list-group-item" style="background-color: transparent;">Special price</li>--%>
-<%--</ul>--%>
-<%--<div class="card-body">--%>
-<%--<a href="#" class="card-link">Buy</a>--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--</div>--%>
-
-<%--<h3>Enter text:</h3>--%>
-<%--<input id="input_str" type="text">--%>
-<%--<input type="button" value="OK" onclick="doAjax()">--%>
-
-<%--<script type="text/javascript">--%>
-<%--function doAjax() {--%>
-<%--$.ajax({--%>
-<%--url : '/ajax',--%>
-<%--type: 'GET',--%>
-<%--dataType: 'json',--%>
-<%--data : ({--%>
-<%--'text': $("#input_str").val()--%>
-<%--}),--%>
-<%--success: function (result) {--%>
-<%--alert(result.dayOfWeek);--%>
-<%--}--%>
-<%--});--%>
-<%--}--%>
-<%--</script>--%>
-
-<%--<footer>--%>
-<%--<p> Copyright ...</p>--%>
-<%--<p> Our contacts ...</p>--%>
-<%--<p> Support... </p>--%>
-<%--</footer>--%>
