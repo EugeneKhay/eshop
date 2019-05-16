@@ -1,8 +1,6 @@
 package com.eshop.service.impl;
 
 import com.eshop.dao.ClientDao;
-//import com.eshop.dao2.GenericDao;
-//import com.eshop.dao2.IGenericDao;
 import com.eshop.domain.Client;
 import com.eshop.domain.ClientAddress;
 import com.eshop.domain.Order;
@@ -10,7 +8,6 @@ import com.eshop.enums.Role;
 import com.eshop.exception.LoginException;
 import com.eshop.service.ClientService;
 import com.eshop.service.OrderService;
-import org.hibernate.StaleObjectStateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -62,8 +59,7 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public boolean checkLogin(String login) {
         List<Client> clientByEmail = getAllClientsByEmail(login);
-        if (clientByEmail.size() == 0) return true;
-        return false;
+        return clientByEmail.isEmpty();
     }
 
     @Override
@@ -126,7 +122,6 @@ public class ClientServiceImpl implements ClientService {
     public void deleteAddressById(int id) {
         try {
             dao.deleteAddressById(id);
-            logger.info("Address " + id + " deleted");
         } catch (Exception ex) {
             logger.info("Update or delete violates foreign key constraint");
         }
@@ -136,8 +131,7 @@ public class ClientServiceImpl implements ClientService {
     public Client getClientForView() {
         Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Integer id = client.getId();
-        Client clientForView = getClientById(id);
-        return clientForView;
+        return getClientById(id);
     }
 
     @Override
@@ -145,7 +139,7 @@ public class ClientServiceImpl implements ClientService {
         //TODO clientForView
         Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         ClientAddress newAddress = getAddressById(addressForEdit);
-        logger.info("Old address " + newAddress + " retrieved");
+        logger.info("Old address retrieved");
         newAddress.setCountry(country);
         newAddress.setCity(city);
         newAddress.setPostCode(postcode);
@@ -153,7 +147,7 @@ public class ClientServiceImpl implements ClientService {
         newAddress.setHouseNumber(houseNumber);
         newAddress.setFlatNumber(flatNumber);
         saveAddress(newAddress);
-        logger.info("New address " + newAddress + " saved");
+        logger.info("New address saved");
         Set<ClientAddress> addresses = client.getAddressList();
         addresses.remove(getAddressById(addressForEdit));
         addresses.add(newAddress);
@@ -183,7 +177,7 @@ public class ClientServiceImpl implements ClientService {
 
         amountOfOrders.forEach(i -> {
             for (Map.Entry<Client, Long> entry : ordersOfClientMap.entrySet()) {
-                if (i == entry.getValue())
+                if (i.equals(entry.getValue()))
                     bestTenClients.add(entry.getKey());
             }
         });

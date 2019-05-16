@@ -30,6 +30,8 @@ public class OrderServiceImpl implements OrderService {
 
     public static final LocalDate FINISH_DATE = LocalDate.now();
 
+    private static String BASKET_ATTR = "shop_basket";
+
     @Autowired
     private OrderDao dao;
 
@@ -112,7 +114,7 @@ public class OrderServiceImpl implements OrderService {
         Set<Product> bestTenProducts = new LinkedHashSet<>();
         freqOfProducts.forEach(p -> {
             for (Map.Entry<Product, Long> entry : productsOfPeriod.entrySet()) {
-                if (entry.getValue() == p)
+                if (entry.getValue().equals(p))
                     bestTenProducts.add(entry.getKey());
             }
         });
@@ -146,7 +148,7 @@ public class OrderServiceImpl implements OrderService {
 
         Order order = new Order();
         Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Basket basket = (Basket) session.getAttribute("shop_basket");
+        Basket basket = (Basket) session.getAttribute(BASKET_ATTR);
 
         if (deliveryAddress != null) {
             ClientAddress address = getClientAddressById(deliveryAddress);
@@ -175,7 +177,7 @@ public class OrderServiceImpl implements OrderService {
         order.setDateOfOrder(LocalDate.now());
         order.setSumOfOrder(sum);
 
-        if (productToOrderList.size() > 0) {
+        if (productToOrderList.isEmpty()) {
             saveOrders(order);
         } else {
             throw new NoProductInBasketException();
@@ -185,9 +187,9 @@ public class OrderServiceImpl implements OrderService {
             int amount = productService.decreaseProductAmountInStock(entry.getKey(), entry.getValue());
             productService.saveNewAmountOfProduct(entry.getKey(), amount);
         }
-        Basket basket2 = (Basket) session.getAttribute("shop_basket");
+        Basket basket2 = (Basket) session.getAttribute(BASKET_ATTR);
         basket2.getProductsInBasket().clear();
-        session.setAttribute("shop_basket", basket);
+        session.setAttribute(BASKET_ATTR, basket);
         session.setAttribute("totalPrice", 0);
         return order;
     }

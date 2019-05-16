@@ -1,16 +1,17 @@
 package com.eshop.domain;
 
 import lombok.Data;
+
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-
 
 /**
  * Class to store order data during checkout process.
  */
 @Data
-public class Basket {
+public class Basket implements Serializable {
 
     private Map<Product, Integer> productsInBasket;
 

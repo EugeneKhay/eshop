@@ -1,6 +1,6 @@
 body{
     /*background-image: url(/resources/static/images/white-brick-small.jpg);*/
-    margin-top: 30px;
+    /*margin-top: 30px;*/
     /*margin-bottom: 50px;*/
     color: black;
     font-family: "Dancing+Script", "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
@@ -10,14 +10,14 @@ img{
     height: 230px;
 }
 
-/*.header{*/
-    /*background-color: #a1a1a1;*/
-/*}*/
-
 .footer{
     text-align: center;
     margin-bottom: 10px;
     color: black;
+    background-color: grey;
+    border-block-start: 1px solid black;
+    flex: 1 0 auto;
+    padding: 0px 10px;
 }
 .form-control{
     background-color: transparent;
@@ -110,22 +110,6 @@ tr td:last-child {
     margin-top: 20px;
     margin-bottom: 60px;
 }
-/*#cardparent {*/
-    /*width: 400px;*/
-    /*height:80px;*/
-    /*overflow: hidden;*/
-    /*overflow-x: scroll;*/
-
-    /*white-space:nowrap;*/
-/*}*/
-
-/*#cardchild {*/
-    /*display: inline-block;*/
-    /*vertical-align: top;*/
-    /*width: 60px;*/
-    /*height:60px;*/
-
-/*}*/
 
 /* Basket */
 
@@ -148,17 +132,6 @@ tr td:last-child {
 
 /* Registration */
 
-/*#regTitle{*/
-    /*font-family: "Dancing+Script", "Century Gothic", CenturyGothic, AppleGothic, sans-serif;*/
-/*}*/
-/*!*#fill{*!*/
-    /*!*!*text-align: center;*!*!*/
-    /*!*margin-top: 40px;*!*/
-/*!*}*!*/
-/*#regForm{*/
-    /*width: 45%;*/
-    /*margin: 0 auto;*/
-/*}*/
 
 
 
@@ -170,11 +143,6 @@ tr td:last-child {
     --selection-color: #abffd9;
     --unitless-max-font-size: 18;
 }
-
-/*body {*/
-    /*padding: 2rem 1rem;*/
-    /*background-color: #2eec96;*/
-/*}*/
 
 form {
     margin: 0 auto;
@@ -284,7 +252,7 @@ input[type='checkbox'] + label {
 #adminTitle{
     font-family: "Dancing+Script", "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
     margin-bottom: 40px;
-    margin-top: 40px;
+
 }
 #stat{
     margin-bottom: 40px;
@@ -302,8 +270,8 @@ input[type='checkbox'] + label {
 
 #personalTitle{
     font-family: "Dancing+Script", "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
-    margin-bottom: 40px;
-    margin-top: 40px;
+    /*margin-bottom: 40px;*/
+    /*margin-top: 40px;*/
 }
 #persNav{
     margin-bottom: 40px;
@@ -314,3 +282,36 @@ input[type='checkbox'] + label {
 #productsTitle{
     font-family: "Dancing+Script", "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
 }
+
+
+
+
+
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.wrapperForFooter {
+    height: 100%;
+    flex: 1 0 auto;
+}
+
+
+.content {
+    flex: 1 0 auto;
+    padding: 10px;
+    min-height: 700px;
+}
+
+
+.header {
+    background-color: #dedede;
+    padding-top: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+

@@ -3,6 +3,7 @@ package com.eshop.domain;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,7 +14,7 @@ import java.util.Objects;
 @Table(name = "clients_addresses")
 @Data
 @NoArgsConstructor
-public class ClientAddress {
+public class ClientAddress implements Serializable {
 
     @Id
     @GeneratedValue

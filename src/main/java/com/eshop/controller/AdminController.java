@@ -20,6 +20,8 @@ public class AdminController {
 
     private Logger logger = Logger.getLogger("logger");
 
+    private static String PAGE_NAME = "adminpage";
+
     @Autowired
     private ProductService productService;
 
@@ -33,7 +35,7 @@ public class AdminController {
     public String viewAdminPage(Model model) {
         logger.info("Go to adminpage");
         adminService.setStatsDefaultDate(model);
-        return "adminpage";
+        return PAGE_NAME;
     }
 
     @PostMapping("/addproducts")
@@ -51,7 +53,7 @@ public class AdminController {
                                    colour, brand, weight, operatingSystem, image);
         logger.info("Product added");
         adminService.setStatsDefaultDate(model);
-        return "adminpage";
+        return PAGE_NAME;
     }
 
     @PostMapping("/addnewcategory")
@@ -62,14 +64,14 @@ public class AdminController {
                 logger.info("Category added");
             }
         adminService.setStatsDefaultDate(model);
-        return "adminpage";
+        return PAGE_NAME;
     }
 
     @PostMapping("/deletecategory")
     public String deleteCategory(@RequestParam(name = "categoryForRemove") String categoryName, Model model) {
         productService.deleteCategoryByName(categoryName);
         adminService.setStatsDefaultDate(model);
-        return "adminpage";
+        return PAGE_NAME;
     }
 
     @PostMapping("/admin")
@@ -80,7 +82,7 @@ public class AdminController {
         LocalDate finish = adminService.getFinishDate(finishParameter);
         adminService.setStats(model, start, finish);
         logger.info("Stats setted");
-        return "adminpage";
+        return PAGE_NAME;
     }
 
     @PostMapping("/addshop")
@@ -95,7 +97,7 @@ public class AdminController {
         orderService.saveShop(shopAddress);
         logger.info("Shop address saved");
         adminService.setStatsDefaultDate(model);
-        return "adminpage";
+        return PAGE_NAME;
     }
 
     //TODO implement method
@@ -115,6 +117,6 @@ public class AdminController {
                            Model model) {
         orderService.editShopById(id, country, city, postcode, street, houseNumber, phone);
         adminService.setStatsDefaultDate(model);
-        return "adminpage";
+        return PAGE_NAME;
     }
 }

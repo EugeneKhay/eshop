@@ -14,6 +14,9 @@ import java.util.Set;
 @Repository
 public class ProductDaoImpl implements ProductDAO {
 
+    private static String PARAM = "param";
+    private static String PARAM_CATEGORY = "paramCategory";
+
     @Autowired
     SessionFactory sessionFactory;
 
@@ -21,18 +24,16 @@ public class ProductDaoImpl implements ProductDAO {
     public Product getProductByName(String name) {
         String hql = "FROM Product WHERE productname = :param";
         Query query = sessionFactory.getCurrentSession().createQuery(hql);
-        query.setParameter("param", name);
-        Product product = (Product) query.list().get(0);
-        return product;
+        query.setParameter(PARAM, name);
+        return  (Product) query.list().get(0);
     }
 
     @Override
     public Product getProductById(int id) {
         String hql = "FROM Product WHERE id = :param";
         Query query = sessionFactory.getCurrentSession().createQuery(hql);
-        query.setParameter("param", id);
-        Product product = (Product) query.list().get(0);
-        return product;
+        query.setParameter(PARAM, id);
+        return  (Product) query.list().get(0);
     }
 
     @Override
@@ -57,7 +58,7 @@ public class ProductDaoImpl implements ProductDAO {
         Query query = sessionFactory.getCurrentSession().createQuery(hql);
         query.setParameter("maxprice", priceMax);
         query.setParameter("minprice", priceMin);
-        query.setParameter("paramCategory", type);
+        query.setParameter(PARAM_CATEGORY, type);
         return query.list();
     }
 
@@ -66,7 +67,7 @@ public class ProductDaoImpl implements ProductDAO {
     public List<Product> getAllProductsByBrand(String brand, String type) {
         String hql = "FROM Product as p WHERE p.productCategory.categoryName = :paramCategory and p.productParameteres.brand = :paramBrand" ;
         Query query = sessionFactory.getCurrentSession().createQuery(hql);
-        query.setParameter("paramCategory", type);
+        query.setParameter(PARAM_CATEGORY, type);
         query.setParameter("paramBrand", brand);
         return query.list();
     }
@@ -75,7 +76,7 @@ public class ProductDaoImpl implements ProductDAO {
     public List<Product> getAllProductsByBrand(String brand) {
         String hql = "FROM Product as p WHERE p.productParameteres.brand = :param";
         Query query = sessionFactory.getCurrentSession().createQuery(hql);
-        query.setParameter("param", brand);
+        query.setParameter(PARAM, brand);
         return query.list();
     }
 
@@ -83,7 +84,7 @@ public class ProductDaoImpl implements ProductDAO {
     public List<Product> getAllProductsByColour(String colour) {
         String hql = "FROM Product as p WHERE p.productParameteres.colour = :param";
         Query query = sessionFactory.getCurrentSession().createQuery(hql);
-        query.setParameter("param", colour);
+        query.setParameter(PARAM, colour);
         return query.list();
     }
 
@@ -91,7 +92,7 @@ public class ProductDaoImpl implements ProductDAO {
     public List<Product> getAllProductsByColour(String colour, String type) {
         String hql = "FROM Product as p WHERE p.productCategory.categoryName = :paramCategory and p.productParameteres.colour = :paramColour" ;
         Query query = sessionFactory.getCurrentSession().createQuery(hql);
-        query.setParameter("paramCategory", type);
+        query.setParameter(PARAM_CATEGORY, type);
         query.setParameter("paramColour", colour);
         return query.list();
     }
@@ -100,7 +101,7 @@ public class ProductDaoImpl implements ProductDAO {
     public List<Product> getAllProductsByCategory(CategoryOfProduct category) {
         String hql = "FROM Product as p WHERE p.productCategory = :param";
         Query query = sessionFactory.getCurrentSession().createQuery(hql);
-        query.setParameter("param", category);
+        query.setParameter(PARAM, category);
         return query.list();
     }
 
@@ -108,7 +109,7 @@ public class ProductDaoImpl implements ProductDAO {
     public List<Product> getAllProductsByCategory(String category) {
         String hql = "FROM Product as p WHERE p.productCategory.categoryName = :param";
         Query query = sessionFactory.getCurrentSession().createQuery(hql);
-        query.setParameter("param", category);
+        query.setParameter(PARAM, category);
         return query.list();
     }
 
@@ -138,9 +139,8 @@ public class ProductDaoImpl implements ProductDAO {
     public CategoryOfProduct getSingleCategoryByName(String name) {
         String hql = "FROM CategoryOfProduct WHERE categoryName = :param";
         Query query = sessionFactory.getCurrentSession().createQuery(hql);
-        query.setParameter("param", name);
-        CategoryOfProduct category = (CategoryOfProduct) query.list().get(0);
-        return category;
+        query.setParameter(PARAM, name);
+        return  (CategoryOfProduct) query.list().get(0);
     }
 
     @Override
@@ -152,17 +152,15 @@ public class ProductDaoImpl implements ProductDAO {
     public List<CategoryOfProduct> getCategoryByName(String categoryName) {
         String hql = "FROM CategoryOfProduct WHERE categoryName = :param";
         Query query = sessionFactory.getCurrentSession().createQuery(hql);
-        query.setParameter("param", categoryName);
-        List<CategoryOfProduct> category = query.list();
-        return category;
+        query.setParameter(PARAM, categoryName);
+        return query.list();
     }
 
     @Override
     public int deleteCategoryByName(String categoryName) {
-            String hql = "DELETE CategoryOfProduct where categoryName = :paramName";
-            Query query = sessionFactory.getCurrentSession().createQuery(hql);
-            query.setParameter("paramName", categoryName);
-            int result = query.executeUpdate();
-            return result;
+        String hql = "DELETE FROM CategoryOfProduct AS p where p.categoryName = :paramName";
+        Query query = sessionFactory.getCurrentSession().createQuery(hql);
+        query.setParameter("paramName", categoryName);
+        return query.executeUpdate();
     }
 }

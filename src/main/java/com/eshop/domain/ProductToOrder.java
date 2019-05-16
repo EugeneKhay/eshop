@@ -3,12 +3,13 @@ package com.eshop.domain;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "product_to_order")
 @Data
 @NoArgsConstructor
-public class ProductToOrder {
+public class ProductToOrder implements Serializable {
 
     @Id
     @GeneratedValue

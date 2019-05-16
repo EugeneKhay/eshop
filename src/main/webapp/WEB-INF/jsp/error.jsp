@@ -26,7 +26,6 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb" style="background-color: transparent">
                     <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item"><a href="/phone">Products</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Error</li>
                 </ol>
             </nav>
@@ -35,13 +34,10 @@
         <!-- Sign In-->
         <div class="col-sm-1">
             <button type="button" class="btn btn-primary-outline btn-md" data-toggle="modal" data-target="#exampleModal">
-                <span><img style="width: 45px; height: 45px" src="/resources/static/images/sign_in2.png"/> </span>
+                <span><img style="width: 45px; height: 45px" src="/resources/static/images/sign_in2.png" alt="Sign in"/> </span>
             </button>
         </div>
 
-        <%--<div class="col-sm-2">--%>
-            <%--<button type="button" class="btn btn-secondary btn-md" data-toggle="modal" data-target="#exampleModal">Sign In</button>--%>
-        <%--</div>--%>
     </div>
 
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -79,7 +75,7 @@
             </div>
         </div>
 
-    <div align="center" id="errormessage" style="color: black">
+    <div id="errormessage" style="color: black; text-align: center">
         <c:if test="${not empty errMsg}">
             <h4 class="text-danger">${errMsg}</h4>
             <br>
@@ -128,8 +124,7 @@
 
 
 </body>
-<script type="text/javascript" src="../resources/static/js/app2.js"/>
-<%--<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>--%>
+<script type="text/javascript" src="../resources/static/js/app2.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>

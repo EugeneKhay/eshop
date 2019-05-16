@@ -18,6 +18,7 @@ public class CatalogService {
                                                String search_dataColour,
                                                String page) {
         List<Product> searchResult = productService.getAllProductsByCategory(page);
+
         if (search_dataPrice1 != null && search_dataPrice2 != null) {
             double priceMin = search_dataPrice1;
             double priceMax = search_dataPrice2;
@@ -39,8 +40,7 @@ public class CatalogService {
         String start = page.substring(0,1).toUpperCase();
         String end = page.substring(1);
         String res = start + end;
-        CategoryOfProduct category = new CategoryOfProduct(res);
-        return category;
+        return new CategoryOfProduct(res);
     }
 
     public CatalogService(ProductService productService) {

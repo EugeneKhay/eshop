@@ -15,42 +15,47 @@
 </head>
 <body>
 
-<div class="container">
+<div class="wrapper">
 
-    <div class="row" id="basketTitle">
-        <div class="col-sm">
-            <h3>Basket</h3>
-        </div>
-    </div>
+    <div class="wrapperForFooter">
 
-    <!-- Nav -->
-    <div class="row" id="basketNav">
-        <div class="col-sm-3">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb" style="background-color: transparent">
-                    <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Basket</li>
-                </ol>
-            </nav>
-        </div>
-        <div class="col-sm">
-        </div>
-        <div class="col-sm-1">
-            <sec:authorize access="isAuthenticated()">
-                <button type="button" class="btn btn-secondary">
-                    <a style="color: aliceblue" href="/logout"> Clear </a>
-                </button>
-            </sec:authorize>
-        </div>
-        <!-- Sign In-->
-        <div class="col-sm-1">
-            <button type="button" class="btn btn-primary-outline btn-md" data-toggle="modal" data-target="#exampleModal">
-                <span><img style="width: 45px; height: 45px" src="/resources/static/images/sign_in2.png"/> </span>
-            </button>
-        </div>
-    </div>
+        <div class="header">
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="row" id="basketTitle">
+                <div class="col-sm-2">
+                    <h3>Basket</h3>
+                </div>
+                <div class="col-sm-3">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb" style="background-color: transparent">
+                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Basket</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Nav -->
+            <div class="row">
+
+                <div class="col-sm">
+                </div>
+                <div class="col-sm-1">
+                    <sec:authorize access="isAuthenticated()">
+                        <button type="button" class="btn btn-secondary">
+                            <a style="color: aliceblue" href="/logout"> Clear </a>
+                        </button>
+                    </sec:authorize>
+                </div>
+                <!-- Sign In-->
+                <div class="col-sm-1">
+                    <button type="button" class="btn btn-primary-outline btn-md" data-toggle="modal" data-target="#exampleModal">
+                        <span><img style="width: 45px; height: 45px" src="/resources/static/images/sign_in2.png" alt="Sign in"/> </span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -84,6 +89,12 @@
         </div>
     </div>
 
+        </div>
+
+        <br>
+        <br>
+
+        <div class="container content">
 
 <%-- Table --%>
     <div class="row">
@@ -247,12 +258,10 @@
         </div>
     </form>
     </sec:authorize>
-<br>
-<br>
-<br>
-<br>
-<br>
-    <div class="footer">
+
+        </div>
+
+        <div class="footer">
         <div class="row">
             <div class="col-sm-5" style="padding: 20px">
                 <p>Phone: 8 800 2000 600, 8 800 5353 777</p>
@@ -268,9 +277,11 @@
             </div>
         </div>
     </div>
+
+    </div>
 </div>
 
-<script type="text/javascript" src="../resources/static/js/app2.js"/>
+<script type="text/javascript" src="../resources/static/js/app2.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>

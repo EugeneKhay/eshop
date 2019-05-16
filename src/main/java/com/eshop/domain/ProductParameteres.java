@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -13,7 +14,7 @@ import java.util.Objects;
 @Table(name = "parameters")
 @Data
 @NoArgsConstructor
-public class ProductParameteres {
+public class ProductParameteres implements Serializable {
 
     @Id
     @GeneratedValue
@@ -48,5 +49,13 @@ public class ProductParameteres {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ProductParameteres)) return false;
+        ProductParameteres that = (ProductParameteres) o;
+        return id.equals(that.id);
     }
 }

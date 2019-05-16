@@ -7,6 +7,7 @@ import com.eshop.enums.PaymentStatus;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Objects;
@@ -19,7 +20,7 @@ import java.util.Set;
 @Table(name = "orders")
 @Data
 @NoArgsConstructor
-public class Order {
+public class Order implements Serializable {
 
     @Id
     @GeneratedValue
@@ -35,15 +36,15 @@ public class Order {
 
     //TODO check
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<ProductToOrder> orderProducts = new HashSet<>();
+    private  Set<ProductToOrder> orderProducts = new HashSet<>();
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
-    private ClientAddress addressForDelivery;
+    private  ClientAddress addressForDelivery;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_self_id")
-    private ShopAddress addressForSelfCollect;
+    private  ShopAddress addressForSelfCollect;
 
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;

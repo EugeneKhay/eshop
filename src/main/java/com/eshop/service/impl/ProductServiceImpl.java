@@ -55,7 +55,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void editProductByAdmin(int productId, String productName, String brand, double price, int amount, String category, String colour, int weight, String operatingSystem) {
-        CategoryOfProduct productCategory = new CategoryOfProduct(category);
+        CategoryOfProduct productCategory = getSingleCategoryByName(category);
         ProductParameteres parameteres = new ProductParameteres(colour, brand, weight, operatingSystem);
         Product product = getProductById(productId);
         product.setProductName(productName);

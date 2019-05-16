@@ -15,6 +15,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Contains the methods to:
@@ -25,7 +26,7 @@ import java.util.List;
 @Transactional
 public class AdminService {
 
-    private final static String IMAGE_PATH = "../resources/static/images/";
+    private static final String IMAGE_PATH = "../resources/static/images/";
 
     @Autowired
     private ClientService clientService;
@@ -35,6 +36,9 @@ public class AdminService {
 
     @Autowired
     private OrderService orderService;
+
+    private Logger logger = Logger.getLogger("logger");
+
 
     /**
      * Define the start date.
@@ -62,9 +66,8 @@ public class AdminService {
      */
     public String getMessage(LocalDate start, LocalDate finish) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        String period = "Info for the period from " + start.format(formatter)
+        return "Info for the period from " + start.format(formatter)
                 + " to " + finish.format(formatter);
-        return period;
     }
 
     /**
@@ -90,6 +93,7 @@ public class AdminService {
             output.add(tenBest.get(i).getFirstName() + " " + tenBest.get(i).getLastName() + ", " + integers.get(i) +  " orders");
         }
         model.addAttribute("output", output);
+        logger.info("Statistics set");
     }
 
     /**
@@ -136,7 +140,6 @@ public class AdminService {
         ProductParameteres productParameteres = new ProductParameteres(colour, brand, weight, operatingSystem);
         CategoryOfProduct productCategory = productService.getSingleCategoryByName(category);
         String imagePath = IMAGE_PATH + image;
-        System.out.println(imagePath);
         Product product = new Product(productName, productPrice, amount, imagePath, productParameteres, productCategory);
         productService.saveProduct(product);
     }
@@ -148,8 +151,7 @@ public class AdminService {
      */
     public boolean checkCategory(String categoryName) {
         List<CategoryOfProduct> listOfCategoryByName = productService.getCategoryByName(categoryName);
-        if (listOfCategoryByName.size() == 0) return true;
-        return false;
+            return listOfCategoryByName.isEmpty();
     }
 
 }

@@ -19,6 +19,8 @@ import java.util.Set;
 @Repository
 public class OrderDaoImpl implements OrderDao {
 
+    private static String PARAM = "param";
+
     @Autowired
     private SessionFactory sessionFactory;
 
@@ -26,9 +28,8 @@ public class OrderDaoImpl implements OrderDao {
     public Order getOrderById(Integer id) {
         String hql = "FROM Order WHERE id = :param";
         Query query = sessionFactory.getCurrentSession().createQuery(hql);
-        query.setParameter("param", id);
-        Order order = (Order) query.list().get(0);
-        return order;
+        query.setParameter(PARAM, id);
+        return  (Order) query.list().get(0);
     }
 
     @Override
@@ -90,7 +91,7 @@ public class OrderDaoImpl implements OrderDao {
     public ShopAddress getShopById(Integer id) {
         String hql = "FROM ShopAddress WHERE id = :param";
         Query query = sessionFactory.getCurrentSession().createQuery(hql);
-        query.setParameter("param", id);
+        query.setParameter(PARAM, id);
         ShopAddress address = (ShopAddress) query.list().get(0);
         return address;
     }
@@ -99,9 +100,8 @@ public class OrderDaoImpl implements OrderDao {
     public ClientAddress getClientAddressById(Integer id) {
         String hql = "FROM ClientAddress WHERE id = :param";
         Query query = sessionFactory.getCurrentSession().createQuery(hql);
-        query.setParameter("param", id);
-        ClientAddress address = (ClientAddress) query.list().get(0);
-        return address;
+        query.setParameter(PARAM, id);
+        return  (ClientAddress) query.list().get(0);
     }
 }
 

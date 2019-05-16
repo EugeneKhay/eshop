@@ -22,6 +22,10 @@ import java.util.logging.Logger;
 @Controller
 public class MainController {
 
+    private static String CLIENT_ATTR = "client";
+
+    private static String PERSONAL_PAGE = "personal";
+
     @Autowired
     private ClientService clientService;
 
@@ -72,8 +76,8 @@ public class MainController {
     @GetMapping("/personal")
     public String enterMyAccount(Model model) {
         Client clientById = clientService.getClientForView();
-        model.addAttribute("client", clientById);
-        return "personal";
+        model.addAttribute(CLIENT_ATTR, clientById);
+        return PERSONAL_PAGE;
     }
 
     @PostMapping("/edit")
@@ -85,8 +89,8 @@ public class MainController {
                                  @RequestParam(name = "phone") String phone,
                                  Model model) {
         Client clientForView = clientService.editClientPersonalData(clientId, firstName, lastName, password, email, phone);
-        model.addAttribute("client", clientForView);
-        return "personal";
+        model.addAttribute(CLIENT_ATTR, clientForView);
+        return PERSONAL_PAGE;
     }
 
     @PostMapping("/addaddress")
@@ -99,9 +103,9 @@ public class MainController {
                                     Model model) {
         Client clientForView = clientService.createAddressForClient(country, city, postcode, street, houseNumber, flatNumber);
         logger.info("Save address");
-        model.addAttribute("client", clientForView);
+        model.addAttribute(CLIENT_ATTR, clientForView);
         model.addAttribute("addresses", clientForView.getAddressList());
-        return "personal";
+        return PERSONAL_PAGE;
     }
 
     @PostMapping("/editaddress")
@@ -114,16 +118,16 @@ public class MainController {
                                      @RequestParam(name = "flatNumber") int flatNumber,
                                      Model model) {
         Client clientForView = clientService.editAddressForClient(addressId, country, city, postcode, street, houseNumber, flatNumber);
-        model.addAttribute("client", clientForView);
-        return "personal";
+        model.addAttribute(CLIENT_ATTR, clientForView);
+        return PERSONAL_PAGE;
     }
 
     @PostMapping("/deleteaddress")
     public String deleteClientAddress(@RequestParam(name = "addressForDelete") int id, Model model) {
         clientService.deleteAddressById(id);
         Client clientById = clientService.getClientForView();
-        model.addAttribute("client", clientById);
-        return "personal";
+        model.addAttribute(CLIENT_ATTR, clientById);
+        return PERSONAL_PAGE;
     }
 
     @PostMapping("/editproduct")

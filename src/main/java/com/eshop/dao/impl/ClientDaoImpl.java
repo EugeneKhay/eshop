@@ -12,6 +12,8 @@ import java.util.List;
 @Repository
 public class ClientDaoImpl implements ClientDao {
 
+    private static String PARAM = "paramId";
+
     @Autowired
     SessionFactory sessionFactory;
 
@@ -19,53 +21,47 @@ public class ClientDaoImpl implements ClientDao {
     public Client getClientByName(String name) {
         String hql = "FROM Client WHERE firstname = :paramId";
         Query query = sessionFactory.getCurrentSession().createQuery(hql);
-        query.setParameter("paramId", name);
-        Client client = (Client) query.list().get(0);
-        return client;
+        query.setParameter(PARAM, name);
+        return  (Client) query.list().get(0);
     }
 
     @Override
     public Client getClientByEmail(String email) {
         String hql = "FROM Client WHERE email = :paramId";
         Query query = sessionFactory.getCurrentSession().createQuery(hql);
-        query.setParameter("paramId", email);
-        Client client = (Client) query.list().get(0);
-        return client;
+        query.setParameter(PARAM, email);
+        return  (Client) query.list().get(0);
     }
 
     @Override
     public List<Client> getAllClientsByEmail(String email) {
         String hql = "FROM Client WHERE email = :paramId";
         Query query = sessionFactory.getCurrentSession().createQuery(hql);
-        query.setParameter("paramId", email);
-        List list = query.list();
-        return list;
+        query.setParameter(PARAM, email);
+        return query.list();
     }
 
     @Override
     public Client getClientById(int id) {
         String hql = "FROM Client WHERE id = :paramId";
         Query query = sessionFactory.getCurrentSession().createQuery(hql);
-        query.setParameter("paramId", id);
-        Client client = (Client) query.list().get(0);
-        return client;
+        query.setParameter(PARAM, id);
+        return (Client) query.list().get(0);
     }
 
     @Override
     public ClientAddress getAddressById(int id) {
         String hql = "FROM ClientAddress WHERE id = :paramId";
         Query query = sessionFactory.getCurrentSession().createQuery(hql);
-        query.setParameter("paramId", id);
-        ClientAddress address = (ClientAddress) query.list().get(0);
-        return address;
+        query.setParameter(PARAM, id);
+        return  (ClientAddress) query.list().get(0);
     }
 
     @Override
     public List<Client> getAllClients() {
         String hql = "FROM Client";
         Query query = sessionFactory.getCurrentSession().createQuery(hql);
-        List<Client> list = query.list();
-        return list;
+        return query.list();
     }
 
     @Override
@@ -82,7 +78,7 @@ public class ClientDaoImpl implements ClientDao {
     public void deleteAddressById(int id) {
         String hql = "DELETE ClientAddress where id = :paramId";
         Query query = sessionFactory.getCurrentSession().createQuery(hql);
-        query.setParameter("paramId", id);
+        query.setParameter(PARAM, id);
         query.executeUpdate();
     }
 }

@@ -8,6 +8,7 @@ import javax.persistence.Table;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.OneToMany;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,7 +19,7 @@ import java.util.Objects;
 @Table(name = "category")
 @Data
 @NoArgsConstructor
-public class CategoryOfProduct {
+public class CategoryOfProduct implements Serializable {
 
     @Id
     @GeneratedValue

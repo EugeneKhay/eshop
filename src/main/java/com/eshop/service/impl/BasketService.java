@@ -12,8 +12,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Contains methods for work with the basket.
+ */
 @Service
 public class BasketService {
+
+    private static String BASKET_ATTR = "shop_basket";
+
+    private static String PRICE_ATTR = "totalPrice";
 
     @Autowired
     private ProductService productService;
@@ -24,9 +31,8 @@ public class BasketService {
      * @return map contains products and its amount
      */
     public Map<Product, Integer> getProductsInBasket(HttpServletRequest request) {
-        Basket basket = (Basket) request.getSession().getAttribute("shop_basket");
-        Map<Product, Integer> products = basket.getProductsInBasket();
-        return products;
+        Basket basket = (Basket) request.getSession().getAttribute(BASKET_ATTR);
+        return basket.getProductsInBasket();
     }
 
     /**
@@ -37,25 +43,24 @@ public class BasketService {
      */
     public Integer prepareProductsForBasket( int id, HttpSession session) {
         Product product = productService.getProductById(id);
-        Basket basket = (Basket) session.getAttribute("shop_basket");
+        Basket basket = (Basket) session.getAttribute(BASKET_ATTR);
         if (basket.getProductsInBasket().containsKey(product)) {
             int amountInBasketBeforeAdd = basket.getProductsInBasket().get(product);
             basket.getProductsInBasket().put(product, amountInBasketBeforeAdd + 1);
         } else {
             basket.getProductsInBasket().put(product, 1);
         }
-        session.setAttribute("shop_basket", basket);
+        session.setAttribute(BASKET_ATTR, basket);
         double totalPrice = 0;
         for (Map.Entry<Product, Integer> entry: basket.getProductsInBasket().entrySet()) {
             totalPrice += (entry.getKey().getProductPrice() * entry.getValue());
         }
-        session.setAttribute("totalPrice", totalPrice);
-        Integer amountOfItemsInBasket = ((Basket) session.getAttribute("shop_basket")).getProductsInBasket()
+        session.setAttribute(PRICE_ATTR, totalPrice);
+        return ((Basket) session.getAttribute(BASKET_ATTR)).getProductsInBasket()
                 .values()
                 .stream()
                 .reduce((s1, s2) -> s1 + s2)
                 .orElse(0);
-        return amountOfItemsInBasket;
     }
 
     /**
@@ -67,15 +72,15 @@ public class BasketService {
      */
     public Double deleteFromBAsket(int id, HttpSession session) {
         Product product = productService.getProductById(id);
-        Basket basket = (Basket) session.getAttribute("shop_basket");
-        Double totalPrice = (Double) session.getAttribute("totalPrice");
+        Basket basket = (Basket) session.getAttribute(BASKET_ATTR);
+        Double totalPrice = (Double) session.getAttribute(PRICE_ATTR);
         for (Map.Entry<Product, Integer> entry: basket.getProductsInBasket().entrySet()) {
             if (entry.getKey().equals(product))
                 totalPrice = totalPrice - (entry.getKey().getProductPrice() * entry.getValue());
         }
         basket.getProductsInBasket().remove(product);
-        session.setAttribute("shop_basket", basket);
-        session.setAttribute("totalPrice", totalPrice);
+        session.setAttribute(BASKET_ATTR, basket);
+        session.setAttribute(PRICE_ATTR, totalPrice);
         return totalPrice;
     }
 
@@ -88,8 +93,8 @@ public class BasketService {
      */
     public List<Number> editOrderMinus(int id, HttpSession session) {
         Product product = productService.getProductById(id);
-        Basket basket = (Basket) session.getAttribute("shop_basket");
-        double totalPrice = (double) session.getAttribute("totalPrice");
+        Basket basket = (Basket) session.getAttribute(BASKET_ATTR);
+        double totalPrice = (double) session.getAttribute(PRICE_ATTR);
         for (Map.Entry<Product, Integer> entry: basket.getProductsInBasket().entrySet()) {
             if (entry.getKey().equals(product))
                 totalPrice = totalPrice - entry.getKey().getProductPrice();
@@ -98,8 +103,7 @@ public class BasketService {
         int amountBefore = basket.getProductsInBasket().get(product);
         int amountAfter = --amountBefore;
         if (amountAfter < 0) amountAfter = 0;
-        List<Number> result = setDataToSession(basket, product, amountAfter, session, totalPrice);
-        return result;
+        return setDataToSession(basket, product, amountAfter, session, totalPrice);
     }
 
     /**
@@ -111,16 +115,15 @@ public class BasketService {
      */
     public List<Number> editOrderPlus(int id, HttpSession session) {
         Product product = productService.getProductById(id);
-        Basket basket = (Basket) session.getAttribute("shop_basket");
-        double totalPrice = (double) session.getAttribute("totalPrice");
+        Basket basket = (Basket) session.getAttribute(BASKET_ATTR);
+        double totalPrice = (double) session.getAttribute(PRICE_ATTR);
         for (Map.Entry<Product, Integer> entry: basket.getProductsInBasket().entrySet()) {
             if (entry.getKey().equals(product))
                 totalPrice = totalPrice + entry.getKey().getProductPrice();
         }
         int amountBefore = basket.getProductsInBasket().get(product);
         int amountAfter = ++amountBefore;
-        List<Number> result = setDataToSession(basket, product, amountAfter, session, totalPrice);
-        return result;
+        return setDataToSession(basket, product, amountAfter, session, totalPrice);
     }
 
     /**
@@ -135,8 +138,8 @@ public class BasketService {
      */
     public List<Number> setDataToSession(Basket basket, Product product, int amountAfter, HttpSession session, double totalPrice) {
         basket.getProductsInBasket().put(product, amountAfter);
-        session.setAttribute("shop_basket", basket);
-        session.setAttribute("totalPrice", totalPrice);
+        session.setAttribute(BASKET_ATTR, basket);
+        session.setAttribute(PRICE_ATTR, totalPrice);
         List<Number> result = new ArrayList();
         result.add(totalPrice);
         result.add(amountAfter);
