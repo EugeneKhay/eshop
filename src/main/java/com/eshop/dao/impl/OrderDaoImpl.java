@@ -16,6 +16,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Contains implementations of OrderDao methods
+ */
 @Repository
 public class OrderDaoImpl implements OrderDao {
 
@@ -79,7 +82,6 @@ public class OrderDaoImpl implements OrderDao {
         sessionFactory.getCurrentSession().saveOrUpdate(address);
     }
 
-    //TODO remove set
     @Override
     public Set<ShopAddress> getAllShops() {
         String hql = "FROM ShopAddress";

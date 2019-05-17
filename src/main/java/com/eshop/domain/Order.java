@@ -34,7 +34,6 @@ public class Order implements Serializable {
     @JoinColumn(name = "client_id")
     private Client client;
 
-    //TODO check
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private  Set<ProductToOrder> orderProducts = new HashSet<>();
 

@@ -2,9 +2,9 @@ package com.eshop.controller;
 
 import com.eshop.domain.CategoryOfProduct;
 import com.eshop.domain.ShopAddress;
+import com.eshop.service.AdminService;
 import com.eshop.service.OrderService;
 import com.eshop.service.ProductService;
-import com.eshop.service.impl.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.time.LocalDate;
 import java.util.logging.Logger;
 
+/**
+ * Contains methods for requests to the manager page processing
+ */
 @Controller
 public class AdminController {
 
@@ -31,6 +34,11 @@ public class AdminController {
     @Autowired
     private OrderService orderService;
 
+    /**
+     * Handle the request to "/admin" URL to go to the manager page
+     * @param model model for view displaying
+     * @return name of the corresponding view
+     */
     @GetMapping("/admin")
     public String viewAdminPage(Model model) {
         logger.info("Go to adminpage");
@@ -38,6 +46,20 @@ public class AdminController {
         return PAGE_NAME;
     }
 
+    /**
+     * Handle the request to "/addproducts" URL to add new product to catalog by manager
+     * @param productName name of the new product
+     * @param productPrice price of the new product
+     * @param category category of the new product
+     * @param amount amount of the new product
+     * @param colour colour of the new product
+     * @param brand brand of the new product
+     * @param weight weight of the new product
+     * @param operatingSystem OS of the new product
+     * @param image name of the folder that contains images of new product
+     * @param model model for view
+     * @return name of the corresponding view
+     */
     @PostMapping("/addproducts")
     public String addProduct(@RequestParam(name = "productName") String productName,
                              @RequestParam(name = "productPrice") double productPrice,
@@ -56,6 +78,11 @@ public class AdminController {
         return PAGE_NAME;
     }
 
+    /**
+     * Handle the request to "/addnewcategory" URL to add new category
+     * @param model model for view displaying
+     * @return name of the corresponding view
+     */
     @PostMapping("/addnewcategory")
     public String addCategory(@RequestParam(name = "categoryName") String categoryName, Model model) {
             if (adminService.checkCategory(categoryName)) {
@@ -67,6 +94,11 @@ public class AdminController {
         return PAGE_NAME;
     }
 
+    /**
+     * Handle the request to "/addnewcategory" URL to delete existing category
+     * @param model model for view displaying
+     * @return name of the corresponding view
+     */
     @PostMapping("/deletecategory")
     public String deleteCategory(@RequestParam(name = "categoryForRemove") String categoryName, Model model) {
         productService.deleteCategoryByName(categoryName);
@@ -74,6 +106,11 @@ public class AdminController {
         return PAGE_NAME;
     }
 
+    /**
+     * Handle the request to "/admin" URL to get data for the particular period of time
+     * @param model model for view displaying
+     * @return name of the corresponding view
+     */
     @PostMapping("/admin")
     public String getStats(@RequestParam(name = "start", required = false) @DateTimeFormat(pattern="yyyy-MM-dd")LocalDate startParameter,
                            @RequestParam(name = "finish", required = false)@DateTimeFormat(pattern="yyyy-MM-dd")LocalDate finishParameter,
@@ -85,27 +122,30 @@ public class AdminController {
         return PAGE_NAME;
     }
 
+    /**
+     * Handle the request to "/addshop" URL to add new shop address
+     * @param model model for view displaying
+     * @return name of the corresponding view
+     */
     @PostMapping("/addshop")
-    public String addShopAddress (@RequestParam(name = "country", required = false) String country,
-                                  @RequestParam(name = "city", required = false) String city,
-                                  @RequestParam(name = "postcode", required = false) int postcode,
-                                  @RequestParam(name = "street", required = false) String street,
-                                  @RequestParam(name = "houseNumber", required = false) int houseNumber,
-                                  @RequestParam(name = "phone", required = false) String phone,
+    public String addShopAddress (@RequestParam(name = "country") String country,
+                                  @RequestParam(name = "city") String city,
+                                  @RequestParam(name = "postcode") int postcode,
+                                  @RequestParam(name = "street") String street,
+                                  @RequestParam(name = "houseNumber") int houseNumber,
+                                  @RequestParam(name = "phone") String phone,
                                   Model model) {
-        ShopAddress shopAddress = new ShopAddress(country, city, postcode, street, houseNumber, phone);
-        orderService.saveShop(shopAddress);
+        adminService.createShopAddress(country, city, postcode, street, houseNumber, phone);
         logger.info("Shop address saved");
         adminService.setStatsDefaultDate(model);
         return PAGE_NAME;
     }
 
-    //TODO implement method
-    @PostMapping("/deleteshop")
-    public String deleteShop(@RequestParam(name = "shopForDelete") int id, Model model) {
-        return null;
-    }
-
+    /**
+     * Handle the request to "/editshop" URL to change data of the particular shop
+     * @param model model for view displaying
+     * @return name of the corresponding view
+     */
     @PostMapping("/editshop")
     public String editShop(@RequestParam(name = "shopForEdit") int id,
                            @RequestParam(name = "country") String country,

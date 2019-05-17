@@ -172,7 +172,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="postcode2" style="color: black">Postcode</label>
-                                                        <input class="form-control form-control-md" type="number" id="postcode2" name="postcode" />
+                                                        <input class="form-control form-control-md" type="number" id="postcode2" name="postcode" min="0"/>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="street2" style="color: black">Street</label>
@@ -180,11 +180,11 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="houseNumber2" style="color: black">House number</label>
-                                                        <input class="form-control form-control-md" type="number" id="houseNumber2" name="houseNumber" />
+                                                        <input class="form-control form-control-md" type="number" id="houseNumber2" name="houseNumber" min="0"/>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="flatNumber2" style="color: black">Flat number</label>
-                                                        <input class="form-control form-control-md" type="number" id="flatNumber2" name="flatNumber" />
+                                                        <input class="form-control form-control-md" type="number" id="flatNumber2" name="flatNumber" min="0"/>
                                                     </div>
                                                     <button onclick="form4_submit()" name="user_search" class="btn btn-secondary" data-dismiss="modal"> Add </button>
                                                     <script>
@@ -249,7 +249,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="freakfield" style="color: black">Postcode</label>
-                                            <input class="form-control form-control-md" type="number" id="freakfield" name="postcode" value="${address.postCode}"/>
+                                            <input class="form-control form-control-md" type="number" id="freakfield" name="postcode" value="${address.postCode}" min="0"/>
                                         </div>
                                         <div class="form-group">
                                             <label for="street" style="color: black">Street</label>
@@ -257,11 +257,11 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="houseNumber" style="color: black">House number</label>
-                                            <input class="form-control form-control-md" type="number" id="houseNumber" name="houseNumber" value="${address.houseNumber}"/>
+                                            <input class="form-control form-control-md" type="number" id="houseNumber" name="houseNumber" value="${address.houseNumber}" min="0"/>
                                         </div>
                                         <div class="form-group">
                                             <label for="flatNumber" style="color: black">Flat number</label>
-                                            <input class="form-control form-control-md" type="number" id="flatNumber" name="flatNumber" value="${address.flatNumber}"/>
+                                            <input class="form-control form-control-md" type="number" id="flatNumber" name="flatNumber" value="${address.flatNumber}" min="0"/>
                                         </div>
                                         <button type="submit" name="user_search" class="btn btn-secondary" data-dismiss="modal"> Submit </button>
                                     </form>
@@ -409,7 +409,6 @@
         </div>
     </div>
 </div>
-
 </body>
 <script type="text/javascript" src="../resources/static/js/app2.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

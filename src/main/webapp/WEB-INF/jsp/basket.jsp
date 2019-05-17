@@ -96,11 +96,21 @@
 
         <div class="container content">
 
+            <div style="text-align: center; display: none" >
+                <sec:authorize access="isAnonymous()">
+                    <div>
+                        <p id="emptyBasket">  </p>
+                    </div>
+                </sec:authorize>
+            </div>
+
+            <br>
+
 <%-- Table --%>
     <div class="row">
             <table class="table" style="width: 80%; color: black; margin: 0 auto">
                 <tr>
-                    <th>Product ID</th>
+                    <%--<th>Product ID</th>--%>
                     <th>Product name</th>
                     <th>Price</th>
                     <th>Amount</th>
@@ -114,7 +124,7 @@
                     <c:set var = "amount" scope = "session" value = "${entry.value}"/>
                     <div>
                     <tr id="product-${product.id}del">
-                        <td>${product.id}</td>
+                        <%--<td>${product.id}</td>--%>
                         <td>${product.productName}</td>
                         <td>${product.productPrice}</td>
                         <td id="amount${product.id}edit">${amount}</td>
@@ -286,19 +296,3 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -30,9 +30,6 @@ public interface OrderService {
 
     List<Order> getOrdersPerPeriodForClient(Client client, LocalDate start, LocalDate finish);
 
-    //TODO delete unused
-    Order makeNewOrder(HttpSession session, String paymentMethod, String deliveryMethod);
-
     Order makeNewOrder(HttpSession session, String paymentMethod, String deliveryMethod, Integer deliveryAddress, Integer collectAddress);
 
     void editOrder(int id, String paymentStatus, String orderStatus);

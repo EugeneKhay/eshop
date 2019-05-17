@@ -1,9 +1,8 @@
 package com.eshop.service.impl;
 
-import com.eshop.domain.CategoryOfProduct;
-import com.eshop.domain.Client;
-import com.eshop.domain.Product;
-import com.eshop.domain.ProductParameteres;
+import com.eshop.domain.*;
+import com.eshop.jms.MessageSender;
+import com.eshop.service.AdminService;
 import com.eshop.service.ClientService;
 import com.eshop.service.OrderService;
 import com.eshop.service.ProductService;
@@ -24,9 +23,9 @@ import java.util.logging.Logger;
  */
 @Service
 @Transactional
-public class AdminService {
+public class AdminServiceImpl implements AdminService {
 
-    private static final String IMAGE_PATH = "../resources/static/images/";
+    private static final String IMAGE_PATH = "/resources/static/images/";
 
     @Autowired
     private ClientService clientService;
@@ -37,6 +36,9 @@ public class AdminService {
     @Autowired
     private OrderService orderService;
 
+    @Autowired
+    private MessageSender sender;
+
     private Logger logger = Logger.getLogger("logger");
 
 
@@ -45,6 +47,7 @@ public class AdminService {
      * @param start input date
      * @return the start date
      */
+    @Override
     public LocalDate getStartDate(LocalDate start) {
         return (start == null) ? LocalDate.of(2019, 1, 1) : start;
     }
@@ -54,6 +57,7 @@ public class AdminService {
      * @param finish input date
      * @return the finish date
      */
+    @Override
     public LocalDate getFinishDate(LocalDate finish) {
         return (finish == null) ? LocalDate.now() : finish;
     }
@@ -64,6 +68,7 @@ public class AdminService {
      * @param finish finish date
      * @return message for manager page
      */
+    @Override
     public String getMessage(LocalDate start, LocalDate finish) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         return "Info for the period from " + start.format(formatter)
@@ -76,6 +81,7 @@ public class AdminService {
      * @param start start date
      * @param finish finish date
      */
+    @Override
     public void setStats(Model model, LocalDate start, LocalDate finish) {
         model.addAttribute("bestProducts", orderService.getBestsellerPerPeriod(start, finish));
         model.addAttribute("orders", orderService.getOrdersPerPeriod(start, finish));
@@ -101,6 +107,7 @@ public class AdminService {
      * finish - the current day.
      * @param model model for view in MVC
      */
+    @Override
     public void setStatsDefaultDate(Model model) {
         LocalDate start = LocalDate.of(2019, 1, 1);
         LocalDate finish = LocalDate.now();
@@ -114,6 +121,7 @@ public class AdminService {
      * @param finish
      * @return
      */
+    @Override
     public List<Integer> numberOfOrdersForTenBestClients(List<Client> clientList, LocalDate start, LocalDate finish) {
         List<Integer> numbers = new ArrayList<>();
         for (Client client: clientList) {
@@ -135,6 +143,7 @@ public class AdminService {
      * @param operatingSystem the OS, if a product has it
      * @param image the name of folder, which contains images of a product
      */
+    @Override
     public void addNewProduct(String productName, double productPrice, String category, int amount,
                               String colour, String brand, int weight, String operatingSystem, String image) {
         ProductParameteres productParameteres = new ProductParameteres(colour, brand, weight, operatingSystem);
@@ -142,6 +151,7 @@ public class AdminService {
         String imagePath = IMAGE_PATH + image;
         Product product = new Product(productName, productPrice, amount, imagePath, productParameteres, productCategory);
         productService.saveProduct(product);
+        sender.sendMessage("Update");
     }
 
     /**
@@ -149,9 +159,18 @@ public class AdminService {
      * @param categoryName
      * @return true if category doesn't exists, false for vice-versa.
      */
+    @Override
     public boolean checkCategory(String categoryName) {
         List<CategoryOfProduct> listOfCategoryByName = productService.getCategoryByName(categoryName);
             return listOfCategoryByName.isEmpty();
+    }
+
+    @Override
+    public ShopAddress createShopAddress(String country, String city, int postcode, String street, int houseNumber, String phone) {
+        if (country == null || city == null || postcode == 0 ||street == null || houseNumber == 0 || phone == null) throw new IllegalArgumentException("Not valid data about shop address");
+        ShopAddress shopAddress = new ShopAddress(country, city, postcode, street, houseNumber, phone);
+        orderService.saveShop(shopAddress);
+        return shopAddress;
     }
 
 }

@@ -6,6 +6,9 @@ import com.twilio.type.PhoneNumber;
 
 import java.util.logging.Logger;
 
+/**
+ * Class for SMS messaging.
+ */
 public class SmsSender {
 
     public static final String ACCOUNT_SID =
@@ -15,10 +18,14 @@ public class SmsSender {
 
     private static Logger logger = Logger.getLogger("logger");
 
-
     private SmsSender() {
     }
 
+    /**
+     * Sends SMS message about order to client phone number.
+     * @param phoneNumber client's phone number
+     * @param orderID id of the client's order
+     */
     public static void sendSMS(String phoneNumber, int orderID) {
         String body = "Order  N" + orderID + " confirmed";
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);

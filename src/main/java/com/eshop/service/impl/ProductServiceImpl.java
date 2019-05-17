@@ -4,6 +4,7 @@ import com.eshop.dao.ProductDAO;
 import com.eshop.domain.CategoryOfProduct;
 import com.eshop.domain.Product;
 import com.eshop.domain.ProductParameteres;
+import com.eshop.jms.MessageSender;
 import com.eshop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,12 +12,18 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Contains implementations of methods ProductService for working with the product.
+ */
 @Service
 @Transactional
 public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductDAO dao;
+
+    @Autowired
+    private MessageSender sender;
 
     @Override
     public Product getProductByName(String name) {
@@ -64,6 +71,7 @@ public class ProductServiceImpl implements ProductService {
         product.setProductCategory(productCategory);
         product.setProductParameteres(parameteres);
         saveProduct(product);
+        sender.sendMessage("Update");
     }
 
     @Override
@@ -96,6 +104,12 @@ public class ProductServiceImpl implements ProductService {
         dao.saveProduct(product);
     }
 
+    /**
+     * Decreases amount of a product in stock.
+     * @param product
+     * @param countOfItems
+     * @return
+     */
     @Override
     public int decreaseProductAmountInStock(Product product, int countOfItems) {
         int newAmount;

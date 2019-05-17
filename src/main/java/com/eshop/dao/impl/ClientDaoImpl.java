@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 
+/**
+ * Contains implementations of ClientDao methods
+ */
 @Repository
 public class ClientDaoImpl implements ClientDao {
 

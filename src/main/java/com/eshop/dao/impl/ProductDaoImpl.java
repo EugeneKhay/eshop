@@ -11,6 +11,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Contains implementations of ProductDao methods
+ */
 @Repository
 public class ProductDaoImpl implements ProductDAO {
 

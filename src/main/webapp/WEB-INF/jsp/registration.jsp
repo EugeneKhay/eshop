@@ -7,25 +7,36 @@
     <link rel="stylesheet" type="text/css" href="../resources/static/css/style.css"/>
 </head>
 <body>
-    <div class="container">
-        <div class="row" id="regTitle">
-            <h3>Registration</h3>
+
+<div class="wrapper">
+
+    <div class="wrapperForFooter">
+
+        <div class="header">
+
+            <div class="row" id="regTitle">
+                <div class="col-sm-2">
+                    <h3>Registration</h3>
+                </div>
+                <div class="col-sm">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb" style="background-color: transparent">
+                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Registration</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
         </div>
 
-        <div class="row" id="basketNav">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Registration</li>
-                </ol>
-            </nav>
-        </div>
+        <br>
+        <br>
+        <br>
 
-        <div class="row" id="fill">
 
-        <div class="container">
+        <div class="container content">
             <form method="post" action="/registration" style="width: 50%">
-                <h1> Please, fill in the form: </h1>
+                <h3> Please, fill in the form: </h3>
                 <div class="form-group">
                     <label for="required-input">First name</label>
                     <input class="form-control form-control-md" type="text" id="required-input" name="firstName" required>
@@ -54,17 +65,9 @@
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             </form>
         </div>
-        </div>
 
-        <div>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-        </div>
+        <br>
+        <br>
 
         <div class="footer" >
             <div class="container">
@@ -84,70 +87,11 @@
                 </div>
             </div>
         </div>
-    </div>
 
+    </div>
+</div>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-<%--<form method="post" action="/registration" id="regForm">--%>
-
-<%--<div class="form-group">--%>
-<%--<label for="firstName">First name</label>--%>
-<%--<input class="form-control form-control-md" name="firstName" type="text" class="form-control" id="firstName" aria-describedby="emailHelp" placeholder="Name">--%>
-<%--</div>--%>
-<%--<div class="form-group">--%>
-<%--<label for="lastName">Last name</label>--%>
-<%--<input class="form-control form-control-md" name="lastName" type="text" class="form-control" id="lastName" placeholder="Last name">--%>
-<%--</div>--%>
-<%--<div class="form-group">--%>
-<%--<label  for="birthDate">Birth date</label>--%>
-<%--<input style="background: transparent; color: black" class="form-control form-control-md" name="birthDate" type="date" class="form-control" id="birthDate" placeholder="YYYY MM DD">--%>
-<%--</div>--%>
-<%--<div class="form-group">--%>
-<%--<label style="color: black" for="email">Email</label>--%>
-<%--<input style="background: transparent; color: black" class="form-control form-control-md" name="email" type="text"  id="email" placeholder="example@email.com">--%>
-<%--</div>--%>
-<%--<div class="form-group">--%>
-<%--<label style="color: black" for="password">Password</label>--%>
-<%--<input style="background: transparent; color: black" class="form-control form-control-md" name="password" type="text"  id="password" placeholder="Password">--%>
-<%--</div>--%>
-<%--<div class="form-group">--%>
-<%--<label style="color: black" for="country">Country</label>--%>
-<%--<input style="background: transparent; color: black" class="form-control form-control-md" name="country" type="text"  id="country" placeholder="Country">--%>
-<%--</div>--%>
-<%--<div class="form-group">--%>
-<%--<label style="color: black" for="city">City</label>--%>
-<%--<input style="background: transparent; color: black" class="form-control form-control-md" name="city" type="text"  id="city" placeholder="City">--%>
-<%--</div>--%>
-<%--<div class="form-group">--%>
-<%--<label style="color: black" for="postcode">Post code</label>--%>
-<%--<input style="background: transparent; color: black" class="form-control form-control-md" name="postcode" type="number"  id="postcode" placeholder="Post code">--%>
-<%--</div>--%>
-<%--<div class="form-group">--%>
-<%--<label style="color: black" for="street">Street</label>--%>
-<%--<input style="background: transparent; color: black" class="form-control form-control-md" name="street" type="text"  id="street" placeholder="Street">--%>
-<%--</div>--%>
-<%--<div class="form-group">--%>
-<%--<label style="color: black" for="house">House</label>--%>
-<%--<input style="background: transparent; color: black" class="form-control form-control-md" name="house" type="number"  id="house" placeholder="House">--%>
-<%--</div>--%>
-<%--<div class="form-group">--%>
-<%--<label style="color: black" for="flat">Flat</label>--%>
-<%--<input style="background: transparent; color: black" class="form-control form-control-md" name="flat" type="number"  id="flat" placeholder="Flat">--%>
-<%--</div>--%>
-<%--<button type="submit" class="btn btn-secondary">Submit</button>--%>
-<%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
-<%--</form>--%>
 
 
 

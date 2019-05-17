@@ -37,7 +37,7 @@
                 <div class="col-sm-1">
                     <sec:authorize access="isAuthenticated()">
                         <button type="button" class="btn btn-secondary">
-                            <a style="color: aliceblue"href="/logout"> Logout </a>
+                            <a style="color: aliceblue" href="/logout"> Logout </a>
                         </button>
                     </sec:authorize>
                 </div>
@@ -82,7 +82,7 @@
 
             <!-- Modal window change period-->
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
-            <div class="modal-dialog" role="document">
+                <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 style="color: black" class="modal-title" id="exampleModalLabel2">Enter period</h5>
@@ -104,62 +104,62 @@
                     </div>
                 </div>
             </div>
-        </div>
+            </div>
 
             <!-- Modal window add shop -->
             <div class="modal fade" id="addShop" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 style="color: black" class="modal-title" id="exampleModalLabel3"> Enter shop data: </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="/addshop" method="post" id="add_shop">
-                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                        <div class="form-group">
-                            <label for="country" style="color: black">Country</label>
-                            <input class="form-control form-control-md" type="text" id="country" name="country"/>
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 style="color: black" class="modal-title" id="exampleModalLabel3"> Enter shop data: </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
-                        <div class="form-group">
-                            <label for="city" style="color: black">City</label>
-                            <input class="form-control form-control-md" type="text" id="city" name="city" />
+                        <div class="modal-body">
+                            <form action="/addshop" method="post" id="add_shop">
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                <div class="form-group">
+                                    <label for="country" style="color: black">Country</label>
+                                    <input class="form-control form-control-md" type="text" id="country" name="country" aria-describedby="emailHelp" minlength="1" required/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="city" style="color: black">City</label>
+                                    <input class="form-control form-control-md" type="text" id="city" name="city" aria-describedby="emailHelp" minlength="1" required/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="postcode" style="color: black">Postcode</label>
+                                    <input class="form-control form-control-md" type="number" id="postcode" name="postcode" aria-describedby="emailHelp" min="1" required/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="street" style="color: black">Street</label>
+                                    <input class="form-control form-control-md" type="text" id="street" name="street" aria-describedby="emailHelp" minlength="1" required/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="houseNumber" style="color: black">House number</label>
+                                    <input class="form-control form-control-md" type="number" id="houseNumber" name="houseNumber" aria-describedby="emailHelp"  min="1" required/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone" style="color: black">Phone number</label>
+                                    <input class="form-control form-control-md" type="text" id="phone" name="phone" aria-describedby="emailHelp" min="1" required/>
+                                </div>
+                                <button onclick="form7_submit()" name="user_search" class="btn btn-secondary" data-dismiss="modal"> Submit </button>
+                                <script>
+                                    function form7_submit() {
+                                        document.getElementById("add_shop").submit();
+                                    };
+                                </script>
+                            </form>
                         </div>
-                        <div class="form-group">
-                            <label for="postcode" style="color: black">Postcode</label>
-                            <input class="form-control form-control-md" type="number" id="postcode" name="postcode" />
-                        </div>
-                        <div class="form-group">
-                            <label for="street" style="color: black">Street</label>
-                            <input class="form-control form-control-md" type="text" id="street" name="street" />
-                        </div>
-                        <div class="form-group">
-                            <label for="houseNumber" style="color: black">House number</label>
-                            <input class="form-control form-control-md" type="number" id="houseNumber" name="houseNumber" />
-                        </div>
-                        <div class="form-group">
-                            <label for="phone" style="color: black">Phone number</label>
-                            <input class="form-control form-control-md" type="text" id="phone" name="phone" />
-                        </div>
-                        <button onclick="form7_submit()" name="user_search" class="btn btn-secondary" data-dismiss="modal"> Submit </button>
-                        <script>
-                            function form7_submit() {
-                                document.getElementById("add_shop").submit();
-                            };
-                        </script>
-                    </form>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
 
             <div class="row" id="info">
                 <!-- Statistics -->
                 <div class="col-sm-10" id="stats" style="display: none; color: black">
-            <h3>Statistics</h3>
-                <ul>
+                    <h3>Statistics</h3>
+                    <ul>
                     <li> Total sum of all orders: ${totalSumOfAllOrders}</li>
                     <br>
                     <li> Total amount of orders: ${totalAmountOfOrders}</li>
@@ -183,14 +183,13 @@
                         </ol>
                     </li>
                 </ul>
-        </div>
+                </div>
 
                 <!-- Orders -->
                 <div id="orders" style="display: none">
                     <div class="cardparent">
                         <div class="cardchild">
-                    <h3 style="color: black">Orders</h3>
-                    <div class="row">
+                            <h3 style="color: black">Orders</h3>
                             <table class="table table-borderless" style="color: black">
                                 <tr>
                                     <th>№</th>
@@ -248,31 +247,32 @@
                                     </tr>
                                 </c:forEach>
                             </table>
+                        </div>
                     </div>
+                </div>
 
-
-                    <!-- Modal process order-->
-                        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
+                <!-- Modal process order-->
+                <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
                                         <h5 class="modal-title" id="editModalLabel"> Edit data </h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <div class="modal-body">
+                            <div class="modal-body">
                                     <form action="/editorder" method="post" id="edited_order">
                                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                         <div class="form-group">
                                             <label for="orderForEdit"> Order number </label>
-                                            <input type="number" id="orderForEdit" name="orderForEdit"/>
+                                            <input class="form-control form-control-md" type="number" id="orderForEdit" name="orderForEdit" required/>
                                         </div>
                                         <p>
                                             <label for="paymentStatus"> Payment status </label>
                                             <select class="custom-select mr-sm-2" name="paymentStatus" id="paymentStatus" style="width: auto">
-                                                <option selected>NOT_PAID</option>
-                                                <option >PAID</option>
+                                                <option selected>PAID</option>
+                                                <option >NOT_PAID</option>
                                             </select>
                                         </p>
                                         <p>
@@ -292,12 +292,10 @@
                                         }
                                     </script>
                                     </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
-                </div>
+
 
                 <style>
                     .cardparent {
@@ -319,7 +317,7 @@
                 <div id="products" style="display: none">
                     <div class="container">
                         <div class="row">
-                            <div class="col-sm-10">
+                            <div class="col-sm">
                                 <h5 style="color: black">List of products</h5>
                                 <table class="table table-borderless" style="withdth: 90%; margin: 0 auto; color: black">
                                     <tr>
@@ -370,11 +368,11 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="price" style="color: black">Price</label>
-                                                        <input class="form-control form-control-md" type="number" id="price" name="price" value="${product.productPrice}"/>
+                                                        <input class="form-control form-control-md" type="number" id="price" name="price" value="${product.productPrice}" min="0"/>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="amount2" style="color: black">Amount</label>
-                                                        <input class="form-control form-control-md" type="number" id="amount2" name="amount" value="${product.amount}"/>
+                                                        <input class="form-control form-control-md" type="number" id="amount2" name="amount" value="${product.amount}" min="0"/>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="category2" style="color: black">Category</label>
@@ -386,7 +384,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="weight2" style="color: black">Weight</label>
-                                                        <input class="form-control form-control-md" type="number" id="weight2" name="weight" value="${parameters.weight}"/>
+                                                        <input class="form-control form-control-md" type="number" id="weight2" name="weight" value="${parameters.weight}" min="0"/>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="operatingSystem" style="color: black"> Operating system </label>
@@ -418,7 +416,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label  for="productPrice"> Product price </label>
-                                                        <input  class="form-control form-control-md" name="productPrice" type="number" class="form-control" id="productPrice" aria-describedby="emailHelp" required>
+                                                        <input  class="form-control form-control-md" name="productPrice" type="number" class="form-control" id="productPrice" aria-describedby="emailHelp" min="0" required>
                                                     </div>
                                                     <div>
                                                         <label for="category"> Product type </label>
@@ -431,7 +429,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="amount">Amount</label>
-                                                        <input class="form-control form-control-md" name="amount" type="number" class="form-control" id="amount" aria-describedby="emailHelp" required>
+                                                        <input class="form-control form-control-md" name="amount" type="number" class="form-control" id="amount" aria-describedby="emailHelp" min="0" required>
                                                     </div>
                                                     <strong style="color:black"> Enter product parameters </strong>
                                                     <div class="form-group">
@@ -444,7 +442,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="weight"> Weight </label>
-                                                        <input class="form-control form-control-md" name="weight" type="number" class="form-control" id="weight" aria-describedby="emailHelp" required>
+                                                        <input class="form-control form-control-md" name="weight" type="number" class="form-control" id="weight" aria-describedby="emailHelp" min="0" required>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="os"> OS </label>
@@ -462,9 +460,11 @@
                                     </div>
                                 </div>
                             </div>
-
+                        </div>
+                        <br>
+                        <div class="row">
                             <!-- Categories -->
-                            <div class="col-sm-2">
+                            <div class="col-sm-3">
                                 <h5 style="color: black">List of categories</h5>
                                 <div id="categories" >
                                     <div class="container">
@@ -611,27 +611,27 @@
                                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                             <div class="form-group">
                                                 <label for="country2" style="color: black">Country</label>
-                                                <input class="form-control form-control-md" type="text" id="country2" name="country" value="${shop.country}"/>
+                                                <input class="form-control form-control-md" type="text" id="country2" name="country" value="${shop.country}" required/>
                                             </div>
                                             <div class="form-group">
                                                 <label for="city2" style="color: black">City</label>
-                                                <input class="form-control form-control-md" type="text" id="city2" name="city" value="${shop.city}"/>
+                                                <input class="form-control form-control-md" type="text" id="city2" name="city" value="${shop.city}"required/>
                                             </div>
                                             <div class="form-group">
                                                 <label for="freakfield" style="color: black">Postcode</label>
-                                                <input class="form-control form-control-md" type="number" id="freakfield" name="postcode" value="${shop.postCode}"/>
+                                                <input class="form-control form-control-md" type="number" id="freakfield" name="postcode" value="${shop.postCode}" min="0" required/>
                                             </div>
                                             <div class="form-group">
                                                 <label for="street2" style="color: black">Street</label>
-                                                <input class="form-control form-control-md" type="text" id="street2" name="street" value="${shop.street}"/>
+                                                <input class="form-control form-control-md" type="text" id="street2" name="street" value="${shop.street}" required/>
                                             </div>
                                             <div class="form-group">
                                                 <label for="houseNumber2" style="color: black">House number</label>
-                                                <input class="form-control form-control-md" type="number" id="houseNumber2" name="houseNumber" value="${shop.houseNumber}"/>
+                                                <input class="form-control form-control-md" type="number" id="houseNumber2" name="houseNumber" value="${shop.houseNumber}" min="0" required/>
                                             </div>
                                             <div class="form-group">
                                                 <label for="flatNumber" style="color: black"> Phone </label>
-                                                <input class="form-control form-control-md" type="text" id="flatNumber" name="phone" value="${shop.phoneNumber}"/>
+                                                <input class="form-control form-control-md" type="text" id="flatNumber" name="phone" value="${shop.phoneNumber}" required/>
                                             </div>
                                             <button type="submit" class="btn btn-secondary"> Submit </button>
                                         </form>
@@ -641,6 +641,7 @@
                         </c:forEach>
                     </table>
                 </div>
+
             </div>
         </div>
 
@@ -666,6 +667,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -673,25 +675,3 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

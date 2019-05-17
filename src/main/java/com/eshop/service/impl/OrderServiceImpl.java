@@ -8,6 +8,7 @@ import com.eshop.enums.PaymentMethod;
 import com.eshop.enums.PaymentStatus;
 import com.eshop.exception.NoAddressException;
 import com.eshop.exception.NoProductInBasketException;
+import com.eshop.jms.MessageSender;
 import com.eshop.sender.SmsSender;
 import com.eshop.service.OrderService;
 import com.eshop.service.ProductService;
@@ -22,13 +23,16 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * Contains implementations of methods OrderService for working with orders.
+ */
 @Service
 @Transactional
 public class OrderServiceImpl implements OrderService {
 
-    public static final LocalDate START_DATE = LocalDate.of(2019, 1, 1);
+    private static final LocalDate START_DATE = LocalDate.of(2019, 1, 1);
 
-    public static final LocalDate FINISH_DATE = LocalDate.now();
+    private static final LocalDate FINISH_DATE = LocalDate.now();
 
     private static String BASKET_ATTR = "shop_basket";
 
@@ -71,15 +75,22 @@ public class OrderServiceImpl implements OrderService {
         return dao.getOrdersPerPeriodForClient(client, start, finish);
     }
 
-    @Override
-    public Order makeNewOrder(HttpSession session, String paymentMethod, String deliveryMethod) {
-        return makeNewOrder(session, paymentMethod, deliveryMethod, null, null);
-    }
-
+    /**
+     * Counts amount of orders for the particular period of time.
+     * @param start start date
+     * @param finish finish date
+     * @return amount of orders for the particular period of time
+     */
     public long getTotalAmountOfOrdersPerPeriod(LocalDate start, LocalDate finish) {
         return getOrdersPerPeriod(start, finish).size();
     }
 
+    /**
+     * Counts total sum of all orders for the particular period of time.
+     * @param start start date
+     * @param finish finish date
+     * @return total sum of all orders for the particular period of time
+     */
     @Override
     public double getTotalSumOfAllOrdersPerPeriod(LocalDate start, LocalDate finish) {
         List<Order> listOfOrdersPerPeriod = getOrdersPerPeriod(start, finish);
@@ -90,13 +101,17 @@ public class OrderServiceImpl implements OrderService {
         return totalSumOfAllOrders;
     }
 
+    /**
+     * Create list of 10 best products for the particular period of time.
+     * @param start start date
+     * @param finish finish date
+     * @return list of 10 best products for the particular period of time
+     */
     @Override
     public List<Product> getBestsellerPerPeriod(LocalDate start, LocalDate finish) {
-
         List<Product> allProducts = productService.getAllProducts();
         Map<Product, Long> productsOfPeriod = new HashMap<>();
         List<Order> orderList = getOrdersPerPeriod(start, finish);
-
         for (Product product: allProducts) {
             long x = 0;
             for (Order order: orderList) {
@@ -126,6 +141,11 @@ public class OrderServiceImpl implements OrderService {
         return getBestsellerPerPeriod(START_DATE, FINISH_DATE);
     }
 
+    /**
+     * Calculates sum of all products in a particular order.
+     * @param basket current state of basket
+     * @return sum of all products in order
+     */
     @Override
     public double sumOfOrder(Basket basket) {
         double sum = 0;
@@ -135,21 +155,27 @@ public class OrderServiceImpl implements OrderService {
         return sum;
     }
 
+    /**
+     * Creates new instance of order and saves it to DB.
+     * @param session current HTTP session
+     * @param paymentMethod payment method of order
+     * @param deliveryMethod delivery method of order
+     * @param deliveryAddress delivery address of order
+     * @param collectAddress address for self collect
+     * @return instance of order, saved to DB
+     */
     @Override
     public Order makeNewOrder(HttpSession session, String paymentMethod, String deliveryMethod,
                               Integer deliveryAddress, Integer collectAddress) {
-
         if (deliveryMethod.equals("COURIER") && deliveryAddress == null) {
             throw new NoAddressException("No address for delivery!");
         }
         if (deliveryMethod.equals("SELF") && collectAddress == null) {
             throw new NoAddressException("No address for self pickup!");
         }
-
         Order order = new Order();
         Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Basket basket = (Basket) session.getAttribute(BASKET_ATTR);
-
         if (deliveryAddress != null) {
             ClientAddress address = getClientAddressById(deliveryAddress);
             order.setAddressForDelivery(address);
@@ -158,11 +184,8 @@ public class OrderServiceImpl implements OrderService {
             ShopAddress address = getShopById(collectAddress);
             order.setAddressForSelfCollect(address);
         }
-
         double sum = sumOfOrder(basket);
         order.setClient(client);
-
-        //TODO check
         Set<ProductToOrder> productToOrderList = new HashSet<>();
         for (Map.Entry<Product, Integer> entry: basket.getProductsInBasket().entrySet()) {
             ProductToOrder productToOrder = new ProductToOrder();
@@ -176,13 +199,11 @@ public class OrderServiceImpl implements OrderService {
         order.setPaymentMethod(PaymentMethod.valueOf(paymentMethod));
         order.setDateOfOrder(LocalDate.now());
         order.setSumOfOrder(sum);
-
-        if (productToOrderList.isEmpty()) {
+        if (!(productToOrderList.isEmpty())) {
             saveOrders(order);
         } else {
             throw new NoProductInBasketException();
         }
-
         for (Map.Entry<Product, Integer> entry : basket.getProductsInBasket().entrySet()) {
             int amount = productService.decreaseProductAmountInStock(entry.getKey(), entry.getValue());
             productService.saveNewAmountOfProduct(entry.getKey(), amount);
@@ -204,6 +225,16 @@ public class OrderServiceImpl implements OrderService {
         return dao.getShopById(id);
     }
 
+    /**
+     * Edits shop's address.
+     * @param id id of the shop
+     * @param country new country
+     * @param city new city
+     * @param postcode new post code
+     * @param street new street
+     * @param houseNumber new house number
+     * @param phone new phone number
+     */
     @Override
     public void editShopById(int id, String country, String city, int postcode, String street, int houseNumber, String phone) {
         ShopAddress shopById = getShopById(id);
@@ -216,6 +247,12 @@ public class OrderServiceImpl implements OrderService {
         saveShop(shopById);
     }
 
+    /**
+     * Method for processing order by manager.
+     * @param id id of the order
+     * @param paymentStatus payment status ton set
+     * @param orderStatus order status to set
+     */
     @Override
     public void editOrder(int id, String paymentStatus, String orderStatus) {
         Order orderForEditing = getOrderById(id);
@@ -224,14 +261,18 @@ public class OrderServiceImpl implements OrderService {
         updateOrder(id, paymentStatus, orderStatus);
     }
 
+    /**
+     * Sends email and SMS messages.
+     * @param client client
+     * @param order order of the client
+     */
     @Override
     public void sendMessages(Client client, Order order) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("4358514@gmail.com");
         message.setTo(client.getEmail());
         message.setSubject("New order");
-        //TODO set text
-        message.setText("Congratulations! Your order: " + order.getId() + ", products: " + order.getOrderProducts());
+        message.setText("Thank you, " + client.getFirstName() + "! Your order number: " + order.getId());
         mailSender.send(message);
         SmsSender.sendSMS(client.getPhone(), order.getId());
     }

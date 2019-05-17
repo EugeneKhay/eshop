@@ -6,6 +6,7 @@ import com.eshop.domain.ClientAddress;
 import com.eshop.domain.Order;
 import com.eshop.enums.Role;
 import com.eshop.exception.LoginException;
+import com.eshop.jms.MessageSender;
 import com.eshop.service.ClientService;
 import com.eshop.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ import java.util.*;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+/**
+ * Contains implementations of ClientService methods for working with the client.
+ */
 @Service
 @Transactional
 public class ClientServiceImpl implements ClientService {
@@ -33,6 +37,9 @@ public class ClientServiceImpl implements ClientService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private MessageSender sender;
 
     private Logger logger = Logger.getLogger("logger");
 
@@ -56,12 +63,27 @@ public class ClientServiceImpl implements ClientService {
         dao.saveClient(client);
     }
 
+    /**
+     * Check user's login already exists
+     * @param login user's login
+     * @return false if login already exists, true vice-versa
+     */
     @Override
     public boolean checkLogin(String login) {
         List<Client> clientByEmail = getAllClientsByEmail(login);
         return clientByEmail.isEmpty();
     }
 
+    /**
+     * Saves new client.
+     * @param firstName first name of a new client
+     * @param lastName last name of a new client
+     * @param birthDate birth date of a new client
+     * @param email email of a new client
+     * @param phone phone number of a new client
+     * @param password password of a new client
+     * @return true if client successfully saved, false if not
+     */
     @Override
     public boolean registerNewClient(String firstName, String lastName, LocalDate birthDate, String email, String phone, String password) {
         Client client = new Client();
@@ -80,6 +102,16 @@ public class ClientServiceImpl implements ClientService {
         }
     }
 
+    /**
+     * Edit client's personal data
+     * @param id id of a client
+     * @param firstName new first name
+     * @param lastName new last name
+     * @param password new password
+     * @param email new email
+     * @param phone new phone number
+     * @return instance of client with renewed data
+     */
     @Override
     public Client editClientPersonalData(int id, String firstName, String lastName, String password, String email, String phone) {
         Client client = getClientById(id);
@@ -102,15 +134,22 @@ public class ClientServiceImpl implements ClientService {
         dao.saveAddress(address);
     }
 
+    /**
+     * Creates new address for client.
+     * @param country country of a new address
+     * @param city city of a new address
+     * @param postcode post code of a new address
+     * @param street street of a new address
+     * @param houseNumber house number of a new address
+     * @param flatNumber flat number of a new address
+     * @return instance of client with new address
+     */
     @Override
     public Client createAddressForClient(String country, String city, int postcode, String street, int houseNumber, int flatNumber) {
-        //TODO clientForView
         ClientAddress address = new ClientAddress(country, city, postcode, street, houseNumber, flatNumber);
-
         Client client0 = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Integer id = client0.getId();
         Client client = getClientById(id);
-
         Set<ClientAddress> addresses = client.getAddressList();
         addresses.add(address);
         client.setAddressList(addresses);
@@ -134,9 +173,19 @@ public class ClientServiceImpl implements ClientService {
         return getClientById(id);
     }
 
+    /**
+     * Edit existing address of the client
+     * @param addressForEdit id if the address to edit
+     * @param country country of a new address
+     * @param city city of a new address
+     * @param postcode post code of a new address
+     * @param street street of a new address
+     * @param houseNumber house number of a new address
+     * @param flatNumber flat number of a new address
+     * @return instance of client with new address
+     */
     @Override
     public Client editAddressForClient(int addressForEdit, String country, String city, int postcode, String street, int houseNumber, int flatNumber) {
-        //TODO clientForView
         Client client = (Client) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         ClientAddress newAddress = getAddressById(addressForEdit);
         logger.info("Old address retrieved");
@@ -156,6 +205,12 @@ public class ClientServiceImpl implements ClientService {
         return getClientById(id);
     }
 
+    /**
+     * Creates list of 10 best clients (with most amounts of orders) for the particular period of time.
+     * @param start start date
+     * @param finish finish date
+     * @return list of 10 best clients
+     */
     @Override
     public List<Client> getTenBestClientsPerPeriod(LocalDate start, LocalDate finish)
     {

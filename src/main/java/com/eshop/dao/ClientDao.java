@@ -5,6 +5,9 @@ import com.eshop.domain.ClientAddress;
 
 import java.util.List;
 
+/**
+ * Interface that contain methods for Client working with DB
+ */
 public interface ClientDao {
 
     Client getClientByName(String name);

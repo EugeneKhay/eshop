@@ -5,6 +5,9 @@ import com.eshop.domain.Product;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Interface that contain methods for Product and CategoryOfProduct working with DB
+ */
 public interface ProductDAO {
 
     Product getProductByName(String name);

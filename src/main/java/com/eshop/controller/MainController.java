@@ -2,10 +2,10 @@ package com.eshop.controller;
 
 import com.eshop.domain.*;
 import com.eshop.jms.MessageSender;
+import com.eshop.service.AdminService;
 import com.eshop.service.ClientService;
 import com.eshop.service.OrderService;
 import com.eshop.service.ProductService;
-import com.eshop.service.impl.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -19,6 +19,9 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.logging.Logger;
 
+/**
+ * Controller class for main user actions handling: registration, go to private account, edit user's data.
+ */
 @Controller
 public class MainController {
 
@@ -45,6 +48,12 @@ public class MainController {
 
     private Logger logger = Logger.getLogger("logger");
 
+    /**
+     * Handle the request to "/" URL to go to the home page
+     * @param session current HTTP session
+     * @param model model for view
+     * @return name of the corresponding view
+     */
     @GetMapping("/")
     public String homepage(HttpSession session, Model model) {
         if (basket == null) basket = new Basket();
@@ -52,16 +61,29 @@ public class MainController {
         List<Product> bestsellers = orderService.getBestsellers();
         model.addAttribute("items", bestsellers);
         model.addAttribute("categories", productService.getAllCategories());
-        //TODO replace
-        sender.sendMessage("Bestsellers updated");
+        sender.sendMessage("Update");
         return "homepage2";
     }
 
+    /**
+     * Handle the request to "/registration" URL to go to the registration page
+     * @return name of the corresponding view
+     */
     @GetMapping("/registration")
     public String register() {
         return "registration";
     }
 
+    /**
+     * Handle the request to "/registration" URL to add new user
+     * @param firstName first name of the new client
+     * @param lastName last name of the new client
+     * @param birthDate birth date of the new client
+     * @param email email of the new client
+     * @param phone phone number of the new client
+     * @param password password of the new client
+     * @return name of the corresponding view
+     */
     @PostMapping("/registration")
     public String add(@RequestParam(name = "firstName") String firstName,
                       @RequestParam(name = "lastName") String lastName,
@@ -73,6 +95,11 @@ public class MainController {
         return "redirect:/";
     }
 
+    /**
+     * Handle the request to "/personal" URL to go to the user's account
+     * @param model model for view
+     * @return name of the corresponding view
+     */
     @GetMapping("/personal")
     public String enterMyAccount(Model model) {
         Client clientById = clientService.getClientForView();
@@ -80,6 +107,17 @@ public class MainController {
         return PERSONAL_PAGE;
     }
 
+    /**
+     * Handle the request to "/edit" URL to edit client's data
+     * @param clientId client's id
+     * @param firstName new first name
+     * @param lastName new last name
+     * @param password new password
+     * @param email new email
+     * @param phone new phone number
+     * @param model model for view
+     * @return name of the corresponding view
+     */
     @PostMapping("/edit")
     public String editClientData(@RequestParam(name = "clientForEdit") int clientId,
                                  @RequestParam(name = "first") String firstName,
@@ -93,6 +131,17 @@ public class MainController {
         return PERSONAL_PAGE;
     }
 
+    /**
+     * Handle the request to "/addaddress" URL to add new client's address
+     * @param country country of new address
+     * @param city country of new address
+     * @param postcode post code of new address
+     * @param street street of new address
+     * @param houseNumber house number of new address
+     * @param flatNumber flat number of new address
+     * @param model model for view
+     * @return name of the corresponding view
+     */
     @PostMapping("/addaddress")
     public String addClientAddress (@RequestParam(name = "country", required = false) String country,
                                     @RequestParam(name = "city", required = false) String city,
@@ -108,6 +157,18 @@ public class MainController {
         return PERSONAL_PAGE;
     }
 
+    /**
+     * Handle the request to "/editaddress" URL to edit client's address
+     * @param addressId id of address to edit
+     * @param country country of new address
+     * @param city country of new address
+     * @param postcode post code of new address
+     * @param street street of new address
+     * @param houseNumber house number of new address
+     * @param flatNumber flat number of new address
+     * @param model model for view
+     * @return name of the corresponding view
+     */
     @PostMapping("/editaddress")
     public String editClientAddress (@RequestParam(name = "addressForEdit") int addressId,
                                      @RequestParam(name = "country") String country,
@@ -122,6 +183,12 @@ public class MainController {
         return PERSONAL_PAGE;
     }
 
+    /**
+     * Handle the request to "/deleteaddress" URL to delete client's address
+     * @param id id of address to delete
+     * @param model model for view
+     * @return name of the corresponding view
+     */
     @PostMapping("/deleteaddress")
     public String deleteClientAddress(@RequestParam(name = "addressForDelete") int id, Model model) {
         clientService.deleteAddressById(id);
@@ -130,6 +197,20 @@ public class MainController {
         return PERSONAL_PAGE;
     }
 
+    /**
+     * Handle the request to "/editproduct" URL to edit the particulac product by manager
+     * @param productId id of product to edit
+     * @param productName new name of the product
+     * @param brand new brand of the product
+     * @param price new price of the product
+     * @param amount new amount of the product
+     * @param category new category of the product
+     * @param colour new colour of the product
+     * @param weight new weight of the product
+     * @param operatingSystem new OS of the product
+     * @param model model for view
+     * @return name of the corresponding view
+     */
     @PostMapping("/editproduct")
     public String editProduct(@RequestParam(name = "productForEdit") int productId,
                               @RequestParam(name = "name") String productName,
@@ -146,15 +227,18 @@ public class MainController {
         return "adminpage";
     }
 
+    /**
+     * Handle the request to get data for catalog
+     * @param page name of the page
+     * @param model model for view
+     * @return name of the corresponding view
+     */
     @GetMapping("/{category}")
     public String get(@PathVariable(name = "category") String page, Model model) {
-
-        //TODO move to service
         String end = page.substring(1);
         String start = page.substring(0,1).toUpperCase();
         String res = start + end;
         CategoryOfProduct category = new CategoryOfProduct(res);
-
         List<Product> allProductsByCategory = productService.getAllProductsByCategory(res);
         model.addAttribute("items", allProductsByCategory);
         model.addAttribute("pageName", category.getCategoryName());

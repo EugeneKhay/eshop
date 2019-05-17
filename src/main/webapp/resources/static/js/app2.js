@@ -118,6 +118,7 @@ function add(id) {
         success: function (result) {
             $('#basketCount').text(result);
             $('#basketCount2').text(result);
+            $('#emptyBasket').text("To proceed with the order, please sign in or register");
         }
     });
 }

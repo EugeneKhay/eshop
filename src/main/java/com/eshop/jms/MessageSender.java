@@ -15,7 +15,6 @@ public class MessageSender {
     private Logger logger = Logger.getLogger("logger");
 
     public void sendMessage(final String message) {
-        //TODO Change to logger
         logger.info("Sending message");
         jmsTemplate.send(session -> session.createTextMessage(message));
     }

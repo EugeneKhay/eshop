@@ -99,16 +99,15 @@
                                 </p>
                             </c:if>
                             <div class="form-group">
-                                <label for="username">Username</label>
-                                <input type="text" id="username" name="username"/>
+                                <label for="username">E-mail</label>
+                                <input class="form-control form-control-md" type="text" id="username" name="username"required/>
                             </div>
                             <div class="form-group">
                                 <label for="password">Password</label>
-                                <input type="password" id="password" name="password"/>
+                                <input class="form-control form-control-md" type="password" id="password" name="password" required/>
                             </div>
                             <button onclick="form_submit()" name="user_search" class="btn btn-secondary" data-dismiss="modal">Log in</button>
                             <a href="/registration" class="btn btn-secondary btn-md active" role="button" aria-pressed="true">Registration</a>
-
                         </form>
                     </div>
                 </div>
@@ -127,7 +126,7 @@
                 <div class="form-check form-group" >
                     <input class="form-check-input" type="checkbox" name="search_type1" value="Price" id="defaultCheck1">
                     <label class="form-check-label" for="defaultCheck1">Price</label>
-                    <input style="display: none" class="form-control form-control-md" id="search_input11" type="number" name="search_res11" placeholder="min" >
+                    <input style="display: none" class="form-control form-control-md" id="search_input11" type="number" name="search_res11" placeholder="min" min="0">
                     <input style="display: none" class="form-control form-control-md" id="search_input12" type="number" name="search_res12" placeholder="max" >
                 </div>
                 <div class="form-check form-group">

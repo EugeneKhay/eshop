@@ -8,6 +8,9 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Interface that contain methods for Order and ShopAddress working with DB
+ */
 public interface OrderDao {
 
     Order getOrderById(Integer id);

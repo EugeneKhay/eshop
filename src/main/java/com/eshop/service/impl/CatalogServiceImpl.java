@@ -2,23 +2,35 @@ package com.eshop.service.impl;
 
 import com.eshop.domain.CategoryOfProduct;
 import com.eshop.domain.Product;
+import com.eshop.service.CatalogService;
 import com.eshop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
+/**
+ * Contains methods for work with the catalog.
+ */
 @Service
-public class CatalogService {
+public class CatalogServiceImpl implements CatalogService {
 
     @Autowired
     private ProductService productService;
 
+    /**
+     * Filter the products of the particular category by price, brand, colour.
+     * @param search_dataPrice1 min price
+     * @param search_dataPrice2 max price
+     * @param search_dataBrand brand of a product
+     * @param search_dataColour colour of product
+     * @param page name of the product category
+     * @return list that contains filtered products
+     */
     public List<Product> getDataForPostCatalog(Double search_dataPrice1, Double search_dataPrice2,
                                                String search_dataBrand,
                                                String search_dataColour,
                                                String page) {
         List<Product> searchResult = productService.getAllProductsByCategory(page);
-
         if (search_dataPrice1 != null && search_dataPrice2 != null) {
             double priceMin = search_dataPrice1;
             double priceMax = search_dataPrice2;
@@ -36,14 +48,7 @@ public class CatalogService {
         return searchResult;
     }
 
-    public CategoryOfProduct getCategoryByPage(String page) {
-        String start = page.substring(0,1).toUpperCase();
-        String end = page.substring(1);
-        String res = start + end;
-        return new CategoryOfProduct(res);
-    }
-
-    public CatalogService(ProductService productService) {
-        this.productService = productService;
+    public CatalogServiceImpl(ProductService service) {
+        this.productService = service;
     }
 }

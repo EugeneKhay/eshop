@@ -2,6 +2,7 @@ package com.eshop.service.impl;
 
 import com.eshop.domain.Basket;
 import com.eshop.domain.Product;
+import com.eshop.service.BasketService;
 import com.eshop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ import java.util.Map;
  * Contains methods for work with the basket.
  */
 @Service
-public class BasketService {
+public class BasketServiceImpl implements BasketService {
 
     private static String BASKET_ATTR = "shop_basket";
 
@@ -30,6 +31,7 @@ public class BasketService {
      * @param request http request from client side
      * @return map contains products and its amount
      */
+    @Override
     public Map<Product, Integer> getProductsInBasket(HttpServletRequest request) {
         Basket basket = (Basket) request.getSession().getAttribute(BASKET_ATTR);
         return basket.getProductsInBasket();
@@ -41,6 +43,7 @@ public class BasketService {
      * @param session the current HTTP session
      * @return total amount of all product items
      */
+    @Override
     public Integer prepareProductsForBasket( int id, HttpSession session) {
         Product product = productService.getProductById(id);
         Basket basket = (Basket) session.getAttribute(BASKET_ATTR);
@@ -70,6 +73,7 @@ public class BasketService {
      * @param session the current HTTP session
      * @return the total price of all products in the basket
      */
+    @Override
     public Double deleteFromBAsket(int id, HttpSession session) {
         Product product = productService.getProductById(id);
         Basket basket = (Basket) session.getAttribute(BASKET_ATTR);
@@ -91,6 +95,7 @@ public class BasketService {
      * @return list of numbers that contains new total price and new amount
      * of particular product in the basket
      */
+    @Override
     public List<Number> editOrderMinus(int id, HttpSession session) {
         Product product = productService.getProductById(id);
         Basket basket = (Basket) session.getAttribute(BASKET_ATTR);
@@ -113,6 +118,7 @@ public class BasketService {
      * @return list of numbers that contains new total price and new amount
      * of particular product in the basket
      */
+    @Override
     public List<Number> editOrderPlus(int id, HttpSession session) {
         Product product = productService.getProductById(id);
         Basket basket = (Basket) session.getAttribute(BASKET_ATTR);
@@ -136,6 +142,7 @@ public class BasketService {
      * @return list of numbers that contains total price and amount
      * of particular product in the basket
      */
+    @Override
     public List<Number> setDataToSession(Basket basket, Product product, int amountAfter, HttpSession session, double totalPrice) {
         basket.getProductsInBasket().put(product, amountAfter);
         session.setAttribute(BASKET_ATTR, basket);
