@@ -77,26 +77,26 @@ public class OrderDaoImpl implements OrderDao {
         return query.list();
     }
 
-    @Override
-    public void saveShop(ShopAddress address) {
-        sessionFactory.getCurrentSession().saveOrUpdate(address);
-    }
-
-    @Override
-    public Set<ShopAddress> getAllShops() {
-        String hql = "FROM ShopAddress";
-        Query query = sessionFactory.getCurrentSession().createQuery(hql);
-        return new HashSet<>(query.list());
-    }
-
-    @Override
-    public ShopAddress getShopById(Integer id) {
-        String hql = "FROM ShopAddress WHERE id = :param";
-        Query query = sessionFactory.getCurrentSession().createQuery(hql);
-        query.setParameter(PARAM, id);
-        ShopAddress address = (ShopAddress) query.list().get(0);
-        return address;
-    }
+//    @Override
+//    public void saveShop(ShopAddress address) {
+//        sessionFactory.getCurrentSession().saveOrUpdate(address);
+//    }
+//
+//    @Override
+//    public Set<ShopAddress> getAllShops() {
+//        String hql = "FROM ShopAddress";
+//        Query query = sessionFactory.getCurrentSession().createQuery(hql);
+//        return new HashSet<>(query.list());
+//    }
+//
+//    @Override
+//    public ShopAddress getShopById(Integer id) {
+//        String hql = "FROM ShopAddress WHERE id = :param";
+//        Query query = sessionFactory.getCurrentSession().createQuery(hql);
+//        query.setParameter(PARAM, id);
+//        ShopAddress address = (ShopAddress) query.list().get(0);
+//        return address;
+//    }
 
     @Override
     public ClientAddress getClientAddressById(Integer id) {

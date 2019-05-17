@@ -1,6 +1,7 @@
 package com.eshop.service.impl;
 
 import com.eshop.dao.OrderDao;
+import com.eshop.dao.ShopAddressDAO;
 import com.eshop.domain.*;
 import com.eshop.enums.DeliveryMethod;
 import com.eshop.enums.OrderStatus;
@@ -38,6 +39,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private OrderDao dao;
+
+    @Autowired
+    private ShopAddressDAO shopDao;
 
     @Autowired
     private ProductService productService;
@@ -222,7 +226,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public ShopAddress getShopById(Integer id) {
-        return dao.getShopById(id);
+        return shopDao.getShopById(id);
     }
 
     /**
@@ -279,12 +283,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void saveShop(ShopAddress address) {
-        dao.saveShop(address);
+        shopDao.saveShop(address);
     }
 
     @Override
     public Set<ShopAddress> getAllShops() {
-        return dao.getAllShops();
+        return shopDao.getAllShops();
     }
 
     public void setDao(OrderDao dao) {

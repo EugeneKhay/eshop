@@ -25,12 +25,6 @@ public interface OrderDao {
 
     List<Order> getOrdersPerPeriodForClient(Client client, LocalDate start, LocalDate finish);
 
-    void saveShop(ShopAddress address);
-
-    Set<ShopAddress> getAllShops();
-
-    ShopAddress getShopById(Integer id);
-
     ClientAddress getClientAddressById(Integer id);
 }
 
